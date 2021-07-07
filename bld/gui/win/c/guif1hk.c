@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2018-2021 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2018-2020 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -65,14 +65,14 @@ static gui_window *getFirstGUIParent( HWND hwnd )
     HWND        parent;
     gui_window  *gui;
 
-    wnd = NULL;
+    gui = NULL;
 
     for( ;; ) {
-        wnd = GUIGetCtrlWnd( hwnd );
-        if( wnd != NULL )
+        gui = GUIGetCtrlWnd( hwnd );
+        if( gui != NULL )
             break;
-        //wnd = GUIFindWindowFromHWND( hwnd );
-        //if( wnd != NULL )
+        //gui = GUIFindWindowFromHWND( hwnd );
+        //if( gui != NULL )
         //    break;
         parent = _wpi_getparent( hwnd );
         if( parent == HWND_DESKTOP )
@@ -80,7 +80,7 @@ static gui_window *getFirstGUIParent( HWND hwnd )
         hwnd = parent;
     }
 
-    return( wnd );
+    return( gui );
 }
 
 #ifdef __OS2_PM__
