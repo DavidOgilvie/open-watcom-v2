@@ -123,20 +123,19 @@ void GUICalcLocation( gui_rect *rect, gui_coord *pos, gui_coord *size,
     if( parent == NULLHANDLE ) {
         parent = HWND_DESKTOP;
     }
-    pos->x = rect->x;
-    pos->y = rect->y;
-    size->x = rect->width;
-    size->y = rect->height;
     if( parent == HWND_DESKTOP ) {
-        GUIScaleToScreen( pos );
+        pos->x = GUIScaleToScreenX( rect->x );
+        pos->y = GUIScaleToScreenY( rect->y );
     } else {
-        GUIScaleToScreenR( pos );
+        pos->x = GUIScaleToScreenH( rect->x );
+        pos->y = GUIScaleToScreenV( rect->y );
         _wpi_getclientrect( parent, &r );
         _wpi_getrectvalues( r, &left, &top, &right, &bottom );
         pos->x += left;
         pos->y += top;
     }
-    GUIScaleToScreenR( size );
+    size->x = GUIScaleToScreenH( rect->width );
+    size->y = GUIScaleToScreenV( rect->height );
 
     pos->y = _wpi_cvtc_y_size_plus1( parent, pos->y, size->y );
 }
@@ -459,27 +458,28 @@ WPI_MRESULT GUISendDlgItemMessage( HWND parent, gui_ctl_id id, WPI_MSG msg, WPI_
     }
 }
 
-void GUIMakeRelative( gui_window *wnd, WPI_POINT *pt, gui_point *point )
+void GUIMakeRelative( gui_window *wnd, WPI_POINT *screen_point, gui_point *point )
 {
     WPI_RECT    rect;
     GUI_RECTDIM left, top, right, bottom;
+    gui_ord     screen_x;
+    gui_ord     screen_y;
 
     rect = wnd->hwnd_client_rect;
     _wpi_mapwindowpoints( wnd->hwnd, HWND_DESKTOP, (WPI_LPPOINT)&rect, 2 );
     _wpi_getrectvalues( rect, &left, &top, &right, &bottom );
-    point->x = pt->x - left;
-    point->y = pt->y - top;
-
+    screen_x = screen_point->x - left;
+    screen_y = screen_point->y - top;
     if( GUI_DO_HSCROLL( wnd ) || GUI_DO_VSCROLL( wnd ) ) {
         if( GUI_DO_HSCROLL( wnd ) ) {
-            point->x += GUIGetScrollPos( wnd, SB_HORZ );
+            screen_x += GUIGetScrollPos( wnd, SB_HORZ );
         }
         if( GUI_DO_VSCROLL( wnd ) ) {
-            point->y += GUIGetScrollPos( wnd, SB_VERT );
+            screen_y += GUIGetScrollPos( wnd, SB_VERT );
         }
     }
-    point->x = GUIScreenToScaleH( point->x );
-    point->y = GUIScreenToScaleV( point->y );
+    point->x = GUIScreenToScaleH( screen_x );
+    point->y = GUIScreenToScaleV( screen_y );
 }
 
 HWND GUIGetScrollHWND( gui_window *wnd )
