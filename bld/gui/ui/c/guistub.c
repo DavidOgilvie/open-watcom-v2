@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -31,7 +32,7 @@
 
 
 #include "guiwind.h"
-#include "guix.h"
+
 
 bool GUIChangeFont( gui_window *wnd )
 {
@@ -90,12 +91,12 @@ void GUIResetMouseCursor( gui_mcursor_handle old )
     /* unused parameters */ (void)old;
 }
 
-bool GUI3DDialogInit( void )
+bool GUIAPI GUI3DDialogInit( void )
 {
     return( false );
 }
 
-void GUI3DDialogFini( void )
+void GUIAPI GUI3DDialogFini( void )
 {
 }
 

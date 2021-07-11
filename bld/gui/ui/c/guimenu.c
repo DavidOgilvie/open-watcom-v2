@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2019 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -579,7 +579,7 @@ void GUIFreeMenus( gui_window * wnd )
     }
 }
 
-void GUISetBetweenTitles( int between_titles )
+void GUIAPI GUISetBetweenTitles( int between_titles )
 {
     uisetbetweentitles( between_titles );
 }
@@ -854,4 +854,3 @@ bool GUIInsertMenuToPopup( gui_window *wnd, gui_ctl_id id, int position,
 {
     return( AddMenuItemToPopup( wnd, id, position, menu, floating ) );
 }
-

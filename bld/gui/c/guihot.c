@@ -34,12 +34,11 @@
 #include "guiwind.h"
 #include "guiscale.h"
 #include "guihot.h"
-#include "guixhot.h"
 #include "guihook.h"
 
-        int             GUINumHotSpots;
-extern  hotspot_info    *GUIHotSpots;
 
+int             GUINumHotSpots = 0;
+hotspot_info    *GUIHotSpots = NULL;
 
 static void Cleanup( void )
 {
@@ -49,7 +48,7 @@ static void Cleanup( void )
     GUINumHotSpots = 0;
 }
 
-bool GUIInitHotSpots( int num_hot_spots, gui_resource *hot )
+bool GUIAPI GUIInitHotSpots( int num_hot_spots, gui_resource *hot )
 {
     GUINumHotSpots = num_hot_spots;
     if( num_hot_spots == 0 ) {
@@ -71,12 +70,12 @@ bool GUIInitHotSpots( int num_hot_spots, gui_resource *hot )
     }
 }
 
-int GUIGetNumHotSpots( void )
+int GUIAPI GUIGetNumHotSpots( void )
 {
     return( GUINumHotSpots );
 }
 
-bool GUIGetHotSpotSize( int hot_spot, gui_coord *size )
+bool GUIAPI GUIGetHotSpotSize( int hot_spot, gui_coord *size )
 {
     if( ( size == NULL ) || ( hot_spot > GUINumHotSpots ) ||
         ( hot_spot < 1 ) ) {

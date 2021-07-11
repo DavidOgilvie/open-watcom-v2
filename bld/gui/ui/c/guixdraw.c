@@ -33,7 +33,6 @@
 #include "guiwind.h"
 #include "guidraw.h"
 #include "guixdraw.h"
-#include "guix.h"
 #include "guixutil.h"
 #include "guicontr.h"
 #include "guiscale.h"
@@ -159,7 +158,7 @@ void GUIInitDrawingChars( bool dbcs )
 }
 
 
-int GUIGetCharacter( gui_draw_char draw_char )
+int GUIAPI GUIGetCharacter( gui_draw_char draw_char )
 {
     if( draw_char < GUI_NUM_DRAW_CHARS ) {
         return( UCHAR_VALUE( DrawingChars[DrawIndex[draw_char]] ) );
@@ -167,7 +166,7 @@ int GUIGetCharacter( gui_draw_char draw_char )
     return( 0 );
 }
 
-void GUISetCharacter( gui_draw_char draw_char, int ch )
+void GUIAPI GUISetCharacter( gui_draw_char draw_char, int ch )
 {
     /* unused parameters */ (void)ch; (void)draw_char;
 
@@ -182,7 +181,7 @@ static void DrawChar( gui_window *wnd, int row, int col, ATTR attr, char chr )
     uivtextput( &wnd->vs, row, col, attr, &chr, 1 );
 }
 
-static void DrawText( gui_window *wnd, int row, int col, ATTR attr, char *buff, int length )
+static void DrawText( gui_window *wnd, int row, int col, ATTR attr, const char *buff, int length )
 {
     if( length > 0 ) {
         uivtextput( &wnd->vs, row, col, attr, buff, length );
@@ -462,7 +461,7 @@ static void DrawGadget( gui_window *wnd, p_gadget gadget, gui_flags flag )
  * GUIWndUpdate -- refresh the portions of the given window which require it
  */
 
-void GUIWndUpdate( gui_window *wnd )
+void GUIAPI GUIWndUpdate( gui_window *wnd )
 {
     if( !GUIIsOpen( wnd ) ) {
         return;

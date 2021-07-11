@@ -32,7 +32,7 @@
 
 
 #include "guiwind.h"
-#include "guixhot.h"
+#include "guihot.h"
 #include "guixdraw.h"
 #include "guixwind.h"
 #include "guirdlg.h"
@@ -41,10 +41,6 @@
 #ifdef __NT__
 typedef HANDLE (WINAPI *PFNLI)( HINSTANCE, LPCSTR, UINT, int, int, UINT );
 #endif
-
-extern  int         GUINumHotSpots;
-
-hotspot_info        *GUIHotSpots;
 
 #ifdef __NT__
 // For TransparentBlt function
@@ -95,7 +91,7 @@ void GUIXCleanupHotSpots( void )
 #endif
 }
 
-void GUIDrawHotSpot( gui_window *wnd, int hot_spot, gui_text_ord row,
+void GUIAPI GUIDrawHotSpot( gui_window *wnd, int hot_spot, gui_text_ord row,
                      gui_ord indent, gui_attr attr )
 {
     gui_text_metrics    metrics;

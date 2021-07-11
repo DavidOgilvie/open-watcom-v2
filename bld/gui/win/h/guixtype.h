@@ -31,50 +31,16 @@
 ****************************************************************************/
 
 
-#include "guiwind.h"
-#include "guiutil.h"
-#include "guihot.h"
-#include <string.h>
+#define s_x             x
+#define s_y             y
+#define s_width         width
+#define s_height        height
 
+typedef int             guix_ord;
 
-bool GUIXInitHotSpots( int num, gui_resource *hot )
-{
-    int i;
-
-    memset( GUIHotSpots, 0, sizeof( hotspot_info ) * num );
-    for( i = 0; i < num; i++ ) {
-        if( hot[i].chars != NULL ) {
-            bool    ok;
-
-            GUIHotSpots[i].text = GUIStrDup( hot[i].chars, &ok );
-            if( !ok )
-                return( false );
-            GUIHotSpots[i].size.x = strlen( GUIHotSpots[i].text );
-            GUIHotSpots[i].size.y = 1;
-        } else {
-            GUIHotSpots[i].text = NULL;
-            GUIHotSpots[i].size.x = 0;
-            GUIHotSpots[i].size.y = 0;
-        }
-    }
-    return( true );
-}
-
-
-void GUIAPI GUIDrawHotSpot( gui_window *wnd, int hot_spot, gui_text_ord row,
-                     gui_ord indent, gui_attr attr )
-{
-    if( ( hot_spot > 0 ) && ( hot_spot <= GUINumHotSpots ) ) {
-        GUIDrawText( wnd, GUIHotSpots[hot_spot-1].text,
-                     GUIHotSpots[hot_spot-1].size.x, row, indent, attr );
-    }
-}
-
-void GUIXCleanupHotSpots( void )
-{
-    int i;
-
-    for( i = 0; i < GUINumHotSpots; i++ ) {
-        GUIMemFree( GUIHotSpots[i].text );
-    }
-}
+typedef struct guix_rect {
+    guix_ord            x;
+    guix_ord            y;
+    guix_ord            width;
+    guix_ord            height;
+} guix_rect;

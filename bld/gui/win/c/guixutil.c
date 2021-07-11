@@ -114,8 +114,7 @@ bool GUIIsRectInUpdateRect( gui_window *wnd, WPI_RECT *rect )
     return( true );
 }
 
-void GUICalcLocation( gui_rect *rect, gui_coord *pos, gui_coord *size,
-                      HWND parent )
+void GUICalcLocation( gui_rect *rect, guix_coord *scr_pos, guix_coord *scr_size, HWND parent )
 {
     WPI_RECT    r;
     GUI_RECTDIM left, top, right, bottom;
@@ -123,21 +122,19 @@ void GUICalcLocation( gui_rect *rect, gui_coord *pos, gui_coord *size,
     if( parent == NULLHANDLE ) {
         parent = HWND_DESKTOP;
     }
+    scr_size->x = GUIScaleToScreenH( rect->width );
+    scr_size->y = GUIScaleToScreenV( rect->height );
     if( parent == HWND_DESKTOP ) {
-        pos->x = GUIScaleToScreenX( rect->x );
-        pos->y = GUIScaleToScreenY( rect->y );
+        scr_pos->x = GUIScaleToScreenX( rect->x );
+        scr_pos->y = GUIScaleToScreenY( rect->y );
     } else {
-        pos->x = GUIScaleToScreenH( rect->x );
-        pos->y = GUIScaleToScreenV( rect->y );
         _wpi_getclientrect( parent, &r );
         _wpi_getrectvalues( r, &left, &top, &right, &bottom );
-        pos->x += left;
-        pos->y += top;
+        scr_pos->x = GUIScaleToScreenH( rect->x ) + left;
+        scr_pos->y = GUIScaleToScreenV( rect->y ) + top;
     }
-    size->x = GUIScaleToScreenH( rect->width );
-    size->y = GUIScaleToScreenV( rect->height );
 
-    pos->y = _wpi_cvtc_y_size_plus1( parent, pos->y, size->y );
+    scr_pos->y = _wpi_cvtc_y_size_plus1( parent, scr_pos->y, scr_size->y );
 }
 
 /*
@@ -145,11 +142,10 @@ void GUICalcLocation( gui_rect *rect, gui_coord *pos, gui_coord *size,
  *                   create_info information.
  */
 
-bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info,
-                      gui_coord *pos, gui_coord *size, HWND parent,
-                      HMENU *hmenu )
+bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info, guix_coord *scr_pos,
+                        guix_coord *scr_size, HWND parent, HMENU *hmenu )
 {
-    GUICalcLocation( &dlg_info->rect, pos, size, parent );
+    GUICalcLocation( &dlg_info->rect, scr_pos, scr_size, parent );
     if( wnd != NULL ) {
         if( !GUI_IS_DIALOG( wnd ) ) {
             wnd->style = dlg_info->style;
@@ -493,18 +489,23 @@ HWND GUIGetScrollHWND( gui_window *wnd )
     return( wnd->hwnd );
 }
 
+static bool ChangeScrollPos( gui_window *wnd, int bar, int new )
+{
+    if( bar == SB_HORZ ) {
+        if( wnd->hpos == new )
+            return( false );
+        wnd->hpos = new;
+    } else {
+        if( wnd->vpos == new )
+            return( false );
+        wnd->vpos = new;
+    }
+    return( true );
+}
+
 void GUISetScrollPos( gui_window *wnd, int bar, int new, bool redraw )
 {
-    int *pos;
-
-    redraw = redraw;
-    if( bar == SB_HORZ ) {
-        pos = &wnd->hpos;
-    } else {
-        pos = &wnd->vpos;
-    }
-    if( *pos != new ) {
-        *pos = new;
+    if( ChangeScrollPos( wnd, bar, new ) ) {
         _wpi_setscrollpos( GUIGetParentFrameHWND( wnd ), bar, new, ( redraw ) ? TRUE : FALSE );
     }
 }
@@ -518,17 +519,23 @@ int GUIGetScrollPos( gui_window *wnd, int bar )
     }
 }
 
+static bool ChangeScrollRange( gui_window *wnd, int bar, int new )
+{
+    if( bar == SB_HORZ ) {
+        if( wnd->hrange == new )
+            return( false );
+        wnd->hpos = new;
+    } else {
+        if( wnd->vrange == new )
+            return( false );
+        wnd->vpos = new;
+    }
+    return( true );
+}
+
 void GUISetScrollRange( gui_window *wnd, int bar, int min, int max, bool redraw )
 {
-    int *old_range;
-
-    if( bar == SB_HORZ ) {
-        old_range = &wnd->hrange;
-    } else {
-        old_range = &wnd->vrange;
-    }
-    if( ( max - min ) != *old_range ) {
-        *old_range = max - min;
+    if( ChangeScrollRange( wnd, bar, max - min ) ) {
         _wpi_setscrollrange( GUIGetParentFrameHWND( wnd ), bar, min, max, ( redraw ) ? TRUE : FALSE );
         if( bar == SB_HORZ ) {
             GUIRedrawScroll( wnd, SB_HORZ, redraw );
@@ -644,7 +651,7 @@ gui_window *GUIGetWindow( HWND hwnd )
     return( NULL );
 }
 
-gui_window *GUIGetParentWindow( gui_window *wnd )
+gui_window * GUIAPI GUIGetParentWindow( gui_window *wnd )
 {
     if( wnd != NULL ) {
         return( wnd->parent );
@@ -664,7 +671,7 @@ bool GUIParentHasFlags( gui_window *wnd, gui_flags flags )
     return( false );
 }
 
-gui_window *GUIGetFirstSibling( gui_window *wnd )
+gui_window * GUIAPI GUIGetFirstSibling( gui_window *wnd )
 {
     gui_window  *parent;
 
@@ -701,4 +708,3 @@ WPI_FONT GUIGetSystemFont( void )
 
     return( font );
 }
-
