@@ -40,7 +40,6 @@
 #include "guix.h"
 #include "guixwind.h"
 
-
 WPI_COLOUR GUIColours[] = {
 #ifdef __OS2_PM__
 //      R G B
@@ -291,9 +290,15 @@ bool GUIXSetColours( gui_window *wnd, int num_attrs, gui_colour_set *colours )
             wnd->num_attrs = num_attrs;
             memcpy( attrs, colours, size );
             SetBKBrush( wnd );
-            return( true );
+// This would be where the foreground colour is set, but it has to be done
+// by changing the text colour rather than the colour of the window.  Darn!
+//            if (GetSysColor (COLOR_BTNFACE)== 0) ( // Is High Contrast Black
+// I have to figure out what I need here
+//                SetTextColor ( wnd->hdc, _BRIGHTWHITE ) // Hightest contrast
+//            );
+           return( true );
         }
-    }
+    };
     return( false );
 }
 
