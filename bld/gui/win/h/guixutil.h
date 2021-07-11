@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -33,16 +34,16 @@
 #ifndef _GUIXUTIL_H_
 #define _GUIXUTIL_H_
 
-extern bool GUIIsOpen( gui_window * );
-extern bool GUISetupStruct( gui_window *wnd, gui_create_info *, gui_coord *, gui_coord *, HWND parent, HMENU * );
-extern void GUICalcLocation( gui_rect *, gui_coord *, gui_coord *, HWND parent );
-extern void GUIError( const char * );
-extern bool GUIScrollOn( gui_window * wnd, int bar );
-extern void GUISetRowCol( gui_window * wnd, gui_coord * size );
+extern bool GUIIsOpen( gui_window *wnd );
+extern bool GUISetupStruct( gui_window *wnd, gui_create_info *, guix_coord *scr_pos, guix_coord *scr_size, HWND parent, HMENU * );
+extern void GUICalcLocation( gui_rect *rect, guix_coord *scr_pos, guix_coord *scr_size, HWND parent );
+extern void GUIError( const char *err_str );
+extern bool GUIScrollOn( gui_window *wnd, int bar );
+extern void GUISetRowCol( gui_window *wnd, gui_coord *size );
 extern void GUIInvalidateResize( gui_window *wnd );
 extern WPI_MRESULT GUISendMessage( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
 extern WPI_MRESULT GUISendDlgItemMessage( HWND hwnd, gui_ctl_id id, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
-extern void GUIMakeRelative( gui_window *wnd, WPI_POINT *pt, gui_point *point );
+extern void GUIMakeRelative( gui_window *wnd, WPI_POINT *screen_point, gui_point *point );
 extern HWND GUIGetScrollHWND( gui_window *wnd );
 extern int GUIGetScrollPos( gui_window *wnd, int bar );
 extern int GUIGetScrollRange( gui_window *wnd, int bar );

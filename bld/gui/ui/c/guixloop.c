@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2019 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -89,9 +89,8 @@ static  gui_window      *ButtonDownSent = NULL;
  * sendPointGUIEvent -- send mouse event to use with the point it occured at
  */
 
-static void sendPointGUIEvent( gui_window *wnd, gui_event gui_ev, gui_coord *point )
+static void sendPointGUIEvent( gui_window *wnd, gui_event gui_ev, const guix_point *scr_point )
 {
-    gui_point   pt;
     bool        down_sent;
 
     down_sent = ( ButtonDownSent == wnd );
@@ -111,14 +110,10 @@ static void sendPointGUIEvent( gui_window *wnd, gui_event gui_ev, gui_coord *poi
      * the border
      */
     if( down_sent || ( MouseState == MOUSE_CLIENT ) ) {
-        if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
-            point->x += wnd->hgadget->pos;
-        }
-        if( ( wnd->vgadget != NULL ) && !GUI_VSCROLL_EVENTS_SET( wnd ) ) {
-            point->y += wnd->vgadget->pos;
-        }
-        GUIMakeRelative( wnd, point, &pt );
-        GUIEVENT( wnd, gui_ev, &pt );
+        gui_point   point;
+
+        GUIMakeRelative( wnd, scr_point, &point );
+        GUIEVENT( wnd, gui_ev, &point );
     }
 }
 
@@ -147,7 +142,6 @@ static bool ValidMin( gui_window *wnd, ORD wnd_row, ORD wnd_col )
 
 static void ProcessMouseReleaseDrag( ui_event ui_ev, gui_event gui_ev, ORD row, ORD col )
 {
-    gui_coord   point;
     ORD         wnd_row;
     ORD         wnd_col;
 
@@ -189,9 +183,11 @@ static void ProcessMouseReleaseDrag( ui_event ui_ev, gui_event gui_ev, ORD row, 
         break;
     default :
         if( GUIMouseWnd != NULL ) {
-            point.x = (gui_ord)col;
-            point.y = (gui_ord)row;
-            sendPointGUIEvent( GUIMouseWnd, gui_ev, &point );
+            guix_point  scr_point;
+
+            scr_point.x = col;
+            scr_point.y = row;
+            sendPointGUIEvent( GUIMouseWnd, gui_ev, &scr_point );
         }
     }
     if( ui_ev == EV_MOUSE_RELEASE || ui_ev == EV_MOUSE_RELEASE_R ) {
@@ -206,30 +202,30 @@ static void ProcessMouseReleaseDrag( ui_event ui_ev, gui_event gui_ev, ORD row, 
 
 static bool ProcessMousePos( gui_event gui_ev, ORD row, ORD col, gui_window * wnd )
 {
-    gui_coord    point;
+    guix_point  scr_point;
 
     OldCol = col;
     OldRow = row;
     if( wnd == NULL ) {
         return( false );
     }
-    point.x = (gui_ord)col;
-    point.y = (gui_ord)row;
-    sendPointGUIEvent( wnd, gui_ev, &point );
+    scr_point.x = col;
+    scr_point.y = row;
+    sendPointGUIEvent( wnd, gui_ev, &scr_point );
     return( true );
 }
 
-ui_event GUICreatePopup( gui_window *wnd, gui_coord *point )
+ui_event GUICreatePopup( gui_window *wnd, const guix_coord *point )
 {
     ui_event    ui_ev;
-    gui_point   gpoint;
+    guix_point  scr_point;
 
-    gpoint.x = point->x - wnd->vs.area.col;
-    gpoint.y = point->y - (wnd->vs.area.row - 1);
+    scr_point.x = point->x - wnd->vs.area.col;
+    scr_point.y = point->y - (wnd->vs.area.row - 1);
     uipushlist( NULL );
     uipushlist( GUIInternalEvents );
     uipushlist( GUIUserEvents );
-    ui_ev = GUICreateMenuPopup( wnd, &gpoint, wnd->menu, GUI_TRACK_LEFT, NULL );
+    ui_ev = GUICreateMenuPopup( wnd, &scr_point, wnd->menu, GUI_TRACK_LEFT, NULL );
     uipoplist( /* GUIUserEvents */ );
     uipoplist( /* GUIInternalEvents */ );
     uipoplist( /* NULL */ );
@@ -238,8 +234,6 @@ ui_event GUICreatePopup( gui_window *wnd, gui_coord *point )
 
 static void ProcessMinimizedMouseEvent( ui_event ui_ev, ORD row, ORD col )
 {
-    gui_coord point;
-
     switch( ui_ev ) {
     case EV_MOUSE_PRESS :
         if( GUIStartMoveResize( GUIMouseWnd, row, col, RESIZE_NONE ) ) {
@@ -257,9 +251,11 @@ static void ProcessMinimizedMouseEvent( ui_event ui_ev, ORD row, ORD col )
             MouseState = MOUSE_FREE;
         }
         if( !MinimizedMoved ) {
-            point.x = (gui_ord)col;
-            point.y = (gui_ord)row;
-            if( GUICreatePopup( GUICurrWnd, &point ) == EV_MOUSE_DCLICK ) {
+            guix_coord  scr_point;
+
+            scr_point.x = col;
+            scr_point.y = row;
+            if( GUICreatePopup( GUICurrWnd, &scr_point ) == EV_MOUSE_DCLICK ) {
                 GUIZoomWnd( GUICurrWnd, GUI_NONE );
             }
         }
@@ -276,14 +272,11 @@ static void ProcessMinimizedMouseEvent( ui_event ui_ev, ORD row, ORD col )
 
 static void ProcessMousePress( ui_event ui_ev, gui_event gui_ev, ORD row, ORD col, bool new_curr_wnd )
 {
-    gui_coord   point;
     ORD         wnd_row;
     ORD         wnd_col;
     resize_dir  dir;
     bool        use_gadgets;
 
-    point.x = (gui_ord)col;
-    point.y = (gui_ord)row;
     OldCol = col;
     OldRow = row;
     if( GUICurrWnd == NULL ) {
@@ -304,8 +297,11 @@ static void ProcessMousePress( ui_event ui_ev, gui_event gui_ev, ORD row, ORD co
         if( use_gadgets && GUI_HAS_CLOSER( GUICurrWnd ) &&
             ( wnd_col >= CLOSER_COL - 1 ) && ( wnd_col <= CLOSER_COL + 1 ) ) {
             if( ( GUICurrWnd->menu != NULL ) && ( ui_ev == EV_MOUSE_PRESS ) ) {
-                point.x = GUICurrWnd->vs.area.col;
-                ui_ev = GUICreatePopup( GUICurrWnd, &point );
+                guix_coord  scr_point;
+
+                scr_point.x = GUICurrWnd->vs.area.col;
+                scr_point.y = row;
+                ui_ev = GUICreatePopup( GUICurrWnd, &scr_point );
             }
             if( (GUICurrWnd->style & GUI_CLOSEABLE) && (ui_ev == EV_MOUSE_DCLICK) ) {
                 if( GUICloseWnd( GUICurrWnd ) ) {
@@ -329,8 +325,12 @@ static void ProcessMousePress( ui_event ui_ev, gui_event gui_ev, ORD row, ORD co
             }
         }
     } else if( GUIPtInRect( &GUICurrWnd->use, wnd_row, wnd_col ) ) {
+        guix_point  scr_point;
+
         MouseState = MOUSE_CLIENT;
-        sendPointGUIEvent( GUICurrWnd, gui_ev, &point );
+        scr_point.x = col;
+        scr_point.y = row;
+        sendPointGUIEvent( GUICurrWnd, gui_ev, &scr_point );
     } else if( (GUICurrWnd->style & GUI_RESIZEABLE) && ( ui_ev == EV_MOUSE_PRESS ) &&
                ( wnd_row == GUICurrWnd->vs.area.height - 1 ) &&
                ( ( wnd_col == 0 ) || ( wnd_col == GUICurrWnd->vs.area.width - 1 ) ) ) {

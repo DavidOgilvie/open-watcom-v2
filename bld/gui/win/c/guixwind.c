@@ -150,7 +150,7 @@ void GUISetCheckResizeAreaForChildren( gui_window *wnd, bool check )
  *                  Window will not get WM_CLOSE message.
  */
 
-void GUIDestroyWnd( gui_window *wnd )
+void GUIAPI GUIDestroyWnd( gui_window *wnd )
 {
     HWND        hwnd;
     gui_window  *curr;
@@ -222,7 +222,7 @@ static bool SetupClass( void )
     return( false );
 }
 
-void GUICleanup( void )
+void GUIAPI GUICleanup( void )
 {
     GUIDeath();                 /* user replaceable stub function */
     GUICleanupHotSpots();
@@ -423,7 +423,7 @@ static void DoSetWindowLongPtr( HWND hwnd, gui_window *wnd )
  * GUIXCreateWindow
  */
 
-bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *parent )
+bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *parent_wnd )
 {
     DWORD               style;
     HMENU               hmenu;
@@ -453,15 +453,15 @@ bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *p
     wnd->root_pinfo.force_count = NUMBER_OF_FORCED_REPAINTS;
     wnd->hwnd_pinfo.force_count = NUMBER_OF_FORCED_REPAINTS;
 
-    wnd->parent = parent;
+    wnd->parent = parent_wnd;
     style = COMMON_STYLES;
-    if( parent == NULL ) {
+    if( parent_wnd == NULL ) {
         parent_hwnd = HWND_DESKTOP;
         if( (dlg_info->style & GUI_POPUP) == 0 ) {
             wnd->flags |= IS_ROOT;
         }
     } else {
-        parent_hwnd = parent->hwnd;
+        parent_hwnd = parent_wnd->hwnd;
         if( (dlg_info->style & GUI_POPUP) == 0 ) {
             style |= CHILD_STYLE;
         }
@@ -664,7 +664,7 @@ bool SendPointEvent( WPI_PARAM1 wparam, WPI_PARAM2 lparam,
 void GUIResizeBackground( gui_window *wnd, bool force_msg )
 {
     WPI_RECT    status;
-    int         t_height, s_height;
+    int         tbar_height, status_height;
     GUI_RECTDIM left, top, right, bottom;
     gui_coord   size;
 
@@ -675,16 +675,16 @@ void GUIResizeBackground( gui_window *wnd, bool force_msg )
         return;
     }
 
-    t_height = 0;
-    s_height = 0;
+    tbar_height = 0;
+    status_height = 0;
 
     if( ( wnd->tbar != NULL ) && ( wnd->tbar->info.is_fixed ) ) {
-        t_height = _wpi_getheightrect( wnd->tbar->fixedrect );
+        tbar_height = _wpi_getheightrect( wnd->tbar->fixedrect );
     }
 
     if( wnd->status != NULLHANDLE ) {
         _wpi_getwindowrect( wnd->status, &status );
-        s_height = _wpi_getheightrect( status );
+        status_height = _wpi_getheightrect( status );
     }
 
     _wpi_getclientrect( wnd->root_frame, &wnd->root_client_rect );
@@ -694,11 +694,11 @@ void GUIResizeBackground( gui_window *wnd, bool force_msg )
     top = left = 0;
 
 #ifdef __OS2_PM__
-    top    += s_height;
-    bottom -= t_height;
+    top    += status_height;
+    bottom -= tbar_height;
 #else
-    top    += t_height;
-    bottom -= s_height;
+    top    += tbar_height;
+    bottom -= status_height;
 #endif
 
     /* if the root client is a separate window resize it too */
@@ -737,7 +737,7 @@ static bool SetFocusToParent( void )
 }
 #endif
 
-void GUIDoResize( gui_window *wnd, HWND hwnd, gui_coord *size )
+void GUIDoResize( gui_window *wnd, HWND hwnd, gui_coord *screen_size )
 {
     hwnd = hwnd;
     if( wnd->style & GUI_CHANGEABLE_FONT ) {
@@ -751,12 +751,15 @@ void GUIDoResize( gui_window *wnd, HWND hwnd, gui_coord *size )
     if( (wnd->flags & NEEDS_RESIZE_REDRAW) == 0 ) {
         wnd->old_rows = wnd->num_rows;
     }
-    GUISetRowCol( wnd, size );
+    GUISetRowCol( wnd, screen_size );
     wnd->flags |= NEEDS_RESIZE_REDRAW;
     GUISetScroll( wnd );
     if( wnd->flags & SENT_INIT ) {
-        GUIScreenToScaleR( size );
-        GUIEVENT( wnd, GUI_RESIZE, size );
+        gui_coord   size;
+
+        size.x = GUIScreenToScaleH( screen_size->x );
+        size.y = GUIScreenToScaleV( screen_size->y );
+        GUIEVENT( wnd, GUI_RESIZE, &size );
     }
     GUIInvalidatePaintHandles( wnd );
 #ifdef __OS2_PM__

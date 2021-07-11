@@ -261,7 +261,7 @@ static  gui_window      *Child4_2Wnd    = NULL;
 static  gui_window      *Child4_3Wnd    = NULL;
 static  int             Percent         = 50;
 static  bool            Highlight       = false;
-static  int             PrevRow;
+static  gui_text_ord    PrevRow;
 static  bool            KeyDown         = false;
 static  bool            WndScaled       = false;
 static  char            *FloatHelp      = "Float Toolbar";
@@ -982,27 +982,27 @@ static void ProcessCursor( gui_window *wnd, gui_key key )
     GUISetCursorPos( wnd, &point );
 }
 
-static void InitIndent( gui_window *wnd, int num_rows, out_info *out )
+static void InitIndent( gui_window *wnd, gui_text_ord num_rows, out_info *out )
 {
     int         i;
-    gui_ord     max_length;
+    gui_ord     max_extent;
     gui_ord     extent;
 
-    max_length = 0;
+    max_extent = 0;
     for( i = 0; i < num_rows; i++ ) {
         extent = GUIGetExtentX( wnd, out->display[i].data, strlen( out->display[i].data ) );
-        if( extent > max_length ) {
-            max_length = extent;
+        if( max_extent < extent ) {
+            max_extent = extent;
         }
     }
     for( i = 0; i < num_rows; i++ ) {
-       IndentData[i].indent = max_length;
+       IndentData[i].indent = max_extent;
     }
 }
 
-static int GetStringIndent( int *indent, gui_ord hscroll, gui_text_metrics *metrics )
+static gui_text_ord GetStringIndent( int *indent, gui_ord hscroll, gui_text_metrics *metrics )
 {
-    int string_indent;
+    gui_text_ord string_indent;
 
     if( ( hscroll * metrics->avg.x ) < *indent ) {
         *indent -= hscroll * metrics->avg.x;
@@ -1021,8 +1021,8 @@ static void PaintWindow( gui_window *wnd, gui_text_ord row, gui_text_ord num, in
     gui_text_ord        i;
     attr_entry          *currattr;
     gui_ord             extent;
-    int                 indent;
-    size_t              string_indent;
+    gui_ord             indent;
+    gui_text_ord        string_indent;
     gui_text_metrics    metrics;
     size_t              length;
     gui_rect            client;
@@ -1305,7 +1305,7 @@ bool Child2WndGUIEventProc( gui_window *wnd, gui_event gui_ev, void *param )
 {
     gui_point           point;
     gui_text_ord        row;
-    gui_ord             col;
+    gui_text_ord        col;
 #if keys
     gui_key             key;
 #endif
@@ -1314,7 +1314,7 @@ bool Child2WndGUIEventProc( gui_window *wnd, gui_event gui_ev, void *param )
     char                Buffer[80];
     gui_text_ord        i;
     gui_text_ord        num;
-    gui_ord             prev_col;
+    gui_text_ord        prev_col;
     out_info            *out;
     char                *start;
     char                *end;
@@ -1431,9 +1431,8 @@ bool Child2WndGUIEventProc( gui_window *wnd, gui_event gui_ev, void *param )
         }
         out = GUIGetExtra( wnd );
         if( row < out->numrows ) {
-            col = GUIGetStringPos( wnd, IndentData[row].indent,
-                                   IndentData[row].data, point.x );
-            if( col != GUI_NO_COLUMN ) {
+            col = GUIGetStringPos( wnd, IndentData[row].indent, IndentData[row].data, point.x );
+            if( col != GUI_TEXT_NO_COLUMN ) {
                 sprintf( Buffer, "Mouse press - position %d", col );
                 GUIDisplayMessage( wnd, Buffer, "SAMPLE PROGRAM", GUI_INFORMATION );
             }
@@ -1476,12 +1475,14 @@ bool Child2WndGUIEventProc( gui_window *wnd, gui_event gui_ev, void *param )
                 farend = out->display[row].data + length - 1;
                 start = out->display[row].data + col;
                 end = start;
-                while( ( *start != ' ' ) && ( start >= out->display[row].data ) )  start--;
+                while( ( *start != ' ' ) && ( start >= out->display[row].data ) )
+                    start--;
                 start++;
-                while( ( *end != ' ' ) && ( end <= farend ) )  end++;
+                while( ( *end != ' ' ) && ( end <= farend ) )
+                    end++;
                 end--;
                 if( start <= end ) {
-                    length = strlen( start ) - strlen( end ) +1;
+                    length = strlen( start ) - strlen( end ) + 1;
                     GetNewVal( start, length, wnd );
                 }
             }

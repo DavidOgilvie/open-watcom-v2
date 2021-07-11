@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -54,14 +55,14 @@ typedef struct draw_cache {
  *            for the given attributes
  */
 
-static void SetText( gui_window * wnd, WPI_COLOUR fore, WPI_COLOUR back )
+static void SetText( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 {
     _wpi_settextcolor( wnd->hdc, _wpi_getnearestcolor( wnd->hdc, fore ) );
     _wpi_setbackcolour( wnd->hdc, _wpi_getnearestcolor( wnd->hdc , back ) );
 }
 
 static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
-                            size_t length, int height, gui_coord *pos,
+                            size_t length, int height, const gui_coord *pos,
                             WPI_COLOUR fore, WPI_COLOUR back, gui_ord extentx,
                             bool draw_extent, int bitmap )
 {
@@ -74,9 +75,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     int         old_rop;
     size_t      num_chars;
     WPI_RECT    rect;
-    gui_coord   indent;
     int         hscroll_pos;
-    gui_coord   extent;
     WPI_COLOUR  colour;
     GUI_RECTDIM left, top, right, bottom;
     GUI_RECTDIM paint_left, paint_top, paint_right, paint_bottom;
@@ -118,15 +117,12 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
         }
     }
 
-    indent.x = pos->x;
-    indent.y = pos->y;
-    GUIScaleToScreenR( &indent );
-    nDrawY = indent.y;
+    nDrawY = GUIScaleToScreenV( pos->y );
     if( GUI_DO_VSCROLL( wnd ) ) {
         nDrawY -= GUIGetScrollPos( wnd, SB_VERT );
     }
     nDrawX = left;
-    nDrawX += ( indent.x - hscroll_pos );
+    nDrawX += ( GUIScaleToScreenH( pos->x ) - hscroll_pos );
 
     if( bitmap > 0 ) {
         lenx = length ;
@@ -137,9 +133,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     if( draw_extent ) {
         /* blanks out some portion of rest of the line */
         if( extentx != GUI_NO_COLUMN ) {
-            extent.x = extentx;
-            GUIScaleToScreen( &extent );
-            right = nDrawX + extent.x;
+            right = nDrawX + GUIScaleToScreenX( extentx );
         }
     } else {
         right = nDrawX + lenx;
@@ -195,7 +189,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
 }
 
 void GUIDrawTextBitmapAttr( gui_window *wnd, const char *text, size_t length,
-                            int height, gui_coord *pos,
+                            int height, const gui_coord *pos,
                             gui_attr attr, gui_ord extentx,
                             bool draw_extent, int bitmap )
 {
@@ -208,13 +202,13 @@ void GUIDrawTextBitmapAttr( gui_window *wnd, const char *text, size_t length,
                            draw_extent, bitmap );
 }
 
-void GUIXDrawText( gui_window *wnd, const char *text, size_t length, gui_coord *pos,
+void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_coord *pos,
                    gui_attr attr, gui_ord extentx, bool draw_extent )
 {
     GUIDrawTextBitmapAttr( wnd, text, length, 0, pos, attr, extentx, draw_extent, 0 );
 }
 
-void GUIXDrawTextRGB( gui_window *wnd, const char *text, size_t length, gui_coord *pos,
+void GUIXDrawTextRGB( gui_window *wnd, const char *text, size_t length, const gui_coord *pos,
                       gui_rgb fore, gui_rgb back, gui_ord extentx,
                       bool draw_extent )
 {

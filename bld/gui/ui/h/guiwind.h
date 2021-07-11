@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2015-2019 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2015-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -35,8 +35,8 @@
 #define _GUIWIND_H_
 
 #include "gui.h"
-#include "stdui.h"
 #include "guitypes.h"
+#include "stdui.h"
 #include "uivedit.h"
 #include "uiledit.h"
 #include "uidialog.h"
@@ -95,6 +95,12 @@ typedef enum {
 
 #define COPYAREA( old, new ) { (new).row = (old).row; (new).height = (old).height; \
                                (new).col = (old).col; (new).width = (old).width; }
+
+#define COPYTOAREA( src, dst ) { (dst).row = (src).x; (dst).height = (src).height; \
+                               (dst).col = (src).y; (dst).width = (src).width; }
+
+#define COPYFROMAREA( src, dst ) { (dst).y = (src).row; (dst).height = (src).height; \
+                               (dst).x = (src).col; (dst).width = (src).width; }
 
 #define EMPTY_AREA( sarea ) ( ( (sarea).width == 0 ) || ( (sarea).height == 0 ) )
 

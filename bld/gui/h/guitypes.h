@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -30,8 +31,18 @@
 ****************************************************************************/
 
 
-/* to be included by the /gui directory */
+#include "guixtype.h"
 
 #define GUIEVENT( wnd, event, param )   ((*wnd->gui_call_back)(wnd, event, param))
 
 #define UCHAR_VALUE( c )                (unsigned char)(c)
+
+typedef struct guix_coord {
+    guix_ord            x;
+    guix_ord            y;
+} guix_coord;
+
+typedef struct guix_point {
+    guix_ord            x;
+    guix_ord            y;
+} guix_point;

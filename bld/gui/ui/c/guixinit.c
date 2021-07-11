@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2018-2018 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2018-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -52,7 +52,7 @@ gui_window_styles GUIGetWindowStyles( void )
  * GUIWndInit -- initialize display
  */
 
-bool GUIWndInit( unsigned dclick_ms, gui_window_styles style )
+bool GUIAPI GUIWndInit( unsigned dclick_ms, gui_window_styles style )
 {
     gui_colour_set      background = { GUI_WHITE, GUI_BLUE };
 
@@ -84,13 +84,12 @@ bool GUIWndInit( unsigned dclick_ms, gui_window_styles style )
     return( true );
 }
 
-void GUISetF10Menus( bool setting )
+void GUIAPI GUISetF10Menus( bool setting )
 {
     UIData->f10menus = setting;
 }
 
-bool GUIIsInit( void )
+bool GUIAPI GUIIsInit( void )
 {
     return( GUIInitialized );
 }
-

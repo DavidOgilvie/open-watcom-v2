@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -30,4 +31,11 @@
 ****************************************************************************/
 
 
-extern void     GUIWndDirty( gui_window * );
+#define s_x             col
+#define s_y             row
+#define s_width         width
+#define s_height        height
+
+typedef short           guix_ord;
+
+#define guix_rect       SAREA

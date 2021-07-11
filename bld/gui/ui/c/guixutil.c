@@ -35,7 +35,6 @@
 #include <string.h>
 #include "guiscale.h"
 #include "guixutil.h"
-#include "guix.h"
 #include "guixdraw.h"
 #include "guiutil.h"
 #include "guixdlg.h"
@@ -329,15 +328,25 @@ void GUIRedrawTitle( gui_window *wnd )
     GUIWndUpdate( wnd );
 }
 
-void GUIMakeRelative( gui_window *wnd, gui_coord *point, gui_point *pt )
+void GUIMakeRelative( gui_window *wnd, const guix_point *scr_point, gui_point *point )
 {
     SAREA       area;
     SAREA       use;
+    guix_ord    screen_x;
+    guix_ord    screen_y;
 
     GUIGetSAREA( wnd, &area );
     GUISetUseArea( wnd, &area, &use );
-    pt->x = GUIScreenToScaleH( point->x ) - GUIScreenToScaleH( use.col + area.col );
-    pt->y = GUIScreenToScaleV( point->y ) - GUIScreenToScaleV( use.row + area.row );
+    screen_x = scr_point->x - use.col - area.col;
+    screen_y = scr_point->y - use.row - area.row;
+    if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
+        screen_x += wnd->hgadget->pos;
+    }
+    if( ( wnd->vgadget != NULL ) && !GUI_VSCROLL_EVENTS_SET( wnd ) ) {
+        screen_y += wnd->vgadget->pos;
+    }
+    point->x = GUIScreenToScaleH( screen_x );
+    point->y = GUIScreenToScaleV( screen_y );
 }
 
 /*
@@ -385,7 +394,7 @@ gui_window *GUIGetTopWnd( gui_window *wnd )
     return( wnd );
 }
 
-gui_window *GUIGetFirstSibling( gui_window *wnd )
+gui_window * GUIAPI GUIGetFirstSibling( gui_window *wnd )
 {
     if( wnd == NULL || wnd->parent == NULL ) {
         return( NULL );
@@ -393,7 +402,7 @@ gui_window *GUIGetFirstSibling( gui_window *wnd )
     return( wnd->parent->child );
 }
 
-gui_window *GUIGetParentWindow( gui_window *wnd )
+gui_window * GUIAPI GUIGetParentWindow( gui_window *wnd )
 {
     if( wnd == NULL ) {
         return( NULL );
@@ -512,7 +521,7 @@ void GUIFreeWindowMemory( gui_window *wnd, bool from_parent, bool dialog )
     GUIMemFree( wnd );
 }
 
-static void DoDestroy( gui_window * wnd, bool dialog )
+static void DoDestroy( gui_window *wnd, bool dialog )
 {
     if( wnd != NULL ) {
         GUIEVENT( wnd, GUI_DESTROY, NULL );
@@ -524,7 +533,7 @@ static void DoDestroy( gui_window * wnd, bool dialog )
     }
 }
 
-void GUIDestroyDialog( gui_window * wnd )
+void GUIDestroyDialog( gui_window *wnd )
 {
     DoDestroy( wnd, true );
 }
@@ -544,7 +553,7 @@ bool GUICloseWnd( gui_window *wnd )
  * GUIDestroyWnd
  */
 
-void GUIDestroyWnd( gui_window * wnd )
+void GUIAPI GUIDestroyWnd( gui_window *wnd )
 {
     DoDestroy( wnd, false );
 }
