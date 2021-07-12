@@ -77,9 +77,9 @@ char * GUIAPI GUIGetFontFromUser( char *fontinfo )
 gui_mcursor_handle GUIAPI GUISetMouseCursor( gui_mcursor_type type )
 {
     switch( type ) {
-    case GUI_ARROW_CURSOR :
-    case GUI_HOURGLASS_CURSOR :
-    case GUI_CROSS_CURSOR :
+    case GUI_ARROW_CURSOR:
+    case GUI_HOURGLASS_CURSOR:
+    case GUI_CROSS_CURSOR:
         return( (void *)"" );
     default:
         return( NULL );
@@ -100,7 +100,7 @@ void GUIAPI GUI3DDialogFini( void )
 {
 }
 
-bool GUIAPI GUISetHorizontalExtent( gui_window *wnd, gui_ctl_id id, int extentx )
+bool GUIAPI GUISetHorizontalExtent( gui_window *wnd, gui_ctl_id id, gui_ord extentx )
 {
     /* unused parameters */ (void)wnd; (void)id; (void)extentx;
 
