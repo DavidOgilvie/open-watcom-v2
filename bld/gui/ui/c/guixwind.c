@@ -36,7 +36,6 @@
     #include <process.h>
 #endif
 #include <stdlib.h>
-#include "guiscale.h"
 #include "guixloop.h"
 #include "guixutil.h"
 #include "guicolor.h"
@@ -254,17 +253,17 @@ bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *p
     }
 }
 
-void GUIShowWindow( gui_window *wnd )
+void GUIAPI GUIShowWindow( gui_window *wnd )
 {
     uivshow( &wnd->vs );
 }
 
-void GUIShowWindowNA( gui_window *wnd )
+void GUIAPI GUIShowWindowNA( gui_window *wnd )
 {
     GUIShowWindow( wnd );
 }
 
-bool GUIIsFirstInstance( void )
+bool GUIAPI GUIIsFirstInstance( void )
 {
     return( true );
 }

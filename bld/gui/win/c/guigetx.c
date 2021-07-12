@@ -34,40 +34,42 @@
 #include "guiwind.h"
 #include <stdlib.h>
 #include "guigetx.h"
-#include "guiscale.h"
+
 
 /*
  * GUIGetTextExtentX -- get the width of the given text
  */
 
-gui_ord GUIGetTextExtentX( gui_window *wnd, const char *str, gui_text_ord cnt )
+guix_ord GUIGetTextExtentX( gui_window *wnd, const char *str, gui_text_ord cnt )
 {
-    int width, height;
+    guix_ord    extentx;
+    guix_ord    extenty;
 
-    _wpi_gettextextent( wnd->hdc, str, cnt, &width, &height );
+    _wpi_gettextextent( wnd->hdc, str, cnt, &extentx, &extenty );
 
-    return( width );
+    return( extentx );
 }
 
 /*
  * GUIGetTextExtentY -- get the extent of the given text
  */
 
-gui_ord GUIGetTextExtentY( gui_window *wnd, const char *str, gui_text_ord cnt )
+guix_ord GUIGetTextExtentY( gui_window *wnd, const char *str, gui_text_ord cnt )
 {
-    int width, height;
+    guix_ord    extentx;
+    guix_ord    extenty;
 
-    _wpi_gettextextent( wnd->hdc, str, cnt, &width, &height );
+    _wpi_gettextextent( wnd->hdc, str, cnt, &extentx, &extenty );
 
-    return( height );
+    return( extenty );
 }
 
 /*
  * GUIGetTextExtent -- get the width & height of the given text
  */
 
-void GUIGetTextExtent( gui_window *wnd, const char *str, gui_text_ord cnt, int *width, int *height )
+void GUIGetTextExtent( gui_window *wnd, const char *str, gui_text_ord cnt, guix_ord *extentx, guix_ord *extenty )
 {
-    _wpi_gettextextent( wnd->hdc, str, cnt, width, height );
+    _wpi_gettextextent( wnd->hdc, str, cnt, extentx, extenty );
 }
 

@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2015-2018 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2015-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -97,13 +97,13 @@ bool GUIXCreateFixedToolbar( gui_window *wnd )
 
 static bool FixToolbar( gui_window *wnd )
 {
-    gui_window  *parent;
+    gui_window  *parent_wnd;
 
-    parent = wnd->parent;
+    parent_wnd = wnd->parent;
     wnd->parent->tbar->switching = true;
     GUICloseWnd( wnd );
-    parent->tbar->switching = false;
-    return( GUIXCreateFixedToolbar( parent ) );
+    parent_wnd->tbar->switching = false;
+    return( GUIXCreateFixedToolbar( parent_wnd ) );
 }
 
 static bool ToolbarGUIEventProc( gui_window *wnd, gui_event gui_ev, void *param )
@@ -111,38 +111,38 @@ static bool ToolbarGUIEventProc( gui_window *wnd, gui_event gui_ev, void *param 
     gui_ctl_id  id;
 
     switch( gui_ev ) {
-    case GUI_INIT_WINDOW :
+    case GUI_INIT_WINDOW:
         GUIEVENT( wnd->parent, GUI_TOOLBAR_FLOATING, NULL );
         return( true );
-    case GUI_KEYDOWN :
-    case GUI_KEYUP :
+    case GUI_KEYDOWN:
+    case GUI_KEYUP:
         GUIEVENT( wnd->parent, gui_ev, param );
         return( true );
-    case GUI_CLICKED :
+    case GUI_CLICKED:
         GUI_GETID( param, id );
         if( id == FIX_TOOLBAR ) {
             FixToolbar( wnd );
         }
         return( true );
-    case GUI_CONTROL_CLICKED :
+    case GUI_CONTROL_CLICKED:
         GUI_GETID( param, id );
         id = EV2ID( id );
         GUIEVENT( wnd->parent, GUI_CLICKED, &id );
         return( true );
-    case GUI_LBUTTONDBLCLK :
+    case GUI_LBUTTONDBLCLK:
         FixToolbar( wnd );
         return( true );
-    case GUI_DESTROY :
+    case GUI_DESTROY:
         /* didn't get close first */
         if( wnd->parent->tbar->floattoolbar != NULL ) {
             wnd->parent->tbar->floattoolbar = NULL;
         }
         GUICloseToolBar( wnd->parent );
         return( true );
-    case GUI_CLOSE :
+    case GUI_CLOSE:
         wnd->parent->tbar->floattoolbar = NULL;
         return( true );
-    default :
+    default:
         break;
     }
     return( false );
@@ -182,12 +182,12 @@ bool GUIXCloseToolBar( gui_window *wnd )
     return( true );
 }
 
-bool GUIHasToolBar( gui_window *wnd )
+bool GUIAPI GUIHasToolBar( gui_window *wnd )
 {
     return( wnd->tbar != NULL );
 }
 
-bool GUIToolBarFixed( gui_window *wnd )
+bool GUIAPI GUIToolBarFixed( gui_window *wnd )
 {
     if( GUIHasToolBar( wnd ) ) {
         return( wnd->tbar->fixed );
@@ -273,7 +273,7 @@ static bool CreateFloatingToolbar( gui_window *wnd, gui_ord height )
 bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord height,
                        const gui_toolbar_items *toolinfo, bool excl,
                        gui_colour_set *plain, gui_colour_set *standout,
-                       gui_rect *float_pos, bool use_tips )
+                       const gui_rect *float_pos, bool use_tips )
 {
     int                 size;
     int                 i;
@@ -336,7 +336,7 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord height,
 bool GUIXCreateToolBar( gui_window *wnd, bool fixed, gui_ord height,
                                 const gui_toolbar_items *toolinfo, bool excl,
                                 gui_colour_set *plain, gui_colour_set *standout,
-                                gui_rect *float_pos )
+                                const gui_rect *float_pos )
 {
     return( GUIXCreateToolBarWithTips( wnd, fixed, height, toolinfo, excl, plain, standout, float_pos, false ) );
 }
@@ -349,7 +349,7 @@ static bool FloatToolbar( gui_window *wnd )
     return( CreateFloatingToolbar( wnd, 0 ) );
 }
 
-bool GUIChangeToolBar( gui_window *wnd )
+bool GUIAPI GUIChangeToolBar( gui_window *wnd )
 {
     if( GUIHasToolBar( wnd ) ) {
         if( GUIToolBarFixed( wnd ) ) {

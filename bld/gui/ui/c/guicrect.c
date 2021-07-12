@@ -35,7 +35,7 @@
 #include "guiscale.h"
 #include "guixutil.h"
 
-void GUIGetClientRect( gui_window *wnd, gui_rect *rect )
+void GUIAPI GUIGetClientRect( gui_window *wnd, gui_rect *rect )
 {
     SAREA       use;
 
@@ -43,11 +43,11 @@ void GUIGetClientRect( gui_window *wnd, gui_rect *rect )
     GUIScreenToScaleRect( &use, rect );
 }
 
-bool GUIGetPaintRect( gui_window *wnd, gui_rect *paint )
+bool GUIAPI GUIGetPaintRect( gui_window *wnd, gui_rect *rect )
 {
     SAREA       area;
 
     COPYAREA( wnd->dirty, area );
-    GUIScreenToScaleRect( &area, paint );
+    GUIScreenToScaleRect( &area, rect );
     return( true );
 }

@@ -58,18 +58,21 @@ static gui_window   *MenuWnd        = NULL;
  * MapLocation --
  */
 
-static void MapLocation( gui_window *wnd, gui_point *point, guix_point *scr_point )
+static void MapLocation( gui_window *wnd, const gui_point *point, guix_point *scr_point )
 {
-    scr_point->x = GUIScaleToScreenH( point->x );
-    scr_point->y = GUIScaleToScreenV( point->y );
+    guix_ord    scr_x;
+    guix_ord    scr_y;
+
+    scr_x = GUIScaleToScreenH( point->x );
+    scr_y = GUIScaleToScreenV( point->y );
     if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
-        scr_point->x -= wnd->hgadget->pos;
+        scr_x -= wnd->hgadget->pos;
     }
     if( ( wnd->vgadget != NULL ) && !GUI_VSCROLL_EVENTS_SET( wnd ) ) {
-        scr_point->y -= wnd->vgadget->pos;
+        scr_y -= wnd->vgadget->pos;
     }
-    scr_point->x += wnd->use.col + 1;
-    scr_point->y += wnd->use.row + 1;
+    scr_point->x = scr_x + wnd->use.col + 1;
+    scr_point->y = scr_y + wnd->use.row + 1;
 }
 
 /*
@@ -107,7 +110,7 @@ void GUIProcessMenuCurr( UIMENUITEM *menuitem )
     top_wnd = GUIGetMenuWindow();
     menu_wnd = NULL;
     switch( MenuState ) {
-    case MENU_NONE :
+    case MENU_NONE:
         menu_wnd = top_wnd;
         if( top_wnd != NULL && GUIHasToolBar( top_wnd ) && GUIToolBarFixed( top_wnd ) ) {
             if( GUIHasHintText( menu_wnd, id, TOOL_HINT ) ) {
@@ -115,10 +118,10 @@ void GUIProcessMenuCurr( UIMENUITEM *menuitem )
             }
         }
         break;
-    case MENU_FLOAT :
+    case MENU_FLOAT:
         type = FLOAT_HINT;
         /* fall through */
-    case MENU_SYS :
+    case MENU_SYS:
         menu_wnd = MenuWnd;
     }
     if( ( top_wnd != NULL ) && ( menu_wnd != NULL ) ) {
@@ -214,7 +217,7 @@ ui_event GUICreateMenuPopup( gui_window *wnd, guix_point *scr_location, UIMENUIT
     return( ui_ev );
 }
 
-static void TrackPopup( gui_window *wnd, gui_point *location,
+static void TrackPopup( gui_window *wnd, const gui_point *location,
                         UIMENUITEM *menuitems, gui_mouse_track track, gui_ctl_id *curr_id )
 {
     guix_point  scr_location;
@@ -234,7 +237,7 @@ static void TrackPopup( gui_window *wnd, gui_point *location,
  * GUIXCreateFloatingPopup - create a floating popup menu
  */
 
-bool GUIXCreateFloatingPopup( gui_window *wnd, gui_point *location,
+bool GUIXCreateFloatingPopup( gui_window *wnd, const gui_point *location,
                              const gui_menu_items *menus,
                              gui_mouse_track track, gui_ctl_id *curr_id )
 {
@@ -248,7 +251,7 @@ bool GUIXCreateFloatingPopup( gui_window *wnd, gui_point *location,
     return( true );
 }
 
-bool GUITrackFloatingPopup( gui_window *wnd, gui_point *location,
+bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
                         gui_mouse_track track, gui_ctl_id *curr_id )
 {
     if( GUIPopupMenu != NULL ) {

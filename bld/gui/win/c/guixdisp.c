@@ -32,7 +32,6 @@
 
 
 #include "guiwind.h"
-#include "guiscale.h"
 
 
 typedef struct MessageTypes {
@@ -59,9 +58,8 @@ static MessageTypes Types[] = {
  *                      return user's response.
  */
 
-gui_message_return GUIDisplayMessage( gui_window *wnd,
-                                      const char *message, const char *title,
-                                      gui_message_type type )
+gui_message_return GUIAPI GUIDisplayMessage( gui_window *wnd, const char *message,
+                                      const char *title, gui_message_type type )
 {
     UINT                style;
     int                 ret;
@@ -92,25 +90,25 @@ gui_message_return GUIDisplayMessage( gui_window *wnd,
     ret = _wpi_messagebox( hwnd, message, title, style );
 
     switch( ret ) {
-    case WPI_IDABORT :
+    case WPI_IDABORT:
         ret_code = GUI_RET_ABORT;
         break;
-    case WPI_IDCANCEL :
+    case WPI_IDCANCEL:
         ret_code = GUI_RET_CANCEL;
         break;
-    case WPI_IDIGNORE :
+    case WPI_IDIGNORE:
         ret_code = GUI_RET_IGNORE;
         break;
-    case WPI_IDNO :
+    case WPI_IDNO:
         ret_code = GUI_RET_NO;
         break;
-    case WPI_IDOK :
+    case WPI_IDOK:
         ret_code = GUI_RET_OK;
         break;
-    case WPI_IDRETRY :
+    case WPI_IDRETRY:
         ret_code = GUI_RET_RETRY;
         break;
-    case WPI_IDYES :
+    case WPI_IDYES:
         ret_code = GUI_RET_YES;
         break;
     }

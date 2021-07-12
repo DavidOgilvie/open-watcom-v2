@@ -37,7 +37,7 @@
  * GUIDrawText
  */
 
-void GUIDrawText( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawText( gui_window *wnd, const char *text, size_t length,
                          gui_text_ord row, gui_ord indent, gui_attr attr )
 {
     gui_text_metrics    metrics;
@@ -49,7 +49,7 @@ void GUIDrawText( gui_window *wnd, const char *text, size_t length,
     GUIXDrawText( wnd, text, length, &pos, attr, GUI_NO_COLUMN, false );
 }
 
-void GUIDrawTextPos( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawTextPos( gui_window *wnd, const char *text, size_t length,
                             const gui_coord *pos, gui_attr attr )
 {
     GUIXDrawText( wnd, text, length, pos, attr, GUI_NO_COLUMN, false );
@@ -59,9 +59,9 @@ void GUIDrawTextPos( gui_window *wnd, const char *text, size_t length,
  * GUIDrawTextExtent
  */
 
-void GUIDrawTextExtent( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawTextExtent( gui_window *wnd, const char *text, size_t length,
                         gui_text_ord row, gui_ord indent, gui_attr attr,
-                        gui_ord extent )
+                        gui_ord extentx )
 {
     gui_text_metrics    metrics;
     gui_coord           pos;
@@ -69,16 +69,16 @@ void GUIDrawTextExtent( gui_window *wnd, const char *text, size_t length,
     GUIGetTextMetrics( wnd, &metrics );
     pos.x = indent;
     pos.y = row * metrics.avg.y;
-    GUIXDrawText( wnd, text, length, &pos, attr, extent, true );
+    GUIXDrawText( wnd, text, length, &pos, attr, extentx, true );
 }
 
-void GUIDrawTextExtentPos( gui_window *wnd, const char *text, size_t length,
-                           const gui_coord *pos, gui_attr attr, gui_ord extent )
+void GUIAPI GUIDrawTextExtentPos( gui_window *wnd, const char *text, size_t length,
+                           const gui_coord *pos, gui_attr attr, gui_ord extentx )
 {
-    GUIXDrawText( wnd, text, length, pos, attr, extent, true );
+    GUIXDrawText( wnd, text, length, pos, attr, extentx, true );
 }
 
-void GUIDrawTextRGB( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawTextRGB( gui_window *wnd, const char *text, size_t length,
                             gui_text_ord row, gui_ord indent,
                             gui_rgb fore, gui_rgb back )
 {
@@ -91,7 +91,7 @@ void GUIDrawTextRGB( gui_window *wnd, const char *text, size_t length,
     GUIXDrawTextRGB( wnd, text, length, &pos, fore, back, GUI_NO_COLUMN, false );
 }
 
-void GUIDrawTextPosRGB( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawTextPosRGB( gui_window *wnd, const char *text, size_t length,
                                const gui_coord *pos, gui_rgb fore, gui_rgb back )
 {
     GUIXDrawTextRGB( wnd, text, length, pos, fore, back, GUI_NO_COLUMN, false );
@@ -101,9 +101,9 @@ void GUIDrawTextPosRGB( gui_window *wnd, const char *text, size_t length,
  * GUIDrawTextExtent
  */
 
-void GUIDrawTextExtentRGB( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawTextExtentRGB( gui_window *wnd, const char *text, size_t length,
                            gui_text_ord row, gui_ord indent,
-                           gui_rgb fore, gui_rgb back, gui_ord extent )
+                           gui_rgb fore, gui_rgb back, gui_ord extentx )
 {
     gui_text_metrics    metrics;
     gui_coord           pos;
@@ -111,12 +111,12 @@ void GUIDrawTextExtentRGB( gui_window *wnd, const char *text, size_t length,
     GUIGetTextMetrics( wnd, &metrics );
     pos.x = indent;
     pos.y = row * metrics.avg.y;
-    GUIXDrawTextRGB( wnd, text, length, &pos, fore, back, extent, true );
+    GUIXDrawTextRGB( wnd, text, length, &pos, fore, back, extentx, true );
 }
 
-void GUIDrawTextExtentPosRGB( gui_window *wnd, const char *text, size_t length,
+void GUIAPI GUIDrawTextExtentPosRGB( gui_window *wnd, const char *text, size_t length,
                               const gui_coord *pos, gui_rgb fore, gui_rgb back,
-                              gui_ord extent )
+                              gui_ord extentx )
 {
-    GUIXDrawTextRGB( wnd, text, length, pos, fore, back, extent, true );
+    GUIXDrawTextRGB( wnd, text, length, pos, fore, back, extentx, true );
 }

@@ -42,8 +42,8 @@
 
 static void SetScrollThumb( gui_window * wnd, int percent, int bar )
 {
-    int         old;
-    int         new;
+    guix_ord    old;
+    guix_ord    new;
     bool        range_set;
 
     if( GUIScrollOn( wnd, bar ) ) {
@@ -75,7 +75,7 @@ static void SetScrollThumb( gui_window * wnd, int percent, int bar )
  * GUISetVScrollThumb -- Set the vertical scrolling thumb for the window
  */
 
-void GUISetVScrollThumb( gui_window * wnd, int percent )
+void GUIAPI GUISetVScrollThumb( gui_window * wnd, int percent )
 {
     SetScrollThumb( wnd, percent, SB_VERT );
 }
@@ -84,7 +84,7 @@ void GUISetVScrollThumb( gui_window * wnd, int percent )
  * GUISetHScrollThumb -- Set the horizontal scrolling thumb for the window
  */
 
-void GUISetHScrollThumb( gui_window * wnd, int percent )
+void GUIAPI GUISetHScrollThumb( gui_window * wnd, int percent )
 {
     SetScrollThumb( wnd, percent, SB_HORZ );
 }

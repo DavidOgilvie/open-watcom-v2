@@ -131,7 +131,7 @@ static void TileWindows( gui_window *wnd, void *param )
     }
 }
 
-static void Tile( gui_window *root, int num_windows, gui_rect *rect,
+static void Tile( gui_window *root, int num_windows, const gui_rect *rect,
                   gui_coord *min_size, bool horz )
 {
     tile_info   info;
@@ -224,7 +224,7 @@ static void CascadeWindows( gui_window *wnd, void *param )
     info->num = info->num % info->mod;
 }
 
-static void Cascade( gui_window *root, int num_windows, gui_rect *rect,
+static void Cascade( gui_window *root, int num_windows, const gui_rect *rect,
                      gui_coord *min_size )
 {
     cascade_info        info;
@@ -272,13 +272,13 @@ static void Arrange( ui_event ui_ev )
         rect.height -= min_size.y;
     }
     switch( ui_ev ) {
-    case GUI_MDI_CASCADE :
+    case GUI_MDI_CASCADE:
         Cascade( root, num_windows, &rect, &min_size );
         break;
-    case GUI_MDI_TILE_HORZ :
+    case GUI_MDI_TILE_HORZ:
         Tile( root, num_windows, &rect, &min_size, true );
         break;
-    case GUI_MDI_TILE_VERT :
+    case GUI_MDI_TILE_VERT:
         Tile( root, num_windows, &rect, &min_size, false );
         break;
     }
@@ -315,19 +315,19 @@ static bool ProcessEvent( ui_event ui_ev )
 
     id = EV2ID( ui_ev );
     switch( id ) {
-    case GUI_MDI_CASCADE :
-    case GUI_MDI_TILE_HORZ :
-    case GUI_MDI_TILE_VERT :
+    case GUI_MDI_CASCADE:
+    case GUI_MDI_TILE_HORZ:
+    case GUI_MDI_TILE_VERT:
         Icons();
         Arrange( id );
         break;
-    case GUI_MDI_ARRANGE_ICONS :
+    case GUI_MDI_ARRANGE_ICONS:
         Icons();
         break;
-    case GUI_MDI_MORE_WINDOWS :
+    case GUI_MDI_MORE_WINDOWS:
         GUIMDIMoreWindows();
         break;
-    default :
+    default:
         if( IS_MDIWIN( id ) ) {
             wnd = GUIMDIGetWindow( id );
             if( wnd != NULL ) {
@@ -358,7 +358,7 @@ void XChangeTitle( gui_window *wnd )
     /* unused parameters */ (void)wnd;
 }
 
-bool GUICascadeWindows( void )
+bool GUIAPI GUICascadeWindows( void )
 {
     return( ProcessEvent( ID2EV( GUI_MDI_CASCADE ) ) );
 }

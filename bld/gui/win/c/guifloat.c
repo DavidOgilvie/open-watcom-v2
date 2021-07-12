@@ -45,10 +45,10 @@ extern  HMENU           GUIHFloatingPopup;
 static  gui_ctl_id      CurrId = 0;
 static  bool            InitComplete = false;
 
-bool GUITrackFloatingPopup( gui_window *wnd, gui_point *location,
+bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
                             gui_mouse_track track, gui_ctl_id *curr_id )
 {
-    WPI_POINT   pt;
+    WPI_POINT   wpi_point;
     ULONG       flags;
     GUI_RECTDIM left, top, right, bottom;
     HMENU       hpopup;
@@ -78,10 +78,10 @@ bool GUITrackFloatingPopup( gui_window *wnd, gui_point *location,
 
     scr_y = _wpi_cvth_y( scr_y, (bottom - top) );
 
-    pt.x = scr_x;
-    pt.y = scr_y;
+    wpi_point.x = scr_x;
+    wpi_point.y = scr_y;
 
-    _wpi_mapwindowpoints( wnd->hwnd, HWND_DESKTOP, &pt, 1 );
+    _wpi_mapwindowpoints( wnd->hwnd, HWND_DESKTOP, &wpi_point, 1 );
 
     flags = TPM_LEFTALIGN;
     if( track & GUI_TRACK_LEFT ) {
@@ -94,7 +94,7 @@ bool GUITrackFloatingPopup( gui_window *wnd, gui_point *location,
 
     GUIFlushKeys();
 
-    _wpi_trackpopupmenu( hpopup, flags, pt.x, pt.y, wnd->hwnd_frame );
+    _wpi_trackpopupmenu( hpopup, flags, wpi_point.x, wpi_point.y, wnd->hwnd_frame );
 
     _wpi_destroymenu( hpopup );
 
@@ -112,7 +112,7 @@ bool GUITrackFloatingPopup( gui_window *wnd, gui_point *location,
  * GUIXCreateFloatingPopup -- create a floating popup menu
  */
 
-bool GUIXCreateFloatingPopup( gui_window *wnd, gui_point *location,
+bool GUIXCreateFloatingPopup( gui_window *wnd, const gui_point *location,
                              const gui_menu_items *menus,
                              gui_mouse_track track, gui_ctl_id *curr_id )
 {
