@@ -74,11 +74,11 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
     /* adjust for scrolling */
     vscroll = 0;
     if( ( wnd->vgadget != NULL ) && ( !GUI_VSCROLL_EVENTS_SET( wnd ) ) ) {
-        vscroll += wnd->vgadget->pos;
+        vscroll = wnd->vgadget->pos;
     }
     hscroll = 0;
     if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
-        hscroll += wnd->hgadget->pos;
+        hscroll = wnd->hgadget->pos;
     }
 
     if( ( scr_pos_y - vscroll + frame_adjust ) < frame_adjust ) {
@@ -128,7 +128,8 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
                 char        *p;
                 const char  *cp;
 
-                for( cp = text; cp < text+col; cp += uicharlen( UCHAR_VALUE( *cp ) ) ) ;
+                for( cp = text; cp < text+col; cp += uicharlen( *(unsigned char *)cp ) )
+                    ;
                 if( cp != text + col ) {
                     p = alloca( length );
                     cp = memcpy( p, text + col, length );
