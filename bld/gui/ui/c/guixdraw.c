@@ -100,7 +100,7 @@ void GUIInitDrawingChars( bool dbcs )
 int GUIAPI GUIGetCharacter( gui_draw_char draw_char )
 {
     if( draw_char < GUI_NUM_DRAW_CHARS ) {
-        return( UCHAR_VALUE( DrawingChars[draw_char] ) );
+        return( (unsigned char)DrawingChars[draw_char] );
     }
     return( 0 );
 }
@@ -353,10 +353,10 @@ void GUIWndRfrshArea( gui_window *wnd, SAREA *area )
         vscroll = 0;
         if( GUI_WND_VISIBLE( wnd ) ) {
             if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
-                hscroll += wnd->hgadget->pos;
+                hscroll = wnd->hgadget->pos;
             }
             if( ( wnd->vgadget != NULL ) && !GUI_VSCROLL_EVENTS_SET( wnd ) ) {
-                vscroll += wnd->vgadget->pos;
+                vscroll = wnd->vgadget->pos;
             }
             COPYAREA( *area, wnd->dirty );
             if( ( wnd->dirty.col + wnd->dirty.width ) >
