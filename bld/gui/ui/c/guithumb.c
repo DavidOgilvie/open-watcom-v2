@@ -55,8 +55,7 @@ static void SetScrollThumb( p_gadget gadget, int percent, bool range_set )
         if( !range_set ) {
             gadget->total_size = 2 * gadget->page_size;
         }
-        pos = (long)( gadget->total_size - gadget->page_size )
-                            * percent / 100;
+        pos = GUIMulDiv( int, gadget->total_size - gadget->page_size, percent, 100 );
         if( ( pos == 0 ) && ( percent != 0 ) &&
             ( gadget->total_size > gadget->page_size ) ) {
             pos++;
@@ -76,7 +75,7 @@ void GUIAPI GUISetHScrollThumb( gui_window * wnd, int percent )
 {
     if( wnd != NULL ) {
         SetScrollThumb( wnd->hgadget, percent, GUI_HRANGE_SET( wnd ) );
-        wnd->flags |= SETHRANGE;
+        wnd->flags |= HRANGE_SET;
     }
 }
 
@@ -88,6 +87,6 @@ void GUIAPI GUISetVScrollThumb( gui_window * wnd, int percent )
 {
     if( wnd != NULL ) {
         SetScrollThumb( wnd->vgadget, percent, GUI_VRANGE_SET( wnd ) );
-        wnd->flags |= SETVRANGE;
+        wnd->flags |= VRANGE_SET;
     }
 }
