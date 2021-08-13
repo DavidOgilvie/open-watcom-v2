@@ -36,7 +36,6 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
-#include "mmisc.h"
 
 #ifdef DLLS_IMPLEMENTED
     #include "idedrv.h"
@@ -175,6 +174,11 @@ typedef enum {
     AUTO_DEP_RES
 } auto_dep_type;
 
+typedef struct EnvTracker {
+    struct EnvTracker   *next;
+    char                value[1];
+} ENV_TRACKER;
+
 extern int          SwitchChar( void );
 extern int          OSCorrupted( void );
 extern bool         TouchFile( const char *name );
@@ -188,5 +192,9 @@ extern void         InitSignals( void );
 extern void         DLLFini( void );
 extern char         *GetEnvExt( const char *str );
 extern int          PutEnvExt( char *str );
+extern int          PutEnvSafe( ENV_TRACKER *env );
+#if !defined(NDEBUG) || defined(DEVELOPMENT)
+extern void         PutEnvFini( void );
+#endif
 
 #endif
