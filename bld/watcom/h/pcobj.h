@@ -121,16 +121,10 @@ enum {
  *  INTEL Target Specifiers
  */
 
-    TARGET_SEGWD        = 0,        /* segment index with displacement  */
-    TARGET_GRPWD        = 1,        /* group index with displacement    */
-    TARGET_EXTWD        = 2,        /* external index with displacement */
-    TARGET_ABSWD        = 3,        /* abs frame num with displacement  */
-    TARGET_SEG          = 4,        /* segment index, no displacement   */
-    TARGET_GRP          = 5,        /* group index, no displacement     */
-    TARGET_EXT          = 6,        /* external index, no displacement  */
-    TARGET_ABS          = 7,        /* abs frame num, no displacement   */
-
-    TARGET_WITH_DISPL   = ~4,       /* frame with displacement          */
+    TARGET_SEG          = 0,        /* segment index with displacement  */
+    TARGET_GRP          = 1,        /* group index with displacement    */
+    TARGET_EXT          = 2,        /* external index with displacement */
+    TARGET_ABS          = 3,        /* abs frame num with displacement  */
 
 /*
  *  INTEL Group Specifiers
@@ -142,6 +136,8 @@ enum {
     GRP_LTLDATA         = 0xfb,     /* load time data info              */
     GRP_ADDR            = 0xfa,     /* load time addr for the group     */
 };
+
+#define TARGET_NO_DISPL(x)  (x | 4) /* frame without displacement       */
 
 /*
  *  INTEL Object Record Types
