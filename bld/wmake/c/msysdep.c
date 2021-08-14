@@ -498,9 +498,13 @@ int SetEnvExt( ENV_TRACKER *env )
         return( rc );
     }
 #endif
-#ifdef _MSC_VER
+#if defined( _MSC_VER )
     return( putenv( env->name ) );
 #else
+  #if !defined( __WATCOMC__ )
+    if( env->value == NULL )
+        return( unsetenv( env->name ) );
+  #endif
     return( setenv( env->name, env->value, true ) );
 #endif
 }
@@ -571,7 +575,7 @@ int SetEnvSafe( const char *name, const char *value )
 
 #if !defined(NDEBUG) || defined(DEVELOPMENT)
 void SetEnvFini( void )
-/****************************/
+/*********************/
 {
     ENV_TRACKER *cur;
 
