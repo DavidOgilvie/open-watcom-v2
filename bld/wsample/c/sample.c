@@ -347,18 +347,18 @@ void Usage( void )
 }
 
 
-static char *skip( const char *ptr )
+static const char *skip( const char *ptr )
 {
     while( *ptr == ' ' || *ptr == '\t' )
         ++ptr;
-    return( (char *)ptr );
+    return( ptr );
 }
 
 
 unsigned GetNumber( unsigned min, unsigned max, const char **atstr, unsigned base )
 /* handles command line items of the sort "b=23" (up to base 16) */
 {
-    char        *scan;
+    const char  *scan;
     int         c;
     unsigned    res;
     unsigned    value;
@@ -395,7 +395,7 @@ unsigned GetNumber( unsigned min, unsigned max, const char **atstr, unsigned bas
     return( res );
 }
 
-static char *skip_command( const char *str )
+static const char *skip_command( const char *str )
 {
     for( ;; ) {
         switch( *str ) {
@@ -409,7 +409,7 @@ static char *skip_command( const char *str )
         case '<':
         case '>':
         case '|':
-            return( (char *)str );
+            return( str );
         default:
             str++;
             break;
@@ -422,7 +422,7 @@ static char *skip_command( const char *str )
         / sizeof( samp_address ))
 
 
-static char *Parse( const char *line, char arg[], const char **eoc )
+static const char *Parse( const char *line, char arg[], const char **eoc )
 {
     const char  *cmd;
     char        *p;
@@ -496,7 +496,7 @@ static char *Parse( const char *line, char arg[], const char **eoc )
     }
     arg[len + 1] = '\r';
     arg[0] = len;
-    return( (char *)cmd );
+    return( cmd );
 }
 
 
@@ -524,51 +524,22 @@ void AllocSamples( unsigned tid )
     LastSampleIndex = 0;
 }
 
-#if defined( __WINDOWS__ )
-int sample_main( char __far *win_cmd )
-#else
-int main( int argc, char **argv )
-#endif
+int sample_main( char *cmd_line )
 {
-    char        *cmd_line;
     char        *arg;
-    char        *cmd;
+    const char  *cmd;
     char        *tmp_cmd;
     const char  *eoc;
-    int         cmdlen;
 
-#if defined( __WINDOWS__ )
-#elif !defined( __WATCOMC__ )
-    _argv = argv;
-    _argc = argc;
-#else
-    /* unused parameters */ (void)argc; (void)argv;
-#endif
-
-    SysInit();
-#if !defined( __WINDOWS__ )
-    if( !MsgInit() )
-        fatal();
-
-    /* Command line may be several KB large on most OSes */
-    cmdlen = _bgetcmd( NULL, 0 );
-    cmd_line = malloc( cmdlen + 1 );
-    arg = malloc( cmdlen + 1 );
-    if( ( cmd_line == NULL ) || ( arg == NULL ) ) {
-        OutputMsgNL( MSG_SAMPLE_BUFF );
-        fatal();
+    arg = NULL;
+    if( cmd_line != NULL ) {
+        arg = malloc( strlen( cmd_line ) + 1 );
     }
-    getcmd( cmd_line );
-#else
-    cmdlen = cmdlen;
-    cmd_line = malloc( 256 ); /* Just hope for the best */
-    arg = malloc( 256 );
-    if( ( cmd_line == NULL ) || ( arg == NULL ) ) {
+    if( arg == NULL ) {
         OutputMsgNL( MSG_SAMPLE_BUFF );
-        fatal();
+        return( 1 );
     }
-    _fstrcpy( cmd_line, win_cmd );
-#endif
+
     tmp_cmd = cmd_line;
     while( *tmp_cmd != '\0' )
         ++tmp_cmd;
@@ -588,13 +559,13 @@ int main( int argc, char **argv )
 
     if( !VersionCheck() ) {
         OutputMsgNL( MSG_VERSION );
-        fatal();
+        return( 1 );
     }
 
 #ifndef __WINDOWS__
     if( SampCreate( SampName ) != 0 ) {
         OutputMsgNL( MSG_SAMPLE_FILE );
-        fatal();
+        return( 1 );
     }
 #endif
     SampWrite( PREFIX_STRING, sizeof( PREFIX_STRING ) );
@@ -625,8 +596,40 @@ int main( int argc, char **argv )
      * at the end. We pass both and let the callee pick & choose.
      */
     StartProg( cmd, ExeName, eoc, arg );
-    MsgFini();
-    free( cmd_line );
     free( arg );
     return( 0 );
 }
+
+#if !defined( __WINDOWS__ )
+int main( int argc, char **argv )
+{
+    char        *cmd_line;
+    int         rc;
+
+#if !defined( __WATCOMC__ )
+    _argv = argv;
+    _argc = argc;
+#else
+    /* unused parameters */ (void)argc; (void)argv;
+#endif
+
+    SysInit();
+    if( !MsgInit() )
+        fatal();
+
+    /* Command line may be several KB large on most OSes */
+    cmd_line = malloc( _bgetcmd( NULL, 0 ) + 1 );
+    if( cmd_line != NULL ) {
+        getcmd( cmd_line );
+    }
+
+    rc = sample_main( cmd_line );
+
+    if( cmd_line != NULL ) {
+        free( cmd_line );
+    }
+
+    MsgFini();
+    return( rc );
+}
+#endif
