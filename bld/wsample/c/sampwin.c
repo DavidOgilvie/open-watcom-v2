@@ -167,7 +167,7 @@ void InitTimerRate( void )
     SleepTime = 55;
 }
 
-void SetTimerRate( char **cmd )
+void SetTimerRate( const char **cmd )
 {
     SleepTime = GetNumber( 1, 1000, cmd, 10 );
 }
@@ -330,7 +330,7 @@ void StartProg( const char *cmd, const char *prog, const char *full_args, char *
     pdata.wEnvSeg = 0;
     pdata.lpCmdLine = (char __far *)full_args;   /* Must be < 120 chars according to SDK */
     pdata.lpCmdShow = (void __far *)&cdata;
-    pdata.dwReserved = 0;
+    pdata.lpReserved = NULL;
 
     SampledProg = LoadModule( prog, (LPVOID)&pdata );
     while( !SharedMemory->TaskEnded ) {
@@ -362,7 +362,7 @@ void SysDefaultOptions( void )
 {
 }
 
-void SysParseOptions( char c, char **cmd )
+void SysParseOptions( char c, const char **cmd )
 {
     if( c != 'r' ) {
         OutputMsgCharNL( MSG_INVALID_OPTION, c );
