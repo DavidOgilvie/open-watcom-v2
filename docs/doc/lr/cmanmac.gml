@@ -52,7 +52,7 @@
 .* .ty &*
 .dm debug end
 .*
-.dm widefunc begin
+.dm chkwfunc begin
 .sr *fx=&'strip(&*1,'L','_')
 .sr iswidefn=1
 .* far function
@@ -68,7 +68,7 @@
 .if '&'right(&*fx,4)' eq 'itow' or '&'right(&*fx,4)' eq 'ltow' .me
 .if '&'right(&*fx,5)' eq 'wchar' .me
 .sr iswidefn=0
-.dm widefunc end
+.dm chkwfunc end
 .*
 .dm addclinf begin
 .sr *cltxt=''
@@ -77,7 +77,7 @@
 .if &*0 gt 1 .do begin
 .   .se *cltxt=is &'substr(&*.,&'length(&*1)+1)
 .do end
-.widefunc &*1
+.chkwfunc &*1
 .if &iswidefn. ne 0 .do begin
 .   .if '&*1(1:1).' ne '_' .sr *clatr=1
 .do end
@@ -117,7 +117,7 @@
 .   .   .sr func64=&*1
 .   .do end
 .do end
-.widefunc &*1
+.chkwfunc &*1
 .if &iswidefn ne 0 .do begin
 .   .sr wfunc=&*1
 .do end
@@ -661,7 +661,7 @@ It is most useful in mixed memory model applications.
 .do end
 .dm farfunc end
 .*
-.dm farparm begin
+.dm farfuncp begin
 .if &farfnc ne 0 .do begin
 .pp
 The
@@ -671,7 +671,15 @@ function is a code and data model independent form of the
 function that accepts far pointer arguments.
 It is most useful in mixed memory model applications.
 .do end
-.dm farparm end
+.dm farfuncp end
+.*
+.dm mbcsfunc begin
+The
+.id &*1.
+function is a multi-byte character version of
+.id &*2.
+that operates with multi-byte character strings.
+.dm mbcsfunc end
 .*
 .dm sbcsfunc begin
 The
