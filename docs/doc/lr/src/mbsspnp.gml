@@ -30,9 +30,9 @@ wchar_t *_wcsspnp( const wchar_t *str,
 .desc begin
 The
 .id &funcb.
-function returns a pointer to the first character in
+function returns a pointer to the first multi-byte character in
 .arg str
-that does not belong to the set of characters in
+that does not belong to the set of multi-byte characters in
 .arg charset
 .period
 The terminating null character is not considered to be part of
@@ -46,10 +46,10 @@ These functions return
 .mono NULL
 if
 .arg str
-consists entirely of characters (single-byte, wide, or multi-byte)
+consists entirely of characters (multi-byte, wide, or single-byte)
 from
 .arg charset
-(single-byte, wide, or multi-byte)
+(multi-byte, wide, or single-byte)
 .period
 .return end
 .see begin

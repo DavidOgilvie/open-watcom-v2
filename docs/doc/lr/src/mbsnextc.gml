@@ -19,7 +19,8 @@ unsigned int _wcsnextc( const wchar_t *string ) {
 .desc begin
 The
 .id &funcb.
-function returns the integer value of the next character in
+function returns the integer value of the next multi-byte
+character in
 .arg string
 .ct , without advancing the string pointer.
 .id &funcb.
@@ -30,7 +31,7 @@ multi-byte character code page currently in use.
 .desc end
 .return begin
 These functions return the integer value of the next character
-(single-byte, wide, or multi-byte) pointed to by
+(multi-byte, wide, or single-byte) pointed to by
 .arg string
 .period
 .return end

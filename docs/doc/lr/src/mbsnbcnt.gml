@@ -24,7 +24,7 @@ The
 .id &funcb.
 function counts the number of bytes in the first
 .arg n
-multibyte characters of the string
+multi-byte characters of the string
 .arg string
 .period
 .np
@@ -37,7 +37,7 @@ in earlier versions.
 .desc end
 .return begin
 These functions return the number of bytes in the string up to the
-specified number of characters (single-byte, wide, or multi-byte)
+specified number of characters (multi-byte, wide, or single-byte)
 or until a null character is encountered.
 The null character is not included in the count.
 If the character preceding the null character was a lead byte, the lead

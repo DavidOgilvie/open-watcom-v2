@@ -21,7 +21,7 @@ size_t _wcsncnt( const wchar_t *string, size_t n ) {
 .desc begin
 The
 .id &funcb.
-function counts the number of multibyte characters in the
+function counts the number of multi-byte characters in the
 first
 .arg n
 bytes of the string
@@ -41,7 +41,7 @@ in earlier versions.
 .desc end
 .return begin
 These functions return the number of characters
-(single-byte, wide, or multi-byte) from the beginning
+(multi-byte, wide, or single-byte) from the beginning
 of the string to byte
 .arg n
 .period
