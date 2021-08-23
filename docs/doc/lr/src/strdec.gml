@@ -35,14 +35,11 @@ You must ensure that
 .arg current
 does not point into the middle of a multibyte or wide character.
 .farfunc &ffunc. &funcb.
-.sbcsfunc _strdec &funcb.
-.widefunc _wcsdec &funcb.
+.tcsfunc _tcsdec &funcb. _strdec &wfunc.
 .desc end
 .return begin
-The
-.id &funcb.
-function returns a pointer to the previous character
-(single-byte, wide, or multibyte depending on the function used).
+These functions return a pointer to the previous character
+(single-byte, wide, or multi-byte).
 .return end
 .see begin
 .seelist _strdec _strinc _strninc
