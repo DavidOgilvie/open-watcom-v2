@@ -42,6 +42,7 @@
     #define _WIN32_IE   0x0400
     #include <commctrl.h>
 #endif
+#include "guilog.h"
 
 
 /* Local Window callback functions prototypes */
@@ -57,7 +58,7 @@ typedef struct GetClassMap {
 } GetClassMap;
 
 #ifdef __OS2_PM__
-// note: the order of entries this table is important
+// note: the order of entries in this table is important
 static GetClassMap Map[] =
 {
     { GUI_RADIO_BUTTON,     "#3",           BS_RADIOBUTTON,     0xf             }
@@ -75,7 +76,7 @@ static GetClassMap Map[] =
 ,   { GUI_SCROLLBAR,        "#8",           0xffff,             0xffff          }
 };
 #else
-// note: the order of entries this table is important
+// note: the order of entries in this table is important
 static GetClassMap Map[] =
 {
     { GUI_GROUPBOX,         WC_BUTTON,      BS_GROUPBOX,        BS_GROUPBOX         }

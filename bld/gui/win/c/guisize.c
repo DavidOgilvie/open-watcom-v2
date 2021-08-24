@@ -39,6 +39,7 @@
 #include "guirect.h"
 #include "guipaint.h"
 #include "guimdi.h"
+#include "guilog.h"
 
 
 bool GUIAPI GUIResizeWindow( gui_window *wnd, const gui_rect *rect )

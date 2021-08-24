@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guixdlg.h"
+#include "guilog.h"
+
 
 unsigned GUIAPI GUIIsChecked( gui_window *wnd, gui_ctl_id id )
 {

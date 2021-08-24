@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guipaint.h"
+#include "guilog.h"
+
 
 /*
  * GUIWndDirty -- tell the user interface that the contents of window wnd

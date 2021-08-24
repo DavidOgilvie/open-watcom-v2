@@ -40,6 +40,7 @@
 #include "guistr.h"
 #include "guixutil.h"
 #include "guistat.h"
+#include "guilog.h"
 
 
 statwnd         *GUIStatusWnd;
@@ -60,7 +61,8 @@ static void SetStatusRect( HWND parent, WPI_RECT *status_wpi_rect, guix_ord x, g
     guix_ord    y;
     guix_ord    h;
 
-    _wpi_getclientrect( parent, &wpi_rect );
+   	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+_wpi_getclientrect( parent, &wpi_rect );
     _wpi_getrectvalues( wpi_rect, &left, &top, &right, &bottom );
     y = _wpi_cvth_y_plus1( bottom - height, bottom - top );
     h = _wpi_cvth_y_plus1( bottom - top, bottom - top );
@@ -110,6 +112,7 @@ bool GUIAPI GUICreateStatusWindow( gui_window *wnd, gui_ord x, gui_ord height,
 {
     WPI_RECT    wpi_rect;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     colour = colour;
     if( wnd->root == NULLHANDLE ) {
         return( false );

@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guixhook.h"
+#include "guilog.h"
+
 
 static  bool    (*ProcessMsg)(gui_window *, HWND, WPI_MSG, WPI_PARAM1, WPI_PARAM2, WPI_MRESULT *) = NULL;
 static  bool    (*IsMaximized)( gui_window * )          = NULL;

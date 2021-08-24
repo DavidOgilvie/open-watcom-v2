@@ -36,6 +36,8 @@
 #include "guixutil.h"
 #include "guiscrol.h"
 #include "guidoscr.h"
+#include "guilog.h"
+
 
 guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 {
@@ -56,6 +58,7 @@ guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 
 guix_ord GUIGetScrollInc( gui_window *wnd, int bar )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( bar == SB_HORZ ) {
         if( GUI_HSCROLL_COLS( wnd ) ) {
             return( GUIFromTextX( 1, wnd ) );
@@ -180,6 +183,7 @@ void GUIAPI GUISetHScroll( gui_window *wnd, gui_ord hscroll_pos )
 
 static void GUIVScroll( int diff, gui_window *wnd, gui_event gui_ev )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( diff == 0 ) {
         return;
     }
@@ -221,11 +225,14 @@ static void GUIHScroll( int diff, gui_window *wnd, gui_event gui_ev )
 
 void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    int         diff;
+    WINDOW_MSG	_msg= msg;
+	int         diff;
     WORD        param;
     int         mult;
     int         bar;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog ("MSG %d(%d) %s %s(%d)\n", _msg, msg, __func__, __FILE__, __LINE__ );
     wparam = wparam;
     lparam = lparam;
 

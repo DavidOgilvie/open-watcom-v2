@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -34,44 +35,46 @@
 #include <stdio.h>
 #include "guixutil.h"
 #include "guitimer.h"
+#include "guilog.h"
 
 
 #if defined(__NT__)
+	/* Local Window callback functions prototypes */
+	WINEXPORT VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime );
 
-/* Local Window callback functions prototypes */
-WINEXPORT VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime );
 
+	VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime )
+	{
+		WINDOW_MSG _msg= uMsg;
+		gui_window      *wnd;
+		gui_timer_event timer;
 
-VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime )
-{
-    gui_window      *wnd;
-    gui_timer_event timer;
+		_msg= uMsg;
+		uMsg = uMsg; dwTime = dwTime;
+		wnd = GUIGetWindow( hwnd );
+		if( wnd == NULL ) {
+			GUITimer();
+		} else {
+			timer.id = idEvent;
+			GUIEVENT( wnd, GUI_TIMER_EVENT, &timer );
+		}
+	}
 
-    uMsg = uMsg; dwTime = dwTime;
-    wnd = GUIGetWindow( hwnd );
-    if( wnd == NULL ) {
-        GUITimer();
-    } else {
-        timer.id = idEvent;
-        GUIEVENT( wnd, GUI_TIMER_EVENT, &timer );
-    }
-}
+	void GUIStartTimer( gui_window *wnd, gui_timer_id id, int msec )
+	{
+		if( wnd != NULL ) {
+			SetTimer( wnd->hwnd, id, (UINT)msec, GUITimerProc );
+		} else {
+			SetTimer( NULL, id, (UINT)msec, GUITimerProc );
+		}
+	}
 
-void GUIStartTimer( gui_window *wnd, gui_timer_id id, int msec )
-{
-    if( wnd != NULL ) {
-        SetTimer( wnd->hwnd, id, (UINT)msec, GUITimerProc );
-    } else {
-        SetTimer( NULL, id, (UINT)msec, GUITimerProc );
-    }
-}
-
-void GUIStopTimer( gui_window *wnd, gui_timer_id id )
-{
-    if( wnd != NULL ) {
-        KillTimer( wnd->hwnd, id );
-    } else {
-        KillTimer( NULL, id );
-    }
-}
+	void GUIStopTimer( gui_window *wnd, gui_timer_id id )
+	{
+		if( wnd != NULL ) {
+			KillTimer( wnd->hwnd, id );
+		} else {
+			KillTimer( NULL, id );
+		}
+	}
 #endif

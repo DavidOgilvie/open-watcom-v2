@@ -41,6 +41,7 @@
 #include "guiscrol.h"
 #include "guixwind.h"
 #include "guistyle.h"
+#include "guilog.h"
 
 
 #define MAX_LENGTH 256
@@ -53,6 +54,8 @@ typedef struct {
     gui_rect    rect;
     gui_coord   bump;
 } cascade_info;
+
+void GUIDoSysColorChange ( gui_window * );
 
 static  mdi_info        MDIInfo;
 static  char            Buffer[MAX_LENGTH];
@@ -69,9 +72,10 @@ static void StartMaxRestore( HWND hwnd )
 static void SetStyle( HWND hwnd, bool max )
 {
 #ifndef __OS2_PM__
-    DWORD       style;
+    DWORD		style;
     gui_window  *wnd;
 
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     wnd = GUIGetWindow( hwnd );
     style = _wpi_getwindowlong( hwnd, GWL_STYLE );
     if( max ) {
@@ -274,7 +278,13 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
                 }
                 return( true );
             }
-        }
+			break;
+#ifndef __OS2_PM__
+		case WM_SYSCOLORCHANGE:
+			GUIDoSysColorChange ( wnd );
+			break;
+#endif
+		}
     } else if( wnd->root == NULLHANDLE ) {
         /* child window */
         switch( msg ) {

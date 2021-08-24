@@ -44,21 +44,23 @@
 #include "guiscale.h"
 #include "guistr.h"
 #include "guixwind.h"
-//#include "guixhook.h"
 #include "ctl3dcvr.h"
 #include "guipaint.h"
 #include "guimapky.h"
 #include "guirdlg.h"
-#ifndef __OS2_PM__
-#include "windlg.h"
-#else
-#include "os2dlg.h"
+#ifdef __NT__
+	#include <wingdi.h>
 #endif
+#ifndef __OS2_PM__
+	#include "windlg.h"
+#else
+	#include "os2dlg.h"
+#endif
+#include "guilog.h"
 
 
 extern  controls_struct GUIControls[];
 extern  bool            EditControlHasFocus;
-
 static  char            *Font           = NULL;         /* name of font used in dialogs  */
 static  int             FontPointSize   = 0;            /* point size of fonts used in dialogs   */
 static  WPI_TEXTMETRIC  GUIDialogtm;                    /* tm of dialog font */
@@ -98,6 +100,7 @@ void GUIInitControl( control_item *item, gui_window *wnd, gui_ctl_id *focus_id )
 {
     HWND        ctrl;
 
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( !item->hwnd ) {
         item->hwnd = _wpi_getdlgitem( wnd->hwnd, item->id );
     }
@@ -155,7 +158,8 @@ bool GUIProcessControlNotification( gui_ctl_id id, int wNotify, gui_window *wnd 
     control_item        *item;
     HWND                cntl;
 
-    if( wnd == NULL ) {
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   if( wnd == NULL ) {
         return( false );
     }
 
@@ -253,6 +257,7 @@ bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd
     bool        rc;
     int         notify_code;
 
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     lparam=lparam;
 
     ret = false;
@@ -294,7 +299,8 @@ bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd
 
 WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    gui_ctl_id          id;
+    WINDOW_MSG _msg= message;
+	gui_ctl_id          id;
     bool                escape_pressed;
     gui_window          *wnd;
     bool                msg_processed;
@@ -306,6 +312,8 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
     gui_event           gui_ev;
     gui_key_state       key_state;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+ 	GUIlog ("MSG %d(%d) %s %s(%d)\n", _msg, message, __FUNCTION__, __FILE__, __LINE__ );
     msg_processed = false;
     ret = false;
 
@@ -327,7 +335,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
     }
 
     switch( message ) {
-    case WM_SIZE:
+	case WM_SIZE:
         if( wnd != NULL ) {
             guix_coord  scr_size;
             gui_coord   size;
@@ -351,12 +359,16 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
         // May come along before WM_INITDIALOG
         if( wnd != NULL ) {
             SetBkColor( (HDC)wparam, GetNearestColor( (HDC)wparam, GUIGetBack( wnd, GUI_BACKGROUND ) ) );
+            SetTextColor( (HDC)wparam, GetNearestColor( (HDC)wparam, GUIGetFore( wnd, GUI_BACKGROUND ) ) );
             return( (WPI_DLGRESULT)wnd->bk_brush );
         }
         break;
 #endif
-    case WM_SYSCOLORCHANGE:
-        (void)CvrCtl3dColorChange();
+	case WM_SYSCOLORCHANGE:
+		(void)CvrCtl3dColorChange();
+#ifndef __OS2_PM__
+		InitSystemRGB();  // Reset colours on change of colour scheme
+#endif
         break;
     case WM_INITDIALOG:
         /* must return false or Windows will set input focus to the
@@ -615,7 +627,8 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
 #endif
     size_t              templatelen;
 
-    wnd->flags |= IS_DIALOG;
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   wnd->flags |= IS_DIALOG;
     wnd->parent = dlg_info->parent;
     wnd->root_pinfo.force_count = NUMBER_OF_FORCED_REPAINTS;
     wnd->hwnd_pinfo.force_count = NUMBER_OF_FORCED_REPAINTS;
@@ -704,6 +717,10 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
         old_dlgtemplate = new_dlgtemplate;
     }
     new_dlgtemplate = DoneAddingControls( old_dlgtemplate );
+//#if defined __NT__ ==1==
+// && !defined _WINDOWS_386__
+//        FixColours ( wnd->hwnd );
+//#endif
     DynamicDialogBox( GUIDialogDlgProc, GUIMainHInst, parent_hwnd, new_dlgtemplate, (WPI_PARAM2)wnd );
     return( true );
 }
@@ -731,15 +748,21 @@ static WPI_FONT         DlgFont;
 
 WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
+    WINDOW_MSG 			_msg= message;
     WPI_PRES            hdc;
     WPI_RECT            wpi_rect;
     bool                ret;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+ 	GUIlog ("MSG %s(%s) %s %s(%d)\n",  strmsgenum (" ", _msg), message, __func__, __FILE__, __LINE__ );
     lparam = lparam;
     ret    = false;
 
     switch( message ) {
 #ifndef __OS2_PM__
+    case WM_SYSCOLORCHANGE:
+		InitSystemRGB ();
+		break;
     case WM_SETFONT:
         DlgFont = (WPI_FONT)wparam;
         break;
@@ -784,7 +807,8 @@ void GUIInitDialog( void )
     bool                font_set;
     size_t              templatelen;
 
-    font_set = false;
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   font_set = false;
 #ifdef __OS2_PM__
     Font = GUIStrDup( LIT( OS2_Dialog_Font ), NULL );
 #else

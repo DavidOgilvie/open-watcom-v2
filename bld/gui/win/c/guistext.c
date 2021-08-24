@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guihook.h"
+#include "guilog.h"
+
 
 /*
  * GUISetWindowText - set the title text of a window

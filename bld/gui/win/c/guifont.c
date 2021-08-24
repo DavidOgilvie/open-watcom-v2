@@ -34,15 +34,18 @@
 #include "guiwind.h"
 #include <string.h>
 #if !defined(__OS2_PM__) && !defined(__WINDOWS_386__)
-#include <commdlg.h>
+	#include <commdlg.h>
 #endif
 #include "guifont.h"
 #include "fontstr.h"
 #include "guiutil.h"
 #include "guixutil.h"
 #include "guiscrol.h"
+#include "guilog.h"
+
 
 #define MAX_STR 256
+
 
 #ifndef __OS2_PM__
 static void SetFont( gui_window *wnd, HFONT font )

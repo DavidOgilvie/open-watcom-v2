@@ -33,6 +33,8 @@
 
 #include "guiwind.h"
 #include "guiscale.h"
+#include "guilog.h"
+
 
 void GUIAPI GUIGetClientRect( gui_window *wnd, gui_rect *rect )
 {
@@ -40,6 +42,7 @@ void GUIAPI GUIGetClientRect( gui_window *wnd, gui_rect *rect )
     WPI_RECTDIM left, top, right, bottom;
     guix_rect   client;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     wpi_rect = wnd->hwnd_client_rect;
     _wpi_mapwindowpoints( wnd->hwnd, HWND_DESKTOP, (WPI_LPPOINT)&wpi_rect, 2 );
     _wpi_getwrectvalues( wpi_rect, &left, &top, &right, &bottom );
@@ -56,6 +59,7 @@ bool GUIAPI GUIGetPaintRect( gui_window *wnd, gui_rect *rect )
     WPI_RECTDIM left, top, right, bottom;
     guix_rect   client;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( ( wnd->hdc == NULLHANDLE ) || ( wnd->ps == NULL ) ) {
         return( false );
     }

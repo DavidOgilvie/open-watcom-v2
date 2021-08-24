@@ -36,6 +36,8 @@
 #include "guiscrol.h"
 #include "guixutil.h"
 #include "guipaint.h"
+#include "guilog.h"
+
 
 /*
  * GUIWndDirtyRow -- tell the user interface that one row of the contents of

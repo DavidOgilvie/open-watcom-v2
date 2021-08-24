@@ -35,10 +35,12 @@
 #include "guiextnm.h"
 #include "guixwind.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 static  bool        GUIMsgInitFlag = false;
 static  bool        external = false;
+
 
 bool GUIAPI GUIIsLoadStrInitialized( void )
 {

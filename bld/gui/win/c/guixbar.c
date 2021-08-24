@@ -35,9 +35,12 @@
 #include "guiscale.h"
 #include "guicolor.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 #define SHADOW_OFFSET   3
 #define BAR_INSET       2
+
 
 static bool DrawSimpleBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR colour,
                     bool selected, bool full_bar )

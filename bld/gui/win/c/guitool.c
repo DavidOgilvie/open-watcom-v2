@@ -40,15 +40,17 @@
 #include "guimenus.h"
 #include "guixutil.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 /* total height/width taken up by outline around  bitmap, on button */
 #if defined (__NT__)
-#define OUTLINE_AMOUNT  4   // Should be changed later.
+	#define OUTLINE_AMOUNT  4   // Should be changed later.
 #else
-#define OUTLINE_AMOUNT  4
+	#define OUTLINE_AMOUNT  4
 #endif
 #define BORDER_AMOUNT   1 /* space outside row of buttons */
+
 
 /*
  * GUIXCloseToolBar -- close the tool bar and free memory.  Can be called by

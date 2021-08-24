@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guiscale.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 
 WPI_TEXTMETRIC GUItm;
@@ -148,7 +150,8 @@ void GUIGetUpdateRows( gui_window *wnd, HWND hwnd, gui_text_ord *start, gui_text
     int         avgy;
     WPI_RECTDIM left, top, right, bottom;
 
-    hwnd = hwnd;
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   hwnd = hwnd;
 
     _wpi_gettextmetrics( wnd->hdc, &GUItm );
     avgy = AVGYCHAR( GUItm );

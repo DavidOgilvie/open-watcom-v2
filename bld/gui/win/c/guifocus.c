@@ -33,6 +33,8 @@
 
 #include "guiwind.h"
 #include "guicontr.h"
+#include "guilog.h"
+
 
 /*
  * GUISetFocus -- set input focus to a control in a dialog box or in a window

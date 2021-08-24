@@ -36,6 +36,8 @@
 #include <stdlib.h>
 #include "guiscale.h"
 #include "guigetx.h"
+#include "guilog.h"
+
 
 static bool GetExtent( gui_window *wnd, const char *text, size_t in_length, gui_coord *extent )
 {

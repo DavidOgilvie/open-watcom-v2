@@ -33,6 +33,8 @@
 
 #include "guiwind.h"
 #include "guicutil.h"
+#include "guilog.h"
+
 
 bool GUIAPI GUIDropDown( gui_window *wnd, gui_ctl_id id, bool drop )
 {

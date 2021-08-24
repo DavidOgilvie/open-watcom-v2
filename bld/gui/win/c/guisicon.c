@@ -34,6 +34,7 @@
 #include "guiwind.h"
 #include "guistr.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 /*

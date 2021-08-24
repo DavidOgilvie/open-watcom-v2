@@ -32,6 +32,7 @@
 
 
 #include "guiwind.h"
+#include "guilog.h"
 
 
 bool GUIAPI GUISysInit( init_mode install )

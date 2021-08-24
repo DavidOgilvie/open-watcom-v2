@@ -39,6 +39,7 @@
 #include "ctl3dcvr.h"
 #include "wclbproc.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 typedef struct {
@@ -86,6 +87,7 @@ WPI_WNDPROC GUISubClassEditCombobox( HWND hwnd )
     WNDENUMPROC         wndenumproc;
 #endif
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     e_info.success = false;
 #ifdef __OS2_PM__
     wndenumproc = _wpi_makeenumprocinstance( GUISubClassEditComboboxEnumFunc, GUIMainHInst );

@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guiscale.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 /*
  * InitScroll -- Init the scrolling position for the window
@@ -44,6 +46,7 @@ static void InitScroll( gui_window *wnd, int bar, guix_ord pos )
     guix_ord old;
     guix_ord max;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( GUIScrollOn( wnd, bar ) ) {
         if( pos >= 0 ) {
             old = GUIGetScrollPos( wnd, bar );
@@ -87,6 +90,7 @@ void GUIAPI GUIInitVScroll( gui_window *wnd, gui_ord vscroll_pos )
 {
     guix_ord    scr_y;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     scr_y = GUIScaleToScreenV( vscroll_pos );
     if( ( vscroll_pos != 0 ) && ( scr_y == 0 ) ) {
         scr_y++;

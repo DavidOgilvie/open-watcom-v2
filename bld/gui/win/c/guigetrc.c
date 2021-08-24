@@ -36,6 +36,7 @@
 #include <string.h>
 #include "guigetx.h"
 #include "guiscale.h"
+#include "guilog.h"
 
 
 gui_text_ord GUIAPI GUIGetRow( gui_window *wnd, const gui_point *in_pos )

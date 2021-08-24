@@ -35,8 +35,11 @@
 #include "guimenus.h"
 #include "guixutil.h"
 #include "guihook.h"
+#include "guilog.h"
+
 
 #define NUM_SYSTEM_MENUS        9
+
 
 static void FreeSystemMenu( gui_window *wnd )
 {

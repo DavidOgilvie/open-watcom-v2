@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guiscale.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 static guix_ord GetPos( gui_window *wnd, int bar )
 {

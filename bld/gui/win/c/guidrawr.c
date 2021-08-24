@@ -36,6 +36,7 @@
 #include "guicolor.h"
 #include "guixutil.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 static bool DrawRect( gui_window *wnd, const gui_rect *rect, WPI_COLOUR colour, bool fill, bool outline )
@@ -50,6 +51,7 @@ static bool DrawRect( gui_window *wnd, const gui_rect *rect, WPI_COLOUR colour, 
     gui_ord     pos;
     gui_ord     size;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( ( rect->width == 0 ) || ( rect->height == 0 ) ) {
         return( false );
     }

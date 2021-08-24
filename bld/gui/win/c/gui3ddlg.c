@@ -33,6 +33,7 @@
 #include "guiwind.h"
 #include "ctl3dcvr.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 bool GUIAPI GUI3DDialogInit( void )

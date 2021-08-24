@@ -32,6 +32,7 @@
 
 
 #include "guiwind.h"
+#include "guilog.h"
 
 
 void GUIAPI GUISetDClickRate( unsigned dclick_ms )

@@ -35,6 +35,8 @@
 #include "guiscale.h"
 #include "guixutil.h"
 #include "guipaint.h"
+#include "guilog.h"
+
 
 /*
  * GUIWndDirtyRect -- tell the user interface that one rectangle of the

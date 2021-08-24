@@ -37,6 +37,8 @@
 #elif defined __WINDOWS__
     #include <windows.h>
 #endif
+#include "guilog.h"
+
 
 char __CharLenTable[256];
 static bool Init;

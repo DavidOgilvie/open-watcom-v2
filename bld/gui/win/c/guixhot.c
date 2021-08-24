@@ -36,6 +36,7 @@
 #include "guixdraw.h"
 #include "guixwind.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 #ifdef __NT__

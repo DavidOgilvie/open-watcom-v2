@@ -36,6 +36,7 @@
 #include "guixutil.h"
 #include "wclbproc.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 /* Local Window callback functions prototypes */

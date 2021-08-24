@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guiscale.h"
+#include "guilog.h"
+
 
 void GUIAPI GUIGetAbsRect( gui_window *wnd, gui_rect *rect )
 {

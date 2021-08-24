@@ -41,6 +41,7 @@
 #include "guixdraw.h"
 #include "guistr.h"
 #include "guicolor.h"
+#include "guilog.h"
 
 
 typedef struct draw_cache {
@@ -159,7 +160,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
                 nDrawY += _wpi_metricdescent( GUItm );
 #endif
                 old_rop = _wpi_setrop2( wnd->hdc, R2_COPYPEN );
-                SetText( wnd, fore, back );
+				SetText( wnd, fore, back );
                 _wpi_textout( wnd->hdc, nDrawX, nDrawY, text, num_chars );
             } else {
                 GUIDrawBitmap( hotspot_no, wnd->hdc, nDrawX, nDrawY, colour );
