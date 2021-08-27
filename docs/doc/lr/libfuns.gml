@@ -812,20 +812,18 @@
 .fnn _fmbsnbcat                 mbsnbcat.gml    DOS       WIN32
 .fnm _mbsnbcmp                  mbsnbcmp.gml    DOS       WIN32
 .fnn _fmbsnbcmp                 mbsnbcmp.gml    DOS       WIN32
-.fnm _mbsnbcnt                  mbsnbcnt.gml    DOS       WIN32
-.fnn _fmbsnbcnt                 mbsnbcnt.gml    DOS       WIN32
-.fnm _strncnt                   mbsnbcnt.gml    DOS QNX W WIN32
-.fnw _wcsncnt                   mbsnbcnt.gml    DOS QNX W WIN32
 .fnm _mbsnbcpy                  mbsnbcpy.gml    DOS       WIN32
 .fnn _fmbsnbcpy                 mbsnbcpy.gml    DOS       WIN32
 .fnm _mbsnbicmp                 mbsnbicm.gml    DOS       WIN32
 .fnn _fmbsnbicmp                mbsnbicm.gml    DOS       WIN32
 .fnm _mbsnbset                  mbsnbset.gml    DOS       WIN32
 .fnn _fmbsnbset                 mbsnbset.gml    DOS       WIN32
-.fnm _mbsnccnt                  mbsnccnt.gml    DOS       WIN32
-.fnn _fmbsnccnt                 mbsnccnt.gml    DOS       WIN32
-.fnm _strncnt                   mbsnccnt.gml    DOS QNX W WIN32
-.fnw _wcsncnt                   mbsnccnt.gml    DOS QNX W WIN32
+.fnm _mbsnbcnt                  mbsncnt.gml     DOS       WIN32
+.fnn _fmbsnbcnt                 mbsncnt.gml     DOS       WIN32
+.fnm _mbsnccnt                  mbsncnt.gml     DOS       WIN32
+.fnn _fmbsnccnt                 mbsncnt.gml     DOS       WIN32
+.fnm _strncnt                   mbsncnt.gml     DOS QNX W WIN32
+.fnw _wcsncnt                   mbsncnt.gml     DOS QNX W WIN32
 .fnm _mbsnextc                  mbsnextc.gml    DOS       WIN32
 .fnn _fmbsnextc                 mbsnextc.gml    DOS       WIN32
 .fnm _strnextc                  mbsnextc.gml    DOS QNX W WIN32
@@ -1381,11 +1379,11 @@
 .fnm _mbsdup                    strdup.gml      DOS       WIN32
 .fnn _fmbsdup                   strdup.gml      DOS       WIN32
 .fnc strerror                   strerror.gml    DOS QNX W WIN32
-.fnw wcserror                   strerror.gml    DOS       WIN32
+.fnw _wcserror                  strerror.gml    DOS       WIN32
 .fnc strerror_s                 strerr_s.gml    DOS       WIN32
-.fnw wcserror_s                 strerr_s.gml    DOS       WIN32
+.fnw _wcserror_s                strerr_s.gml    DOS       WIN32
 .fnc strerrorlen_s              streln_s.gml    DOS       WIN32
-.fnw wcserrorlen_s              streln_s.gml    DOS       WIN32
+.fnw _wcserrorlen_s             streln_s.gml    DOS       WIN32
 .fnc strftime                   strftime.gml    DOS QNX W WIN32
 .fnw wcsftime                   strftime.gml    DOS QNX W WIN32
 .fnw _wstrftime_ms              strftime.gml    DOS QNX W WIN32
