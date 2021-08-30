@@ -286,6 +286,7 @@
 &*str.&*.
 .dm qref end
 .gt qref add qref cont att
+.ga * top REQ ANY
 .ga * str REQ ANY
 .ga * pfx ANY
 .ga * * value '' default

@@ -1,10 +1,9 @@
 .func bzero
 .synop begin
-** deprecated **
-
+.deprec
 #include <strings.h>
 void bzero( void *dst, size_t n );
-.ixfunc2 '&String' &funcb
+.ixfunc2 '&String' bzero
 .synop end
 .desc begin
 The
@@ -25,7 +24,7 @@ The
 function has no return value.
 .return end
 .see begin
-.seelist bcmp bcopy bzero memset strset
+.seelist bcmp bcopy bzero memset _strset
 .see end
 .exmp begin
 #include <strings.h>

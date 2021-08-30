@@ -31,7 +31,7 @@ asct_r        _asctime          asctime_r                                       
 atoi64        atoll             _atoi64           d16 d32 nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32         rdu rdk
 chdir_        chdir             _chdir            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 chmod_        chmod             _chmod            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
-chsize        chsize            _chsize           d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
+chsize        _chsize           chsize            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 close_        close             _close            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 creat_        creat             _creat            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 ctim_r        _ctime            ctime_r                                                               l32 lpc lmp
@@ -39,7 +39,7 @@ cwait_        cwait             _cwait                    nt  nta ntp         o1
 dopen_        _hdopen           _dopen            d16 d32 nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32         rdu rdk
 dup2__        dup2              _dup2             d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 dup___        dup               _dup              d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
-eof___        eof               _eof              d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
+eof___        _eof              eof               d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 excl__        execl             _execl            d16     nt  nta ntp         o16 o32 q16 q32         l32 lpc lmp rdu
 excle_        execle            _execle           d16     nt  nta ntp         o16 o32 q16 q32         l32 lpc lmp rdu
 exclp_        execlp            _execlp           d16     nt  nta ntp         o16 o32 q16 q32         l32 lpc lmp rdu
@@ -90,7 +90,8 @@ mbsnbc        _mbsnbcmp         _mbsnbcoll        d16 d32 nt  nta ntp         o1
 mbsnbi        _mbsnbicmp        _mbsnbicoll       d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 mbsnco        _mbsncmp          _mbsncoll         d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 mbsnic        _mbsnicmp         _mbsnicoll        d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
-memicm        memicmp           _memicmp          d16 d32 nt  nta ntp         o16 o32         w16 w32 l32         rdu rdk
+memccp        memccpy           _memccpy          d16 d32 nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32         rdu rdk
+memicm        _memicmp          memicmp           d16 d32 nt  nta ntp         o16 o32         w16 w32 l32         rdu rdk
 mkdir_        mkdir             _mkdir            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 open__        open              _open             d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 pclose        pclose            _pclose                                                               l32 lpc lmp
@@ -100,7 +101,7 @@ putws_        putws             _putws            d16 d32 nt  nta ntp         o1
 read__        read              _read             d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 rmdir_        rmdir             _rmdir            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 setenv        setenv            _setenv           d16 d32 nt  nta ntp         o16 o32 q16     w16 w32 l32 lpc lmp rdu rdk
-setmod        setmode           _setmode          d16 d32 nt  nta ntp nvc nvl o16 o32         w16 w32             rdu rdk
+setmod        _setmode          setmode           d16 d32 nt  nta ntp nvc nvl o16 o32         w16 w32             rdu rdk
 sisini        mbsinit           sisinit           d16 d32 nt  nta ntp         o16 o32         w16 w32
 sopen_        sopen             _sopen            d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 spwl__        spawnl            _spawnl           d16     nt  nta ntp         o16 o32 q16 q32         l32 lpc lmp rdu
@@ -169,7 +170,7 @@ tcsspn        _mbsspn           _tcsspn           d16 d32 nt  nta ntp         o1
 tcsstr        _mbsstr           _tcsstr           d16 d32 nt  nta ntp         o16 o32 q16 q32 w16 w32 l32         rdu rdk
 tcstok        _mbstok           _tcstok           d16 d32 nt  nta ntp         o16 o32 q16 q32 w16 w32 l32         rdu rdk
 tcsupr        _mbsupr           _tcsupr           d16 d32 nt  nta ntp         o16 o32 q16 q32 w16 w32 l32         rdu rdk
-tell__        tell              _tell             d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
+tell__        _tell             tell              d16 d32 nt  nta ntp         o16 o32         w16 w32             rdu rdk
 tolowe        tolower           _tolower          d16 d32 nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32         rdu rdk
 touppe        toupper           _toupper          d16 d32 nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32         rdu rdk
 tzset_        tzset             _tzset            d16 d32 nt  nta ntp         o16 o32 q16 q32 w16 w32 l32         rdu rdk

@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -427,7 +428,7 @@ _WCRTLINK int dup2( int handle1, int handle2 )
     return( -1 );
 }
 
-_WCRTLINK int eof( int handle )
+_WCRTLINK int _eof( int handle )
 {
     int         rdos_handle;
     long        pos;
@@ -457,7 +458,7 @@ _WCRTLINK long filelength( int handle )
     }
 }
 
-_WCRTLINK int chsize( int handle, long size )
+_WCRTLINK int _chsize( int handle, long size )
 {
     int         rdos_handle;
 
@@ -526,7 +527,7 @@ _WCRTLINK int fstat( int handle, struct stat *buf )
         return( -1 );
 }
 
-_WCRTLINK int setmode( int handle, int mode )
+_WCRTLINK int _setmode( int handle, int mode )
 {
     return( mode );
 }
@@ -581,7 +582,7 @@ _WCRTLINK off_t lseek( int handle, off_t offset, int origin )
         return( -1 );
 }
 
-_WCRTLINK off_t tell( int handle )
+_WCRTLINK off_t _tell( int handle )
 {
     return( GetHandlePos( handle ) );
 }

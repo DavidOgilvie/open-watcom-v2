@@ -92,6 +92,19 @@
 .se $$fnc(&__fnx.)=&*1
 .dm addsyinf end
 .*
+.dm ftopsect begin
+.cp 10
+.funcref &'strip(&*1.,'T',',')
+.se *top='&'translate(&frefid.,`&trto.`,`&trfrom.`)'
+:ZH2 ctx='&*top.'.&*
+.pu 1 .ixsect &*
+.pu 1 .ixsectid &*top.
+.se headtxt0$=&*
+.se headtxt1$=&*
+.se SCTlvl=1
+.cntents *ctx='&*top.' &*
+.dm ftopsect end
+.*
 .dm funkw begin
 .se *fnd=&'vecpos(&*1,fnclst)
 .if &*fnd. eq 0 .do begin
@@ -185,12 +198,12 @@
 .do end
 .if &'compare(&*1.,'begin') ne 0 .do begin
 .*  generate title and start of code (declaration)
-.   .topsect &fncttl.
 .   .if &'length(&funcgrp.) ne 0 .do begin
 .   .   .sr functiong=&funcgrp.
 .   .   .ixm '&funcgrp. Functions'
 .   .do end
 .   .el .sr functiong=&funcb.
+.   .ftopsect &fncttl.
 .   .sr *i=0
 .   .pe &__fnx.;.sr *i=&*i.+1;.ixm '&$$fnc(&*i.)'
 .do end
@@ -510,26 +523,38 @@ Prototype in
 .el .if '&*' eq 'end' .oldtext
 .dm see end
 .*
-.dm seelist begin
-.se *i=1
-.se *j=2
-.pe &*0.
-.   .seekw '&functiong.' &*&*i. &*&*j.;.se *i=&*i.+1;.se *j=&*i.+1
-.dm seelist end
+.dm ofuncref begin
+.if &e'&dohelp eq 0 .do begin
+.   .mono &frefid.
+.do end
+.el .do begin
+:QREF top='&frefid.' str='&*'.
+.do end
+.dm ofuncref end
+.*
+.dm reffunc begin
+.funcref &*1.
+.if '&freffnd.' ne '0' .do begin
+.   .ofuncref &*1.
+.do end
+.dm reffunc end
+.*
+.dm seeref begin
+.ix '&*1'
+(see the
+.reffunc &*1.
+&routine)
+.dm seeref end
 .*
 .dm seekw begin
 .if &'length(&*2.) ne 0 .do begin
 .   .if '&*2' ne 'Functions' .do begin
 .   .   .if '&*1' ne '&*2' .do begin
-.   .   .   .if &'vecpos(&*2,fnclst) ne 0 .do begin
+.   .   .   .funcref &*2.
+.   .   .   .if '&freffnd.' ne '0' .do begin
 .   .   .   .   .if &seecnt. ne 0 .ct ,
 .   .   .   .   .se seecnt=1
-.   .   .   .   .if &e'&dohelp eq 0 .do begin
-.   .   .   .   .   .mono &*2
-.   .   .   .   .do end
-.   .   .   .   .el .do begin
-:QREF str='&*2'.
-.   .   .   .   .do end
+.   .   .   .   .ofuncref &*2.
 .   .   .   .   .if '&*3' eq 'Functions' .do begin
 &*3
 .   .   .   .   .do end
@@ -538,6 +563,13 @@ Prototype in
 .   .do end
 .do end
 .dm seekw end
+.*
+.dm seelist begin
+.se *i=1
+.se *j=2
+.pe &*0.
+.   .seekw '&functiong.' &*&*i. &*&*j.;.se *i=&*i.+1;.se *j=&*i.+1
+.dm seelist end
 .*
 .dm seeall begin
 .newtext See also:
@@ -760,4 +792,20 @@ string versions of
 .period
 .tcsfoot &*3. &*4.
 .dm tcsfunc end
+.*
+.dm deprec begin
+** deprecated **
+.dm deprec end
+.*
+.dm deprfunc begin
+.id &*2.
+function is identical to the
+.id &*1.
+function.
+Use 
+.reffunc &*2.
+instead of 
+.id &*1.
+.period
+.dm deprfunc end
 .*
