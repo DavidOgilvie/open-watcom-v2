@@ -1,4 +1,5 @@
 .func _stricmp _fstricmp _wcsicmp _mbsicmp _fmbsicmp stricmp
+.ansiname _stricmp
 .synop begin
 #include <string.h>
 int _stricmp( const char *s1, const char *s2 );
@@ -50,11 +51,12 @@ All uppercase characters from
 and
 .arg s2
 are mapped to lowercase for the purposes of doing the comparison.
-.im ansiconf
 .farfuncp &ffunc. &funcb.
 .widefunc &wfunc. &funcb.
 .mbcsfunc &mfunc. &funcb.
 .farfuncp &fmfunc. &mfunc.
+.np
+.deprfunc stricmp _stricmp
 .desc end
 .return begin
 The function returns an integer less than, equal to,
@@ -65,7 +67,7 @@ is less than, equal to, or greater than the string pointed to by
 .period
 .return end
 .see begin
-.seelist strcmp _stricmp strncmp _strnicmp strcmpi strcasecmp strncasecmp
+.seelist strcmp _stricmp strncmp _strnicmp strcasecmp strncasecmp
 .see end
 .exmp begin
 #include <stdio.h>

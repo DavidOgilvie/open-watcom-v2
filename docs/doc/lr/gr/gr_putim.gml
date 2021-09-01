@@ -1,4 +1,4 @@
-.gfuncw putimage
+.gfuncw _putimage
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 void _FAR _putimage( short x, short y,
@@ -36,11 +36,11 @@ The image is displayed upon the screen with its top left corner
 located at the point with coordinates
 .coord x y .
 The image was previously saved using the
-.kw _getimage
+.reffunc _getimage
 &routines..
 The image is displayed in a rectangle whose size
 is the size of the rectangular image saved by the
-.kw _getimage
+.reffunc _getimage
 &routines..
 .pp
 The image can be displayed in a number of ways, depending upon the
@@ -49,18 +49,18 @@ value of the
 argument.
 This argument can have the following values:
 .begterm 15
-.uterm GPSET
+.uterm _GPSET
 replace the rectangle on the screen by the saved image
-.uterm GPRESET
+.uterm _GPRESET
 replace the rectangle on the screen with the pixel values of the
 saved image inverted; this produces a negative image
-.uterm GAND
+.uterm _GAND
 produce a new image on the screen by ANDing together the pixel values
 from the screen with those from the saved image
-.uterm GOR
+.uterm _GOR
 produce a new image on the screen by ORing together the pixel values
 from the screen with those from the saved image
-.uterm GXOR
+.uterm _GXOR
 produce a new image on the screen by exclusive ORing together
 the pixel values from the screen with those from the saved image;
 the original screen is restored by two successive calls to the &funcb

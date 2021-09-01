@@ -21,21 +21,21 @@ and the data is transmitted starting at the address specified by
 The
 .arg &fd
 value is returned by the
-.kw open
+.reffunc open
 function.
 The access mode must have included either
 .kw O_RDONLY
 or
 .kw O_RDWR
 when the
-.kw open
+.reffunc open
 function was invoked.
 The data is read starting at the
 current file position for the file in question.
 This file position can be determined with the
-.kw tell
+.reffunc _tell
 function and can be set with the
-.kw lseek
+.reffunc lseek
 function.
 .np
 When

@@ -33,7 +33,7 @@ pointer.
 The argument
 .arg mode
 is described in the description of the
-.kw fopen
+.reffunc fopen
 function.
 .widefunc &wfunc. &funcb.
 .desc end
@@ -53,7 +53,7 @@ returns
 .see begin
 .seelist freopen _dos_open fclose fcloseall fdopen fopen fopen_s freopen_s
 .seelist freopen _fsopen _grow_handles _hdopen open _open_osfhandle
-.seelist freopen _popen sopen
+.seelist freopen _popen _sopen
 .see end
 .exmp begin
 #include <stdio.h>

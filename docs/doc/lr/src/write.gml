@@ -22,14 +22,14 @@ and the data to be transmitted is located at the address specified by
 The
 .arg &fd
 value is returned by the
-.kw open
+.reffunc open
 function.
 The access mode must have included either
 .kw O_WRONLY
 or
 .kw O_RDWR
 when the
-.kw open
+.reffunc open
 function was invoked.
 .np
 The data is written to the file at the end when the file was opened with
@@ -37,9 +37,9 @@ The data is written to the file at the end when the file was opened with
 included as part of the access mode; otherwise, it is written at the
 current file position for the file in question.
 This file position can be determined with the
-.kw tell
+.reffunc _tell
 function and can be set with the
-.kw lseek
+.reffunc lseek
 function.
 .np
 When
@@ -58,7 +58,7 @@ argument.
 however, that this doesn't work under OS/2 2.1, Windows NT/2000, and
 other operating systems.
 To truncate a file in a portable manner, use the
-.kw chsize
+.reffunc _chsize
 function.
 .desc end
 .return begin

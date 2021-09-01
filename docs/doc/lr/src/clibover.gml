@@ -175,13 +175,13 @@ These functions are described in the "IEEE Standard Portable Operating
 System Interface for Computer Environments" (POSIX 1003.1).
 The POSIX input/output functions provide the capability to perform I/O
 at a "lower level" than the C Language "stream I/O" functions (e.g.,
-.kw fopen
+.reffunc fopen
 .ct ,
-.kw fread
+.reffunc fread
 .ct ,
-.kw fwrite
+.reffunc fwrite
 .ct , and
-.kw fclose
+.reffunc fclose
 .ct ).
 .do end
 .el .do begin
@@ -637,12 +637,15 @@ pointers as their arguments allowing manipulation of any memory location
 regardless of which memory model your program has been compiled for.
 .fdbeg
 .fd bcmp
+.deprec
 compare two byte strings
 .fd bcopy
+.deprec
 copy a byte string
 .fd _bprintf
 formatted transmission to fixed-length string
 .fd bzero
+.deprec
 zero a byte string
 .fd _fstrcat
 concatenate two far strings
@@ -697,6 +700,7 @@ locate character in string
 .fd strcmp
 compare two strings
 .fd strcmpi
+.deprec
 compare two strings with case insensitivity
 .fd strcoll
 compare two strings using "locale" collating sequence
@@ -828,6 +832,7 @@ locate character in string
 .fd wcscmp
 compare two strings
 .fd wcscmpi
+.deprec
 compare two strings with case insensitivity
 .fd wcscoll
 compare two strings using "locale" collating sequence
@@ -1231,25 +1236,25 @@ It may be less in a machine with insufficient memory or when other
 programs in the computer already occupy some of the memory.
 .do end
 The
-.kw _nmalloc
+.reffunc _nmalloc
 function allocates space within this area while the
-.kw _fmalloc
+.reffunc _fmalloc
 function allocates space outside the area (if it is available).
 .np
 In a small data model, the
-.kw malloc
+.reffunc malloc
 .ct ,
-.kw calloc
+.reffunc calloc
 and
-.kw realloc
+.reffunc realloc
 functions use the
-.kw _nmalloc
+.reffunc _nmalloc
 function to acquire memory; in a large data model, the
-.kw _fmalloc
+.reffunc _fmalloc
 function is used.
 .np
 It is also possible to allocate memory from a based heap using
-.kw _bmalloc
+.reffunc _bmalloc
 .period
 Based heaps are similar to far heaps in that they are located
 outside the normal data segment.
@@ -1262,45 +1267,45 @@ heap functions.
 It is important to use the appropriate memory-deallocation function to
 free memory blocks.
 The
-.kw _nfree
+.reffunc _nfree
 function should be used to free space acquired by the
-.kw _ncalloc
+.reffunc _ncalloc
 .ct ,
-.kw _nmalloc
+.reffunc _nmalloc
 .ct , or
-.kw _nrealloc
+.reffunc _nrealloc
 functions.
 The
-.kw _ffree
+.reffunc _ffree
 function should be used to free space acquired by the
-.kw _fcalloc
+.reffunc _fcalloc
 .ct ,
-.kw _fmalloc
+.reffunc _fmalloc
 .ct , or
-.kw _frealloc
+.reffunc _frealloc
 functions.
 The
-.kw _bfree
+.reffunc _bfree
 function should be used to free space acquired by the
-.kw _bcalloc
+.reffunc _bcalloc
 .ct ,
-.kw _bmalloc
+.reffunc _bmalloc
 .ct , or
-.kw _brealloc
+.reffunc _brealloc
 functions.
 .np
 The
-.kw free
+.reffunc free
 function will use the
-.kw _nfree
+.reffunc _nfree
 function when the small data memory model is used; it will use the
-.kw _ffree
+.reffunc _ffree
 function when the large data memory model is being used.
 .np
 It should be noted that the
-.kw _fmalloc
+.reffunc _fmalloc
 and
-.kw _nmalloc
+.reffunc _nmalloc
 functions can both be used in either data memory model.
 .fdbeg
 .fd alloca
@@ -1976,11 +1981,11 @@ When a new process is started, it may replace the existing process
 .bull
 .kw P_OVERLAY
 is specified with the
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 functions
 .bull
 the
-.kw exec&grpsfx
+.reffunc exec&grpsfx
 routines are invoked
 .endbull
 .pc
@@ -1991,10 +1996,10 @@ new process was started)
 .bull
 .kw P_WAIT
 is specified with the
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 functions
 .bull
-.kw system
+.reffunc system
 is used
 .endbull
 .np
@@ -2160,9 +2165,9 @@ execute system command
 .fdend
 .np
 There are eight
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 and
-.kw exec&grpsfx
+.reffunc exec&grpsfx
 functions each.
 The
 .mono "&grpsfx"
@@ -2335,7 +2340,7 @@ which is returned when the file is opened.
 The file &handle is passed to the other functions.
 .np
 .fdbeg
-.fd chsize
+.fd _chsize
 change the size of a file
 .fd close
 close file
@@ -2347,13 +2352,13 @@ create a file
 duplicate file &handle, get unused &handle number
 .fd dup2
 duplicate file &handle, supply new &handle number
-.fd eof
+.fd _eof
 test for end of file
 .fd fcntl
 control over an open file
 .fd fdatasync
 write queued file data to disk
-.fd filelength
+.fd _filelength
 get file size
 .fd fileno
 get file &handle for stream file
@@ -2401,15 +2406,15 @@ read a symbolic link
 read several records placing them into a specified number of buffers
 .fd select
 synchronous I/O multiplexing
-.fd setmode
+.fd _setmode
 set file mode
-.fd sopen
+.fd _sopen
 open a file for shared access
 .fd symlink
 create a symbolic link
 .fd sync
 sync the filesystem
-.fd tell
+.fd _tell
 get current file position
 .fd umask
 set file permission mask
@@ -3455,7 +3460,7 @@ delete a file
 rename a file
 .fd rmdir
 remove a directory
-.fd sopen
+.fd _sopen
 open a file for shared access
 .fd stat
 get file status
@@ -3563,9 +3568,9 @@ as follows:
 .do end
 .pc
 or (during the program execution) by using the
-.kw setenv
+.reffunc setenv
 or
-.kw putenv
+.reffunc putenv
 library functions:
 .millust begin
     setenv( "TZ", "PST8PDT", 1 );
@@ -3573,7 +3578,7 @@ library functions:
 .millust end
 .np
 The value of the variable can be obtained by using the
-.kw getenv
+.reffunc getenv
 function:
 .millust begin
     char *tzvalue;
@@ -3582,7 +3587,7 @@ function:
 .millust end
 .np
 The
-.kw tzset
+.reffunc tzset
 function processes the
 .kw TZ
 environment variable and sets the global variables
@@ -3731,7 +3736,7 @@ or
 is called, the time zone names contained in the external variable
 .kw tzname
 will be set as if the
-.kw tzset
+.reffunc tzset
 function had been called.
 The same is true if the
 .mono %Z

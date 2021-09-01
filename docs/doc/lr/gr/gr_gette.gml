@@ -1,4 +1,4 @@
-.gfunc gettextextent
+.gfunc _gettextextent
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 void _FAR _gettextextent( short x, short y,
@@ -18,7 +18,7 @@ record /xycoord/ extent(4)
 The
 .id &funcb.
 &routine simulates the effect of using the
-.kw _grtext
+.reffunc _grtext
 &routine to display the text string
 .arg text
 at the position

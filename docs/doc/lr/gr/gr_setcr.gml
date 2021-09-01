@@ -1,4 +1,4 @@
-.gfunc setcliprgn
+.gfunc _setcliprgn
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 void _FAR _setcliprgn( short x1, short y1,
@@ -24,12 +24,12 @@ and
 The
 .id &funcb.
 &routine does not affect text output using the
-.kw _outtext
+.reffunc _outtext
 and
-.kw _outmem
+.reffunc _outmem
 &routines..
 To control the location of text output, see the
-.kw _settextwindow
+.reffunc _settextwindow
 &routine..
 .desc end
 .if '&lang' eq 'C' .do begin

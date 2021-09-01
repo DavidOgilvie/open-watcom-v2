@@ -1,4 +1,4 @@
-.gfunc setcolor
+.gfunc _setcolor
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 short _FAR _setcolor( short pixval );
@@ -17,7 +17,7 @@ current color to be that indicated by the
 argument.
 The current color is only used by the &routines that produce graphics
 output; text output with
-.kw _outtext
+.reffunc _outtext
 uses the current text color
 .seeref _settextcolor
 .period

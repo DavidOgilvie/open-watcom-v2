@@ -44,12 +44,12 @@ the string
 to it for processing.
 .if '&machsys' eq 'QNX' .do begin
 This function uses
-.kw spawnlp
+.reffunc spawnlp
 to load a copy of the &shell..
 .do end
 .el .do begin
 This function uses
-.kw spawnl
+.reffunc spawnl
 to load a copy of the &shell identified by the
 .kw COMSPEC
 environment variable.
@@ -74,9 +74,9 @@ shell scripts.
 batch files.
 .do end
 The
-.kw exec&grpsfx
+.reffunc exec&grpsfx
 and
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 functions can only cause programs to be executed.
 .widefunc &wfunc. &funcb.
 .desc end

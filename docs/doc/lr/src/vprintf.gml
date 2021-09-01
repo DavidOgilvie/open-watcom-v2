@@ -28,16 +28,16 @@ under control of the argument
 The
 .arg format
 string is described under the description of the
-.kw printf
+.reffunc printf
 function.
 The
 .id &funcb.
 function is equivalent to the
-.kw printf
+.reffunc printf
 function, with the variable argument list replaced with
 .arg arg
 .ct , which has been initialized by the
-.kw va_start
+.reffunc va_start
 macro.
 .im widefun4
 .desc end

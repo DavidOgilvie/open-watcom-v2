@@ -173,7 +173,7 @@ _strnicmp~b~b~b~b~b~b~b~b~b~b
 _strnset~b~b~b~b~b~b~b~b~b~b~b
 strpbrk~b~b~b~b~b~b~b~b~b~b~b~b
 strrchr~b~b~b~b~b~b~b~b~b~b~b~b
-strrev~b~b~b~b~b~b~b~b~b~b~b~b~b
+_strrev~b~b~b~b~b~b~b~b~b~b~b~b
 _strset~b~b~b~b~b~b~b~b~b~b~b~b
 strspn~b~b~b~b~b~b~b~b~b~b~b~b~b
 strstr~b~b~b~b~b~b~b~b~b~b~b~b~b
@@ -237,7 +237,7 @@ calloc~b~b~b~b~b~b~b~b~b~b~b~b~b
 cgets~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 chdir~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 chmod~b~b~b~b~b~b~b~b~b~b~b~b~b~b
-chsize~b~b~b~b~b~b~b~b~b~b~b~b~b
+_chsize~b~b~b~b~b~b~b~b~b~b~b~b
 clearerr~b~b~b~b~b~b~b~b~b~b~b
 clock~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 close~b~b~b~b~b~b~b~b~b~b~b~b~b~b
@@ -305,7 +305,7 @@ _fheapwalk~b~b~b~b~b~b~b~b~b
 fgetc~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 fgetpos~b~b~b~b~b~b~b~b~b~b~b~b
 fgets~b~b~b~b~b~b~b~b~b~b~b~b~b~b
-filelength~b~b~b~b~b~b~b~b~b
+_filelength~b~b~b~b~b~b~b~b
 fileno~b~b~b~b~b~b~b~b~b~b~b~b~b
 flushall~b~b~b~b~b~b~b~b~b~b~b
 _fmalloc~b~b~b~b~b~b~b~b~b~b~b
@@ -383,11 +383,11 @@ sbrk~b~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 scanf~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 _searchenv~b~b~b~b~b~b~b~b~b
 setbuf~b~b~b~b~b~b~b~b~b~b~b~b~b
-setmode~b~b~b~b~b~b~b~b~b~b~b~b
+_setmode~b~b~b~b~b~b~b~b~b~b~b
 setvbuf~b~b~b~b~b~b~b~b~b~b~b~b
 signal~b~b~b~b~b~b~b~b~b~b~b~b~b
 sleep~b~b~b~b~b~b~b~b~b~b~b~b~b~b
-sopen~b~b~b~b~b~b~b~b~b~b~b~b~b~b
+_sopen~b~b~b~b~b~b~b~b~b~b~b~b~b
 sound~b~b~b~b~b~b~b~b~b~b~b~b~b~b
 spawnl~b~b~b~b~b~b~b~b~b~b~b~b~b
 spawnle~b~b~b~b~b~b~b~b~b~b~b~b

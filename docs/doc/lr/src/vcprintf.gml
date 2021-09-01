@@ -18,7 +18,7 @@ function is used to output characters to the console.
 The
 .arg format
 string is described under the description of the
-.kw printf
+.reffunc printf
 function.
 The
 .id &funcb.
@@ -27,7 +27,7 @@ function is equivalent to the
 function, with the variable argument list replaced with
 .arg arg
 .ct , which has been initialized by the
-.kw va_start
+.reffunc va_start
 macro.
 .desc end
 .return begin

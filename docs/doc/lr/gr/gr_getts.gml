@@ -1,4 +1,4 @@
-.gfunc gettextsettings
+.gfunc _gettextsettings
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 struct textsettings _FAR * _FAR _gettextsettings
@@ -14,7 +14,7 @@ The
 .id &funcb.
 &routine returns information about the current text settings
 used when text is displayed by the
-.kw _grtext
+.reffunc _grtext
 &routine..
 The information is stored in the
 .id textsettings

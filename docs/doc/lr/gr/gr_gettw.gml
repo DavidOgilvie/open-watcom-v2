@@ -1,4 +1,4 @@
-.gfunc gettextwindow
+.gfunc _gettextwindow
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 void _FAR _gettextwindow(
@@ -16,7 +16,7 @@ The
 .id &funcb.
 &routine returns the location of the current text window.
 A text window is defined with the
-.kw _settextwindow
+.reffunc _settextwindow
 &routine..
 By default, the text window is the entire screen.
 .np

@@ -458,14 +458,14 @@ The value to which the macro
 is set by the
 .kw fgetpos
 or
-.kw ftell
+.reffunc ftell
 function on failure (7.9.9.1, 7.9.9.4).
 .bigdesc
 .np
 When the function
 .kw fgetpos
 or
-.kw ftell
+.reffunc ftell
 fails, they set
 .kw errno
 to
@@ -495,11 +495,11 @@ function generates the following messages.
 .section Allocating Zero Memory
 .bigterm
 The behavior of the
-.kw calloc
+.reffunc calloc
 .ct ,
-.kw malloc
+.reffunc malloc
 .ct , or
-.kw realloc
+.reffunc realloc
 function if the size requested is zero (7.10.3).
 .bigdesc
 .np
@@ -523,7 +523,7 @@ does it flush any output buffers.
 .section The atexit Function
 .bigterm
 The status returned by the
-.kw exit
+.reffunc exit
 function if the value of the argument is other than zero,
 .kw EXIT_SUCCESS
 .ct , or
@@ -532,7 +532,7 @@ function if the value of the argument is other than zero,
 .bigdesc
 .np
 The
-.kw exit
+.reffunc exit
 function returns the value of its argument to the operating system
 regardless of its value.
 .*-------------------------
@@ -540,7 +540,7 @@ regardless of its value.
 .bigterm
 The set of environment names and the method for altering the environment
 list used by the
-.kw getenv
+.reffunc getenv
 function (7.10.4.4).
 .bigdesc
 .np
@@ -549,7 +549,7 @@ The set of environment names is unlimited.
 Environment variables can be set from the QNX command line using the
 EXPORT or SET commands.
 A program can modify its environment variables with the
-.kw putenv
+.reffunc putenv
 function.
 Such modifications last only until the program terminates.
 .do end
@@ -558,7 +558,7 @@ The set of environment names is unlimited.
 Environment variables can be set from the DOS command line using the
 SET command.
 A program can modify its environment variables with the
-.kw putenv
+.reffunc putenv
 function.
 Such modifications last only until the program terminates.
 .do end
@@ -566,12 +566,12 @@ Such modifications last only until the program terminates.
 .section The system Function
 .bigterm
 The contents and mode of execution of the string by the
-.kw system
+.reffunc system
 function (7.10.4.5).
 .bigdesc
 .np
 The
-.kw system
+.reffunc system
 function
 .if '&machsys' eq 'QNX' .do begin
 always executes an executable binary or a shell file, using
@@ -582,7 +582,7 @@ executes an internal DOS, Windows, or OS/2 command, or an EXE, COM,
 BAT or CMD file from within a C program rather than from the command
 line.
 The
-.kw system
+.reffunc system
 function
 examines the
 .kw COMSPEC

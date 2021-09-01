@@ -20,22 +20,22 @@ The
 .kw _nheapgrow
 function attempts to grow the near heap to the maximum size of 64K.
 You will want to do this in the small data models if you are using both
-.kw malloc
+.reffunc malloc
 and
-.kw _fmalloc
+.reffunc _fmalloc
 or
-.kw halloc
+.reffunc halloc
 .period
 Once a call to
-.kw _fmalloc
+.reffunc _fmalloc
 or
-.kw halloc
+.reffunc halloc
 has been made, you may not be able to allocate any memory with
-.kw malloc
+.reffunc malloc
 unless space has been reserved for the near heap using either
-.kw malloc
+.reffunc malloc
 .ct ,
-.kw sbrk
+.reffunc sbrk
 or
 .kw _nheapgrow
 .period

@@ -8,9 +8,9 @@ unsigned int _freect( size_t size );
 The
 .id &funcb.
 function returns the number of times that
-.kw _nmalloc
+.reffunc _nmalloc
 (or
-.kw malloc
+.reffunc malloc
 in small data models)
 can be called to allocate a item of
 .arg size

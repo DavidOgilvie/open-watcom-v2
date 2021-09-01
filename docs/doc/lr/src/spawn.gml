@@ -131,12 +131,12 @@ This option is supported under OS/2, Win32 and QNX.
 .do end
 .if '&machsys' eq 'QNX' .do begin
 The
-.kw wait
+.reffunc wait
 function cannot be used to obtain the exit code.
 .do end
 .el .do begin
 The
-.kw wait
+.reffunc wait
 and
 .kw cwait
 functions cannot be used to obtain the exit code.
@@ -150,7 +150,7 @@ This option is supported under DOS (16-bit only), OS/2, Win32, and
 QNX.
 .do end
 This is equivalent to calling the appropriate
-.kw exec&grpsfx
+.reffunc exec&grpsfx
 function.
 .term P_DETACH
 Launches the child process in the background without access to the keyboard or
@@ -175,13 +175,13 @@ DOS systems.
 .do end
 .np
 The arguments may be passed as a list of arguments (
-.ct .kw spawnl
+.ct .reffunc spawnl
 .ct ,
 .kw spawnle
 .ct ,
-.kw spawnlp
+.reffunc spawnlp
 and
-.kw spawnlpe
+.reffunc spawnlpe
 .ct ) or as a vector of pointers (
 .ct .kw spawnv
 .ct ,
@@ -210,9 +210,9 @@ pointer.
 .np
 The environment for the invoked program is inherited from the parent
 process when you use the
-.kw spawnl
+.reffunc spawnl
 .ct ,
-.kw spawnlp
+.reffunc spawnlp
 .ct ,
 .kw spawnv
 and
@@ -221,7 +221,7 @@ functions.
 The
 .kw spawnle
 .ct ,
-.kw spawnlpe
+.reffunc spawnlpe
 .ct ,
 .kw spawnve
 and
@@ -254,19 +254,19 @@ values that have been defined with the
 .if '&machsys' eq 'QNX' .do begin
 .qnxcmd export
 or by the successful execution of the
-.kw putenv
+.reffunc putenv
 or
-.kw setenv
+.reffunc setenv
 functions.
 .do end
 .el .do begin
 .doscmd SET
 or by the successful execution of the
-.kw putenv
+.reffunc putenv
 function.
 .do end
 A program may read these values with the
-.kw getenv
+.reffunc getenv
 function.
 .np
 The following example invokes "myprog" as if
@@ -337,7 +337,7 @@ under Win32) of the child process.
 To obtain the exit code for a process spawned with
 .kw P_NOWAIT
 .ct , you must call the
-.kw wait
+.reffunc wait
 (under OS/2 or QNX)
 .if '&machsys' ne 'QNX' .do begin
 or

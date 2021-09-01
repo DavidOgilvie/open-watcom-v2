@@ -48,24 +48,24 @@ by
 and returns a pointer to the new copy.
 .if &farfnc eq 0 .do begin
 The memory for the new string is obtained by using the
-.kw malloc
+.reffunc malloc
 function
 and can be freed using the
-.kw free
+.reffunc free
 function.
 .do end
 .el .do begin
 For
 .id &funcb.
 the memory for the new string is obtained by using the
-.kw malloc
+.reffunc malloc
 function and can be freed using the
-.kw free
+.reffunc free
 function.
 For &ffunc, the memory for the new string is obtained by using the
-.kw _fmalloc
+.reffunc _fmalloc
 function and can be freed using the
-.kw _ffree
+.reffunc _ffree
 function.
 .do end
 .im ansiconf

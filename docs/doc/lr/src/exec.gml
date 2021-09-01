@@ -126,7 +126,7 @@ DOS systems.
 .do end
 .np
 The arguments may be passed as a list of arguments (
-.ct .kw execl
+.ct .reffunc execl
 .ct ,
 .kw execle
 .ct ,
@@ -161,7 +161,7 @@ pointer.
 .np
 The environment for the invoked program is inherited from the parent
 process when you use the
-.kw execl
+.reffunc execl
 .ct ,
 .kw execlp
 .ct ,
@@ -205,19 +205,19 @@ values have been defined with the
 .if '&machsys' eq 'QNX' .do begin
 .qnxcmd export
 or by the successful execution of the
-.kw putenv
+.reffunc putenv
 or
-.kw setenv
+.reffunc setenv
 functions.
 .do end
 .el .do begin
 .doscmd SET
 or by the successful execution of the
-.kw putenv
+.reffunc putenv
 function.
 .do end
 A program may read these values with the
-.kw getenv
+.reffunc getenv
 function.
 .*==========================================
 .np
