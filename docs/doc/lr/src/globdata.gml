@@ -19,7 +19,7 @@ This value may be changed by a program at any time.
 This
 .id int
 item contains the number of arguments passed to
-.kw main
+.reffunc main
 .period
 .df __argv
 .proto stdlib.h
@@ -27,7 +27,7 @@ This
 .id char **
 item contains a pointer to a vector containing the actual arguments
 passed to
-.kw main
+.reffunc main
 .period
 .do end
 .df daylight
@@ -70,9 +70,9 @@ Symbolic names for these errors are found in the
 .hdrfile errno.h
 header file.
 See the descriptions for the
-.kw perror
+.reffunc perror
 and
-.kw strerror
+.reffunc strerror
 functions for information about the text which describes these errors.
 .df fltused_
 .ix 'undefined references' 'fltused_'
@@ -193,17 +193,17 @@ to reserve when running a 32-bit DOS extended application.
 This
 .id char *
 variable contains a pointer to an option-argument parsed by the
-.kw getopt
+.reffunc getopt
 function.
 .df opterr
 .proto unistd.h
 This
 .id int
 variable controls whether the
-.kw getopt
+.reffunc getopt
 function will print error messages. The default value is non-zero and
 will cause the
-.kw getopt
+.reffunc getopt
 function to print error messages on the console.
 .df optind
 .proto unistd.h
@@ -211,14 +211,14 @@ This
 .id int
 variable holds the index of the argument array element currently
 processed by the
-.kw getopt
+.reffunc getopt
 function.
 .df optopt
 .proto unistd.h
 This
 .id int
 variable contains the unrecognized option character in case the
-.kw getopt
+.reffunc getopt
 function returns an error.
 .df _osmajor
 .proto stdlib.h
@@ -431,7 +431,7 @@ environment variable.
 This
 .id int
 item contains the number of arguments passed to
-.kw wmain
+.reffunc wmain
 .period
 .df __wargv
 .proto stdlib.h
@@ -439,7 +439,7 @@ This
 .id wchar_t **
 item contains a pointer to a vector containing the actual arguments
 passed to
-.kw wmain
+.reffunc wmain
 .period
 .df _wenviron
 .proto stdlib.h

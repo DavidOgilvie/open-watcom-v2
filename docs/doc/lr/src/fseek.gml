@@ -18,7 +18,7 @@ The argument
 is a file pointer returned by
 .reffunc fopen
 or
-.kw freopen
+.reffunc freopen
 .period
 The argument
 .arg offset
@@ -50,7 +50,7 @@ The
 .id &funcb.
 function clears the end-of-file indicator and undoes any
 effects of the
-.kw ungetc
+.reffunc ungetc
 function on the same file.
 .np
 The

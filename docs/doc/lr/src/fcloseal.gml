@@ -29,11 +29,11 @@ function closes all open stream files, except
 .period
 .do end
 This includes streams created (and not yet closed) by
-.kw fdopen
+.reffunc fdopen
 .ct ,
 .reffunc fopen
 and
-.kw freopen
+.reffunc freopen
 .period
 .if '&machsys' eq 'DOS' .do begin
 The

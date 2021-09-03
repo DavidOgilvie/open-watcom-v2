@@ -1191,29 +1191,29 @@ wide character string to "long long int"
 .fdend
 .np
 See also
-.kw tolower
+.reffunc tolower
 .ct ,
-.kw towlower
+.reffunc towlower
 .ct ,
-.kw _mbctolower
+.reffunc _mbctolower
 .ct ,
-.kw toupper
+.reffunc toupper
 .ct ,
-.kw towupper
+.reffunc towupper
 .ct ,
-.kw _mbctoupper
+.reffunc _mbctoupper
 .ct ,
-.kw _strlwr
+.reffunc _strlwr
 .ct ,
-.kw _wcslwr
+.reffunc _wcslwr
 .ct ,
-.kw _mbslwr
+.reffunc _mbslwr
 .ct ,
-.kw _strupr
+.reffunc _strupr
 .ct ,
-.kw _wcsupr
+.reffunc _wcsupr
 and
-.kw _mbsupr
+.reffunc _mbsupr
 which convert the cases of characters and strings.
 .*======================================================================
 .section Memory Allocation Functions
@@ -1750,7 +1750,7 @@ Standard Printer: available for use by a program
 .endnote
 .np
 These standard streams may be re-directed by use of the
-.kw freopen
+.reffunc freopen
 function.
 .np
 See also the section
@@ -1760,7 +1760,7 @@ for other functions which operate upon files.
 The functions referenced in the section
 .us Operating System I/O Functions
 may also be invoked (use the
-.kw fileno
+.reffunc fileno
 function to obtain the file &handle).
 Since the stream functions may buffer input and output, these
 functions should be used with caution to avoid unexpected results.
@@ -1882,7 +1882,7 @@ Similarly, once a byte input/output function has been applied to a
 stream without orientation, the stream becomes
 .us byte-oriented.
 Only a successful call to
-.kw freopen
+.reffunc freopen
 can otherwise alter the orientation of a stream (it removes any
 orientation).
 You cannot mix byte input/output functions and wide character
@@ -2062,7 +2062,7 @@ exit process, set return code
 create a new process
 .fd kill
 send a signal to specified process
-.fd onexit
+.fd _onexit
 register exit routine
 .fd pause
 suspend calling process until signal
@@ -3724,15 +3724,15 @@ is omitted, is
 .endnote
 .np
 Whenever
-.kw ctime
+.reffunc ctime
 .ct ,
-.kw _ctime
+.reffunc _ctime
 .ct ,
-.kw localtime
+.reffunc localtime
 .ct ,
-.kw _localtime
+.reffunc _localtime
 or
-.kw mktime
+.reffunc mktime
 is called, the time zone names contained in the external variable
 .kw tzname
 will be set as if the
@@ -3741,7 +3741,7 @@ function had been called.
 The same is true if the
 .mono %Z
 directive of
-.kw strftime
+.reffunc strftime
 is used.
 .np
 Some examples are:

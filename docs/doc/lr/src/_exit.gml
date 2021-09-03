@@ -16,7 +16,7 @@ function causes normal program termination to occur.
 The functions registered by the
 .reffunc atexit
 or
-.reffunc onexit
+.reffunc _onexit
 functions are not called.
 .if '&machsys' eq 'QNX' .do begin
 .note
@@ -86,7 +86,7 @@ Any unopened files are not closed and any buffered output is not
 flushed to the associated files or devices.
 .note
 Any files created by
-.kw tmpfile
+.reffunc tmpfile
 are not removed.
 .note
 The return

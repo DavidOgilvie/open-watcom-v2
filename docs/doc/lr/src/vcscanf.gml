@@ -15,18 +15,18 @@ under control of the argument
 The
 .id &funcb.
 function uses the function
-.kw getche
+.reffunc getche
 to read characters from the console.
 The
 .arg format
 string is described under the description of the
-.kw scanf
+.reffunc scanf
 function.
 .pp
 The
 .id &funcb.
 function is equivalent to the
-.kw cscanf
+.reffunc cscanf
 function, with a variable argument list replaced with
 .arg arg
 .ct , which has been initialized using the

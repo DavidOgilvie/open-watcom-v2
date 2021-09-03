@@ -138,7 +138,7 @@ function cannot be used to obtain the exit code.
 The
 .reffunc wait
 and
-.kw cwait
+.reffunc cwait
 functions cannot be used to obtain the exit code.
 .do end
 .term P_OVERLAY
@@ -177,19 +177,19 @@ DOS systems.
 The arguments may be passed as a list of arguments (
 .ct .reffunc spawnl
 .ct ,
-.kw spawnle
+.reffunc spawnle
 .ct ,
 .reffunc spawnlp
 and
 .reffunc spawnlpe
 .ct ) or as a vector of pointers (
-.ct .kw spawnv
+.ct .reffunc spawnv
 .ct ,
-.kw spawnve
+.reffunc spawnve
 .ct ,
-.kw spawnvp
+.reffunc spawnvp
 .ct , and
-.kw spawnvpe
+.reffunc spawnvpe
 .ct ).
 At least one argument,
 .arg arg0
@@ -214,18 +214,18 @@ process when you use the
 .ct ,
 .reffunc spawnlp
 .ct ,
-.kw spawnv
+.reffunc spawnv
 and
-.kw spawnvp
+.reffunc spawnvp
 functions.
 The
-.kw spawnle
+.reffunc spawnle
 .ct ,
 .reffunc spawnlpe
 .ct ,
-.kw spawnve
+.reffunc spawnve
 and
-.kw spawnvpe
+.reffunc spawnvpe
 functions allow a different environment to be passed to the child
 process through the
 .arg envp
@@ -341,7 +341,7 @@ To obtain the exit code for a process spawned with
 (under OS/2 or QNX)
 .if '&machsys' ne 'QNX' .do begin
 or
-.kw cwait
+.reffunc cwait
 (under OS/2 or Win32)
 .do end
 function specifying the process ID/handle.
@@ -372,7 +372,7 @@ is set to indicate the error.
 .error begin
 .if '&machsys' eq 'QNX' .do begin
 See the
-.kw qnx_spawn
+.reffunc qnx_spawn
 function for a description of possible
 .kw errno
 values.
