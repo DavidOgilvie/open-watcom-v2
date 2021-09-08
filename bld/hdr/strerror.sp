@@ -1,13 +1,13 @@
-:: MS strdup function
+:: ISO C strerror function
 ::
 ::                          <string.h> (<string.h>,<wchar.h>)
 :segment WIDE
 :: Wide character version
-_WCRTLINK extern wchar_t    *_wcsdup( const wchar_t * );
+_WCRTLINK extern wchar_t    *_wcserror( int __errnum );
 :elsesegment ANSINAME
 :: ANSI name version
-_WCRTLINK extern char       *_strdup( const char *__string );
 :elsesegment
-:: POSIX
+:: ISO C
+_WCRTLINK extern char       *strerror( int __errnum );
 :endsegment
 ::
