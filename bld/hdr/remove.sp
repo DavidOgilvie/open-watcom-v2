@@ -2,10 +2,10 @@
 ::
 ::                          <stdio.h> (<stdio.h>,<wchar.h>)
 :segment WIDE
-:: MS wide extension
+:: Wide character version
 _WCRTLINK extern int        _wremove( const wchar_t * );
-:elsesegment MSEXT
-:: MS extension
+:elsesegment ANSINAME
+:: ANSI name version
 :elsesegment
 :: ISO C
 _WCRTLINK extern int        remove( const char *__filename );

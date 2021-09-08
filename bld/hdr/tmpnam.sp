@@ -1,12 +1,12 @@
-:: POSIX/ISO tmpnam function
+:: ISO C tmpnam function
 ::
 ::                          <stdio.h> (<stdio.h>,<wchar.h>)
 :segment WIDE
-:: MS wide extension
+:: Wide character version
 _WCRTLINK extern wchar_t    *_wtmpnam( wchar_t * );
-:elsesegment MSEXT
-:: MS extension
+:elsesegment ANSINAME
+:: ANSI name version
 :elsesegment
-:: POSIX/ISO
+:: ISO C
 _WCRTLINK extern char       *tmpnam( char *__s );
 :endsegment

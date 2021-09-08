@@ -387,9 +387,9 @@ _WCRTLINK extern int        _pclose( __w_FILE *__fp );
 _WCRTLINK extern __w_FILE   *_popen( const char *__command, const char *__mode );
 _WCRTLINK extern int        _putw( int __binint, __w_FILE *__fp );
 :include tempnam.sp
-:keep MSEXT
+:keep ANSINAME
 :include tempnam.sp
-:remove MSEXT
+:remove ANSINAME
 
 :: Wide character version
 :include nsstd.sp
@@ -419,9 +419,11 @@ _WCRTLINK extern int        wscanf( const wchar_t *, ... );
 
 /* These names are not part of C89 or C99. */
 
+:segment DOS | LINUX | QNX
 _WCRTLINK extern int        _fseeki64( __w_FILE *__fp, long long __offset, int __whence );
 _WCRTLINK extern long long  _ftelli64( __w_FILE *__fp );
 
+:endsegment
 :segment LINUX
 _WCRTLINK extern int        fseeko( __w_FILE *__fp, off_t __offset, int __whence );
 _WCRTLINK extern off_t      ftello( __w_FILE *__fp );

@@ -28,6 +28,10 @@
 :endsegment
 :include null.sp
 
+:segment QNX
+:include size_t.sp
+
+:endsegment
 :segment LINUX | QNX
 :include access.sp
 
@@ -35,11 +39,7 @@
 
 :include seekpos.sp
 
-/* Symbolic constants for stream I/O */
-
-#define STDIN_FILENO    0
-#define STDOUT_FILENO   1
-#define STDERR_FILENO   2
+:include stdfilno.sp
 
 /* Compile-time Symbolic Constants for Portability Specifications */
 
@@ -86,6 +86,7 @@
 #define _SC_THREAD_PROCESS_SHARED           21
 #define _SC_MONOTONIC_CLOCK                 22
 #define _SC_THREAD_STACK_MIN                23
+
 /* Execution-time Symbolic Constants for Portability Specifications */
 
 #define _POSIX_CHOWN_RESTRICTED 0       /* restricted use of chown() */
@@ -110,19 +111,7 @@
 
 #define _CS_PATH            1
 
-/*
- *  POSIX 1003.1 Prototypes
- */
-:include pid_t.sp
-:include uid_t.sp
-:include gid_t.sp
-:include off_t.sp
-:include size_t.sp
-:include ssize_t.sp
-
 :include fileio.sp
-:include rename.sp
-:include remove.sp
 _WCRTLINK extern unsigned   alarm( unsigned int __seconds );
 _WCRTLINK extern int        chown( const char *__path, uid_t __owner, gid_t __group );
 _WCRTLINK extern int        fchown( int __fildes, uid_t __owner, gid_t __group );
@@ -187,14 +176,10 @@ _WCRTLINK extern int        ftruncate( int __fd, off_t __length );
 :include ext.sp
 
 :include msioext.sp
-:include msffind.sp
-:keep MSEXT
+:keep ANSINAME
 :include fileio.sp
-:include rename.sp
-:include remove.sp
 :include msioext.sp
-:include msffind.sp
-:remove MSEXT
+:remove ANSINAME
 :segment QNX
 :include mkdir.sp
 _WCRTLINK extern int        mknod( const char *__path, mode_t __mode, int __dev );
@@ -217,9 +202,9 @@ _WCRTLINK extern int        qnx_sync( nid_t __nid );
 _WCRTLINK extern char       *basename( char *__fname );
 _WCRTLINK extern off_t      ltrunc( int __fildes, off_t __offset, int __origin );
 
-:keep MSEXT
+:keep ANSINAME
 :include mkdir.sp
-:remove MSEXT
+:remove ANSINAME
 :endsegment
 :segment LINUX
 :: These are Linux specific
@@ -231,49 +216,42 @@ _WCRTLINK extern int        _llseek( unsigned int __fildes, unsigned long __hi, 
 :include extepi.sp
 :endsegment
 
-:: the following are also in process.h, but they are expected to be here
-:include _exit.sp
-
-:include pxexec.sp
+:include _pxexit.sp
 
 _WCRTLINK extern int        getopt( int __argc, char * const __argv[], const char *__optstring );
 _WCRTLINK extern unsigned   sleep( unsigned int __seconds );
 :segment RDOS
 _WCRTLINK extern pid_t      fork( void );
-_WCRTLINK extern pid_t      waitpid( pid_t __pid, int *__stat_loc, int __options );
 :endsegment
 
-:include msffind.sp
 :include getpid.sp
 :include getcwd.sp
 :include chdir.sp
 :include rmdir.sp
 
+:include pxexec.sp
+
 :include ext.sp
-:keep MSEXT
-:include fileio.sp
-:include rename.sp
-:include remove.sp
-:include msioext.sp
-:include msffind.sp
+:keep ANSINAME
 :include getpid.sp
 :include getcwd.sp
 :include chdir.sp
 :include rmdir.sp
-:remove MSEXT
+
+:include pxexec.sp
+:remove ANSINAME
 
 :include delay.sp
 
+:segment DOS
 :keep WIDE
-:include fileio.sp
-:include rename.sp
-:include remove.sp
-:include msioext.sp
-:include msffind.sp
 :include getcwd.sp
 :include chdir.sp
 :include rmdir.sp
+
+:include pxexec.sp
 :remove WIDE
+:endsegment
 :include extepi.sp
 
 :include brk.sp
