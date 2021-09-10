@@ -91,8 +91,8 @@
 #endif
 
 #if defined( __DOS__ )
-extern int  __dospawn( int mode, char_type_stk_ptr pgmname, char_type_stk_ptr cmdline, ENV_ARG env );
-#pragma aux __dospawn "_*" __parm __caller [];
+extern int  __cdecl __dospawn( int mode, char_type_stk_ptr pgmname, char_type_stk_ptr cmdline, ENV_ARG env );
+#pragma aux __dospawn "_*"
 #endif
 
 #define FALSE   0
@@ -197,7 +197,7 @@ _WCRTLINK int __F_NAME(spawnve,_wspawnve)( int mode, const CHAR_TYPE * path,
         _POSIX_HANDLE_CLEANUP;
         return( rc );
     }
- #else
+ #else      /* __DOS_086__ */
     prot_mode286 = FALSE;
     if( mode == OLD_P_OVERLAY ) {
         execveaddr_type    execve;
