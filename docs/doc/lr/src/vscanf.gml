@@ -26,17 +26,17 @@ under control of the argument
 The
 .arg format
 string is described under the description of the
-.kw scanf
+.reffunc scanf
 function.
 .np
 The
 .id &funcb.
 function is equivalent to the
-.kw scanf
+.reffunc scanf
 function, with a variable argument list replaced with
 .arg arg
 .ct , which has been initialized using the
-.kw va_start
+.reffunc va_start
 macro.
 .if &'length(&wfunc.) ne 0 .do begin
 .np

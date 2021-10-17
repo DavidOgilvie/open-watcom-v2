@@ -966,7 +966,7 @@ extern bool     GUIAPI GUISetListItemData( gui_window *wnd, gui_ctl_id id, int c
 extern void     * GUIAPI GUIGetListItemData( gui_window *wnd, gui_ctl_id id, int choice );
 extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *getstring );
 extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *
-					getstring );
+                       getstring );
 extern bool     GUIAPI GUIInsertText( gui_window *wnd, gui_ctl_id id, int choice, const char *text );
 extern bool     GUIAPI GUISetTopIndex( gui_window *wnd, gui_ctl_id id, int choice );
 extern int      GUIAPI GUIGetTopIndex( gui_window *wnd, gui_ctl_id id );

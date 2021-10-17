@@ -36,7 +36,6 @@
 
 typedef struct {
     const char          *classname;
-    const char          *osclassname;
     DWORD               style;
 #if defined( __NT__ ) && !defined( _WIN64 )
     DWORD               xstyle;

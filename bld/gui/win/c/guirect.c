@@ -86,4 +86,3 @@ void GUIAPI GUIGetRect( gui_window *wnd, gui_rect *rect )
 {
     GUIGetRelRect( GUIGetParentFrameHWND( wnd ), rect, (wnd->style & GUI_POPUP) != 0 );
 }
-

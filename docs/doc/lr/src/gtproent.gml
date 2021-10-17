@@ -8,7 +8,7 @@ The
 .id &funcb.
 function retrieves the next entry in the protocol database.  If
 not proceeded by an appropriate call to
-.kw setprotoent
+.reffunc setprotoent
 .ct , the function will always return the first protocol in the
 database.  The routine will query the local database only.
 .np
@@ -44,5 +44,5 @@ will be NULL.
 .see begin
 .seelist setprotoent endprotoent getprotobyname getprotobynumber
 .see end
-.class POSIX
+.class POSIX 1003.1
 .system

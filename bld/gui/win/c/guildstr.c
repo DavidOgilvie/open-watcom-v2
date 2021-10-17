@@ -100,4 +100,3 @@ bool GUIAPI GUILoadString( gui_res_id id, char *buffer, int buffer_length )
     }
     return( false );
 }
-

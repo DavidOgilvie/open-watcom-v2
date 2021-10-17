@@ -1,14 +1,15 @@
 .func strcmpi wcscmpi
 .synop begin
+.deprec
 #include <string.h>
 int strcmpi( const char *s1, const char *s2 );
-.ixfunc2 '&String' &funcb
-.ixfunc2 '&Compare' &funcb
+.ixfunc2 '&String' strcmpi
+.ixfunc2 '&Compare' strcmpi
 .if &'length(&wfunc.) ne 0 .do begin
 int wcscmpi( const wchar_t *s1, const wchar_t *s2 );
-.ixfunc2 '&String' &wfunc
-.ixfunc2 '&Compare' &wfunc
-.ixfunc2 '&Wide' &wfunc
+.ixfunc2 '&String' wcscmpi
+.ixfunc2 '&Compare' wcscmpi
+.ixfunc2 '&Wide' wcscmpi
 .do end
 .synop end
 .desc begin
@@ -39,7 +40,7 @@ is less than, equal to, or greater than the string pointed to by
 .period
 .return end
 .see begin
-.seelist strcmp stricmp strncmp strnicmp strcmpi strcasecmp strncasecmp
+.seelist strcmp _stricmp strncmp _strnicmp strcasecmp strncasecmp
 .see end
 .exmp begin
 #include <stdio.h>
@@ -47,11 +48,11 @@ is less than, equal to, or greater than the string pointed to by
 
 void main()
   {
-    printf( "%d\n", strcmpi( "AbCDEF", "abcdef" ) );
-    printf( "%d\n", strcmpi( "abcdef", "ABC"    ) );
-    printf( "%d\n", strcmpi( "abc",    "ABCdef" ) );
-    printf( "%d\n", strcmpi( "Abcdef", "mnopqr" ) );
-    printf( "%d\n", strcmpi( "Mnopqr", "abcdef" ) );
+    printf( "%d\n", _strcmpi( "AbCDEF", "abcdef" ) );
+    printf( "%d\n", _strcmpi( "abcdef", "ABC"    ) );
+    printf( "%d\n", _strcmpi( "abc",    "ABCdef" ) );
+    printf( "%d\n", _strcmpi( "Abcdef", "mnopqr" ) );
+    printf( "%d\n", _strcmpi( "Mnopqr", "abcdef" ) );
   }
 .exmp output
 0

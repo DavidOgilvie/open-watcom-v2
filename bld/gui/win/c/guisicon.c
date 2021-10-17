@@ -77,4 +77,3 @@ bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
 
     return( icon != NULL );
 }
-

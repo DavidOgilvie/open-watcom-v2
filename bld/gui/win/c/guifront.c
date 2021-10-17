@@ -101,4 +101,3 @@ void GUIAPI GUIActivateNC( gui_window *wnd, bool activate )
 {
     ActivateNC( wnd, activate );
 }
-

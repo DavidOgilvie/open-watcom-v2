@@ -28,7 +28,7 @@ to the fill character.
 .np
 .id &funcb.
 is similar to
-.kw _mbsnset
+.reffunc _mbsnset
 .ct , except that it fills in
 .arg count
 bytes rather than
@@ -46,7 +46,7 @@ The address of the original string
 is returned.
 .return end
 .see begin
-.seelist _mbsnbset strnset strset
+.seelist _mbsnbset _strnset _strset
 .see end
 .exmp begin
 #include <stdio.h>

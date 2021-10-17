@@ -33,18 +33,18 @@ Entries can be added to the environment list
 with the
 .qnxcmd export
 or with the
-.kw putenv
+.reffunc putenv
 or
-.kw setenv
+.reffunc setenv
 functions.
 .do end
 .el .do begin
 with the
 .doscmd set
 or with the
-.kw putenv
+.reffunc putenv
 or
-.kw setenv
+.reffunc setenv
 functions.
 .do end
 .ix 'environment'
@@ -108,9 +108,9 @@ assignments:
 :CMT. is initially NULL because the environment is composed of
 :CMT. multi-byte character strings.
 :CMT. Then, on the first call to
-:CMT. .kw _wputenv
+:CMT. .reffunc _wputenv
 :CMT. .ct , or on the first call to
-:CMT. .kw _wgetenv
+:CMT. .reffunc _wgetenv
 :CMT. if an (MBCS) environment already exists, a corresponding
 :CMT. wide character string environment is created and is then
 :CMT. pointed to by

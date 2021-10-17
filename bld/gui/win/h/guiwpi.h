@@ -114,4 +114,3 @@
         (prect)->top = 0;
     #define _wpi_dlgreturn( flag )              return( flag )
 #endif
-

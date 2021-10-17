@@ -1,4 +1,4 @@
-.gfunc setwindow
+.gfunc _setwindow
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 short _FAR _setwindow( short invert,
@@ -42,7 +42,7 @@ The window defined by the
 &routine is displayed in
 the current viewport.
 A viewport is defined by the
-.kw _setviewport
+.reffunc _setviewport
 &routine..
 .np
 By default, the window coordinate system is defined with the point

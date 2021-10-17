@@ -247,4 +247,3 @@ bool GUICreateDialogFromRes( res_name_or_id dlg_id, gui_window *parent_wnd, GUIC
 #endif
     return( ok );
 }
-

@@ -12,12 +12,12 @@ of the argument
 .arg format
 .period
 The
-.kw putch
+.reffunc putch
 function is used to output characters to the console.
 The
 .arg format
 string is described under the description of the
-.kw printf
+.reffunc printf
 function.
 .desc end
 .return begin

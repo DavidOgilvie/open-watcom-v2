@@ -66,4 +66,3 @@ void GUIAPI GUIWndDirtyRect( gui_window *wnd, const gui_rect *rect )
     _wpi_invalidaterect( wnd->hwnd, &wpi_rect, TRUE );
     _wpi_updatewindow( wnd->hwnd );
 }
-

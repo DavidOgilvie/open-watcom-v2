@@ -24,7 +24,6 @@ is not a null pointer, stores that value in the object pointed to by
 .period
 If the corresponding wide character is the null wide character, the
 resulting state described will be the initial conversion state.
-<<<<<<< Updated upstream
 .millust begin
 .millust end
 If
@@ -44,9 +43,6 @@ Function determines the number of bytes necessary to enter
 the initial shift state (zero if encodings are not state-dependent or
 if the initial conversion state is described).
 .farfuncp &ffunc. &funcb.
-=======
-.im farparm
->>>>>>> Stashed changes
 .im mbcrstrt
 .desc end
 .return begin

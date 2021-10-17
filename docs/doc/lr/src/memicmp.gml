@@ -1,22 +1,25 @@
-.func memicmp _memicmp _fmemicmp
+.func _memicmp _fmemicmp memicmp
+.ansiname _memicmp
 .synop begin
 #include <string.h>
-int memicmp( const void *s1,
-             const void *s2,
-             size_t length );
-.ixfunc2 '&Compare' &funcb
 .if &'length(&_func.) ne 0 .do begin
 int _memicmp( const void *s1,
               const void *s2,
               size_t length );
-.ixfunc2 '&Compare' &_func
+.ixfunc2 '&Compare' _memicmp
 .do end
 .if &farfnc ne 0 .do begin
 int _fmemicmp( const void __far *s1,
                const void __far *s2,
                size_t length );
-.ixfunc2 '&Compare' &ffunc
+.ixfunc2 '&Compare' _fmemicmp
 .do end
+
+.deprec
+int memicmp( const void *s1,
+             const void *s2,
+             size_t length );
+.ixfunc2 '&Compare' memicmp
 .synop end
 .desc begin
 The function compares, without case sensitivity (upper- and
@@ -34,6 +37,8 @@ and
 are mapped to lowercase for the purposes of doing the comparison.
 .farfuncp &ffunc. &funcb.
 .im ansiconf
+.np
+.deprfunc memicmp _memicmp
 .desc end
 .return begin
 The function returns an integer less than, equal to, or greater
@@ -54,7 +59,7 @@ void main()
   {
     char buffer[80];
 .exmp break
-    if( memicmp( buffer, "Hello", 5 ) < 0 ) {
+    if( _memicmp( buffer, "Hello", 5 ) < 0 ) {
       printf( "Less than\n" );
     }
   }

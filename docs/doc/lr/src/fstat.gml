@@ -32,19 +32,19 @@ indicated by
 .im ansiconf
 .np
 The
-.kw _fstati64
+.reffunc _fstati64
 .ct ,
-.kw _wfstat
+.reffunc _wfstat
 .ct , and
-.kw _wfstati64
+.reffunc _wfstati64
 functions differ from
 .id &funcb.
 in the type of structure that they are
 asked to fill in.
 The
-.kw _wfstat
+.reffunc _wfstat
 and
-.kw _wfstati64
+.reffunc _wfstati64
 functions deal with wide character strings.
 The differences in the structures are described above.
 .desc end
@@ -60,8 +60,11 @@ argument is not a valid file &handle..
 .endterm
 .error end
 .see begin
-.seelist fstat creat dup dup2 fcntl fsys_stat fsys_fstat
-.seelist fstat open sopen stat pipe
+.seelist fstat creat dup dup2 fcntl
+.if '&machsys' eq 'QNX' .do begin
+.seelist fsys_stat fsys_fstat
+.do end
+.seelist fstat open _sopen stat pipe
 .see end
 .exmp begin
 #include <stdio.h>
@@ -84,5 +87,5 @@ void main()
     }
 }
 .exmp end
-.class POSIX
+.class POSIX 1003.1
 .system

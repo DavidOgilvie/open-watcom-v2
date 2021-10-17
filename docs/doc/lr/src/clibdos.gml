@@ -250,7 +250,7 @@ library will remove carriage returns on input and add them on output,
 provided the mode is set to be
 .us text.
 This mode is set upon opening the file or with the
-.kw setmode
+.reffunc _setmode
 function.
 .*
 .section DOS Commands
@@ -260,7 +260,7 @@ function.
 DOS commands are documented in the technical documentation for your
 DOS system.
 These may be invoked from a C or C++ program with the
-.kw system
+.reffunc system
 function.
 .*
 .section DOS Interrupts
@@ -270,23 +270,23 @@ function.
 DOS interrupts and 8086 interrupts are documented in the technical
 documentation for your DOS system.
 These may be generated from a C or C++ program by calling the
-.kw bdos
+.reffunc bdos
 .ct ,
-.kw intdos
+.reffunc intdos
 .ct ,
-.kw intdosx
+.reffunc intdosx
 .ct ,
-.kw intr
+.reffunc intr
 .ct ,
-.kw intrf
+.reffunc intrf
 .ct ,
-.kw int386
+.reffunc int386
 .ct ,
-.kw int386x
+.reffunc int386x
 .ct ,
-.kw int86
+.reffunc int86
 and
-.kw int86x
+.reffunc int86x
 functions.
 .*
 .section DOS Processes
@@ -296,16 +296,16 @@ functions.
 Currently, DOS has the capability to execute only one process at a
 time.
 Thus, when a process is initiated with the
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 parameter
 .kw P_WAIT
 .ct , the new process will execute to completion before control returns to
 the initiating program.
 Otherwise, the new task replaces the initial task.
 Tasks can be started by using the
-.kw system
+.reffunc system
 .ct ,
-.kw exec&grpsfx
+.reffunc exec&grpsfx
 and
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 functions.

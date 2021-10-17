@@ -3,12 +3,12 @@
 #include <stdio.h>
 FILE *_fsopen( const char *filename,
                const char *mode, int share );
-.ixfunc2 '&StrIo' &funcb
+.ixfunc2 '&StrIo' _fsopen
 .if &'length(&wfunc.) ne 0 .do begin
 FILE *_wfsopen( const wchar_t *filename,
                 const wchar_t *mode, int share );
-.ixfunc2 '&StrIo' &wfunc
-.ixfunc2 '&Wide' &wfunc
+.ixfunc2 '&StrIo' _wfsopen
+.ixfunc2 '&Wide' _wfsopen
 .do end
 .synop end
 .desc begin
@@ -137,7 +137,7 @@ as the first character in the
 .arg mode
 argument) causes all subsequent writes to the file to be forced to the
 current end-of-file, regardless of previous calls to the
-.kw fseek
+.reffunc fseek
 function.
 .ix '&StrIo' 'fseek'
 When a file is opened with update mode (
@@ -151,13 +151,13 @@ When a stream is opened in update mode, both reading and writing
 may be performed.
 However, writing may not be followed by reading without an
 intervening call to the
-.kw fflush
+.reffunc fflush
 function or to a file positioning function (
-.ct .kw fseek
+.ct .reffunc fseek
 .ct ,
-.kw fsetpos
+.reffunc fsetpos
 .ct ,
-.kw rewind
+.reffunc rewind
 .ct ).
 Similarly, reading may not be followed by writing without an
 intervening call to a file positioning function, unless the read
@@ -217,7 +217,7 @@ returns
 .see begin
 .seelist _dos_open fclose fcloseall fdopen fopen freopen
 .seelist _fsopen _grow_handles _hdopen open _open_osfhandle
-.seelist _popen sopen
+.seelist _popen _sopen
 .see end
 .exmp begin
 #include <stdio.h>

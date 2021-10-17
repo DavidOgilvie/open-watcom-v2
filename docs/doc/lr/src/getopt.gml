@@ -20,7 +20,7 @@ The parameters
 and
 .arg argv
 are the argument count and argument array as passed to
-.kw main
+.reffunc main
 .period
 The argument
 .arg optstring
@@ -211,5 +211,5 @@ when the program is executed with the command
 <program name> -afin -o out
 .blkcode end
 .exmp end
-.class POSIX
+.class POSIX 1003.1
 .system

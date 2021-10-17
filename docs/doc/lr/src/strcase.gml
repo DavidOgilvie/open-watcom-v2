@@ -21,7 +21,7 @@ are mapped to lowercase for the purposes of doing the comparison.
 The
 .id &funcb.
 function is identical to the
-.kw stricmp
+.reffunc _stricmp
 function.
 .desc end
 .return begin
@@ -34,7 +34,7 @@ to by
 .period
 .return end
 .see begin
-.seelist strcmp stricmp strncmp strnicmp strcmpi strcasecmp strncasecmp
+.seelist strcmp _stricmp strncmp _strnicmp strcasecmp strncasecmp
 .see end
 .exmp begin
 #include <stdio.h>
@@ -56,5 +56,5 @@ int main( void )
 -12
 12
 .exmp end
-.class POSIX
+.class POSIX 1003.1
 .system

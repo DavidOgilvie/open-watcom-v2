@@ -19,7 +19,7 @@ This value may be changed by a program at any time.
 This
 .id int
 item contains the number of arguments passed to
-.kw main
+.reffunc main
 .period
 .df __argv
 .proto stdlib.h
@@ -27,7 +27,7 @@ This
 .id char **
 item contains a pointer to a vector containing the actual arguments
 passed to
-.kw main
+.reffunc main
 .period
 .do end
 .df daylight
@@ -37,7 +37,7 @@ This
 has a value of one when daylight saving time is supported in this
 locale and zero otherwise.
 Whenever a time function is called, the
-.kw tzset
+.reffunc tzset
 function is called to set the value of the variable.
 The value will be determined from the value of the
 .mono TZ
@@ -70,9 +70,9 @@ Symbolic names for these errors are found in the
 .hdrfile errno.h
 header file.
 See the descriptions for the
-.kw perror
+.reffunc perror
 and
-.kw strerror
+.reffunc strerror
 functions for information about the text which describes these errors.
 .df fltused_
 .ix 'undefined references' 'fltused_'
@@ -85,7 +85,7 @@ a
 or
 .id double
 as an argument to the
-.kw printf
+.reffunc printf
 function).
 .if '&machsys' ne 'QNX' .do begin
 .df _fmode
@@ -111,13 +111,13 @@ header file.
 The value of
 .kw _fmode
 may be changed by a program to change the default behavior of the
-.kw open
+.reffunc open
 .ct ,
-.kw fopen
+.reffunc fopen
 .ct ,
-.kw creat
+.reffunc creat
 and
-.kw sopen
+.reffunc _sopen
 functions.
 The default setting of
 .kw _fmode
@@ -193,17 +193,17 @@ to reserve when running a 32-bit DOS extended application.
 This
 .id char *
 variable contains a pointer to an option-argument parsed by the
-.kw getopt
+.reffunc getopt
 function.
 .df opterr
 .proto unistd.h
 This
 .id int
 variable controls whether the
-.kw getopt
+.reffunc getopt
 function will print error messages. The default value is non-zero and
 will cause the
-.kw getopt
+.reffunc getopt
 function to print error messages on the console.
 .df optind
 .proto unistd.h
@@ -211,14 +211,14 @@ This
 .id int
 variable holds the index of the argument array element currently
 processed by the
-.kw getopt
+.reffunc getopt
 function.
 .df optopt
 .proto unistd.h
 This
 .id int
 variable contains the unrecognized option character in case the
-.kw getopt
+.reffunc getopt
 function returns an error.
 .df _osmajor
 .proto stdlib.h
@@ -409,7 +409,7 @@ contains the number of seconds of time that the local time zone is
 earlier than Coordinated Universal Time (UTC) (formerly known as
 Greenwich Mean Time (GMT)).
 Whenever a time function is called, the
-.kw tzset
+.reffunc tzset
 function is called to set the value of the variable.
 The value will be determined from the value of the
 .mono TZ
@@ -420,7 +420,7 @@ This array of two pointers to character strings indicates the name of
 the standard abbreviation for the time zone and the name of the
 abbreviation for the time zone when daylight saving time is in effect.
 Whenever a time function is called, the
-.kw tzset
+.reffunc tzset
 function is called to set the values in the array.
 These values will be determined from the value of the
 .mono TZ
@@ -431,7 +431,7 @@ environment variable.
 This
 .id int
 item contains the number of arguments passed to
-.kw wmain
+.reffunc wmain
 .period
 .df __wargv
 .proto stdlib.h
@@ -439,7 +439,7 @@ This
 .id wchar_t **
 item contains a pointer to a vector containing the actual arguments
 passed to
-.kw wmain
+.reffunc wmain
 .period
 .df _wenviron
 .proto stdlib.h

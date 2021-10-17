@@ -41,7 +41,7 @@
 #include "farfunc.h"
 
 /**
- * Convert a string to lowercase.  Equivalent to strlwr().
+ * Convert a string to lowercase.  Equivalent to _strlwr().
  */
 
 _WCRTLINK unsigned char _FFAR *_NEARFAR(_mbslwr,_fmbslwr)( unsigned char _FFAR *string )

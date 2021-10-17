@@ -41,7 +41,7 @@
 #include "farfunc.h"
 
 /**
- * Convert a string to uppercase.  Equivalent to strupr().
+ * Convert a string to uppercase.  Equivalent to _strupr().
  */
 
 _WCRTLINK unsigned char _FFAR *_NEARFAR(_mbsupr,_fmbsupr)( unsigned char _FFAR *string )

@@ -38,14 +38,14 @@
 
 
 /****
-***** Compare two strings, without case-sensitivity.  Equivalent to stricmp().
+***** Compare two strings, without case-sensitivity.  Equivalent to _stricmp().
 ****/
 
 _WCRTLINK int _NEARFAR(_mbsicmp,_fmbsicmp)( const unsigned char _FFAR *s1, const unsigned char _FFAR *s2 )
 {
     int                 status;
 
-//    if( !__IsDBCS )  return( stricmp( s1, s2 ) );
+//    if( !__IsDBCS )  return( _stricmp( s1, s2 ) );
 
     /*** Compare characters, one by one ***/
     while( !_NEARFAR(_mbterm,_fmbterm)(s1) && !_NEARFAR(_mbterm,_fmbterm)(s2) ) {

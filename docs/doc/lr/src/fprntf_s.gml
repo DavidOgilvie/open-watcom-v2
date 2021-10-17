@@ -43,9 +43,9 @@ produced output before discovering the runtime-constraint violation.
 The
 .id &funcb.
 function is equivalent to the
-.kw fprintf
+.reffunc fprintf
 function except for the explicit runtime-constraints listed above.
-.im widefun4
+.widefunc &wfunc. &funcb. <form>
 .desc end
 .*
 .return begin

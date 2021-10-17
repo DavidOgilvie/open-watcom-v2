@@ -14,13 +14,13 @@ function.
 The
 .kw DOSEXIT
 function is called whenever
-.kw main
+.reffunc main
 returns, or
-.kw exit
+.reffunc exit
 .ct , or
-.kw _Exit
+.reffunc _Exit
 or
-.kw _exit
+.reffunc _exit
 are explicity called.
 .np
 If the child process did not terminate normally, then the high order byte

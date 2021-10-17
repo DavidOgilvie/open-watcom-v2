@@ -186,4 +186,3 @@ void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_CO
     }
     _wpi_deletecompatiblepres( memDC, new_hdc );
 }
-

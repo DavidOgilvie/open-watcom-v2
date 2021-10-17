@@ -34,6 +34,17 @@
 #include "guiwind.h"	// In <OWROOT>\bld\gui\win\h\guiwind.h
 #include <string.h>
 #include <stdlib.h>
+#include "guistyle.h"
+#include "guixutil.h"
+#include "guicontr.h"
+#include "guixwind.h"
+#include "guicombo.h"
+#include "guimapky.h"
+#include "guixdlg.h"
+//#include "guixhook.h"
+#include "ctl3dcvr.h"
+#include "guirdlg.h"
+#include "wclbproc.h"
 #include "guistyle.h"	// In <OWROOT>\bld\gui\win\h\guistyle.h
 #include "guixutil.h"	// In <OWROOT>\bld\gui\win\h\guixutil.h
 #include "guicontr.h"	// In <OWROOT>\bld\gui\win\h\guicontr.h

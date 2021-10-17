@@ -17,28 +17,28 @@ The
 value is the file &handle returned by a successful execution of one of
 the
 .if '&machsys' eq 'QNX' .do begin
-.kw creat
+.reffunc creat
 .ct ,
-.kw dup
+.reffunc dup
 .ct ,
-.kw dup2
+.reffunc dup2
 .ct ,
-.kw fcntl
+.reffunc fcntl
 .ct ,
-.kw open
+.reffunc open
 or
-.kw sopen
+.reffunc _sopen
 .do end
 .el .do begin
-.kw creat
+.reffunc creat
 .ct ,
-.kw dup
+.reffunc dup
 .ct ,
-.kw dup2
+.reffunc dup2
 .ct ,
-.kw open
+.reffunc open
 or
-.kw sopen
+.reffunc _sopen
 .do end
 functions.
 .im ansiconf
@@ -73,10 +73,10 @@ A previous buffered write call has failed.
 .error end
 .see begin
 .if '&machsys' eq 'QNX' .do begin
-.seelist creat dup dup2 fcntl open sopen
+.seelist creat dup dup2 fcntl open _sopen
 .do end
 .el .do begin
-.seelist creat dup dup2 open sopen
+.seelist creat dup dup2 open _sopen
 .do end
 .see end
 .exmp begin

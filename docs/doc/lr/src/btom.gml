@@ -1,5 +1,6 @@
 .func btom _fbtom
 .synop begin
+.deprec
 #include <jstring.h>
 size_t btom( const unsigned char *s, size_t nb );
 .ixfunc2 '&Jstring' &funcb

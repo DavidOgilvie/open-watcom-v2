@@ -155,7 +155,7 @@ _WCRTLINK int fseek( FILE *fp, long offset, int origin )
 #ifdef __INT64__
             long long   file_ptr = _telli64( fileno( fp ) );
 #else
-            long        file_ptr = tell( fileno( fp ) );
+            long        file_ptr = _tell( fileno( fp ) );
 #endif
 
             file_ptr -= fp->_cnt;

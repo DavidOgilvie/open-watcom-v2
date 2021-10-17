@@ -1,4 +1,4 @@
-.gfunc settextorient
+.gfunc _settextorient
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 void _FAR _settextorient( short vecx, short vecy );
@@ -17,7 +17,7 @@ vector specified by the arguments
 The text orientation specifies the direction of the base-line vector
 when a text string is
 displayed with the
-.kw _grtext
+.reffunc _grtext
 &routine..
 The default text orientation, for normal left-to-right text,
 is the vector

@@ -113,7 +113,7 @@ directory are described first.
 .*------------------------------
 .df assert.h
 This ISO C90 header file is required when an
-.kw assert
+.reffunc assert
 macro is used. These assertions will be ignored when the identifier
 .mono NDEBUG
 is defined.
@@ -188,20 +188,20 @@ the error variable.
 .df fcntl.h
 This POSIX header file defines the flags used by the
 .if '&machsys' ne 'QNX' .do begin
-.kw open
+.reffunc open
 and
-.kw sopen
+.reffunc _sopen
 functions. The function declarations for these functions are found in the
 .hdrfile &iohdr
 header file.
 .do end
 .if '&machsys' eq 'QNX' .do begin
-.kw creat
-.kw fcntl
+.reffunc creat
+.reffunc fcntl
 .ct ,
-.kw open
+.reffunc open
 .ct , and
-.kw sopen
+.reffunc _sopen
 functions.
 .do end
 .*------------------------------
@@ -219,7 +219,7 @@ declaration of the floating-point exception codes.
 .*------------------------------
 .df fnmatch.h
 This header file declares the pattern matching function
-.kw fnmatch
+.reffunc fnmatch
 .*------------------------------
 .df graph.h
 This header file contains structure definitions and function
@@ -272,7 +272,7 @@ is defined.
 This header file declares functions that perform input/output
 operations at the operating system level. These functions use file
 &handle.s to reference files or devices. The function
-.kw fstat
+.reffunc fstat
 is declared in the
 .hdrfile sys/stat.h
 header file.
@@ -286,7 +286,7 @@ boundary values for ranges of integers and characters.
 This ISO C90 header file contains declarations for the categories
 .mono (LC...)
 of locales which can be selected using the
-.kw setlocale
+.reffunc setlocale
 function which is also declared.
 .*------------------------------
 .df malloc.h
@@ -300,7 +300,7 @@ with floating-point numbers) and the structures:
 .sfbeg
 .sf exception
 describes the exception structure passed to the
-.kw matherr
+.reffunc matherr
 function; symbolic constants for the types of exceptions are included
 .sf complex
 declares a complex number
@@ -328,11 +328,11 @@ in-line generation of code that operates on multimedia registers.
 .df process.h
 .ix '&Process'
 This header file declares the
-.kw spawn&grpsfx
+.reffunc spawn&grpsfx
 functions, the
-.kw exec&grpsfx
+.reffunc exec&grpsfx
 functions, and the
-.kw system
+.reffunc system
 function. The file also contains declarations for the constants
 .kw P_WAIT
 .ct ,
@@ -357,28 +357,28 @@ declarations for regular expression handling.
 .*------------------------------
 .df search.h
 This header file declares the functions
-.kw lfind
+.reffunc lfind
 and
-.kw lsearch
+.reffunc lsearch
 .*------------------------------
 .df setjmp.h
 .ix 'Non-local jumps'
 This ISO C90 header file declares the
-.kw setjmp
+.reffunc setjmp
 and
-.kw longjmp
+.reffunc longjmp
 functions.
 .*------------------------------
 .df share.h
 This header file defines constants for shared access to files using the
-.kw sopen
+.reffunc _sopen
 function.
 .*------------------------------
 .df signal.h
 This ISO C90 header file declares the
-.kw signal
+.reffunc signal
 and
-.kw raise
+.reffunc raise
 functions.
 .*------------------------------
 .df stdarg.h
@@ -481,7 +481,7 @@ defines the structure
 This POSIX header file declares functions that perform input/output
 operations at the operating system level. These functions use file
 &handle.s to reference files or devices. The function
-.kw fstat
+.reffunc fstat
 is declared in the
 .hdrfile sys/stat.h
 header file.
@@ -496,7 +496,7 @@ UNIX code.
 .if '&machsys' eq 'QNX' .do begin
 .df utime.h
 This POSIX header file declares the
-.kw utime
+.reffunc utime
 function and defines the structure
 .kw utimbuf
 that is used by it.
@@ -649,7 +649,7 @@ format.
 .*------------------------------
 .df sys/locking.h
 This header file contains the manifest constants used by the
-.kw locking
+.reffunc locking
 function.
 .*------------------------------
 .if '&machsys' eq 'QNX' .do begin
@@ -746,7 +746,7 @@ This header file contains segment information data structures.
 .if '&machsys' eq 'QNX' .do begin
 .df sys/select.h
 This header file contains the prototype for the
-.kw select
+.reffunc select
 function.
 .do end
 .*------------------------------
@@ -773,9 +773,9 @@ This header file contains session information data structures.
 .df sys/stat.h
 This POSIX header file contains the declarations pertaining to file
 status, including definitions for the
-.kw fstat
+.reffunc fstat
 and
-.kw stat
+.reffunc stat
 functions and for the structure:
 .sfbeg
 .sf stat
@@ -792,7 +792,7 @@ This header file contains standard system message definitions.
 This header file describes the
 .kw timeb
 structure used in conjunction with the
-.kw ftime
+.reffunc ftime
 function.
 .*------------------------------
 .if '&machsys' eq 'QNX' .do begin
@@ -831,7 +831,7 @@ writev() functions.
 .if '&machsys' ne 'QNX' .do begin
 .df sys/utime.h
 This POSIX header file contains a declaration for the
-.kw utime
+.reffunc utime
 function and for the structured type
 .kw utimbuf
 used by it.
@@ -843,7 +843,7 @@ This POSIX header file contains a definition of the
 .kw utsname
 structure and
 a prototype for the
-.kw uname
+.reffunc uname
 function.
 .do end
 .*------------------------------

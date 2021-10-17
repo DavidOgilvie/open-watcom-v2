@@ -16,9 +16,9 @@ the next I/O operation on the file.
 The argument
 .arg fp
 is a file pointer returned by
-.kw fopen
+.reffunc fopen
 or
-.kw freopen
+.reffunc freopen
 .period
 The argument
 .arg offset
@@ -50,15 +50,15 @@ The
 .id &funcb.
 function clears the end-of-file indicator and undoes any
 effects of the
-.kw ungetc
+.reffunc ungetc
 function on the same file.
 .np
 The
-.kw ftell
+.reffunc ftell
 function can be used to obtain the current position in the file before
 changing it.
 The position can be restored by using the value returned by
-.kw ftell
+.reffunc ftell
 in a subsequent call to
 .id &funcb.
 with the

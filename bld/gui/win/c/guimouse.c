@@ -52,4 +52,3 @@ bool GUIAPI GUIGetMousePosn( gui_window *wnd, gui_point *point )
     GUIMakeRelative( wnd, &wpi_point, point );
     return( true );
 }
-

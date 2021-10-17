@@ -4,8 +4,11 @@
 .synop begin
 #include <wchar.h>
 int mbsinit( const mbstate_t *ps );
+.ixfunc2 '&Multibyte' mbsinit
+
+.deprec
 int sisinit( const mbstate_t *ps );
-.ixfunc2 '&Multibyte' &funcb
+.ixfunc2 '&Multibyte' sisinit
 .synop end
 .*
 .desc begin
@@ -17,6 +20,8 @@ function determines whether
 the pointed-to
 .kw mbstate_t
 object describes an initial conversion state.
+.np
+.deprfunc sisinit mbsinit
 .desc end
 .*
 .return begin

@@ -60,17 +60,17 @@ to the null character.
 The
 .id &funcb.
 function is equivalent to the
-.kw vsnprintf
+.reffunc vsnprintf
 function except for the explicit runtime-constraints listed above.
 .np
 The
 .id &funcb.
 function, unlike
-.kw vsprintf_s
+.reffunc vsprintf_s
 .ct , will truncate the result to fit within the array pointed to by
 .arg s
 .period
-.im widefun4
+.widefunc &wfunc. &funcb. <form>
 .desc end
 .*
 .return begin

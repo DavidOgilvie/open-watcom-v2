@@ -71,4 +71,3 @@ void GUIAPI GUIWndDirtyControl( gui_window *wnd, gui_ctl_id id )
         _wpi_updatewindow( control );
     }
 }
-

@@ -39,7 +39,7 @@
         (r).rect.width = width1; \
         (r).rect.height = height1; \
         (r).style |= GUI_STYLE_CONTROL_CHARCOORD; }
-		
+
 #define DLG_SET_RECT_CHARCOORD_1( r, x1, y1, width1 ) \
       { (r).rect.x = x1; \
         (r).rect.y = y1; \

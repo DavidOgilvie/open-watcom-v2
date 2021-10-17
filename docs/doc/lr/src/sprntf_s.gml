@@ -58,17 +58,17 @@ to the null character.
 The
 .id &funcb.
 function is equivalent to the
-.kw sprintf
+.reffunc sprintf
 function except for the explicit runtime-constraints listed above.
 .np
 The
 .id &funcb.
 function, unlike
-.kw snprintf_s
+.reffunc snprintf_s
 .ct , treats a result too big for the array pointed to by
 .arg s
 as a runtime-constraint violation.
-.im widefun4
+.widefunc &wfunc. &funcb. <form>
 .desc end
 .*
 .return begin

@@ -41,7 +41,7 @@ argument.
 .if &'length(&wfunc.) ne 0 .do begin
 .np
 The
-.kw _wstrftime_ms
+.reffunc _wstrftime_ms
 function is identical to
 .id &wfunc.
 except that the
@@ -145,7 +145,7 @@ When the
 or
 .mono %z
 directive is specified, the
-.kw tzset
+.reffunc tzset
 function is called.
 .np
 % g, %G, %V give values according to the ISO 8601 week-based year. In this

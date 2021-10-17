@@ -1,6 +1,6 @@
 .func setenv _setenv _wsetenv
 .synop begin
-#include <env.h>
+#include <stdlib.h>
 int setenv( const char *name,
             const char *newvalue,
             int overwrite );
@@ -52,7 +52,7 @@ with no arguments.
 .do end
 A program can obtain the value for an environment variable by using
 the
-.kw getenv
+.reffunc getenv
 function.
 .np
 The
@@ -112,7 +112,7 @@ Entries can also be added to the environment list
 with the
 .qnxcmd export
 or with the
-.kw putenv
+.reffunc putenv
 or
 .id &funcb.
 functions.
@@ -121,14 +121,14 @@ functions.
 with the
 .doscmd set
 or with the
-.kw putenv
+.reffunc putenv
 or
 .id &funcb.
 functions.
 .do end
 .ix 'environment'
 All entries in the environment list can be obtained by using the
-.kw getenv
+.reffunc getenv
 function.
 .np
 To assign a string to a variable and place it in the environment list:
@@ -197,7 +197,6 @@ and then display the new string.
 .blkcode begin
 #include <stdio.h>
 #include <stdlib.h>
-#include <env.h>
 
 void main()
   {

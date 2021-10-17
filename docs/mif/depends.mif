@@ -1458,7 +1458,6 @@ objs_lr2 = &
 ../doc/lr/src/gmtime_s.gml &
 ../doc/lr/src/halloc.gml &
 ../doc/lr/src/hantozen.gml &
-../doc/lr/src/hcfunmac.gml &
 ../doc/lr/src/header.gml &
 ../doc/lr/src/hfree.gml &
 ../doc/lr/src/hypot.gml &
@@ -1783,6 +1782,7 @@ objs_lr2 = &
 ../doc/lr/src/rand.gml &
 ../doc/lr/src/read.gml &
 ../doc/lr/src/readdir.gml &
+../doc/lr/src/readlink.gml &
 ../doc/lr/src/realloc.gml &
 ../doc/lr/src/remove.gml &
 ../doc/lr/src/rename.gml &
@@ -1986,10 +1986,6 @@ objs_lr2 = &
 ../doc/lr/src/wctomb_s.gml &
 ../doc/lr/src/wctrans.gml &
 ../doc/lr/src/wctype.gml &
-../doc/lr/src/widefun1.gml &
-../doc/lr/src/widefun2.gml &
-../doc/lr/src/widefun3.gml &
-../doc/lr/src/widefun4.gml &
 ../doc/lr/src/write.gml &
 ../doc/lr/src/zentohan.gml
 

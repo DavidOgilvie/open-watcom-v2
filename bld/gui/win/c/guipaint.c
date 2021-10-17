@@ -294,4 +294,3 @@ void GUIFreePaintHandles( gui_paint_info *pinfo, int force )
     pinfo->delete_when_done = false;
 #endif // of #ifdef __OS2_PM__
 }
-

@@ -71,4 +71,3 @@ bool GUIAPI GUIIsControlEnabled( gui_window *wnd, gui_ctl_id id )
     }
     return( false );
 }
-

@@ -5,15 +5,9 @@ unsigned int _mbsnextc( const unsigned char *s );
 .ixfunc2 '&String' _mbsnextc
 .ixfunc2 '&Multibyte' _mbsnextc
 .if &farfnc ne 0 .do begin
-<<<<<<< Updated upstream
 unsigned int _fmbsnextc( const unsigned char __far *s );
 .ixfunc2 '&String' _fmbsnextc
 .ixfunc2 '&Multibyte' _fmbsnextc
-=======
-unsigned int _fmbsnextc( const unsigned char __far *string );
-.ixfunc2 '&String' &fmfunc
-.ixfunc2 '&Multibyte' &fmfunc
->>>>>>> Stashed changes
 .do end
 #include <tchar.h>
 unsigned int _strnextc( const char *s );
@@ -42,7 +36,7 @@ These functions return the integer value of the next character
 .period
 .return end
 .see begin
-.seelist _mbsnextc _strdec _strinc _strninc
+.seelist _mbsnextc _mbsdec _mbsinc _mbsninc
 .see end
 .exmp begin
 #include <stdio.h>

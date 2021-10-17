@@ -58,4 +58,3 @@ bool GUIAPI GUISetChecked( gui_window *wnd, gui_ctl_id id, unsigned check )
 
     return( true );
 }
-

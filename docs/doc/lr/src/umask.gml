@@ -4,17 +4,16 @@
 #include <sys/stat.h>
 .if '&machsys' eq 'QNX' .do begin
 mode_t umask( mode_t cmask );
+.ixfunc2 '&OsIo' umask
 .do end
 .el .do begin
 #include <fcntl.h>
 #include <&iohdr>
 mode_t umask( mode_t cmask );
-.if &'length(&_func.) ne 0 .do begin
+.ixfunc2 '&OsIo' umask
 mode_t _umask( mode_t cmask );
-.ixfunc2 '&OsIo' &_func
+.ixfunc2 '&OsIo' _umask
 .do end
-.do end
-.ixfunc2 '&OsIo' &funcb
 .synop end
 .desc begin
 The
@@ -24,22 +23,22 @@ function sets the process's file mode creation mask to
 .period
 The process's file mode creation mask is used during
 .if '&machsys' eq 'QNX' .do begin
-.kw creat
+.reffunc creat
 .ct ,
-.kw mkdir
+.reffunc mkdir
 .ct ,
-.kw mkfifo
+.reffunc mkfifo
 .ct ,
-.kw open
+.reffunc open
 or
-.kw sopen
+.reffunc _sopen
 .do end
 .el .do begin
-.kw creat
+.reffunc creat
 .ct ,
-.kw open
+.reffunc open
 or
-.kw sopen
+.reffunc _sopen
 .do end
 to turn off permission bits in the
 .arg permission
@@ -68,7 +67,7 @@ function returns the previous value of
 .period
 .return end
 .see begin
-.seelist umask chmod creat mkdir mkfifo open sopen
+.seelist umask chmod creat mkdir mkfifo open _sopen
 .see end
 .exmp begin
 #include <sys/types.h>

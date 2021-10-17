@@ -39,13 +39,13 @@ is less than, equal to, or greater than the string pointed to by
 .period
 .id &funcb.
 is similar to
-.kw _mbsnicmp
+.reffunc _mbsnicmp
 .ct , except that
 .id &funcb.
 compares strings by length in bytes rather than by length in characters.
 .return end
 .see begin
-.seelist _mbsnbcat _mbsnbcmp strncmp strnicmp
+.seelist _mbsnbcat _mbsnbcmp strncmp _strnicmp
 .see end
 .exmp begin
 #include <stdio.h>

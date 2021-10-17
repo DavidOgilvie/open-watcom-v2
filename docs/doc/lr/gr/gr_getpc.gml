@@ -1,4 +1,4 @@
-.gfunc getphyscoord
+.gfunc _getphyscoord
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 struct xycoord _FAR _getphyscoord( short x, short y );
@@ -15,9 +15,9 @@ The
 of the position with view coordinates
 .coord x y .
 View coordinates are defined by the
-.kw _setvieworg
+.reffunc _setvieworg
 and
-.kw _setviewport
+.reffunc _setviewport
 &routines..
 .desc end
 .return begin

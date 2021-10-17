@@ -1,4 +1,4 @@
-.gfunc gettextcursor
+.gfunc _gettextcursor
 .gsynop begin
 .if '&lang' eq 'C' .do begin
 short _FAR _gettextcursor( void );
@@ -12,10 +12,10 @@ The
 .id &funcb.
 &routine returns the current cursor attribute, or shape.
 The cursor shape is set with the
-.kw _settextcursor
+.reffunc _settextcursor
 &routine..
 See the
-.kw _settextcursor
+.reffunc _settextcursor
 &routine for a description of the value returned by the
 .id &funcb.
 &routine..

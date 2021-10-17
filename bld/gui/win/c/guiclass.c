@@ -39,4 +39,3 @@ char * GUIAPI GUIGetWindowClassName( void )
 {
     return( GUIDefaultClassName );
 }
-

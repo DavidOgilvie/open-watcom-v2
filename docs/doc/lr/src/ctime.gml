@@ -57,10 +57,10 @@ places the result string in a static buffer
 that is re-used each time
 .idbold &funcb.
 or
-.kw asctime
+.reffunc asctime
 is called.
 The non-ISO C function
-.kw _ctime
+.reffunc _ctime
 places the result string in the buffer pointed to by
 .arg buf
 .period
@@ -76,16 +76,18 @@ The wide character function
 is identical to
 .kw _ctime
 except that it produces a wide character string.
+.widefunc _wctime &funcb. <ret>
+.widefunc __wctime _ctime <ret>
 .do end
 .np
 Whenever the
 .idbold &funcb.
 functions are called, the
-.kw tzset
+.reffunc tzset
 function is also called.
 .np
 The calendar time is usually obtained by using the
-.kw time
+.reffunc time
 function.
 That time is Coordinated Universal Time (UTC) (formerly known as
 Greenwich Mean Time (GMT)).

@@ -7,13 +7,6 @@ errno_t memcpy_s( void * restrict s1,
                   const void * restrict s2,
                   rsize_t n );
 .ixfunc2 '&Copy' &funcb
-.if &'length(&ffunc.) ne 0 .do begin
-errno_t _fmemcpy_s( void __far * restrict s1,
-                    rsize_t s1max,
-                    const void __far * restrict s2,
-                    size_t n );
-.ixfunc2 '&Copy' &ffunc
-.do end
 .if &'length(&wfunc.) ne 0 .do begin
 #include <wchar.h>
 errno_t wmemcpy_s( wchar_t * restrict s1,
@@ -71,7 +64,7 @@ into the buffer pointed to by
 .period
 Copying between overlapping objects is not allowed.
 See the
-.kw memmove_s
+.reffunc memmove_s
 function if you wish to copy objects that overlap.
 .if &'length(&_func.) ne 0 .do begin
 .farfuncp &ffunc. &funcb.
@@ -91,7 +84,7 @@ are interpreted to mean the number of wide characters.
 .return end
 .*
 .see begin
-.seelist memcpy memchr memcmp memcpy memicmp memmove memset memmove_s
+.seelist memcpy memchr memcmp memcpy _memicmp memmove memset memmove_s
 .see end
 .*
 .exmp begin

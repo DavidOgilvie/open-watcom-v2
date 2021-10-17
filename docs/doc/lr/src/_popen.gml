@@ -86,7 +86,7 @@ mode.
 A stream opened by
 .id &funcb.
 should be closed by the
-.kw _pclose
+.reffunc _pclose
 function.
 .desc end
 .return begin
@@ -116,9 +116,9 @@ argument is invalid.
 may also set
 .kw errno
 values as described by the
-.kw _pipe
+.reffunc _pipe
 and
-.kw spawnl
+.reffunc spawnl
 functions.
 .error end
 .see begin

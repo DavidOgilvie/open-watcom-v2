@@ -430,4 +430,3 @@ bool GUIAPI GUICascadeWindows( void )
     GUIWndDirty( root );
     return( true );
 }
-

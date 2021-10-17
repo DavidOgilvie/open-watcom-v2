@@ -49,4 +49,3 @@ void GUIAPI GUIFlushKeys( void )
         while( _wpi_peekmessage( GUIMainHInst, &msg, hwnd, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE ) );
     }
 }
-

@@ -15,22 +15,22 @@ The
 function closes the directory specified by
 .arg dirp
 and frees the memory allocated by
-.kw opendir
+.reffunc opendir
 .period
 .if '&machsys' eq 'QNX' .do begin
 .np
 The result of using a directory stream after one of the
-.kw exec
+.reffunc exec&grpsfx
 or
-.kw spawn
+.reffunc spawn&grpsfx
 family of functions is undefined.
 After a call to the
-.kw fork
+.reffunc fork
 function, either the parent or the child (but not both) may continue
 processing the directory stream using
-.kw readdir
+.reffunc readdir
 or
-.kw rewinddir
+.reffunc rewinddir
 or both.
 If both the parent and child processes use these functions, the result
 is undefined.

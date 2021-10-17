@@ -28,9 +28,9 @@ successfully read.
 This value may be less than the requested number of elements.
 .pp
 The
-.kw feof
+.reffunc feof
 and
-.kw ferror
+.reffunc ferror
 functions can be used to determine whether the end of the file was
 encountered or if an input/output error has occurred.
 .im errnoref

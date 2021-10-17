@@ -8,7 +8,7 @@ The
 .id &funcb.
 function retrieves the next entry in the service database.  If
 not proceeded by an appropriate call to
-.kw setservent
+.reffunc setservent
 .ct , the function will always return the first service in the
 database.  The routine will query the local database only.
 .np
@@ -44,5 +44,5 @@ value will be NULL.
 .see begin
 .seelist setservent endservent getservbyname getservbyport
 .see end
-.class POSIX
+.class POSIX 1003.1
 .system

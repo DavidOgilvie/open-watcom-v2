@@ -18,7 +18,7 @@ int _snwprintf( wchar_t *buf,
 The
 .id &funcb.
 function is equivalent to the
-.kw fprintf
+.reffunc fprintf
 function, except that the argument
 .arg buf
 specifies a character array into which the generated output is placed,
@@ -33,9 +33,9 @@ characters were stored.
 The
 .arg format
 string is described under the description of the
-.kw printf
+.reffunc printf
 function.
-.im widefun4
+.widefunc &wfunc. &funcb. <form>
 .if &'length(&wfunc.) ne 0 .do begin
 The argument
 .arg buf
