@@ -69,8 +69,8 @@ typedef enum {
     VSCROLL_INVALID             = 0x0010,
     MAXIMIZED                   = 0x0020,
     MINIMIZED                   = 0x0040,
-    SETHRANGE                   = 0x0080,
-    SETVRANGE                   = 0x0100,
+    HRANGE_SET                  = 0x0080,
+    VRANGE_SET                  = 0x0100,
     DONT_SEND_PAINT             = 0x0200,
     NEEDS_RESIZE_REDRAW         = 0x0400,
     DIALOG                      = 0x0800,
@@ -82,25 +82,16 @@ typedef enum {
                               VSCROLL_INVALID | HSCROLL_INVALID
 } gui_flags;
 
-#define GUI_HRANGE_SET( wnd ) ( ( wnd->hgadget != NULL ) && ( ( wnd->flags & SETHRANGE ) != 0 ) )
-#define GUI_VRANGE_SET( wnd ) ( ( wnd->vgadget != NULL ) && ( ( wnd->flags & SETVRANGE ) != 0 ) )
-#define GUI_HSCROLL_EVENTS_SET( wnd ) ( ( wnd->hgadget != NULL ) && ( ( wnd->style & GUI_HSCROLL_EVENTS ) != 0 ) )
-#define GUI_VSCROLL_EVENTS_SET( wnd ) ( ( wnd->vgadget != NULL ) && ( ( wnd->style & GUI_VSCROLL_EVENTS ) != 0 ) )
+#define GUI_HRANGE_SET( wnd ) ( ( wnd->hgadget != NULL ) && ( ( wnd->flags & HRANGE_SET ) != 0 ) )
+#define GUI_VRANGE_SET( wnd ) ( ( wnd->vgadget != NULL ) && ( ( wnd->flags & VRANGE_SET ) != 0 ) )
+#define GUI_DO_HSCROLL( wnd ) ( ( wnd->hgadget != NULL ) && ( ( wnd->style & GUI_HSCROLL_EVENTS ) == 0 ) )
+#define GUI_DO_VSCROLL( wnd ) ( ( wnd->vgadget != NULL ) && ( ( wnd->style & GUI_VSCROLL_EVENTS ) == 0 ) )
 #define GUI_WND_MINIMIZED( wnd ) ( wnd->flags & MINIMIZED )
 #define GUI_WND_MAXIMIZED( wnd ) ( wnd->flags & MAXIMIZED )
 #define GUI_WND_VISIBLE( wnd )   ( wnd->style & GUI_VISIBLE )
 #define GUI_HAS_CLOSER( wnd ) ( ( wnd->style & GUI_CLOSEABLE ) || ( wnd->menu != NULL ) )
 #define GUI_RESIZE_GADGETS_USEABLE( wnd ) ( wnd->vs.area.width >= MINMAX_WIDTH )
 #define GUI_IS_DIALOG( wnd ) ( ( wnd->flags & DIALOG ) != 0 )
-
-#define COPYAREA( old, new ) { (new).row = (old).row; (new).height = (old).height; \
-                               (new).col = (old).col; (new).width = (old).width; }
-
-#define COPYTOAREA( src, dst ) { (dst).row = (src).x; (dst).height = (src).height; \
-                               (dst).col = (src).y; (dst).width = (src).width; }
-
-#define COPYFROMAREA( src, dst ) { (dst).y = (src).row; (dst).height = (src).height; \
-                               (dst).x = (src).col; (dst).width = (src).width; }
 
 #define EMPTY_AREA( sarea ) ( ( (sarea).width == 0 ) || ( (sarea).height == 0 ) )
 

@@ -8,13 +8,13 @@ errno_t mbstowcs_s( size_t * restrict retval,
                     wchar_t * restrict dst,
                     rsize_t dstmax,
                     const char * restrict src, rsize_t len);
-.ixfunc2 '&Multibyte' &funcb
+.ixfunc2 '&Multibyte' mbstowcs_s
 .if &farfnc ne 0 .do begin
-.ixfunc2 '&Multibyte' &fmfunc
 errno_t _fmbstowcs_s( size_t __far * restrict retval,
                     wchar_t __far * restrict dst,
                     rsize_t dstmax,
                     const char __far * restrict src, rsize_t len);
+.ixfunc2 '&Multibyte' _fmbstowcs_s
 .do end
 .synop end
 .*
@@ -55,13 +55,9 @@ multibyte characters of the array pointed to by
 .np
 If there is a runtime-constraint violation, then
 .id &funcb.
-does the following. If
-.arg retval
-is not a null pointer, then
-.id &funcb.
-sets
-.arg *retval
-to (size_t)(-1). If
+does the following.
+.im _mbsret6
+If
 .arg dst
 is not a null pointer and
 .arg dstmax
@@ -111,11 +107,8 @@ function.
 Regardless of whether
 .arg dst
 is or is not a null pointer, if the input conversion encounters a
-sequence of bytes that do not form a valid multibyte character, an encoding error occurs:
-the
-.id &funcb.
-function stores the value (size_t)(-1) into
-.arg *retval
+sequence of bytes that do not form
+.im _mbsret4
 .period
 Otherwise, the
 .id &funcb.
@@ -136,7 +129,7 @@ returns.
 .np
 If copying takes place between objects that overlap, the objects take on unspecified
 values.
-.im safefarm
+.farfuncp &ffunc. &funcb.
 .desc end
 .*
 .return begin

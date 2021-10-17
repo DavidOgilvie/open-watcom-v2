@@ -32,6 +32,7 @@
 
 
 #include "guiwind.h"
+#include "guilog.h"
 
 
 typedef struct MessageTypes {

@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guiscale.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 static guix_ord GetPos( gui_window *wnd, int bar )
 {
@@ -65,7 +67,7 @@ gui_text_ord GUIAPI GUIGetVScrollRow( gui_window *wnd )
 
 static gui_ord GetScroll( gui_window *wnd, int bar )
 {
-    gui_ord     pos;
+    guix_ord    pos;
 
     pos = GetPos( wnd, bar );
     if( bar == SB_HORZ ) {

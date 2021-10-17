@@ -60,20 +60,13 @@ and if
 .arg dst
 is not a null pointer, the resulting state described will be the
 initial conversion state.
-.im farparm
+.farfuncp &ffunc. &funcb.
 .im mbsrstrt
 .desc end
 .return begin
 If the first code is not a valid wide character, an encoding error
-occurs: The
-.id &funcb.
-function stores the value of the macro
-.kw EILSEQ
-in
-.kw errno
-and returns
-.mono (size_t)&minus.1,
-but the conversion state will be unchanged.
+occurs:
+.im _mbsret1
 Otherwise, it returns the number of bytes in the resulting multibyte
 characters sequence, which is the same as the number of array elements
 modified when

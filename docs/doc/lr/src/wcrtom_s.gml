@@ -7,15 +7,14 @@
 errno_t wcrtomb_s( size_t * restrict retval,
                    char * restrict s, rsize_t smax,
                    wchar_t wc, mbstate_t * restrict ps);
-.ixfunc2 '&Wide' &funcb
-.ixfunc2 '&Multibyte' &funcb
+.ixfunc2 '&Wide' wcrtomb_s
+.ixfunc2 '&Multibyte' wcrtomb_s
 .if &farfnc ne 0 .do begin
-
-errno_t _wcrtomb_s( size_t __far * restrict retval,
+errno_t _fwcrtomb_s( size_t __far * restrict retval,
                    char __far * restrict s, rsize_t smax,
                    wchar_t wc, mbstate_t __far * restrict ps);
-.ixfunc2 '&Wide' &fwfunc
-.ixfunc2 '&Multibyte' &fwfunc
+.ixfunc2 '&Wide' _fwcrtomb_s
+.ixfunc2 '&Multibyte' _fwcrtomb_s
 .do end
 .synop end
 .*
@@ -58,13 +57,8 @@ is greater than zero and not greater than
 .id &funcb.
 sets
 .arg s[0]
-to the null character. If
-.arg retval
-is not a null pointer, then
-.kw wcrtomb_s
-sets
-.arg *retval
-to (size_t)(-1).
+to the null character.
+.im _mbsret6
 .rtconst end
 .*
 .desc begin
@@ -107,13 +101,9 @@ described is the initial conversion state.
 .np
 If
 .arg wc
-does not correspond to a valid multibyte character, an encoding error
-occurs: the
-.id &funcb.
-function stores the value (size_t)(-1) into
-.arg *retval
-and the
-conversion state is unspecified. Otherwise, the
+does not correspond to
+.im _mbsret5
+Otherwise, the
 .id &funcb.
 function stores into
 .arg *retval
@@ -121,7 +111,7 @@ the number of bytes (including any shift sequences) stored in the array pointed
 to by
 .arg s
 .period
-.im safefarw
+.farfuncp &ffunc. &funcb.
 .desc end
 .*
 .return begin

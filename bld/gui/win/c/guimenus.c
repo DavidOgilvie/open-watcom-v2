@@ -42,6 +42,7 @@
 #include "guixhook.h"
 #include "guihook.h"
 #include "guimdi.h"
+#include "guilog.h"
 
 
 #define MAX_STR 256

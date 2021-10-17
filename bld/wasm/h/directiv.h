@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -33,13 +33,13 @@
 #ifndef _DIRECTIV_H_
 #define _DIRECTIV_H_
 
-#include "objrec.h"
+#include "omfobjre.h"
 
 #define MAX_LNAME       255
 #define LNAME_NULL      0
 
 typedef uint_16 direct_idx; // directive index, such as segment index,
-                            //group index or lname index, etc. follow womp (OMF)
+                            //group index or lname index, etc. follow OMF output
 
 /* Paul Edwards
    Note that there is code that is dependent on the ordering

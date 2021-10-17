@@ -35,8 +35,8 @@
 #define _GUIXHOT_H_
 
 typedef struct hotspot_info {
-    HBITMAP     bitmap;
-    guix_coord  size;
+    guix_coord      size;
+    HBITMAP         bitmap;
 } hotspot_info;
 
 extern void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_COLOUR bkcolour );

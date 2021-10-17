@@ -1,36 +1,34 @@
 .func _mbsnccnt _fmbsnccnt _strncnt _wcsncnt
 .synop begin
-.sr func=_strncnt
 #include <mbstring.h>
-size_t _mbsnccnt( const unsigned char *string, size_t n );
-.ixfunc2 '&String' &mfunc
-.ixfunc2 '&Multibyte' &mfunc
+size_t _mbsnccnt( const unsigned char *s, size_t n );
+.ixfunc2 '&String' _mbsnccnt
+.ixfunc2 '&Multibyte' _mbsnccnt
 .if &farfnc ne 0 .do begin
-size_t _fmbsnccnt( const unsigned char __far *string,
-                   size_t n );
-.ixfunc2 '&String' &fmfunc
-.ixfunc2 '&Multibyte' &fmfunc
+size_t _fmbsnccnt( const unsigned char __far *s, size_t n );
+.ixfunc2 '&String' _fmbsnccnt
+.ixfunc2 '&Multibyte' _fmbsnccnt
 .do end
 #include <tchar.h>
-size_t _strncnt( const char *string, size_t n );
-.ixfunc2 '&String' &funcb
+size_t _strncnt( const char *s, size_t n );
+.ixfunc2 '&String' _strncnt
 .if &'length(&wfunc.) ne 0 .do begin
-size_t _wcsncnt( const wchar_t *string, size_t n ) {
-.ixfunc2 '&String' &wfunc
-.ixfunc2 '&Wide' &wfunc
+size_t _wcsncnt( const wchar_t *s, size_t n );
+.ixfunc2 '&String' _wcsncnt
+.ixfunc2 '&Wide' _wcsncnt
 .do end
 .synop end
 .desc begin
 The
-.id &mfunc.
-function counts the number of multibyte characters in the
+.id &funcb.
+function counts the number of multi-byte characters in the
 first
 .arg n
 bytes of the string
-.arg string
+.arg s
 .period
 If
-.id &mfunc.
+.id &funcb.
 finds a null byte as the second byte of a double-byte
 character, the first (lead) byte is not included in the count.
 .np
@@ -38,78 +36,12 @@ character, the first (lead) byte is not included in the count.
 This function was called
 .kw btom
 in earlier versions.
-.if &farfnc ne 0 .do begin
-.np
-The
-.id &fmfunc.
-function is a data model independent form of the &funcb
-function that accepts far pointer arguments.
-It is most useful in mixed memory model applications.
-.do end
-.np
-The header file
-.hdrfile tchar.h
-defines the generic-text routine
-.kw _tcsnccnt
-.period
-This macro maps to
-.id &mfunc.
-if
-.kw _MBCS
-has been defined, or to the
-.id &wfunc.
-macro if
-.kw _UNICODE
-has been defined.
-Otherwise
-.kw _tcsnccnt
-maps to &funcb..
-.id &funcb.
-and
-.id &wfunc.
-are single-byte character string and wide-character
-string versions of &mfunc..
-The
-.id &funcb.
-and
-.id &wfunc.
-macros are provided only for this mapping and
-should not be used otherwise.
-.np
-The
-.id &funcb.
-function returns the number of characters (i.e.,
-.arg n
-.ct )
-in the first
-.arg n
-bytes of the single-byte string
-.arg string
-.period
-The
-.id &wfunc.
-function returns the number of bytes (i.e., 2 *
-.arg n
-.ct )
-in the first
-.arg n
-wide characters of the wide-character string
-.arg string
-.period
+.farfuncp &ffunc. &funcb.
+.tcsfunc _tcsnccnt &funcb. _strncnt &wfunc.
 .desc end
 .return begin
-.id &funcb.
-returns the number of characters from the beginning
-of the string to byte
-.arg n
-.period
-.id &wfunc.
-returns the number of wide characters from the beginning
-of the string to byte
-.arg n
-.period
-.id &mfunc.
-returns the number of multibyte characters from the beginning
+These functions return the number of characters
+(multi-byte, wide, or single-byte) from the beginning
 of the string to byte
 .arg n
 .period

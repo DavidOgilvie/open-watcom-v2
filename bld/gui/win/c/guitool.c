@@ -40,15 +40,17 @@
 #include "guimenus.h"
 #include "guixutil.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 /* total height/width taken up by outline around  bitmap, on button */
 #if defined (__NT__)
-#define OUTLINE_AMOUNT  4   // Should be changed later.
+	#define OUTLINE_AMOUNT  4   // Should be changed later.
 #else
-#define OUTLINE_AMOUNT  4
+	#define OUTLINE_AMOUNT  4
 #endif
 #define BORDER_AMOUNT   1 /* space outside row of buttons */
+
 
 /*
  * GUIXCloseToolBar -- close the tool bar and free memory.  Can be called by
@@ -232,7 +234,7 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
     int                 new_right;
     int                 bm_h;
     int                 bm_w;
-    GUI_RECTDIM         left, top, right, bottom;
+    WPI_RECTDIM         left, top, right, bottom;
     int                 h;
     int                 num_items;
 
@@ -265,10 +267,10 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
         tbar->bitmaps[i] = _wpi_loadbitmap( GUIResHInst, MAKEINTRESOURCE( toolinfo->toolbar[i].bitmap ) );
         if( in_height == 0 ) {
             _wpi_getbitmapdim( tbar->bitmaps[i], &bm_w, &bm_h );
-            if( bm_h > fixed_height ) {
+            if( fixed_height < bm_h ) {
                 fixed_height = bm_h;
             }
-            if( bm_w > fixed_width ) {
+            if( fixed_width < bm_w ) {
                 fixed_width = bm_w;
             }
         }
@@ -378,9 +380,9 @@ bool GUIXCreateToolBar( gui_window *wnd, bool fixed, gui_ord height,
 void GUIResizeToolBar( gui_window *wnd )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
-    GUI_RECTDIM height;
-    GUI_RECTDIM t, h;
+    WPI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM height;
+    WPI_RECTDIM t, h;
     toolbarinfo *tbar;
 
     tbar = wnd->tbar;
@@ -414,7 +416,7 @@ bool GUIAPI GUIChangeToolBar( gui_window *wnd )
     toolbarinfo *tbar;
     HWND        toolhwnd;
     int         t;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     tbar = wnd->tbar;
     if( !tbar->info.is_fixed ) {

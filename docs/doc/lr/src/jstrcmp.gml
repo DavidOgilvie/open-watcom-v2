@@ -5,8 +5,7 @@ int jstrcmp( const JCHAR *s1, const JCHAR *s2 );
 .ixfunc2 '&Jstring' &funcb
 .ixfunc2 '&Jcompare' &funcb
 .if &farfnc ne 0 .do begin
-int __far _fjstrcmp( const JCHAR __far *s1,
-                     const JCHAR __far *s2 );
+int _fjstrcmp( const JCHAR __far *s1, const JCHAR __far *s2 );
 .ixfunc2 '&Jstring' &ffunc
 .ixfunc2 '&Jcompare' &ffunc
 .do end
@@ -33,7 +32,7 @@ The rule of comparison is:
 .illust begin
 ASCII and numeric characters < Katakana characters < Kanji characters
 .illust end
-.im ffarparm
+.farfuncp &ffunc. &funcb.
 .desc end
 .return begin
 .if &farfnc eq 0 .do begin

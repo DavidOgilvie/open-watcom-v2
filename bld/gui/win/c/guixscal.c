@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guiscale.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 
 WPI_TEXTMETRIC GUItm;
@@ -67,7 +69,7 @@ gui_text_ord GUIToTextY( guix_ord ord, gui_window *wnd )
  *  GUIFromTextX -- multiply by character width, height
  */
 
-gui_ord GUIFromTextX( gui_text_ord text_ord, gui_window *wnd )
+guix_ord GUIFromTextX( gui_text_ord text_ord, gui_window *wnd )
 {
     GUIGetMetrics( wnd );
     return( GUIMulDiv( gui_ord, text_ord, AVGXCHAR( GUItm ), 1 ) );
@@ -77,7 +79,7 @@ gui_ord GUIFromTextX( gui_text_ord text_ord, gui_window *wnd )
  *  GUIFromTextY -- multiply by character widht, height
  */
 
-gui_ord GUIFromTextY( gui_text_ord text_ord, gui_window *wnd )
+guix_ord GUIFromTextY( gui_text_ord text_ord, gui_window *wnd )
 {
     GUIGetMetrics( wnd );
     return( GUIMulDiv( gui_ord, text_ord, AVGYCHAR( GUItm ), 1 ) );
@@ -146,12 +148,10 @@ void GUIGetUpdateRows( gui_window *wnd, HWND hwnd, gui_text_ord *start, gui_text
 {
     WPI_RECT    wpi_rect;
     int         avgy;
-    GUI_RECTDIM left;
-    GUI_RECTDIM top;
-    GUI_RECTDIM right;
-    GUI_RECTDIM bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
-    hwnd = hwnd;
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   hwnd = hwnd;
 
     _wpi_gettextmetrics( wnd->hdc, &GUItm );
     avgy = AVGYCHAR( GUItm );
@@ -161,8 +161,8 @@ void GUIGetUpdateRows( gui_window *wnd, HWND hwnd, gui_text_ord *start, gui_text
     top    = _wpi_cvtc_y_plus1( hwnd, top );
     bottom = _wpi_cvtc_y_plus1( hwnd, bottom );
 
-    *start = ( gui_ord )( top / avgy );
-    *num = ( bottom + avgy - 1 ) / avgy - *start;
+    *start = (gui_text_ord)( top / avgy );
+    *num = (gui_text_ord)( ( bottom + avgy - 1 ) / avgy ) - *start;
     if( ( *start + *num ) > wnd->num_rows ) {
         *num = wnd->num_rows - *start;
     }

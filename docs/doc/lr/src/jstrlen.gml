@@ -4,7 +4,7 @@
 size_t jstrlen( const JCHAR *s );
 .ixfunc2 '&Jstring' &funcb
 .if &farfnc ne 0 .do begin
-size_t __far _fjstrlen( const JCHAR __far *s );
+size_t _fjstrlen( const JCHAR __far *s );
 .ixfunc2 '&Jstring' &ffunc
 .do end
 .synop end
@@ -25,7 +25,7 @@ the number of characters in the Kanji string pointed to by
 .arg s
 .period
 A double-byte character is treated as one character.
-.im ffarparm
+.farfuncp &ffunc. &funcb.
 .desc end
 .return begin
 .if &farfnc eq 0 .do begin

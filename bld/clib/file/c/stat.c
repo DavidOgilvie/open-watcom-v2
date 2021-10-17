@@ -178,7 +178,7 @@ _WCRTLINK int __F_NAME(stat,_wstat)( CHAR_TYPE const *path, struct stat *buf )
 #if defined(__WIDECHAR__)
         char    mbPath[MB_CUR_MAX * _MAX_PATH];
 
-        if( wcstombs( mbPath, path, sizeof( mbPath ) ) == -1 ) {
+        if( wcstombs( mbPath, path, sizeof( mbPath ) ) == (size_t)-1 ) {
             mbPath[0] = '\0';
         }
 #endif
@@ -193,7 +193,7 @@ _WCRTLINK int __F_NAME(stat,_wstat)( CHAR_TYPE const *path, struct stat *buf )
             handle = __F_NAME(open,_wopen)( path, O_WRONLY );
             if( handle != -1 ) {
                 canwrite = 1;
-                if( __F_NAME(fstat,_wfstat)( handle, buf ) == -1 ) {
+                if( fstat( handle, buf ) == -1 ) {
                     rc = _RWD_errno;
                 } else {
                     fstatok = 1;
@@ -204,7 +204,7 @@ _WCRTLINK int __F_NAME(stat,_wstat)( CHAR_TYPE const *path, struct stat *buf )
             if( handle != -1 ) {
                 canread = 1;
                 if( !fstatok ) {
-                    if( __F_NAME(fstat,_wfstat)( handle, buf ) == -1 ) {
+                    if( fstat( handle, buf ) == -1 ) {
                         rc = _RWD_errno;
                     }
                 }

@@ -38,8 +38,8 @@ Copying of overlapping objects is not guaranteed to work properly.
 See the
 .kw memmove
 function if you wish to copy objects that overlap.
-.im farfunc
-.im widefun1
+.farfunc &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
 .if &'length(&wfunc.) ne 0 .do begin
 The argument
 .arg length

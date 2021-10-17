@@ -36,13 +36,15 @@
 #include <stdlib.h>
 #include "guiscale.h"
 #include "guigetx.h"
+#include "guilog.h"
+
 
 static bool GetExtent( gui_window *wnd, const char *text, size_t in_length, gui_coord *extent )
 {
     size_t      length;
     bool        got_new;
-    guix_ord    extentx;
-    guix_ord    extenty;
+    WPI_RECTDIM extentx;
+    WPI_RECTDIM extenty;
 
     if( wnd != NULL && text != NULL ) {
         got_new = GUIGetTheDC( wnd );
@@ -102,8 +104,8 @@ static bool GetControlExtent( gui_window *wnd, gui_ctl_id id, const char *text, 
     WPI_FONT    old;
     WPI_FONT    first;
     HWND        hwnd;
-    guix_ord    extentx;
-    guix_ord    extenty;
+    WPI_RECTDIM extentx;
+    WPI_RECTDIM extenty;
 
     if( text != NULL && GetControlInfo( wnd, id, &hwnd, &dc ) ) {
         length = strlen( text );

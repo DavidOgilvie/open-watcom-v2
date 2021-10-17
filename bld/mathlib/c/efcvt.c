@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -60,7 +61,7 @@ static char *fixup( char *p, int n )
     return( start );
 }
 
-_WMRTLINK CHAR_TYPE *__F_NAME(ecvt,_wecvt)( double value,int ndigits, int *dec, int *sign )
+_WMRTLINK CHAR_TYPE *__F_NAME(ecvt,_wecvt)( double value, int ndigits, int *dec, int *sign )
 {
     /* ndigits represents the number of significant digits */
     char    *buf;

@@ -9,17 +9,16 @@ errno_t wcstombs_s( size_t * restrict retval,
                     rsize_t dstmax,
                     const wchar_t * restrict src,
                     rsize_t len);
-.ixfunc2 '&Wide' &funcb
-.ixfunc2 '&Multibyte' &funcb
+.ixfunc2 '&Wide' wcstombs_s
+.ixfunc2 '&Multibyte' wcstombs_s
 .if &farfnc ne 0 .do begin
-
 errno_t _fwcstombs_s( size_t __far * restrict retval,
                       char __far * restrict dst,
                       rsize_t dstmax,
                       const wchar_t __far * restrict src,
                       rsize_t len);
-.ixfunc2 '&Wide' &fwfunc
-.ixfunc2 '&Multibyte' &fwfunc
+.ixfunc2 '&Wide' _fwcstombs_s
+.ixfunc2 '&Multibyte' _fwcstombs_s
 .do end
 .synop end
 .*
@@ -57,13 +56,9 @@ reached or because an encoding error occurred.
 .np
 If there is a runtime-constraint violation, then
 .id &funcb.
-does the following. If
-.arg retval
-is not a null pointer,then
-.id &funcb.
-sets
-.arg *retval
-to (size_t)(-1). If
+does the following.
+.im _mbsret6
+If
 .arg dst
 is not a null pointer and
 .arg dstmax
@@ -133,12 +128,8 @@ call to the wcrtomb function.
 Regardless of whether
 .arg dst
 is or is not a null pointer, if the input conversion encounters a
-wide character that does not correspond to a valid multibyte character,
-an encoding error
-occurs: the
-.id &funcb.
-function stores the value (size_t)(-1) into
-.arg *retval
+wide character that does not correspond to
+.im _mbsret4
 .period
 Otherwise, the
 .id &funcb.
@@ -159,7 +150,7 @@ returns.
 .np
 If copying takes place between objects that overlap, the objects take on unspecified
 values.
-.im safefarw
+.farfuncp &ffunc. &funcb.
 .desc end
 .*
 .return begin

@@ -34,9 +34,10 @@ The
 function computes the length of the string pointed to by
 .arg s
 .period
-.im farparm
-.im widefun1
-.im mbsffunc
+.farfuncp &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
+.mbcsfunc &mfunc. &funcb.
+.farfuncp &fmfunc. &mfunc.
 .desc end
 .return begin
 The

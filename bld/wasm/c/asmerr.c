@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -36,8 +36,8 @@
 #include "asminput.h"
 #include "fatal.h"
 #include "errout.h"
-#include "wompwasm.h"
 #include "standalo.h"
+
 
 void                    OpenErrFile( void );
 
@@ -68,6 +68,21 @@ void DoDebugMsg( const char *format, ... )
     va_start( args, format );
     vprintf( format, args );
     va_end( args );
+}
+#endif
+
+#ifndef NDEBUG
+int InternalError( const char *file, unsigned line )
+/**************************************************/
+// it is used by myassert function in debug version
+{
+    char msgbuf[MAX_MESSAGE_SIZE];
+
+    MsgGet( MSG_INTERNAL_ERROR, msgbuf );
+    fprintf( errout, msgbuf, file, line );
+    fflush( errout );
+    exit( EXIT_FAILURE );
+    return( 0 );
 }
 #endif
 
@@ -152,7 +167,7 @@ void AsmWarn( int level, unsigned msgnum, ... )
 
 static void PrtMsg1( char *prefix, unsigned msgnum, va_list args1, va_list args2 )
 /**********************************************p*********************************/
-// print standard WASM messages, no WOMP
+// print standard WASM messages
 {
     PrintBanner();
     if( ErrFile == NULL )
@@ -163,21 +178,6 @@ static void PrtMsg1( char *prefix, unsigned msgnum, va_list args1, va_list args2
         Errfile_Written = true;
         PutMsg( ErrFile, prefix, msgnum, args2 );
     }
-}
-
-void PrtMsg( unsigned msgnum, ... )
-/*********************************/
-// print messages from WOMP !!!
-{
-    va_list args1;
-
-    PrintBanner();
-    if( ErrFile == NULL )
-        OpenErrFile();
-    va_start( args1, msgnum );
-    PutMsg( errout, "Warning!", msgnum, args1 );
-    va_end( args1 );
-    fflush( errout );
 }
 
 void DelErrFile( void )

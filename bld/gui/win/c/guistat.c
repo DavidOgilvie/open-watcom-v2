@@ -40,6 +40,7 @@
 #include "guistr.h"
 #include "guixutil.h"
 #include "guistat.h"
+#include "guilog.h"
 
 
 statwnd         *GUIStatusWnd;
@@ -56,10 +57,12 @@ static void DoFreeStatus( void )
 static void SetStatusRect( HWND parent, WPI_RECT *status_wpi_rect, guix_ord x, guix_ord height )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, right, top, bottom;
-    int         y, h;
+    WPI_RECTDIM left, right, top, bottom;
+    guix_ord    y;
+    guix_ord    h;
 
-    _wpi_getclientrect( parent, &wpi_rect );
+   	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+_wpi_getclientrect( parent, &wpi_rect );
     _wpi_getrectvalues( wpi_rect, &left, &top, &right, &bottom );
     y = _wpi_cvth_y_plus1( bottom - height, bottom - top );
     h = _wpi_cvth_y_plus1( bottom - top, bottom - top );
@@ -69,7 +72,7 @@ static void SetStatusRect( HWND parent, WPI_RECT *status_wpi_rect, guix_ord x, g
 static void DoResizeStatus( gui_window *wnd )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     if( GUIHasStatus( wnd ) ) {
         _wpi_getwindowrect( wnd->status, &wpi_rect );
@@ -109,6 +112,7 @@ bool GUIAPI GUICreateStatusWindow( gui_window *wnd, gui_ord x, gui_ord height,
 {
     WPI_RECT    wpi_rect;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     colour = colour;
     if( wnd->root == NULLHANDLE ) {
         return( false );
@@ -173,7 +177,7 @@ bool GUIAPI GUICloseStatusWindow( gui_window *wnd )
 bool GUIAPI GUIResizeStatusWindow( gui_window *wnd, gui_ord x, gui_ord height )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     if( !GUIHasStatus( wnd ) ) {
         return( false );

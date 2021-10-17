@@ -32,6 +32,7 @@
 
 #include "guiwind.h"
 #include "watcom.h"
+#include "guilog.h"
 
 
 gui_mcursor_handle GUIAPI GUISetMouseCursor( gui_mcursor_type type )

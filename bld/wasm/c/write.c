@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -38,21 +38,22 @@
 #include "asmalloc.h"
 #include "fatal.h"
 #include "asmeval.h"
-#include "womp.h"
-#include "objprs.h"
-#include "fixup.h"
+#include "asmglob.h"
+#include "omffixup.h"
 #include "autodept.h"
 #include "dostimet.h"
 #include "mangle.h"
 #include "directiv.h"
 #include "queues.h"
-#include "womputil.h"
 #include "asmlabel.h"
 #include "asminput.h"
 #include "asmfixup.h"
 #include "condasm.h"
 #include "myassert.h"
 #include "standalo.h"
+#include "omfobjre.h"
+#include "omfgen.h"
+#include "omfgenio.h"
 
 #include "clibext.h"
 
@@ -170,13 +171,13 @@ static void write_init( void )
 
     AddLnameData( dir_insert( "", TAB_CLASS_LNAME ) );
     ModuleInit();
-    FixInit();      /* womp init */
+    FixInit();      /* OMF output init */
 }
 
 static void write_fini( void )
 /****************************/
 {
-    FixFini();      /* womp fini */
+    FixFini();      /* OMF output fini */
     ModuleFini();
     FreeFlist();
 }
@@ -617,9 +618,9 @@ static void get_frame( fixup *fixnode, struct asmfixup *fixup )
 
 static struct fixup *CreateFixupRecModend( struct asmfixup *fixup )
 /*****************************************************************/
-/* Create a fixup record for WOMP */
+/* Create a fixup record for OMF output */
 {
-    struct fixup        *fixnode;       // fixup structure from WOMP
+    struct fixup        *fixnode;       // fixup structure from OMF output
     struct asm_sym      *sym;
 
     fixnode = FixNew();
@@ -645,7 +646,7 @@ static struct fixup *CreateFixupRecModend( struct asmfixup *fixup )
         return( NULL );
     case SYM_EXTERNAL:
         if( sym->mem_type == MT_NEAR || sym->mem_type == MT_FAR || sym->mem_type == MT_SHORT ) {
-            fixnode->lr.target = TARGET_EXT & TARGET_WITH_DISPL;
+            fixnode->lr.target = TARGET_EXT;
             fixnode->lr.target_datum = ((dir_node *)sym)->e.extinfo->idx;
             get_frame( fixnode, fixup );
             return( fixnode );
@@ -655,7 +656,7 @@ static struct fixup *CreateFixupRecModend( struct asmfixup *fixup )
         }
     default:
         /**/myassert( sym->segment != NULL );
-        fixnode->lr.target = TARGET_SEG & TARGET_WITH_DISPL;
+        fixnode->lr.target = TARGET_SEG;
         fixnode->lr.target_datum = ((dir_node *)sym->segment)->e.seginfo->idx;
         fixnode->lr.frame = FRAME_TARG;
         fixnode->lr.frame_datum = 0;
@@ -776,9 +777,9 @@ static void write_linnum( void )
 
 static struct fixup *CreateFixupRec( unsigned long offset, struct asmfixup *fixup )
 /*********************************************************************************/
-/* Create a fixup record for WOMP */
+/* Create a fixup record for OMF output */
 {
-    struct fixup        *fixnode;       // fixup structure from WOMP
+    struct fixup        *fixnode;       // fixup structure from OMF output
     struct asm_sym      *sym;
 
     fixnode = FixNew();
@@ -830,7 +831,7 @@ static struct fixup *CreateFixupRec( unsigned long offset, struct asmfixup *fixu
         AsmErr( SYMBOL_NOT_DEFINED, sym->name );
         return( NULL );
     case SYM_GRP:
-        fixnode->lr.target = TARGET_GRP;
+        fixnode->lr.target = TARGET_NO_DISPL( TARGET_GRP );
         fixnode->lr.target_datum = ((dir_node *)sym)->e.grpinfo->idx;
         if( fixup->frame == NULL ) {
             fixnode->lr.frame = FRAME_GRP;
@@ -840,7 +841,7 @@ static struct fixup *CreateFixupRec( unsigned long offset, struct asmfixup *fixu
         }
         break;
     case SYM_SEG:
-        fixnode->lr.target = TARGET_SEG;
+        fixnode->lr.target = TARGET_NO_DISPL( TARGET_SEG );
         fixnode->lr.target_datum = ((dir_node *)sym)->e.seginfo->idx;
         if( fixup->frame == NULL ) {
             fixnode->lr.frame = FRAME_SEG;
@@ -850,13 +851,13 @@ static struct fixup *CreateFixupRec( unsigned long offset, struct asmfixup *fixu
         }
         break;
     case SYM_EXTERNAL:
-        fixnode->lr.target = TARGET_EXT;
+        fixnode->lr.target = TARGET_NO_DISPL( TARGET_EXT );
         fixnode->lr.target_datum = ((dir_node *)sym)->e.extinfo->idx;
         get_frame( fixnode, fixup );
         break;
     default:
         /**/myassert( sym->segment != NULL );
-        fixnode->lr.target = TARGET_SEG;
+        fixnode->lr.target = TARGET_NO_DISPL( TARGET_SEG );
         fixnode->lr.target_datum = ((dir_node *)sym->segment)->e.seginfo->idx;
         get_frame( fixnode, fixup );
         break;
@@ -866,7 +867,7 @@ static struct fixup *CreateFixupRec( unsigned long offset, struct asmfixup *fixu
     /* Optimize the fixup */
     /*--------------------*/
 
-    if( fixnode->lr.frame == ( fixnode->lr.target - TARGET_SEG ) ) {
+    if( fixnode->lr.frame == ( fixnode->lr.target - TARGET_NO_DISPL( TARGET_SEG ) ) ) {
         fixnode->lr.frame = FRAME_TARG;
     }
     return( fixnode );
@@ -1275,13 +1276,8 @@ void WriteObjModule( void )
 #ifdef DEBUG_OUT
         write_modend();
 #endif
-        ObjWriteClose( pobjState.file_out );
-        /* This remove works around an NT networking bug */
-        remove( AsmFiles.fname[OBJ] );
-        pobjState.file_out = ObjWriteOpen( AsmFiles.fname[OBJ] );
-        if( pobjState.file_out == NULL ) {
-            Fatal( MSG_CANNOT_OPEN_FILE, AsmFiles.fname[OBJ] );
-        }
+        ObjWriteClose( true );
+        ObjWriteOpen();
         prev_total = curr_total;
     }
     if( write_to_file && Options.error_count == 0 )

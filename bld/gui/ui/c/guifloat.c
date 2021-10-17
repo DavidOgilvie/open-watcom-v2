@@ -65,10 +65,10 @@ static void MapLocation( gui_window *wnd, const gui_point *point, guix_point *sc
 
     scr_x = GUIScaleToScreenH( point->x );
     scr_y = GUIScaleToScreenV( point->y );
-    if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
+    if( GUI_DO_HSCROLL( wnd ) ) {
         scr_x -= wnd->hgadget->pos;
     }
-    if( ( wnd->vgadget != NULL ) && !GUI_VSCROLL_EVENTS_SET( wnd ) ) {
+    if( GUI_DO_VSCROLL( wnd ) ) {
         scr_y -= wnd->vgadget->pos;
     }
     scr_point->x = scr_x + wnd->use.col + 1;
@@ -170,7 +170,7 @@ ui_event GUICreateMenuPopup( gui_window *wnd, guix_point *scr_location, UIMENUIT
         ui_ev = ID2EV( *curr_id );
     }
     top = GUIGetTopWnd( wnd );
-    COPYAREA( top->use, area );
+    COPYRECTX( top->use, area );
     area.row += top->vs.area.row;
     area.col += top->vs.area.col;
     ok = uiposfloatingpopup( menuitems, &desc, wnd->vs.area.row + scr_location->y,

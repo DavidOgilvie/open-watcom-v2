@@ -37,13 +37,7 @@
     #include <windows.h>
     #include <dos.h>
 #elif defined( __NT__ )
-    #include <windows.h>
-  #ifdef INCLUDE_COMMDLG_H
-    #include <commdlg.h>
-  #endif
-  #ifdef INCLUDE_DDEML_H
-    #include <ddeml.h>
-  #endif
+    #include <wwindows.h>
 #elif defined( __OS2__ )
     #define  INCL_DOSMISC
     // For WPI
@@ -68,7 +62,6 @@
 #include "bool.h"
 #include "vhandle.h"
 #include "gui.h"
-#include "guitypes.h"
 #include "strvbuf.h"
 
 

@@ -1,10 +1,10 @@
 .func nthctype _fnthctype
 .synop begin
 #include <jstring.h>
-int nthctype( const char * str, size_t n );
+int nthctype( const char *s, size_t n );
 .ixfunc2 '&Jstring' &funcb
 .if &farfnc ne 0 .do begin
-int far _fnthctype( const char far * str, size_t n );
+int _fnthctype( const char far *s, size_t n );
 .ixfunc2 '&Jstring' &ffunc
 .do end
 .synop end
@@ -24,7 +24,7 @@ functions return
 the type of an 8-bit character indicated as a byte offset
 .arg n
 from the start of the string
-.arg str
+.arg s
 .period
 .begterm 10
 .termhd1 Constant
@@ -45,7 +45,7 @@ is
 (-1) The byte is not valid as second byte of a double-byte character
 or it is the null character,
 .endterm
-.im ffarparm
+.farfuncp &ffunc. &funcb.
 .desc end
 .return begin
 If the character is a null character,

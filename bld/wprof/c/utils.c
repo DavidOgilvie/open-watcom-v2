@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2017-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2017-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -35,7 +35,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <limits.h>
-#include "wio.h"
 #include "common.h"
 #if defined( __DOS__ )
     #include <i86.h>
@@ -50,6 +49,7 @@
     #define INCL_DOS
     #include "os2.h"
 #elif defined( __UNIX__ )
+    #include <unistd.h>
     #if defined( __WATCOMC__ )
         #include <process.h>
     #endif
@@ -70,6 +70,7 @@
 #include "sampinfo.h"
 #include "wpdata.h"
 #include "pathgrp2.h"
+#include "autoenv.h"
 
 #include "clibext.h"
 
@@ -103,13 +104,13 @@ void ReplaceExt( char * path, char * addext )
 static char *findFile( char *fullname, const char *name, char *path_list )
 /************************************************************************/
 {
-    int             fh;
+    FILE            *fp;
     char            *p;
     char            c;
 
-    fh = open( name, O_RDONLY | O_BINARY, S_IREAD );
-    if( fh != -1 ) {
-        close( fh );
+    fp = fopen( name, "rb" );
+    if( fp != NULL ) {
+        fclose( fp );
         strcpy( fullname, name );
         return( fullname );
     }
@@ -120,16 +121,16 @@ static char *findFile( char *fullname, const char *name, char *path_list )
                 ++path_list;
                 if( IS_PATH_LIST_SEP( c ) )
                     break;
-                *p = c;
+                *p++ = c;
             } while( (c = *path_list) != NULLCHAR );
             c = p[-1];
             if( !IS_PATH_SEP( c ) ) {
                 *p++ = DIR_SEP;
             }
-            strcat( p, name );
-            fh = open( fullname, O_RDONLY | O_BINARY, S_IREAD );
-            if( fh != -1 ) {
-                close( fh );
+            strcpy( p, name );
+            fp = fopen( fullname, "rb" );
+            if( fp != NULL ) {
+                fclose( fp );
                 return( fullname );
             }
         }
@@ -230,6 +231,8 @@ void InitPaths( void )
     char        buff [ _MAX_PATH ];
     char        *p;
 #endif
+
+    watcom_setup_env();
 
     env = getenv( PATH_NAME );
     FilePathList = AddPath( FilePathList, env );

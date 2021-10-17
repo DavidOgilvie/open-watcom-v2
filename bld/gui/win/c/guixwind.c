@@ -58,7 +58,10 @@
 #include "guimdi.h"
 #include "guistat.h"
 #include "wclbproc.h"
+#include "guilog.h"
 
+
+extern void 	GUIDoSysColorChange ( gui_window * );
 
 #if !defined(__NT__)
 #define WM_PAINTICON            0x0026
@@ -72,7 +75,6 @@
 
 #define REGISTER_STYLE          CS_DBLCLKS
 #define REGISTER_DIALOG_STYLE   CS_PARENTDC
-
 typedef struct wmcreate_info {
     int                 size;
     gui_window          *wnd;
@@ -83,7 +85,6 @@ bool            EditControlHasFocus = false;
 
 gui_window      *GUICurrWnd = NULL;
 WPI_INST        GUIMainHInst;
-
 char            GUIClass[GUI_CLASSNAME_MAX + 1];
 char            GUIDialogClass[GUI_CLASSNAME_MAX + 1] = "GUIDialogClass";
 char            GUIDefaultClassName[] = "GUIClass";
@@ -126,7 +127,6 @@ static void GUISetWindowClassName( void )
     strncpy( GUIClass, class_name, GUI_CLASSNAME_MAX );
     GUIClass[GUI_CLASSNAME_MAX] = '\0';
 }
-
 void GUIAPI GUIWantPartialRows( gui_window *wnd, bool want )
 {
     if( wnd != NULL ) {
@@ -243,6 +243,8 @@ int GUIXMain( int argc, char *argv[] )
     bool        register_done;
     HAB         inst;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+
     inst = WinInitialize( 0 );
     if( inst == 0 ) {
         return( 0 );
@@ -265,6 +267,11 @@ int GUIXMain( int argc, char *argv[],
     int         ret;
     bool        register_done;
 
+    GUIset_log_mode( 1 );       // 1 to turn on standard tracing, usually 1
+    GUIset_crash_mode( 0 );    	// 1 to turn on crash-resistant log file writing (slow!), usually 0
+	GUIjustify ( 0 );			// Close log file
+
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     ret = 0;
     lpCmdLine = lpCmdLine;
     nShowCmd = nShowCmd;
@@ -322,6 +329,7 @@ int GUIXMain( int argc, char *argv[],
     GUICleanup();
     GUIDead();                  /* user replaceable stub function */
     GUIMemClose();
+	GUIclose_log ();	// Close everything down when closing program
     return( ret );
 }
 
@@ -386,7 +394,7 @@ static bool CreateBackgroundWnd( gui_window *wnd, gui_create_info *dlg_info )
     DWORD               style;
     wmcreate_info       wmcreateinfo;
     HWND                frame_hwnd;
-    GUI_RECTDIM         left, top, right, bottom;
+    WPI_RECTDIM         left, top, right, bottom;
 
     _wpi_getclientrect( wnd->root, &wnd->hwnd_client_rect );
     _wpi_getrectvalues( wnd->hwnd_client_rect, &left, &top, &right, &bottom );
@@ -479,10 +487,10 @@ bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *p
     if( dlg_info->style & GUI_RESIZEABLE ) {
         style |= WS_THICKFRAME;
     }
-    if( dlg_info->scroll & GUI_HSCROLL ) {
+    if( dlg_info->scroll_style & GUI_HSCROLL ) {
         style |= WS_HSCROLL;
     }
-    if( dlg_info->scroll & GUI_VSCROLL ) {
+    if( dlg_info->scroll_style & GUI_VSCROLL ) {
         style |= WS_VSCROLL;
     }
     if( wnd->flags & HAS_CAPTION ) {
@@ -550,10 +558,10 @@ bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *p
             //flags |= FCF_MENU;
         }
     }
-    if( dlg_info->scroll & GUI_HSCROLL ) {
+    if( dlg_info->scroll_style & GUI_HSCROLL ) {
         flags |= FCF_HORZSCROLL;
     }
-    if( dlg_info->scroll & GUI_VSCROLL ) {
+    if( dlg_info->scroll_style & GUI_VSCROLL ) {
         flags |= FCF_VERTSCROLL;
     }
     if( dlg_info->style & GUI_DIALOG_LOOK ) {
@@ -663,7 +671,7 @@ void GUIResizeBackground( gui_window *wnd, bool force_msg )
 {
     WPI_RECT    wpi_rect;
     int         tbar_height, status_height;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     if( wnd->root == NULLHANDLE ) {
         if( wnd->hwnd != NULLHANDLE ) {
@@ -826,6 +834,7 @@ static WPI_POINT prev_wpi_point = { -1, -1 };
 
 WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
+    WINDOW_MSG 			_msg= msg;
     gui_window          *wnd;
     gui_window          *root;
     gui_ctl_id          id;
@@ -847,6 +856,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
     RECT                rc;
 #endif
 
+	_msg= msg;
     root = NULL;
     dlg_info = NULL;
     if( msg == WM_CREATE ) {
@@ -903,7 +913,12 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
                 ret = (WPI_MRESULT)WPI_ERROR_ON_CREATE;
             }
             return( ret );
-        }
+#ifndef __OS2_PM__
+		case WM_SYSCOLORCHANGE:
+			GUIDoSysColorChange ( wnd );
+			break;
+#endif
+		}
     } else if( ( wnd->root != NULLHANDLE ) && ( hwnd == wnd->hwnd ) ) {
         /* message for container window */
         switch( msg ) {
@@ -921,7 +936,17 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
         case WM_HSCROLL:
         case WM_CLOSE:
             return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
-        }
+#ifndef __OS2_PM__
+		case WM_SYSCOLORCHANGE:
+			GUIDoSysColorChange ( wnd );
+			break;
+#endif
+// Even the root window needs to get painted on a WM_SYSCOLORCHANGE  event
+		case WM_PAINT:
+			use_defproc = true;
+			GUIPaint( wnd, hwnd, true );
+			break;
+		}
     }
 
     use_defproc = false;
@@ -964,6 +989,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
         ret = (WPI_MRESULT)CvrCtl3dCtlColorEx( msg, wparam, lparam );
         if( ret == (WPI_MRESULT)NULL ) {
             SetBkColor( (HDC)wparam, GetNearestColor( (HDC)wparam, GUIGetBack( wnd, GUI_BACKGROUND ) ) );
+            SetTextColor( (HDC)wparam, GetNearestColor( (HDC)wparam, GUIGetFore( wnd, GUI_BACKGROUND ) ) );
             ret = (WPI_MRESULT)wnd->bk_brush;
         }
         break;
@@ -979,6 +1005,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
             ret = (WPI_MRESULT)CvrCtl3dCtlColorEx( msg, wparam, lparam );
             if( ret == (WPI_MRESULT)NULL ) {
                 SetBkColor( (HDC)wparam, GetNearestColor( (HDC)wparam, GUIGetBack( wnd, GUI_BACKGROUND ) ) );
+                SetTextColor( (HDC)wparam, GetNearestColor( (HDC)wparam, GUIGetFore( wnd, GUI_BACKGROUND ) ) );
                 ret = (WPI_MRESULT)wnd->bk_brush;
             }
             break;
@@ -1349,6 +1376,11 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
             Posted = true;
         }
         break;
+#ifndef __OS2_PM__
+	case WM_SYSCOLORCHANGE:
+		GUIDoSysColorChange ( wnd );
+		break;
+#endif
     default:
         use_defproc = true;
         break;
@@ -1362,9 +1394,11 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
 #ifdef __OS2_PM__
 WPI_MRESULT CALLBACK GUIFrameProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
+    WINDOW_MSG _msg= msg;
     HWND        client;
     gui_window  *wnd;
 
+	_msg= msg;
     client = WinWindowFromID( hwnd, FID_CLIENT );
     wnd = GUIGetWindow( client );
     if( wnd != NULL ) {
@@ -1410,7 +1444,12 @@ WPI_MRESULT CALLBACK GUIFrameProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WP
         case WM_HSCROLL:
             GUIProcessScrollMsg( wnd, msg, wparam, lparam );
             return( 0L );
-        }
+#ifndef __OS2_PM__
+		case WM_SYSCOLORCHANGE:
+			GUIDoSysColorChange ( wnd );
+			break;
+#endif
+		}
     }
     return( _wpi_callwindowproc( oldFrameProc, hwnd, msg, wparam, lparam ) );
 }

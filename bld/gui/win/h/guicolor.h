@@ -2,6 +2,7 @@
 *
 *                            Open Watcom Project
 *
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -37,3 +38,4 @@ extern HBRUSH       GUIFreeBKBrush( gui_window * wnd );
 extern void         GUIXGetWindowColours( gui_window * wnd, gui_colour_set * colours );
 extern WPI_COLOUR   GUIGetFore( gui_window *wnd, gui_attr attr );
 extern WPI_COLOUR   GUIGetBack( gui_window *wnd, gui_attr attr );
+extern void 		InitSystemRGB( void );

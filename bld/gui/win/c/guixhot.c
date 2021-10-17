@@ -36,6 +36,7 @@
 #include "guixdraw.h"
 #include "guixwind.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 #ifdef __NT__
@@ -54,6 +55,8 @@ static PFNLI        pfnLoadImage;
 bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
 {
     int         i;
+    int         bm_w;
+    int         bm_h;
 
     for( i = 0; i < num_hot_spots; i++ ) {
 #ifdef __NT__
@@ -72,7 +75,9 @@ bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
 #ifdef __NT__
         }
 #endif
-        _wpi_getbitmapdim( GUIHotSpots[i].bitmap, &GUIHotSpots[i].size.x, &GUIHotSpots[i].size.y );
+        _wpi_getbitmapdim( GUIHotSpots[i].bitmap, &bm_w, &bm_h );
+        GUIHotSpots[i].size.x = bm_w;
+        GUIHotSpots[i].size.y = bm_h;
     }
     return( true );
 }

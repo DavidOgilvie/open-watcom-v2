@@ -4,7 +4,7 @@
 JSTRING jstrlwr( JCHAR *s1 );
 .ixfunc2 '&Jstring' &funcb
 .if &farfnc ne 0 .do begin
-FJSTRING __far _fjstrlwr( JCHAR __far *s1 );
+FJSTRING _fjstrlwr( JCHAR __far *s1 );
 .ixfunc2 '&Jstring' &ffunc
 .do end
 .synop end
@@ -24,7 +24,7 @@ functions replace
 all uppercase Roman characters ("A" to "Z") in the Kanji string
 .arg s1
 with lowercase characters.
-.im ffarfunc
+.farfunc &ffunc. &funcb.
 .desc end
 .return begin
 The address of the original string

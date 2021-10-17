@@ -45,12 +45,12 @@ void GUIAPI GUIWndDirty( gui_window *wnd )
 
     if( wnd != NULL ) {
         wnd->flags |= CONTENTS_INVALID;
-        COPYAREA( wnd->use, wnd->dirty );
+        COPYRECTX( wnd->use, wnd->dirty );
         wnd->flags &= ~NEEDS_RESIZE_REDRAW;
         GUIWndUpdate( wnd );
     } else {
         for( wnd = GUIGetFront(); wnd != NULL; wnd = GUIGetNextWindow( wnd ) ) {
-            GUIWholeWndDirty( wnd );
+            GUIDirtyWhole( wnd );
         }
         screen.row = 0; /* leave this 0! */
         screen.col = 0;

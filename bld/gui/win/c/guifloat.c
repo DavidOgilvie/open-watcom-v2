@@ -38,6 +38,7 @@
 #include "guifloat.h"
 #include "guistr.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 extern  HMENU           GUIHFloatingPopup;
@@ -50,7 +51,7 @@ bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
 {
     WPI_POINT   wpi_point;
     ULONG       flags;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
     HMENU       hpopup;
     guix_ord    scr_x;
     guix_ord    scr_y;
@@ -104,6 +105,7 @@ bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
         *curr_id = CurrId;
     }
     CurrId = 0;
+
     GUIDeleteFloatingPopups( wnd );
     return( true );
 }

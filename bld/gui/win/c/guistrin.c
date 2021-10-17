@@ -35,6 +35,7 @@
 #include <string.h>
 #include "guiscale.h"
 #include "guigetx.h"
+#include "guilog.h"
 
 
 static gui_text_ord DoReturn( gui_text_ord ret, gui_window *wnd, bool got_new )

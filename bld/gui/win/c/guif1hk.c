@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2018-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2018-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -35,6 +35,7 @@
 #include "guicontr.h"
 #include "guixwind.h"
 #include "wclbproc.h"
+#include "guilog.h"
 
 
 /* Local Window callback functions prototypes */
@@ -65,14 +66,14 @@ static gui_window *getFirstGUIParent( HWND hwnd )
     HWND        parent;
     gui_window  *wnd;
 
-    gui = NULL;
+    wnd = NULL;
 
     for( ;; ) {
-        gui = GUIGetCtrlWnd( hwnd );
-        if( gui != NULL )
+        wnd = GUIGetCtrlWnd( hwnd );
+        if( wnd != NULL )
             break;
-        //gui = GUIFindWindowFromHWND( hwnd );
-        //if( gui != NULL )
+        //wnd = GUIFindWindowFromHWND( hwnd );
+        //if( wnd != NULL )
         //    break;
         parent = _wpi_getparent( hwnd );
         if( parent == HWND_DESKTOP )
@@ -80,7 +81,7 @@ static gui_window *getFirstGUIParent( HWND hwnd )
         hwnd = parent;
     }
 
-    return( gui );
+    return( wnd );
 }
 
 #ifdef __OS2_PM__
@@ -90,6 +91,7 @@ LRESULT CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param )
 #endif
 {
     WPI_MSG             message;
+    WINDOW_MSG 			_msg;
     WPI_PARAM1          parm1;
     WPI_PARAM2          parm2;
     gui_window          *curr;
@@ -110,6 +112,7 @@ LRESULT CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param )
 #endif
 
     message = _wpi_qmsgmessage( qmsg );
+	_msg= message;
     parm1 = _wpi_qmsgparam1( qmsg );
     parm2 = _wpi_qmsgparam2( qmsg );
 

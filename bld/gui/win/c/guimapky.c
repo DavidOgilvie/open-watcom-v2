@@ -38,14 +38,17 @@
 #include "guixutil.h"
 #include "guimkey.h"
 #include "guixwind.h"
+#include "guilog.h"
+
 
 extern  bool            EditControlHasFocus;
 extern  gui_keystate    KeyState;
 #ifndef __OS2_PM__
-static  bool            RetTrue = false; /* set to true of app returned
-                                            true to last WM_SYSKEYDOWN or
-                                            WM_SYSKEYUP message */
+	static  bool            RetTrue = false; /* set to true of app returned
+												true to last WM_SYSKEYDOWN or
+												WM_SYSKEYUP message */
 #endif
+
 
 typedef struct {
     unsigned char   value;
@@ -54,6 +57,7 @@ typedef struct {
     gui_key         alt;
     gui_key         ctrl;
 } keytable;
+
 
 static keytable vk_table[] = {
     { 0xbc,     ',',    '<', GUI_KEY_ALT_COMMA,         0       },

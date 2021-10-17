@@ -36,6 +36,7 @@
 #include <string.h>
 #include "guigetx.h"
 #include "guiscale.h"
+#include "guilog.h"
 
 
 gui_text_ord GUIAPI GUIGetRow( gui_window *wnd, const gui_point *in_pos )
@@ -46,7 +47,7 @@ gui_text_ord GUIAPI GUIGetRow( gui_window *wnd, const gui_point *in_pos )
 
 gui_text_ord GUIAPI GUIGetCol( gui_window *wnd, const char *text, const gui_point *in_pos )
 {
-    guix_ord        width;
+    gui_text_ord    width;
     guix_ord        scr_x;
     bool            got_new;
 

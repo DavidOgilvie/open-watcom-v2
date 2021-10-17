@@ -124,7 +124,7 @@ void StopProg( void )
     RemoveDOSIntercepts();
 }
 
-void StartProg( const char *cmd, const char *prog, char *full_args, char *dos_args )
+void StartProg( const char *cmd, const char *prog, const char *full_args, char *dos_args )
 {
     struct  SREGS       segs;
     seg_offset          ovl_tbl;
@@ -253,7 +253,7 @@ void SysDefaultOptions( void )
 }
 
 
-static void SetInterruptWatch( char **cmd )
+static void SetInterruptWatch( const char **cmd )
 {
     unsigned intr_num;
 
@@ -271,7 +271,7 @@ static void SetInterruptWatch( char **cmd )
 }
 
 
-void SysParseOptions( char c, char **cmd )
+void SysParseOptions( char c, const char **cmd )
 {
     switch( c ) {
     case 'r':

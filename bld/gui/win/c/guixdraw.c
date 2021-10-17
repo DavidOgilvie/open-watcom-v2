@@ -37,10 +37,11 @@
 #include "guixutil.h"
 #include "guiscale.h"
 #include "guigetx.h"
-#include "guixdraw.h"
 #include "guixhot.h"
+#include "guixdraw.h"
 #include "guistr.h"
 #include "guicolor.h"
+#include "guilog.h"
 
 
 typedef struct draw_cache {
@@ -62,7 +63,7 @@ static void SetText( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 }
 
 static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
-                            guix_ord in_width, guix_ord in_height, const gui_coord *pos,
+                            unsigned in_width, unsigned in_height, const gui_coord *pos,
                             WPI_COLOUR fore, WPI_COLOUR back, gui_ord extentx,
                             bool draw_extent, int hotspot_no )
 {
@@ -79,8 +80,8 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     WPI_RECT    wpi_rect;
     guix_ord    hscroll_pos;
     WPI_COLOUR  colour;
-    GUI_RECTDIM left, top, right, bottom;
-    GUI_RECTDIM paint_left, paint_top, paint_right, paint_bottom;
+    WPI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM paint_left, paint_top, paint_right, paint_bottom;
     //draw_cache        dcache;
 
     if( ( wnd->hdc == NULLHANDLE ) || ( wnd->ps == NULL ) ||
@@ -124,7 +125,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     if( GUI_DO_VSCROLL( wnd ) ) {
         nDrawY -= GUIGetScrollPos( wnd, SB_VERT );
     }
-    nDrawX = left + ( GUIScaleToScreenH( pos->x ) - hscroll_pos );
+    nDrawX = left + GUIScaleToScreenH( pos->x ) - hscroll_pos;
 
     if( draw_extent ) {
         /* blanks out some portion of rest of the line */
@@ -149,7 +150,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
 #ifdef __OS2_PM__
         _wpi_rectangle( wnd->hdc, nDrawX, nDrawY + 1, right, nDrawY + height - 1 );
 #else
-        _wpi_rectangle( wnd->hdc, nDrawX, nDrawY, right, nDrawY + height);
+        _wpi_rectangle( wnd->hdc, nDrawX, nDrawY, right, nDrawY + height );
 #endif
 
         /* if visible even with scrolling */
@@ -159,7 +160,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
                 nDrawY += _wpi_metricdescent( GUItm );
 #endif
                 old_rop = _wpi_setrop2( wnd->hdc, R2_COPYPEN );
-                SetText( wnd, fore, back );
+				SetText( wnd, fore, back );
                 _wpi_textout( wnd->hdc, nDrawX, nDrawY, text, num_chars );
             } else {
                 GUIDrawBitmap( hotspot_no, wnd->hdc, nDrawX, nDrawY, colour );

@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include "guiscale.h"
 #include "guitextm.h"
+#include "guilog.h"
 
 
 void GUISetMetrics( gui_text_metrics *metrics, WPI_TEXTMETRIC *tm )

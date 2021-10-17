@@ -204,12 +204,9 @@ pick( MSG_READ_MORE,
 pick( MSG_INTERNAL_ERROR,
                                 "Internal error in %s(%u)" ,
                                 "%s(%u) で内部エラーが起こりました\n" )
-pick( OBJECT_WRITE_ERROR,
-                                "OBJECT WRITE ERROR !!" ,
-                                "オブジェクト書込みエラー !!\n" )
-pick( NO_LOR_PHARLAP,
-                                "NO LOR PHARLAP !!" ,
-                                "LOR PHARLAPではありません!!\n" )
+pick( OBJECT_FILE_ERROR,
+                                "Object file error - " ,
+                                "Object file error - " )
 pick( PARM_REQUIRED,
                                 "Parameter Required" ,
                                 "パラメータが必要です" )

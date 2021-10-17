@@ -74,9 +74,9 @@ See the
 .kw memmove_s
 function if you wish to copy objects that overlap.
 .if &'length(&_func.) ne 0 .do begin
-.im farfunc
+.farfuncp &ffunc. &funcb.
 .do end
-.im widefun1
+.widefunc &wfunc. &funcb.
 .if &'length(&wfunc.) ne 0 .do begin
 The arguments
 .arg s1max

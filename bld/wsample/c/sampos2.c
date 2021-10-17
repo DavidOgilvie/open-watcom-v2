@@ -101,7 +101,7 @@ void InitTimerRate( void )
     SleepTime = 55;
 }
 
-void SetTimerRate( char **cmd )
+void SetTimerRate( const char **cmd )
 {
     SleepTime = GetNumber( 1, 1000, cmd, 10 );
 }
@@ -477,7 +477,7 @@ static void LoadProg( char *cmd, char *cmd_args )
 
 #define BSIZE 256
 
-void StartProg( const char *cmd, const char *prog, char *full_args, char *dos_args )
+void StartProg( const char *cmd, const char *prog, const char *full_args, char *dos_args )
 {
 
     const char  *src;
@@ -605,7 +605,7 @@ void SysDefaultOptions( void )
 }
 
 
-void SysParseOptions( char c, char **cmd )
+void SysParseOptions( char c, const char **cmd )
 {
     switch( c ) {
     case 'r':

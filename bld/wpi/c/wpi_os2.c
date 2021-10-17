@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2015-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2015-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -45,6 +45,7 @@
 #define INCL_DOSDEVICES
 #include <wos2.h>
 #include "wpi.h"
+#include "oswincls.h"
 
 #define PATBRUSHID 200   /* This is the constant id for pattern brushes */
 static char sys_font_facename[] = "System Proportional";
@@ -2136,7 +2137,7 @@ BOOL _wpi_trackpopupmenu( HMENU hmenu, ULONG flags, LONG x, LONG y,
             } else {
                 // lets make sure this child of the desktop is a menu!!
                 WinQueryClassName( msg.hwnd, 9, class_name );
-                if( memcmp( class_name, "#4", 2 ) ) {
+                if( strcmp( class_name, WC_SYS_MENU ) ) {
                     discard_msg = TRUE;
                 }
             }
@@ -2162,7 +2163,7 @@ BOOL _wpi_trackpopupmenu( HMENU hmenu, ULONG flags, LONG x, LONG y,
             } else {
                 // lets make sure this child of the desktop is a menu!!
                 WinQueryClassName( msg.hwnd, 9, class_name );
-                if( memcmp( class_name, "#4", 2 ) ) {
+                if( strcmp( class_name, WC_SYS_MENU ) ) {
                     // the window is not a menu
                     quit_loop = TRUE;
                 } else {
@@ -2832,11 +2833,11 @@ void _wpi_deletesysmenupos( HMENU hmenu, SHORT pos )
 } /* _wpi_deletesysmenupos */
 
 void _wpi_gettextextent( WPI_PRES pres, LPCSTR string, int len_string,
-                                                    int *width, int *height )
+                                    WPI_RECTDIM *width, WPI_RECTDIM *height )
 /***************************************************************************/
 {
     WPI_POINT           pts[TXTBOX_COUNT];
-    int                 t_max, t_min;
+    WPI_RECTDIM         t_max, t_min;
 
     GpiQueryTextBox( pres, (LONG)len_string, (PCH)string, TXTBOX_COUNT, pts );
 

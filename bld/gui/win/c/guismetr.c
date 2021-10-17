@@ -33,6 +33,8 @@
 
 #include "guiwind.h"
 #include "guiscale.h"
+#include "guilog.h"
+
 
 void GUIAPI GUIGetSystemMetrics( gui_system_metrics *metrics )
 {

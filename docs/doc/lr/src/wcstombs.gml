@@ -36,14 +36,10 @@ At most
 bytes of the array pointed to by
 .arg s
 will be modified.
-.im farparm
+.farfuncp &ffunc. &funcb.
 .desc end
 .return begin
-If an invalid multibyte character is encountered, the
-.id &funcb.
-function
-returns
-.mono (size_t)&minus.1.
+.im _mbsret3
 Otherwise, the
 .id &funcb.
 function returns the number of array elements

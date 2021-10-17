@@ -32,6 +32,8 @@
 
 
 #include "guiwind.h"
+#include "guilog.h"
+
 
 void GUIAPI GUIRefresh( void )
 {

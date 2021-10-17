@@ -78,15 +78,15 @@ bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info, bool dialog )
         return( false );
     }
     GUISetUseWnd( wnd );
-    if( dlg_info->scroll & GUI_VSCROLL ) {
+    if( dlg_info->scroll_style & GUI_VSCROLL ) {
         if( !GUICreateGadget( wnd, VERTICAL, wnd->use.width, wnd->use.row,
-                           wnd->use.height, &wnd->vgadget, dlg_info->scroll ) ) {
+                           wnd->use.height, &wnd->vgadget, dlg_info->scroll_style ) ) {
             return( false );
         }
     }
-    if( dlg_info->scroll & GUI_HSCROLL ) {
+    if( dlg_info->scroll_style & GUI_HSCROLL ) {
         if( !GUICreateGadget( wnd, HORIZONTAL, wnd->use.height, wnd->use.col,
-                           wnd->use.width, &wnd->hgadget, dlg_info->scroll ) ) {
+                           wnd->use.width, &wnd->hgadget, dlg_info->scroll_style ) ) {
             return( false );
         }
     }
@@ -117,7 +117,7 @@ bool GUIIsOpen( gui_window *wnd )
 
 void GUISetUseArea( gui_window *wnd, SAREA *area, SAREA *use )
 {
-    COPYAREA( *area, *use );
+    COPYRECTX( *area, *use );
     use->row = 0;
     use->col = 0;
     if( (wnd->style & GUI_VISIBLE) && (wnd->style & GUI_NOFRAME) == 0 ) {
@@ -200,7 +200,7 @@ void GUIGetSAREA( gui_window *wnd, SAREA *area )
     if( GUI_IS_DIALOG( wnd ) ) {
         GUIGetDlgRect( wnd, area );
     } else {
-        COPYAREA( wnd->vs.area, *area );
+        COPYRECTX( wnd->vs.area, *area );
     }
 }
 
@@ -233,7 +233,7 @@ bool GUISetArea( SAREA *area, const gui_rect *rect, gui_window *parent_wnd,
     if( dialog || ( parent_wnd == NULL ) ) {
         GUIGetScreenArea( &bounding );
     } else {
-        COPYAREA( parent_wnd->use, bounding );
+        COPYRECTX( parent_wnd->use, bounding );
         GUIGetSAREA( parent_wnd, &parent_area );
         bounding.row += parent_area.row;
         bounding.col += parent_area.col;
@@ -338,10 +338,10 @@ void GUIMakeRelative( gui_window *wnd, const guix_point *scr_point, gui_point *p
     GUISetUseArea( wnd, &area, &use );
     scr_x = scr_point->x - use.col - area.col;
     scr_y = scr_point->y - use.row - area.row;
-    if( ( wnd->hgadget != NULL ) && !GUI_HSCROLL_EVENTS_SET( wnd ) ) {
+    if( GUI_DO_HSCROLL( wnd ) ) {
         scr_x += wnd->hgadget->pos;
     }
-    if( ( wnd->vgadget != NULL ) && !GUI_VSCROLL_EVENTS_SET( wnd ) ) {
+    if( GUI_DO_VSCROLL( wnd ) ) {
         scr_y += wnd->vgadget->pos;
     }
     point->x = GUIScreenToScaleH( scr_x );

@@ -34,12 +34,14 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guiscale.h"
+#include "guilog.h"
+
 
 void GUIAPI GUIGetAbsRect( gui_window *wnd, gui_rect *rect )
 {
     HWND        hwnd;
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
     guix_rect   scr_rect;
 
     hwnd = GUIGetParentFrameHWND( wnd );

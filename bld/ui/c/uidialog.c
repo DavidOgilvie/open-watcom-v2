@@ -177,9 +177,11 @@ static void print_field( VSCREEN *vs, VFIELD *field, bool current )
     case FLD_TEXT :
     case FLD_LABEL :
         attr = UIData->attrs[ATTR_NORMAL];
-        strncpy( ctrlbuf, field->u.str, CTRL_BUF_LEN );
-        ctrlbuf[CTRL_BUF_LEN] = '\0';
-        ctrlbuf_len = strlen( ctrlbuf );
+        if( field->u.str != NULL ) {
+            strncpy( ctrlbuf, field->u.str, CTRL_BUF_LEN );
+            ctrlbuf[CTRL_BUF_LEN] = '\0';
+            ctrlbuf_len = strlen( ctrlbuf );
+        }
         if( field->typ == FLD_LABEL ) {
             if( ctrlbuf_len < CTRL_BUF_LEN ) {
                 ctrlbuf[ctrlbuf_len++] = ':';
@@ -924,7 +926,7 @@ static ui_event uitabkey( ui_event ui_ev, a_dialog *ui_dlg_info )
     ui_event        new_ui_ev;
 
     if( ui_dlg_info->first == NULL )
-        return( false );
+        return( ui_ev );
     curr = ui_dlg_info->curr;
     new_ui_ev = ui_ev;
     switch( ui_ev ) {

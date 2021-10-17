@@ -35,6 +35,8 @@
 #include "guixutil.h"
 #include "guiscale.h"
 #include "guiscrol.h"
+#include "guilog.h"
+
 
 /*
  * SetScrollThumb -- Set the scrolling thumb for the window
@@ -46,6 +48,7 @@ static void SetScrollThumb( gui_window * wnd, int percent, int bar )
     guix_ord    new;
     bool        range_set;
 
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( GUIScrollOn( wnd, bar ) ) {
         old = GUIGetScrollPos( wnd, bar );
         if( percent < 0 ) {

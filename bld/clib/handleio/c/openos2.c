@@ -25,7 +25,7 @@
 *
 *  ========================================================================
 *
-* Description:  OS/2 implementation of open() and sopen().
+* Description:  OS/2 implementation of open() and _sopen().
 *
 ****************************************************************************/
 
@@ -73,7 +73,7 @@ static int __F_NAME(__sopen,__wsopen)( const CHAR_TYPE *name, unsigned mode, uns
         ++name;
 #ifdef __WIDECHAR__
     /*** If necessary, convert the wide filename to multibyte form ***/
-    if( wcstombs( mbName, name, sizeof( mbName ) ) == -1 ) {
+    if( wcstombs( mbName, name, sizeof( mbName ) ) == (size_t)-1 ) {
         mbName[0] = '\0';
     }
 #endif
@@ -147,8 +147,8 @@ static int __F_NAME(__sopen,__wsopen)( const CHAR_TYPE *name, unsigned mode, uns
     __SetIOMode( handle, iomode_flags );
 #ifdef DEFAULT_WINDOWING
     if( _WindowsNewWindow != NULL ) {
-        if( ( __F_NAME(stricmp,_wcsicmp)( name, STRING( "con" ) ) == 0 ) ||
-            ( __F_NAME(stricmp,_wcsicmp)( name, STRING( "\\dev\\con" ) ) == 0 ) ) {
+        if( ( __F_NAME(_stricmp,_wcsicmp)( name, STRING( "con" ) ) == 0 ) ||
+            ( __F_NAME(_stricmp,_wcsicmp)( name, STRING( "\\dev\\con" ) ) == 0 ) ) {
             _WindowsNewWindow( NULL, handle, -1 );
         }
     }
@@ -165,11 +165,11 @@ _WCRTLINK int __F_NAME(open,_wopen)( const CHAR_TYPE *name, int mode, ... )
     va_start( args, mode );
     permission = va_arg( args, int );
     va_end( args );
-    return( __F_NAME(sopen,_wsopen)( name, mode, SH_COMPAT, permission ) );
+    return( __F_NAME(_sopen,_wsopen)( name, mode, SH_COMPAT, permission ) );
 }
 
 
-_WCRTLINK int __F_NAME(sopen,_wsopen)( const CHAR_TYPE *name, int mode, int shflag, ... )
+_WCRTLINK int __F_NAME(_sopen,_wsopen)( const CHAR_TYPE *name, int mode, int shflag, ... )
 {
     va_list     args;
 

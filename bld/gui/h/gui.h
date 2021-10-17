@@ -34,9 +34,8 @@
 #include "guimem.h"
 #include "initmode.h"
 
-
-#define GUIAPI                  /* public API */
-#define GUIAPICALLBACK          /* public callback */
+#define GUIAPI			/* public API */
+#define GUIAPICALLBACK	/* public callback */
 
 #define GUI_LAST_INTERNAL_MSG   255
 
@@ -72,7 +71,7 @@ typedef enum {
     GUI_SCROLL_PAGE_RIGHT,
     GUI_SCROLL_FULL_RIGHT,
     GUI_SCROLL_HORIZONTAL,
-    GUI_CLICKED,                /* menu clicked */
+    GUI_CLICKED,                /* menu or control clicked */
     GUI_CONTROL_DCLICKED,       /* control double clicked */
     GUI_LBUTTONDOWN,            /* mouse messages */
     GUI_LBUTTONUP,
@@ -166,10 +165,61 @@ typedef enum {
     GUI_BR_MAGENTA,
     GUI_BR_YELLOW,
     GUI_BR_WHITE,
+    GUIEX_3DDKSHADOW,
+    GUIEX_3DFACE,
+    GUIEX_3DHIGHLIGHT,
+    GUIEX_3DHILIGHT,
+    GUIEX_3DLIGHT,
+    GUIEX_3DSHADOW,
+    GUIEX_ACTIVEBORDER,
+    GUIEX_ACTIVECAPTION,
+    GUIEX_APPWORKSPACE,
+    GUIEX_BACKGROUND,
+    GUIEX_BTNFACE,
+    GUIEX_BTNHIGHLIGHT,
+    GUIEX_BTNHILIGHT,
+    GUIEX_BTNSHADOW,
+    GUIEX_BTNTEXT,
+    GUIEX_CAPTIONTEXT,
+    GUIEX_DESKTOP,
+    GUIEX_DLG_BACKGRND,
     GUIEX_DLG_BKGRND,
-    GUIEX_WND_BKGRND,
+    GUIEX_DLG_TEXT,
+    GUIEX_FRAME_ACTIVE,
+    GUIEX_FRAME_INACTIVE,
+    GUIEX_GRADIENTACTIVECAPTION,
+    GUIEX_GRADIENTINACTIVECAPTION,
+    GUIEX_GRAYTEXT,
     GUIEX_HIGHLIGHT,
+    GUIEX_HIGHLIGHT_TEXT,
     GUIEX_HIGHLIGHTTEXT,
+    GUIEX_HIGHLITE,
+    GUIEX_HIGHLITE_TEXT,
+    GUIEX_HIGHLITETEXT,
+    GUIEX_HOTLIGHT,
+    GUIEX_HOTLITE,
+    GUIEX_INACTIVEBORDER,
+    GUIEX_INACTIVECAPTION,
+    GUIEX_INACTIVECAPTIONTEXT,
+    GUIEX_INFO_BACKGROUND,
+    GUIEX_INFO_TEXT,
+    GUIEX_INFOBACKGROUND,
+    GUIEX_INFOBK,
+    GUIEX_INFOTEXT,
+    GUIEX_MENU,
+    GUIEX_MENU_INACTIVE_TEXT,
+    GUIEX_MENU_TEXT,
+    GUIEX_MENU_TEXT_GRAYED,
+    GUIEX_MENUBAR,
+    GUIEX_MENUHILIGHT,
+    GUIEX_MENUTEXT,
+    GUIEX_SCROLLBAR,
+    GUIEX_WINDOW,
+    GUIEX_WINDOWFRAME,
+    GUIEX_WINDOWTEXT,
+    GUIEX_WINDOW_TEXT,
+    GUIEX_WND_BKGRND,
+    GUIEX_WND_TEXT,
     GUI_NUM_COLOURS,
 } gui_colour;
 
@@ -239,7 +289,8 @@ typedef enum gui_control_styles {
     GUI_STYLE_CONTROL_3STATE            = 0x00004000,
     GUI_STYLE_CONTROL_WANTKEYINPUT      = 0x00008000,
     GUI_STYLE_CONTROL_READONLY          = 0x00010000,
-    GUI_STYLE_CONTROL_BORDER            = 0x00020000
+    GUI_STYLE_CONTROL_BORDER            = 0x00020000,
+    GUI_STYLE_CONTROL_CHARCOORD         = 0x00040000,
 } gui_control_styles;
 
 typedef enum gui_line_styles {
@@ -471,15 +522,15 @@ typedef struct gui_control_info {
     const char              *text;
     gui_rect                rect;
     gui_window              *parent;
-    gui_scroll_styles       scroll;
+    gui_scroll_styles       scroll_style;
     gui_control_styles      style;
     gui_ctl_id              id;
 } gui_control_info;
 
-typedef bool (GUIAPICALLBACK GUICALLBACK)( gui_window *, gui_event gui_ev, void *param );
-typedef void (GUIAPICALLBACK ENUMCALLBACK)( gui_window *, void *param );
-typedef void (GUIAPICALLBACK CONTRENUMCALLBACK)( gui_window *parent, gui_ctl_id id, void *param );
-typedef void (GUIAPICALLBACK GUIPICKCALLBACK)( gui_window *, gui_ctl_id id );
+typedef bool (GUIAPICALLBACK GUICALLBACK)( gui_window *wnd, gui_event gui_ev, void *param );
+typedef void (GUIAPICALLBACK ENUMCALLBACK)( gui_window *wnd, void *param );
+typedef void (GUIAPICALLBACK CONTRENUMCALLBACK)( gui_window *parent_wnd, gui_ctl_id id, void *param );
+typedef void (GUIAPICALLBACK GUIPICKCALLBACK)( gui_window *wnd, gui_ctl_id id );
 typedef void (GUIAPICALLBACK PICKDLGOPEN)( const char *title, gui_text_ord rows, gui_text_ord cols,
                              gui_control_info *controls_info, int num_controls,
                              GUICALLBACK *gui_call_back, void *extra );
@@ -488,7 +539,7 @@ typedef const char *(GUIAPICALLBACK GUIPICKGETTEXT)( const void *data_handle, in
 typedef struct gui_create_info {
     const char          *title;
     gui_rect            rect;
-    gui_scroll_styles   scroll;
+    gui_scroll_styles   scroll_style;
     gui_create_styles   style;
     gui_window          *parent;
     gui_menu_items      menus;
@@ -637,9 +688,12 @@ extern bool     GUIAPI GUIGetColourFromUser( const char *title, gui_colour *init
 extern bool     GUIAPI GUIInitHotSpots( int num_hot_spots, gui_resource *hot );
 extern int      GUIAPI GUIGetNumHotSpots( void );
 extern bool     GUIAPI GUIGetHotSpotSize( int hotspot_no, gui_coord *size );
-extern void     GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row,
-                                gui_ord indent, gui_attr attr );
+extern void     GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row, gui_ord indent, gui_attr attr );
 
+  extern bool     GUIAPI GUIGetHotSpotSize( int hotspot_no, gui_coord *size );
+  extern void     GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, 
+  gui_text_ord row, gui_ord indent, gui_attr attr );
+  
 /* Window Functions */
 
 extern gui_window * GUIAPI GUICreateWindow( gui_create_info *dlg_info );
@@ -647,7 +701,7 @@ extern int      GUIAPI GUIGetNumWindowColours( gui_window *wnd );
 extern gui_colour_set * GUIAPI GUIGetWindowColours( gui_window *wnd );
 extern void     GUIAPI GUIDestroyWnd( gui_window *wnd );
 extern void     GUIAPI GUIWndDirty( gui_window *wnd );
-extern void     GUIAPI GUIControlDirty( gui_window *wnd, gui_ctl_id id );
+extern void     GUIAPI GUIWndDirtyControl( gui_window *wnd, gui_ctl_id id );
 extern void     GUIAPI GUIWndDirtyRow( gui_window *wnd, gui_text_ord row );
 extern void     GUIAPI GUIWndDirtyRect( gui_window *wnd, const gui_rect *rect );
 extern void     GUIAPI GUIRefresh( void );
@@ -810,8 +864,7 @@ extern bool     GUIAPI GUIToolBarFixed( gui_window *wnd );
 
 /* Status Window Functions */
 
-extern bool     GUIAPI GUICreateStatusWindow( gui_window *wnd, gui_ord x, gui_ord height,
-                                       gui_colour_set *colour );
+extern bool     GUIAPI GUICreateStatusWindow( gui_window *wnd, gui_ord x, gui_ord height, gui_colour_set *colour );
 extern bool     GUIAPI GUICloseStatusWindow( gui_window *wnd );
 extern bool     GUIAPI GUIHasStatus( gui_window *wnd );
 extern bool     GUIAPI GUIDrawStatusText( gui_window *wnd, const char *text );
@@ -911,8 +964,9 @@ extern bool     GUIAPI GUIControlSetRedraw( gui_window *wnd, gui_ctl_id id, bool
 extern bool     GUIAPI GUIAddText( gui_window *wnd, gui_ctl_id id, const char *text );
 extern bool     GUIAPI GUISetListItemData( gui_window *wnd, gui_ctl_id id, int choice, void *data );
 extern void     * GUIAPI GUIGetListItemData( gui_window *wnd, gui_ctl_id id, int choice );
-extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items,
-                                const void *data_handle, GUIPICKGETTEXT *getstring );
+extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *getstring );
+extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *
+					getstring );
 extern bool     GUIAPI GUIInsertText( gui_window *wnd, gui_ctl_id id, int choice, const char *text );
 extern bool     GUIAPI GUISetTopIndex( gui_window *wnd, gui_ctl_id id, int choice );
 extern int      GUIAPI GUIGetTopIndex( gui_window *wnd, gui_ctl_id id );

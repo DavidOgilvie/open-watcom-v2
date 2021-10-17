@@ -34,6 +34,8 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guipaint.h"
+#include "guilog.h"
+
 
 /*
  * GUIWndDirty -- tell the user interface that the contents of window wnd
@@ -58,7 +60,7 @@ void GUIAPI GUIWndDirty( gui_window *wnd )
     }
 }
 
-void GUIAPI GUIControlDirty( gui_window *wnd, gui_ctl_id id )
+void GUIAPI GUIWndDirtyControl( gui_window *wnd, gui_ctl_id id )
 {
     HWND        control;
 

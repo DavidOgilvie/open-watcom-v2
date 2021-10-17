@@ -36,6 +36,8 @@
 #include "guiscrol.h"
 #include "guixutil.h"
 #include "guipaint.h"
+#include "guilog.h"
+
 
 /*
  * GUIWndDirtyRow -- tell the user interface that one row of the contents of
@@ -47,7 +49,7 @@ void GUIAPI GUIWndDirtyRow( gui_window *wnd, gui_text_ord row )
     WPI_RECT    wpi_rect;
     int         height;
     int         h;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     height = GUIFromTextY( 1, wnd );
     wpi_rect = wnd->hwnd_client_rect;

@@ -35,6 +35,8 @@
 #include <stdlib.h>
 #include "guixutil.h"
 #include "guirect.h"
+#include "guilog.h"
+
 
 bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *rect )
 {
@@ -55,6 +57,7 @@ bool GUIAPI GUIGetControlRect( gui_window *wnd, gui_ctl_id id, gui_rect *rect )
 {
     HWND        control;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     control = _wpi_getdlgitem( wnd->hwnd, id );
     if( control != NULLHANDLE ) {
         GUIGetRelRect( control, rect, false );

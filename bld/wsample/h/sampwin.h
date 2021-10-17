@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -46,7 +46,7 @@ typedef struct {
     WORD        wEnvSeg;
     LPSTR       lpCmdLine;
     LPVOID      lpCmdShow;
-    DWORD       dwReserved;
+    LPVOID      lpReserved;
 } parm_data;
 
 typedef struct {
@@ -68,7 +68,6 @@ extern seg_offset       CommonAddr;
 extern samp_save        __far * __near SampSave;
 
 /* somewhere in the common part of the sampler */
-extern int          sample_main( char __far * );
 extern int          MessageLoop( void );
 
 extern void FAR_PTR *alloc( int );

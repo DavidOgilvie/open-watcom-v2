@@ -35,6 +35,8 @@
 #include "guicontr.h"
 #include "guicutil.h"
 #include "guixutil.h"
+#include "guilog.h"
+
 
 static HWND GUIGetControlHWND( gui_window *wnd, gui_ctl_id id )
 {

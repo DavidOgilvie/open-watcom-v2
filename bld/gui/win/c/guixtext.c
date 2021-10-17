@@ -37,6 +37,8 @@
 #include "guicutil.h"
 #include "guiscale.h"
 #include "guicontr.h"
+#include "guilog.h"
+
 
 /*
  * GUIControlSetRedraw -- set the redraw flag for a given window control
@@ -82,12 +84,13 @@ bool GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const
 {
     int     i;
 
-    GUIControlSetRedraw( wnd, id, false );
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   GUIControlSetRedraw( wnd, id, false );
     for( i = 0; i < num_items; i++ ) {
         GUIAddText( wnd, id, (*getstring)( data_handle, i ) );
     }
     GUIControlSetRedraw( wnd, id, true );
-    GUIControlDirty( wnd, id );
+    GUIWndDirtyControl( wnd, id );
     return( true );
 }
 

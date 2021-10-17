@@ -33,6 +33,8 @@
 
 #include "guiwind.h"
 #include "guicontr.h"
+#include "guilog.h"
+
 
 bool GUIAPI GUIClearText( gui_window *wnd, gui_ctl_id id )
 {

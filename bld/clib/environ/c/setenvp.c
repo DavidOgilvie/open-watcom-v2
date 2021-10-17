@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -104,11 +104,12 @@ void __setenvp( void )
     while( *argep != NULL )
         argep++;
     count = argep - _Envptr;
-    argep = lib_malloc( ( count + 1 ) * sizeof( char * ) + count * sizeof( char ) );
-    memcpy( argep, _Envptr, ( count + 1 ) * sizeof( char * ) );
-    _RWD_env_mask = (char *)&argep[count + 1];
-    memset( _RWD_env_mask, 0, count * sizeof( char ) );
-    _RWD_environ = argep;
+    _RWD_environ = lib_malloc( ENVARR_SIZE( count ) );
+    if( _RWD_environ != NULL ) {
+        _RWD_env_mask = (char *)&_RWD_environ[count + 1];
+        memcpy( _RWD_environ, _Envptr, ( count + 1 ) * sizeof( char * ) );
+        memset( _RWD_env_mask, 0, count );
+    }
 #else
   #if defined(__WINDOWS_386__) || defined(__DOS_386__)
     char    _WCFAR *startp;
@@ -121,11 +122,9 @@ void __setenvp( void )
     char    _WCI86FAR *p;
   #endif
     char    *ep;
-    char    *my_env_mask;
     char    **my_environ;
     int     count;
     size_t  ep_size;
-    size_t  env_size;
 
     /* if we are already initialized, then return */
     if( _RWD_environ != NULL )
@@ -217,8 +216,7 @@ void __setenvp( void )
     }
     ep = allocate( ep_size );
     if( ep != NULL ) {
-        env_size = ( count + 1 ) * sizeof( char * ) + count * sizeof( char );
-        my_environ = allocate( env_size );
+        my_environ = allocate( ENVARR_SIZE( count ) );
         if( my_environ != NULL ) {
             _RWD_environ = my_environ;
             p = startp;
@@ -230,10 +228,8 @@ void __setenvp( void )
                 }
             }
             *my_environ++ = NULL;
-            _RWD_env_mask = my_env_mask = (char *)my_environ;
-            for( ; count; count-- ) {
-                *my_env_mask++ = 0;
-            }
+            _RWD_env_mask = (char *)my_environ;
+            memset( _RWD_env_mask, 0, count );
         } else {
             lib_free( ep );
         }
@@ -255,12 +251,18 @@ void __setenvp( void )
 void __freeenvp( void )
 {
     clearenv();
-    if( _RWD_environ ) {
+    if( _RWD_environ != NULL ) {
         lib_free( _RWD_environ );
         _RWD_environ = NULL;
     }
+  #if defined( CLIB_USE_OTHER_ENV )
+    if( _RWD_wenviron != NULL ) {
+        lib_free( _RWD_wenviron );
+        _RWD_wenviron = NULL;
+    }
+  #endif
   #if !defined(__LINUX__)
-    if( _free_ep ) {
+    if( _free_ep != NULL ) {
         lib_free( _free_ep );
         _free_ep = NULL;
     }

@@ -4,9 +4,7 @@
 JSTRING jstrnset( JCHAR *s1, JMOJI fill, size_t n );
 .ixfunc2 '&Jstring' &funcb
 .if &farfnc ne 0 .do begin
-FJSTRING __far _fjstrnset( JCHAR __far *s1,
-                           JMOJI fill,
-                           size_t n );
+FJSTRING _fjstrnset( JCHAR __far *s1, JMOJI fill, size_t n );
 .ixfunc2 '&Jstring' &ffunc
 .do end
 .synop end
@@ -51,11 +49,11 @@ is greater than the length of the string, the entire string is filled.
 Otherwise, that number of characters at the start of the string are set
 to the fill character.
 .np
-If after filling the string with as many single- or double-byte
+If after filling the string with as many single-byte or double-byte
 characters as possible,
 the next character in the string is the second byte of a double-byte
 character, then that character is set to ASCII blank (hex '20').
-.im ffarfunc
+.farfunc &ffunc. &funcb.
 .desc end
 .return begin
 The address of the original string

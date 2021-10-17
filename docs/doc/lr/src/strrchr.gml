@@ -42,9 +42,10 @@ function locates the last occurrence of
 .arg s
 .period
 The terminating null character is considered to be part of the string.
-.im farfunc
-.im widefun1
-.im mbsffunc
+.farfunc &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
+.mbcsfunc &mfunc. &funcb.
+.farfunc &fmfunc. &mfunc.
 .desc end
 .return begin
 The

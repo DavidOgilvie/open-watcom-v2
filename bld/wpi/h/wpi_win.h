@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2015-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2015-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -901,7 +901,7 @@ extern void _wpi_setbmphdrvalues( WPI_BITMAPINFOHEADER *bmih, ULONG size,
     #define _wpi_ptvisible( pres, pt ) PtVisible( pres, pt )
 
 extern void _wpi_gettextextent( WPI_PRES pres, LPCSTR string, int len_string,
-                                                    int *width, int *height );
+                                    WPI_RECTDIM *width, WPI_RECTDIM *height );
 
     #define _wpi_arc( pres, x1, y1, x2, y2, x3, y3, x4, y4 ) \
         Arc( pres, x1, y1, x2, y2, x3, y3, x4, y4 )
@@ -1090,6 +1090,8 @@ extern void _wpi_getbitmapparms( HBITMAP bitmap, int *width, int *height,
 #define GET_WM_MOUSEMOVE_POSY( parm1, parm2 ) _wpi_getmousey( parm1, parm2 )
 
     #define GET_WM_INITMENU_MENU( parm1, parm2 ) (HMENU) parm1
+
+    #define GET_WM_HSCROLL_CMD( wp, lp ) GET_WM_HSCROLL_CODE( wp, lp )
 
     #define GET_WM_VSCROLL_CMD( wp, lp ) GET_WM_VSCROLL_CODE( wp, lp )
 

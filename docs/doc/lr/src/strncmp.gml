@@ -50,9 +50,10 @@ characters from the string pointed to by
 to the string pointed to by
 .arg s2
 .period
-.im farparm
-.im widefun1
-.im mbsffunc
+.farfuncp &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
+.mbcsfunc &mfunc. &funcb.
+.farfuncp &fmfunc. &mfunc.
 .desc end
 .return begin
 The

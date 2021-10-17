@@ -117,8 +117,8 @@ The reentrant form of this function,
 This pointer is used internally by the function for subsequent
 calls to perform tokenizing without relying on internal state
 within the function.
-.im farfunc
-.im widefun1
+.farfunc &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
 .if &'length(&wfunc.) ne 0 .do begin
 The third argument
 .arg ptr
@@ -155,7 +155,8 @@ is similar to that for the
 .id &funcb.
 function.
 .do end
-.im mbsffunc
+.mbcsfunc &mfunc. &funcb.
+.farfunc &fmfunc. &mfunc.
 .desc end
 .return begin
 The

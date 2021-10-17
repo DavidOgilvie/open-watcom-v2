@@ -36,10 +36,12 @@
 #include "guixutil.h"
 #include "guiscrol.h"
 #include "guidoscr.h"
+#include "guilog.h"
+
 
 guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 {
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     _wpi_getclientrect( wnd->hwnd, &wnd->hwnd_client_rect );
     _wpi_getrectvalues( wnd->hwnd_client_rect, &left, &top, &right, &bottom );
@@ -56,6 +58,7 @@ guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 
 guix_ord GUIGetScrollInc( gui_window *wnd, int bar )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( bar == SB_HORZ ) {
         if( GUI_HSCROLL_COLS( wnd ) ) {
             return( GUIFromTextX( 1, wnd ) );
@@ -180,6 +183,7 @@ void GUIAPI GUISetHScroll( gui_window *wnd, gui_ord hscroll_pos )
 
 static void GUIVScroll( int diff, gui_window *wnd, gui_event gui_ev )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( diff == 0 ) {
         return;
     }
@@ -221,11 +225,14 @@ static void GUIHScroll( int diff, gui_window *wnd, gui_event gui_ev )
 
 void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    int         diff;
+    WINDOW_MSG	_msg= msg;
+	int         diff;
     WORD        param;
     int         mult;
     int         bar;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog ("MSG %d(%d) %s %s(%d)\n", _msg, msg, __func__, __FILE__, __LINE__ );
     wparam = wparam;
     lparam = lparam;
 
@@ -257,14 +264,14 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
             break;
 #endif
         case SB_THUMBPOSITION:
-            if( wnd->scroll & GUI_VDRAG ) {
+            if( wnd->scroll_style & GUI_VDRAG ) {
                 param = GET_WM_VSCROLL_POS( wparam, lparam );
                 diff = param - GUIGetScrollPos( wnd, bar );
                 GUIVScroll( diff, wnd, GUI_SCROLL_VERTICAL );
             }
             break;
         case SB_THUMBTRACK:
-            if( (wnd->scroll & GUI_VDRAG) && (wnd->scroll & GUI_VTRACK) ) {
+            if( (wnd->scroll_style & (GUI_VDRAG | GUI_VTRACK)) == (GUI_VDRAG | GUI_VTRACK) ) {
                 param = GET_WM_VSCROLL_POS( wparam, lparam );
                 diff = param - GUIGetScrollPos( wnd, bar );
                 GUIVScroll( diff, wnd, GUI_SCROLL_VERTICAL );
@@ -278,17 +285,17 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
     case WM_HSCROLL:
         bar = SB_HORZ;
         mult = GUIGetScrollInc( wnd, bar );
-        switch( GET_WM_VSCROLL_CMD( wparam, lparam ) ) {
-        case SB_LINEUP:
+        switch( GET_WM_HSCROLL_CMD( wparam, lparam ) ) {
+        case SB_LINELEFT:
             GUIHScroll( -mult, wnd, GUI_SCROLL_LEFT );
             break;
-        case SB_PAGEUP:
+        case SB_PAGELEFT:
             GUIHScroll( -wnd->num_cols * mult, wnd, GUI_SCROLL_PAGE_LEFT );
             break;
-        case SB_LINEDOWN:
+        case SB_LINERIGHT:
             GUIHScroll( mult, wnd, GUI_SCROLL_RIGHT );
             break;
-        case SB_PAGEDOWN:
+        case SB_PAGERIGHT:
             GUIHScroll( mult * wnd->num_cols, wnd, GUI_SCROLL_PAGE_RIGHT );
             break;
 #ifndef __OS2_PM__
@@ -302,15 +309,15 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
             break;
 #endif
         case SB_THUMBPOSITION:
-            if( wnd->scroll & GUI_HDRAG ) {
-                param = GET_WM_VSCROLL_POS( wparam, lparam );
+            if( wnd->scroll_style & GUI_HDRAG ) {
+                param = GET_WM_HSCROLL_POS( wparam, lparam );
                 diff = param - GUIGetScrollPos( wnd, bar );
                 GUIHScroll( diff, wnd, GUI_SCROLL_HORIZONTAL );
             }
             break;
         case SB_THUMBTRACK:
-            if( (wnd->scroll & GUI_HDRAG) && (wnd->scroll & GUI_HTRACK) ) {
-                param = GET_WM_VSCROLL_POS( wparam, lparam );
+            if( (wnd->scroll_style & (GUI_HDRAG | GUI_HTRACK)) == (GUI_HDRAG | GUI_HTRACK) ) {
+                param = GET_WM_HSCROLL_POS( wparam, lparam );
                 diff = param - GUIGetScrollPos( wnd, bar );
                 GUIHScroll( diff, wnd, GUI_SCROLL_HORIZONTAL );
             }

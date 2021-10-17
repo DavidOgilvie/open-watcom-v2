@@ -4,7 +4,7 @@
 JSTRING jstrrev( JCHAR *s1 );
 .ixfunc2 '&Jstring' &funcb
 .if &farfnc ne 0 .do begin
-FJSTRING __far _fjstrrev( JCHAR __far *s1 );
+FJSTRING _fjstrrev( JCHAR __far *s1 );
 .ixfunc2 '&Jstring' &ffunc
 .do end
 .synop end
@@ -23,9 +23,9 @@ functions replace
 .do end
 the Kanji string
 .arg s1
-with a Kanji string whose single- or double-byte characters are in the
+with a Kanji string whose single-byte or double-byte characters are in the
 reverse order.
-.im ffarfunc
+.farfunc &ffunc. &funcb.
 .desc end
 .return begin
 The address of the original string

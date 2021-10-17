@@ -38,9 +38,10 @@ with lowercase characters by invoking the
 .kw tolower
 function for each character in the string.
 .im ansiconf
-.im farfunc
-.im widefun1
-.im mbsffunc
+.farfunc &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
+.mbcsfunc &mfunc. &funcb.
+.farfunc &fmfunc. &mfunc.
 .desc end
 .return begin
 The address of the original string

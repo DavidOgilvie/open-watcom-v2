@@ -34,6 +34,7 @@
 #include "guiwind.h"
 #include "guixutil.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 void GUIAPI GUIFlushKeys( void )

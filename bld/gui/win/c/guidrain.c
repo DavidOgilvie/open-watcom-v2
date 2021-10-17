@@ -33,6 +33,7 @@
 #include "guiwind.h"
 #include <stdlib.h>
 #include "guixwind.h"
+#include "guilog.h"
 
 
 void GUIAPI GUIDrainEvents( void )

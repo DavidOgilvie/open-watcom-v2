@@ -37,6 +37,7 @@
 #include "guiscrol.h"
 #include "guipaint.h"
 #include "guidoscr.h"
+#include "guilog.h"
 
 
 static void DoScroll( gui_window *wnd, int rows, int cols, int start, int end, bool chars )
@@ -44,12 +45,13 @@ static void DoScroll( gui_window *wnd, int rows, int cols, int start, int end, b
     int         dx, dy;
     WPI_RECT    wpi_rect;
     HWND        hwnd;
-    int         multx, multy;
-    GUI_RECTDIM left, top, right, bottom;
+    guix_ord    multx, multy;
+    WPI_RECTDIM left, top, right, bottom;
 #ifdef __OS2_PM__
     int         bottom_adjust;
 #endif
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     hwnd = GUIGetScrollHWND( wnd );
     _wpi_getclientrect( wnd->hwnd, &wpi_rect );
     _wpi_getrectvalues( wpi_rect, &left, &top, &right, &bottom );
@@ -157,6 +159,7 @@ void GUIDoScroll( gui_window *wnd, int row_col, int bar )
     int         rows;
     int         cols;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     rows = 0;
     cols = 0;
     if( bar == SB_HORZ ) {

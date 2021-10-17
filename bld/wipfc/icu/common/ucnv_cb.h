@@ -2,7 +2,7 @@
 *
 *                          Open Watcom Project
 *
-* Copyright (c) 2018-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2018-2021 The Open Watcom Contributors. All Rights Reserved.
 *
 *****************************************************************************/
 // (c) 2016 and later: Unicode, Inc. and others.

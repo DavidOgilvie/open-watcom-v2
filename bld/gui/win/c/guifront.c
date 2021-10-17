@@ -37,6 +37,7 @@
 #include "guizlist.h"
 #include "guifront.h"
 #include "guixwind.h"
+#include "guilog.h"
 
 
 void ActivateNC( gui_window *wnd, bool activate )

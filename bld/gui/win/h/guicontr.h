@@ -35,9 +35,10 @@
 #define _GUICONTR_H_
 
 typedef struct {
-    char                *classname;
+    const char          *classname;
+    const char          *osclassname;
     DWORD               style;
-#ifdef __NT__
+#if defined( __NT__ ) && !defined( _WIN64 )
     DWORD               xstyle;
 #endif
 } controls_struct;

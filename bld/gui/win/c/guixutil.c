@@ -34,6 +34,7 @@
 #include "guiwind.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include "guicolor.h"
 #include "guimenus.h"
 #include "guiscale.h"
@@ -48,6 +49,7 @@
 #include "guipaint.h"
 #include "guizlist.h"
 #include "guirdlg.h"
+#include "guilog.h"
 
 
 #define ERROR_STYLE MB_OK | MB_ICONEXCLAMATION
@@ -117,7 +119,7 @@ bool GUIIsRectInUpdateRect( gui_window *wnd, WPI_RECT *wpi_rect )
 void GUICalcLocation( const gui_rect *rect, guix_coord *scr_pos, guix_coord *scr_size, HWND parent )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     if( parent == NULLHANDLE ) {
         parent = HWND_DESKTOP;
@@ -149,7 +151,7 @@ bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info, guix_coord *scr
     if( wnd != NULL ) {
         if( !GUI_IS_DIALOG( wnd ) ) {
             wnd->style = dlg_info->style;
-            wnd->scroll = dlg_info->scroll;
+            wnd->scroll_style = dlg_info->scroll_style;
         }
         if( !GUISetColours( wnd, dlg_info->colours.num_items, dlg_info->colours.colour ) ) {
             return( false );
@@ -168,19 +170,46 @@ bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info, guix_coord *scr
 }
 
 /*
- * GUIError -- display an error message
+ * GUIError -- display a formatted error message
  */
 
-void GUIError( const char *str )
+void GUIError( const char *_str, ... )
 {
-    HWND focus;
+	char		str[256]= "\0";
+	HWND 		focus;
+	int			ret;
+    va_list 	arglist;
+	
+    va_start (arglist, _str);
 
-    focus = _wpi_getfocus();
+    ret = vsprintf (str, _str, arglist);
+
+	focus = _wpi_getfocus();
     if( focus != NULLHANDLE ) {
         _wpi_messagebox( focus, str, NULL, ERROR_STYLE );
     }
+	va_end (arglist);
 }
 
+/*
+ * GUIErrorSA -- display a formatted error message when the GUI is not yet
+ * initialized.  In DOS, this would have been equivalent to using a printf
+ */
+
+void GUIErrorSA( const char *_str, ... )
+{
+	char		str[256]= "\0";
+	HWND 		focus= 0L;
+	int			ret;
+    va_list 	arglist;
+	
+    va_start (arglist, _str);
+
+    ret = vsprintf (str, _str, arglist);
+
+    _wpi_messagebox( focus, str, NULL, ERROR_STYLE );
+	va_end (arglist);
+}
 
 gui_window *GUIFindWindowFromHWND( HWND hwnd )
 {
@@ -415,7 +444,7 @@ void GUISetRowCol( gui_window *wnd, const guix_coord *scr_size )
 void GUIInvalidateResize( gui_window *wnd )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
 
     if( (wnd->flags & NEEDS_RESIZE_REDRAW) && ( wnd->old_rows != wnd->num_rows ) ) {
         _wpi_getrectvalues( wnd->hwnd_client_rect, &left, &top, &right, &bottom );
@@ -458,7 +487,7 @@ WPI_MRESULT GUISendDlgItemMessage( HWND parent, gui_ctl_id id, WPI_MSG msg, WPI_
 void GUIMakeRelative( gui_window *wnd, WPI_POINT *wpi_point, gui_point *point )
 {
     WPI_RECT    wpi_rect;
-    GUI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM left, top, right, bottom;
     gui_ord     scr_x;
     gui_ord     scr_y;
 
@@ -492,7 +521,8 @@ HWND GUIGetScrollHWND( gui_window *wnd )
 
 static bool ChangeScrollPos( gui_window *wnd, int bar, guix_ord new )
 {
-    if( bar == SB_HORZ ) {
+ 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+   if( bar == SB_HORZ ) {
         if( wnd->hpos == new )
             return( false );
         wnd->hpos = new;
@@ -506,6 +536,7 @@ static bool ChangeScrollPos( gui_window *wnd, int bar, guix_ord new )
 
 void GUISetScrollPos( gui_window *wnd, int bar, guix_ord new, bool redraw )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( ChangeScrollPos( wnd, bar, new ) ) {
         _wpi_setscrollpos( GUIGetParentFrameHWND( wnd ), bar, new, ( redraw ) ? TRUE : FALSE );
     }
@@ -513,6 +544,7 @@ void GUISetScrollPos( gui_window *wnd, int bar, guix_ord new, bool redraw )
 
 guix_ord GUIGetScrollPos( gui_window *wnd, int bar )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( bar == SB_HORZ ) {
         return( wnd->hpos );
     } else {
@@ -522,6 +554,7 @@ guix_ord GUIGetScrollPos( gui_window *wnd, int bar )
 
 static bool ChangeScrollRange( gui_window *wnd, int bar, guix_ord new )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( bar == SB_HORZ ) {
         if( wnd->hrange == new )
             return( false );
@@ -536,6 +569,7 @@ static bool ChangeScrollRange( gui_window *wnd, int bar, guix_ord new )
 
 void GUISetScrollRange( gui_window *wnd, int bar, int min, int max, bool redraw )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( ChangeScrollRange( wnd, bar, max - min ) ) {
         _wpi_setscrollrange( GUIGetParentFrameHWND( wnd ), bar, min, max, ( redraw ) ? TRUE : FALSE );
         if( bar == SB_HORZ ) {
@@ -548,6 +582,7 @@ void GUISetScrollRange( gui_window *wnd, int bar, int min, int max, bool redraw 
 
 guix_ord GUIGetScrollRange( gui_window *wnd, int bar )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( bar == SB_HORZ ) {
         return( wnd->hrange );
     } else {
@@ -560,6 +595,7 @@ void GUISetRangePos( gui_window *wnd, int bar )
     guix_ord    range;
     guix_ord    pos;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     range = GUIGetScrollRange( wnd, bar );
     pos = GUIGetScrollPos( wnd, bar );
     _wpi_setscrollrange( GUIGetParentFrameHWND( wnd ), bar, 0, range, FALSE );
@@ -571,9 +607,10 @@ void GUIRedrawScroll( gui_window *wnd, int bar, bool redraw_now )
     WPI_RECT    wpi_rect;
     WPI_RECT    client_wpi_rect;
     HWND        hwnd;
-    GUI_RECTDIM left, top, right, bottom;
-    GUI_RECTDIM clleft, cltop, clright, clbottom;
+    WPI_RECTDIM left, top, right, bottom;
+    WPI_RECTDIM clleft, cltop, clright, clbottom;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     hwnd = GUIGetParentFrameHWND( wnd );
     _wpi_getwindowrect( hwnd, &wpi_rect );
     _wpi_getclientrect( hwnd, &client_wpi_rect );

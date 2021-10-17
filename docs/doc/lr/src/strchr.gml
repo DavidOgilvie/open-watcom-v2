@@ -42,9 +42,9 @@ function locates the first occurrence of
 .arg s
 .period
 The terminating null character is considered to be part of the string.
-.im farfunc
-.im widefun1
-.im mbsfunc
+.farfunc &ffunc. &funcb.
+.widefunc &wfunc. &funcb.
+.mbcsfunc &mfunc. &funcb.
 .desc end
 .return begin
 The

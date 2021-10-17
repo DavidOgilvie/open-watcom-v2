@@ -1215,6 +1215,12 @@ objs_lr2 = &
 ../doc/lr/src/_lrotl.gml &
 ../doc/lr/src/_lrotr.gml &
 ../doc/lr/src/_makepat.gml &
+../doc/lr/src/_mbsret1.gml &
+../doc/lr/src/_mbsret2.gml &
+../doc/lr/src/_mbsret3.gml &
+../doc/lr/src/_mbsret4.gml &
+../doc/lr/src/_mbsret5.gml &
+../doc/lr/src/_mbsret6.gml &
 ../doc/lr/src/_memavl.gml &
 ../doc/lr/src/_memmax.gml &
 ../doc/lr/src/_msize.gml &
@@ -1354,8 +1360,6 @@ objs_lr2 = &
 ../doc/lr/src/exp2.gml &
 ../doc/lr/src/expm1.gml &
 ../doc/lr/src/fabs.gml &
-../doc/lr/src/farfunc.gml &
-../doc/lr/src/farparm.gml &
 ../doc/lr/src/fclose.gml &
 ../doc/lr/src/fcloseal.gml &
 ../doc/lr/src/fcvt.gml &
@@ -1376,8 +1380,6 @@ objs_lr2 = &
 ../doc/lr/src/fesetrnd.gml &
 ../doc/lr/src/fetestex.gml &
 ../doc/lr/src/feupdenv.gml &
-../doc/lr/src/ffarfunc.gml &
-../doc/lr/src/ffarparm.gml &
 ../doc/lr/src/fflush.gml &
 ../doc/lr/src/ffs.gml &
 ../doc/lr/src/fgetc.gml &
@@ -1647,8 +1649,9 @@ objs_lr2 = &
 ../doc/lr/src/mbrlen.gml &
 ../doc/lr/src/mbrtowc.gml &
 ../doc/lr/src/mbsbtype.gml &
-../doc/lr/src/mbsffunc.gml &
-../doc/lr/src/mbsfunc.gml &
+../doc/lr/src/mbsdec.gml &
+../doc/lr/src/mbsinc.gml &
+../doc/lr/src/mbsinit.gml &
 ../doc/lr/src/mbsnbcat.gml &
 ../doc/lr/src/mbsnbcmp.gml &
 ../doc/lr/src/mbsnbcnt.gml &
@@ -1657,9 +1660,11 @@ objs_lr2 = &
 ../doc/lr/src/mbsnbset.gml &
 ../doc/lr/src/mbsnccnt.gml &
 ../doc/lr/src/mbsnextc.gml &
+../doc/lr/src/mbsninc.gml &
 ../doc/lr/src/mbsrstrt.gml &
 ../doc/lr/src/mbsrto_s.gml &
 ../doc/lr/src/mbsrtowc.gml &
+../doc/lr/src/mbsspnp.gml &
 ../doc/lr/src/mbstow_s.gml &
 ../doc/lr/src/mbstowcs.gml &
 ../doc/lr/src/mbterm.gml &
@@ -1787,9 +1792,6 @@ objs_lr2 = &
 ../doc/lr/src/rmdir.gml &
 ../doc/lr/src/rmnder.gml &
 ../doc/lr/src/round.gml &
-../doc/lr/src/safefar.gml &
-../doc/lr/src/safefarm.gml &
-../doc/lr/src/safefarw.gml &
 ../doc/lr/src/sbrk.gml &
 ../doc/lr/src/scalbn.gml &
 ../doc/lr/src/scanf.gml &
@@ -1848,7 +1850,6 @@ objs_lr2 = &
 ../doc/lr/src/signal.gml &
 ../doc/lr/src/sin.gml &
 ../doc/lr/src/sinh.gml &
-../doc/lr/src/sisinit.gml &
 ../doc/lr/src/sleep.gml &
 ../doc/lr/src/snprintf.gml &
 ../doc/lr/src/snprtf_s.gml &
@@ -1877,7 +1878,6 @@ objs_lr2 = &
 ../doc/lr/src/strcpy_s.gml &
 ../doc/lr/src/strcspn.gml &
 ../doc/lr/src/strdate.gml &
-../doc/lr/src/strdec.gml &
 ../doc/lr/src/strdup.gml &
 ../doc/lr/src/streln_s.gml &
 ../doc/lr/src/strerr_s.gml &
@@ -1887,7 +1887,6 @@ objs_lr2 = &
 ../doc/lr/src/strftime.gml &
 ../doc/lr/src/stricmp.gml &
 ../doc/lr/src/stricoll.gml &
-../doc/lr/src/strinc.gml &
 ../doc/lr/src/strlcat.gml &
 ../doc/lr/src/strlcpy.gml &
 ../doc/lr/src/strlen.gml &
@@ -1895,12 +1894,10 @@ objs_lr2 = &
 ../doc/lr/src/strncase.gml &
 ../doc/lr/src/strncat.gml &
 ../doc/lr/src/strncmp.gml &
-../doc/lr/src/strncnt.gml &
 ../doc/lr/src/strncoll.gml &
 ../doc/lr/src/strncpy.gml &
 ../doc/lr/src/strnicmp.gml &
 ../doc/lr/src/strnicol.gml &
-../doc/lr/src/strninc.gml &
 ../doc/lr/src/strnln_s.gml &
 ../doc/lr/src/strnset.gml &
 ../doc/lr/src/strpbrk.gml &

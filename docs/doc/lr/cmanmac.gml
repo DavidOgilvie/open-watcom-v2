@@ -52,21 +52,23 @@
 .* .ty &*
 .dm debug end
 .*
-.dm widefunc begin
+.dm chkwfunc begin
+.sr *fx=&'strip(&*1,'L','_')
 .sr iswidefn=1
-.if '&*1(1:2)' eq '_w' and '&*1(1:7)' ne '_wrapon' and '&*1(1:6)' ne '_write' .me
-.if '&*1(1:2)' eq 'wc' or '&*1(1:4)' eq 'wmem' .me
-.if '&*1(1:3)' eq 'tow' .me
-.if '&*1(1:3)' eq 'isw' .me
-.if '&*1(1:4)' eq 'wasc' .me
-.if '&*1(1:5)' eq '__isw' .me
-.if &'pos('wprintf',&*1) ne 0 .me
-.if &'pos('wscanf',&*1) ne 0 .me
-.if '&'right(&*1,2)' eq 'wc' or '&'right(&*1,2)' eq 'ws' .me
-.if '&'right(&*1,3)' eq 'tow' .me
-.if '&'right(&*1,5)' eq 'wchar' .me
+.* far function
+.if '&*fx(1:1)' eq 'w' and '&*fx(1:6)' ne 'wrapon' and '&*fx(1:5)' ne 'write' .me
+.if '&*fx(1:2)' eq 'wc' or '&*fx(1:4)' eq 'wmem' .me
+.if '&*fx(1:3)' eq 'tow' .me
+.if '&*fx(1:3)' eq 'isw' .me
+.if '&*fx(1:4)' eq 'wasc' .me
+.if &'pos('wprintf',&*fx) ne 0 .me
+.if &'pos('wscanf',&*fx) ne 0 .me
+.if '&*fx(1:3)' ne 'fmb' and '&*fx(1:2)' ne 'mb' and '&'right(&*fx,2)' eq 'wc' .me
+.if '&*fx(1:3)' ne 'fmb' and '&*fx(1:2)' ne 'mb' and '&'right(&*fx,2)' eq 'ws' .me
+.if '&'right(&*fx,4)' eq 'itow' or '&'right(&*fx,4)' eq 'ltow' .me
+.if '&'right(&*fx,5)' eq 'wchar' .me
 .sr iswidefn=0
-.dm widefunc end
+.dm chkwfunc end
 .*
 .dm addclinf begin
 .sr *cltxt=''
@@ -75,7 +77,7 @@
 .if &*0 gt 1 .do begin
 .   .se *cltxt=is &'substr(&*.,&'length(&*1)+1)
 .do end
-.widefunc &*1
+.chkwfunc &*1
 .if &iswidefn. ne 0 .do begin
 .   .if '&*1(1:1).' ne '_' .sr *clatr=1
 .do end
@@ -115,7 +117,7 @@
 .   .   .sr func64=&*1
 .   .do end
 .do end
-.widefunc &*1
+.chkwfunc &*1
 .if &iswidefn ne 0 .do begin
 .   .sr wfunc=&*1
 .do end
@@ -645,3 +647,150 @@ command
 .*
 :cmt. include 'Safer C Library' related macros
 :INCLUDE file='safecmac'.
+.*
+.dm farfunc begin
+.if &farfnc ne 0 .do begin
+.pc
+The
+.id &*1.
+function is a data model independent form of the
+.id &*2.
+function.
+It accepts far pointer arguments and returns a far pointer.
+It is most useful in mixed memory model applications.
+.do end
+.dm farfunc end
+.*
+.dm farfuncp begin
+.if &farfnc ne 0 .do begin
+.pc
+The
+.id &*1.
+function is a data model independent form of the
+.id &*2.
+function that accepts far pointer arguments.
+It is most useful in mixed memory model applications.
+.do end
+.dm farfuncp end
+.*
+.dm mbcsfunc begin
+.pc
+The
+.id &*1.
+function is a multi-byte character version of
+.id &*2.
+that operates with multi-byte character strings.
+.dm mbcsfunc end
+.*
+.dm sbcsfunc begin
+.pc
+The
+.id &*1.
+function is a single-byte character version of
+.id &*2.
+that operates with single-byte character strings.
+.dm sbcsfunc end
+.*
+.dm widefunc begin
+.pc
+The
+.id &*1.
+function is a wide character version of
+.id &*2.
+that operates with wide character strings.
+.dm widefunc end
+.*
+.dm tcsfunc begin
+.pc
+The header file
+.hdrfile tchar.h
+defines the generic-text macro
+.kw &*1.
+.period
+.br
+This macro maps to
+.id &*2.
+if
+.kw _MBCS
+has been defined, or to the
+.id &*4.
+macro if
+.kw _UNICODE
+has been defined, otherwise it maps to
+.id &*3.
+macro.
+.br
+.id &*3.
+and
+.id &*4.
+are single-byte character string and wide character
+string versions of
+.id &*2.
+.period
+.br
+The
+.id &*3.
+and
+.id &*4.
+macros are provided only for this mapping and
+should not be used otherwise.
+.dm tcsfunc end
+.*
+.dm tcsfunc1 begin
+.pc
+The header file
+.hdrfile tchar.h
+defines the generic-text macros
+.kw &*1.
+and
+.kw &*3.
+.period
+.br
+The
+.id &*1.
+macro maps to
+.id &*2.
+if
+.kw _MBCS
+has been defined, or to the
+.id &*6.
+macro if
+.kw _UNICODE
+has been defined.
+Otherwise
+.kw &*1.
+maps to
+.id &*5.
+macro.
+.br
+The
+.id &*3.
+macro maps to
+.id &*4.
+if
+.kw _MBCS
+has been defined, or to the
+.id &*6.
+macro if
+.kw _UNICODE
+has been defined.
+Otherwise
+.kw &*3.
+maps to
+.id &*5.
+macro.
+.br
+.id &*5.
+and
+.id &*6.
+are single-byte character string and wide character
+string versions.
+.br
+The
+.id &*5.
+and
+.id &*6.
+macros are provided only for this mapping and
+should not be used otherwise.
+.dm tcsfunc1 end
+.*

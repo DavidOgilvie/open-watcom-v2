@@ -33,6 +33,8 @@
 
 #include "guiwind.h"
 #include "guicutil.h"
+#include "guilog.h"
+
 
 static bool GUISelect( gui_window *wnd, gui_ctl_id id, bool set, WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {

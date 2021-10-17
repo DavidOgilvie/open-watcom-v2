@@ -31,6 +31,7 @@
 
 
 #include "make.h"
+#include <ctype.h>
 #include "wio.h"
 #include "mcache.h"
 #include "mmemory.h"
@@ -81,6 +82,7 @@ extern void __far *_DOS_list_of_lists( void );
 
 #endif
 
+static ENV_TRACKER  *envList;
 
 #if defined( __DOS__ )
 
@@ -404,7 +406,7 @@ void InitSignals( void )
     signal( SIGINT, breakHandler );
 }
 
-#if defined( __OS2__ ) && !defined( _M_I86 )
+#if defined( __OS2__ )
 
 /* Older versions of OS/2 did not support BEGIN/ENDLIBPATH.
  * Dynamically query the API entrypoints to prevent load failures.
@@ -441,7 +443,7 @@ static bool ensure_loaded( ULONG ord, PFN *fn )
 
 char *GetEnvExt( const char *str )
 {
-#if defined( __OS2__ ) && !defined( _M_I86 )
+#if defined( __OS2__ )
     char    *rc;
 
     rc = NULL;
@@ -471,26 +473,113 @@ char *GetEnvExt( const char *str )
     return( getenv( str ) );
 }
 
-int PutEnvExt( char *str )
+int SetEnvExt( ENV_TRACKER *env )
 {
-#if defined( __OS2__ ) && !defined( _M_I86 )
-    int rc;
+#if defined( __OS2__ )
+    int     rc;
 
     rc = -1;
-    if( strncmp( str, BEGPATHNAME "=", sizeof( BEGPATHNAME "=" ) - 1 ) == 0 ) {
+    if( strcmp( env->name, BEGPATHNAME ) == 0 ) {
         if( ensure_loaded( ORD_DOS32SETEXTLIBPATH, (PFN *)&fnDosSetExtLIBPATH ) ) {
-            strcpy( os2BegLibPath, str + sizeof( BEGPATHNAME "=" ) - 1 );
+            if( env->value == NULL )
+                env->value = "";
+            strcpy( os2BegLibPath, env->value );
             rc = fnDosSetExtLIBPATH( os2BegLibPath, BEGIN_LIBPATH );
         }
         return( rc );
     }
-    if( strncmp( str, ENDPATHNAME "=", sizeof( ENDPATHNAME "=" ) - 1 ) == 0 ) {
+    if( strcmp( env->name, ENDPATHNAME ) == 0 ) {
         if( ensure_loaded( ORD_DOS32SETEXTLIBPATH, (PFN *)&fnDosSetExtLIBPATH ) ) {
-            strcpy( os2EndLibPath, str + sizeof( ENDPATHNAME "=" ) - 1 );
+            if( env->value == NULL )
+                env->value = "";
+            strcpy( os2EndLibPath, env->value );
             rc = fnDosSetExtLIBPATH( os2EndLibPath, END_LIBPATH );
         }
         return( rc );
     }
 #endif
-    return( putenv( str ) );
+#if defined( _MSC_VER )
+    return( putenv( env->name ) );
+#else
+  #if !defined( __WATCOMC__ )
+    if( env->value == NULL )
+        return( unsetenv( env->name ) );
+  #endif
+    return( setenv( env->name, env->value, true ) );
+#endif
 }
+
+int SetEnvSafe( const char *name, const char *value )
+/****************************************************
+ * This function takes over responsibility for freeing env
+ */
+{
+    char        *p;
+    ENV_TRACKER **walk;
+    ENV_TRACKER *old;
+    int         rc;
+    size_t      len;
+    size_t      len1;
+    ENV_TRACKER *env;
+
+    len = strlen( name );
+    len1 = ( value == NULL ) ? 0 : strlen( value );
+    env = MallocSafe( sizeof( ENV_TRACKER ) + len + len1 + 1 );
+    // upper case the name
+    p = env->name;
+    while( *name != NULLCHAR ) {
+        *p++ = ctoupper( *name++ );
+    }
+#ifdef _MSC_VER
+    *p++ = '=';
+    len++;  /* include '=' character to search */
+#else
+    *p++ = NULLCHAR;
+#endif
+    if( value == NULL ) {
+        env->value = NULL;
+        *p = NULLCHAR;
+    } else {
+        env->value = p;
+        strcpy( env->value, value );
+    }
+    rc = SetEnvExt( env );          // put into environment
+    if( *p == NULLCHAR ) {
+        rc = 0;                     // we are deleting the envvar, ignore errors
+    }
+    for( walk = &envList; *walk != NULL; walk = &(*walk)->next ) {
+#ifdef _MSC_VER
+        if( strncmp( (*walk)->name, env->name, len ) == 0 ) {
+#else
+        if( strcmp( (*walk)->name, env->name ) == 0 ) {
+#endif
+            break;
+        }
+    }
+    old = *walk;
+    if( old != NULL ) {
+        *walk = old->next;          // unlink old entry from chain
+        FreeSafe( old );            // ...
+    }
+    if( env->value != NULL ) {
+        env->next = envList;        // we put new entry into chain
+        envList = env;              // ...
+    } else {
+        FreeSafe( env );            // we're deleting the entry
+    }
+    return( rc );
+}
+
+
+#if !defined(NDEBUG) || defined(DEVELOPMENT)
+void SetEnvFini( void )
+/*********************/
+{
+    ENV_TRACKER *cur;
+
+    while( (cur = envList) != NULL ) {
+        envList = cur->next;
+        FreeSafe( cur );
+    }
+}
+#endif

@@ -65,16 +65,16 @@ static void RedrawResize( gui_window *wnd, SAREA *old )
 {
     if( ( ( wnd->use.width > old->width )  &&
           ( wnd->use.height > old->height ) ) || GUI_WND_MINIMIZED( wnd ) ) {
-        GUIWholeWndDirty( wnd );
+        GUIDirtyWhole( wnd );
     } else {
         if( wnd->flags & NEEDS_RESIZE_REDRAW ) {
             if( wnd->use.width > old->width ) {
-                COPYAREA( wnd->use, wnd->dirty );
+                COPYRECTX( wnd->use, wnd->dirty );
                 wnd->dirty.col += old->width;
                 wnd->dirty.width = wnd->use.width - old->width;
             }
             if( wnd->use.height > old->height ) {
-                COPYAREA( wnd->use, wnd->dirty );
+                COPYRECTX( wnd->use, wnd->dirty );
                 wnd->dirty.row += old->height;
                 wnd->dirty.height = wnd->use.height - old->height;
             }
@@ -145,7 +145,7 @@ void GUICheckResizeAreaForChildren( gui_window *wnd, SAREA *area, resize_dir dir
     GUISetUseArea( wnd, area, &use );
     use.row += wnd->vs.area.row;
     use.col += wnd->vs.area.col;
-    COPYAREA( use, old_use );
+    COPYRECTX( use, old_use );
     for( child_wnd = wnd->child; child_wnd != NULL; child_wnd = child_wnd->sibling ) {
         child = &child_wnd->vs.area;
         CheckChildResize( child, &use, dir );
@@ -170,7 +170,7 @@ void GUICheckResizeAreaForParent( gui_window *wnd, SAREA *area, resize_dir dir )
     int         diff;
 
     if( wnd->parent != NULL ) {
-        COPYAREA( wnd->parent->use, parent );
+        COPYRECTX( wnd->parent->use, parent );
         parent.row += wnd->parent->vs.area.row;
         parent.col += wnd->parent->vs.area.col;
         if( dir & RESIZE_RIGHT ) {
@@ -227,8 +227,8 @@ static bool SizeWnd( gui_window *wnd, SAREA *area, gui_flags flag, resize_dir di
     int         row_diff;
     int         col_diff;
 
-    COPYAREA( *area, new )
-    COPYAREA( wnd->use, save );
+    COPYRECTX( *area, new )
+    COPYRECTX( wnd->use, save );
     if( flag != MINIMIZED ) {
         GUICheckResizeAreaForChildren( wnd, &new, dir );
     }
@@ -244,12 +244,10 @@ static bool SizeWnd( gui_window *wnd, SAREA *area, gui_flags flag, resize_dir di
         GUIResizeStatus( wnd );
     }
     if( wnd->hgadget != NULL ) {
-        ResizeGadget( wnd->hgadget, wnd->use.width, wnd->use.height,
-                      GUI_HRANGE_SET( wnd ) );
+        ResizeGadget( wnd->hgadget, wnd->use.width, wnd->use.height, GUI_HRANGE_SET( wnd ) );
     }
     if( wnd->vgadget != NULL ) {
-        ResizeGadget( wnd->vgadget, wnd->use.height, wnd->use.width,
-                      GUI_VRANGE_SET( wnd ) );
+        ResizeGadget( wnd->vgadget, wnd->use.height, wnd->use.width, GUI_VRANGE_SET( wnd ) );
     }
     if( GUI_WND_MAXIMIZED( wnd ) ) {
         wnd->flags &= ~MAXIMIZED;
@@ -262,7 +260,7 @@ static bool SizeWnd( gui_window *wnd, SAREA *area, gui_flags flag, resize_dir di
     wnd->flags |= DONT_SEND_PAINT+NEEDS_RESIZE_REDRAW;
     if( was_minimized ) {
         uivsetactive( &wnd->vs );
-        GUIWholeWndDirty( wnd );
+        GUIDirtyWhole( wnd );
     } else {
         wnd->flags |= NON_CLIENT_INVALID;
         RedrawResize( wnd, &save );
@@ -298,7 +296,7 @@ void GUICheckMove( gui_window *wnd, int *row_diff, int *col_diff )
     SAREA       parent;
 
     if( wnd->parent != NULL ) {
-        COPYAREA( wnd->parent->use, parent );
+        COPYRECTX( wnd->parent->use, parent );
         parent.row += wnd->parent->vs.area.row;
         parent.col += wnd->parent->vs.area.col;
         if( ( wnd->vs.area.row + *row_diff + wnd->vs.area.height ) >
@@ -445,7 +443,7 @@ static void CalcIconsDim( gui_window *parent_wnd, int *icons_per_row,
     if( parent_wnd == NULL ) {
         GUIGetScreenArea( bound );
     } else {
-        COPYAREA( parent_wnd->use, *bound );
+        COPYRECTX( parent_wnd->use, *bound );
         bound->row += parent_wnd->vs.area.row;
         bound->col += parent_wnd->vs.area.col;
     }
@@ -536,7 +534,7 @@ static void InitMaxArea( gui_window *parent_wnd, SAREA *new )
     if( parent_wnd == NULL ) {
         GUIGetScreenArea( new );
     } else {
-        COPYAREA( parent_wnd->use, *new );
+        COPYRECTX( parent_wnd->use, *new );
         new->row += parent_wnd->vs.area.row;
         new->col += parent_wnd->vs.area.col;
     }
@@ -544,7 +542,7 @@ static void InitMaxArea( gui_window *parent_wnd, SAREA *new )
 
 static void SetPrevArea( SAREA *area, gui_window *wnd )
 {
-    COPYAREA( *area, wnd->prev_area );
+    COPYRECTX( *area, wnd->prev_area );
     if( wnd->parent != NULL ) {
         wnd->prev_area.row -= wnd->parent->vs.area.row;
         wnd->prev_area.col -= wnd->parent->vs.area.col;
@@ -656,7 +654,7 @@ bool GUIAPI GUIGetRestoredSize( gui_window *wnd, gui_rect *rect )
 {
     SAREA       pos;
 
-    COPYAREA( wnd->prev_area, pos );
+    COPYRECTX( wnd->prev_area, pos );
     if( wnd->parent != NULL ) {
         pos.row += wnd->parent->vs.area.row;
         pos.col += wnd->parent->vs.area.col;

@@ -35,12 +35,15 @@
 #include "guiscale.h"
 #include "guixutil.h"
 #include "guiscrol.h"
+#include "guilog.h"
+
 
 static void SetRange( gui_window *wnd, int bar, guix_ord range, guix_ord text_range )
 {
     int new_range;
     guix_ord screen_size;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     screen_size = GUIGetScrollScreenSize( wnd, bar );
     if( bar == SB_HORZ ) {
         if( !GUI_HSCROLL_ON( wnd ) ) {
@@ -78,6 +81,7 @@ void GUIAPI GUISetHScrollRangeCols( gui_window *wnd, gui_text_ord text_range )
 
 void GUIAPI GUISetVScrollRangeRows( gui_window *wnd, gui_text_ord text_range )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     wnd->flags |= VRANGE_ROW;
     SetRange( wnd, SB_VERT, GUIFromTextY( text_range, wnd ), text_range );
 }
@@ -134,6 +138,7 @@ gui_text_ord GUIAPI GUIGetVScrollRangeRows( gui_window *wnd )
 {
     guix_ord    range;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     range = GUIGetScrollRange( wnd, SB_VERT );
     if( range == GUI_NO_ROW ) {
         return( GUI_TEXT_NO_ROW );

@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -74,19 +74,19 @@ static unsigned long ProcObj( file_list *file, unsigned long loc, void (*procrtn
 /*****************************************************************************************/
 /* Process an object file. */
 {
-    obj_record          *rec;
+    omf_record          *rec;
     byte                cmd;
     unsigned_16         len;
 
     RecNum = 0;
     do {
         ObjFormat &= ~FMT_MS_386;   // assume not a Microsoft 386 .obj file
-        rec = CacheRead( file, loc, sizeof( obj_record ) );
+        rec = CacheRead( file, loc, sizeof( omf_record ) );
         if( rec == NULL ) {
             EarlyEOF();
             break;
         }
-        loc += sizeof( obj_record );
+        loc += sizeof( omf_record );
         len = rec->length;
         cmd = rec->command;
         if( procrtn != NULL ) {
@@ -136,14 +136,14 @@ bool IsOMF( file_list *list, unsigned long loc )
 char *GetOMFName( file_list *list, unsigned long *loc )
 /*****************************************************/
 {
-    obj_record  *rec;
+    omf_record  *rec;
     char        *name;
     unsigned    len;
 
-    rec = CacheRead( list, *loc, sizeof( obj_record ) );
+    rec = CacheRead( list, *loc, sizeof( omf_record ) );
     if( rec == NULL )
         return( NULL );
-    *loc += sizeof( obj_record );
+    *loc += sizeof( omf_record );
     len = rec->length;
     name = CacheRead( list, *loc, rec->length );
     *loc += len;
@@ -295,7 +295,7 @@ static void ProcModuleEnd( void )
         }
         targetidx = GetIdx();
         switch( target ) {
-        case TARGET_SEGWD:
+        case TARGET_SEG:
             if( StartInfo.type != START_UNDEFED ) {
                 LnkMsg( LOC+MILD_ERR+MSG_MULT_START_ADDRS, "12", StartInfo.mod->f.source->infile->name, StartInfo.mod->name );
                 return;                 // <-------- NOTE: premature return
@@ -308,12 +308,12 @@ static void ProcModuleEnd( void )
             }
             StartInfo.mod = CurrMod;
             break;
-        case TARGET_EXTWD:
+        case TARGET_EXT:
             ext = (extnode *)FindNode( ExtNodes, targetidx );
             SetStartSym( ext->entry->name.u.ptr );
             break;
-        case TARGET_ABSWD:
-        case TARGET_GRPWD:
+        case TARGET_ABS:
+        case TARGET_GRP:
             BadObject();        // no one does these, right???
             break;
         }
@@ -475,6 +475,7 @@ static void ProcPubdef( bool static_sym )
     size_t          sym_len;
     unsigned_16     frame;
     unsigned_16     segidx;
+    sym_flags       symop;
 
     DEBUG(( DBG_OLD, "ProcPubdef" ));
     SkipIdx();
@@ -488,6 +489,10 @@ static void ProcPubdef( bool static_sym )
         ObjBuff += sizeof( unsigned_16 );
     }
     DEBUG(( DBG_OLD, "segidx = %d", segidx ));
+    symop = ST_CREATE_DEFINE_NOALIAS;
+    if( static_sym ) {
+        symop |= ST_STATIC;
+    }
     while( ObjBuff < EOObjRec ) {
         sym_len = *ObjBuff++;
         if( sym_len == 0 ) {
@@ -502,11 +507,7 @@ static void ProcPubdef( bool static_sym )
             _TargU16toHost( _GetU16UN( ObjBuff ), off );
             ObjBuff += sizeof( unsigned_16 );
         }
-        if( static_sym ) {
-            sym = SymOp( ST_DEFINE_SYM | ST_STATIC, sym_name, sym_len );
-        } else {
-            sym = SymOp( ST_DEFINE_SYM, sym_name, sym_len );
-        }
+        sym = SymOp( symop, sym_name, sym_len );
         DefineSymbol( sym, seg, off, frame );
         SkipIdx();   /* skip type index */
     }
@@ -623,12 +624,12 @@ static void UseSymbols( bool static_sym, bool iscextdef )
     size_t              sym_len;
     extnode             *newnode;
     symbol              *sym;
-    sym_flags           flags;
+    sym_flags           symop;
 
     DEBUG(( DBG_OLD, "UseSymbols()" ));
-    flags = ST_REFERENCE_SYM;
+    symop = ST_CREATE_REFERENCE;
     if( static_sym ) {
-        flags |= ST_STATIC;
+        symop |= ST_STATIC;
     }
     while( ObjBuff < EOObjRec ) {
         if( iscextdef ) {
@@ -639,7 +640,7 @@ static void UseSymbols( bool static_sym, bool iscextdef )
             if( sym_len == 0 ) {
                 BadObject();
             }
-            sym = SymOp( flags, (char *)ObjBuff, sym_len );
+            sym = SymOp( symop, (char *)ObjBuff, sym_len );
             ObjBuff += sym_len;
         }
         newnode = AllocNode( ExtNodes );
