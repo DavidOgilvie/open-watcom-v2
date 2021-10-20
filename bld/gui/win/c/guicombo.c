@@ -39,8 +39,8 @@
 #include "ctl3dcvr.h"
 #include "wclbproc.h"
 #include "guixwind.h"
+#include "oswincls.h"
 #include "guilog.h"
-
 
 typedef struct {
     bool        success;
@@ -54,9 +54,8 @@ WINEXPORT BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 l
 
 BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
 {
-    char        buff[5];
+    char        osclassname[GUI_CLASSNAME_MAX + 1];
     enum_info   *info;
-    int         len;
 
     info = ( enum_info * )lparam;
     if( info == NULL ) {
@@ -65,16 +64,13 @@ BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
     if( info->success == true ) {
         return( TRUE );
     }
-    len = GetClassName( hwnd, buff, sizeof( buff ) );
-    buff[len] = '\0';
-#ifndef __OS2_PM__
-    //if( strcmp( buff, "#6" ) == 0 ) {
-    if( stricmp( buff, GUIControls[GUI_EDIT].classname ) == 0 ) {
-        info->success = true;
-        info->old = GUIDoSubClass( hwnd, GUI_EDIT );
-        //CvrCtl3dSubclassCtl( hwnd );
+    if( _wpi_getclassname( hwnd, osclassname, sizeof( osclassname ) ) ) {
+        if( stricmp( osclassname, GUIControls[GUI_EDIT].osclassname ) == 0 ) {
+            info->success = true;
+            info->old = GUIDoSubClass( hwnd, GUI_EDIT );
+            //CvrCtl3dSubclassCtl( hwnd );
+        }
     }
-#endif
     return( TRUE );
 }
 
@@ -87,7 +83,6 @@ WPI_WNDPROC GUISubClassEditCombobox( HWND hwnd )
     WNDENUMPROC         wndenumproc;
 #endif
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     e_info.success = false;
 #ifdef __OS2_PM__
     wndenumproc = _wpi_makeenumprocinstance( GUISubClassEditComboboxEnumFunc, GUIMainHInst );

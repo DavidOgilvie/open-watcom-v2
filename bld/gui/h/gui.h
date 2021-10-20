@@ -456,11 +456,9 @@ typedef struct gui_menu_struct  gui_menu_struct;
 
 typedef void                *gui_help_instance;
 
-typedef long                gui_bitmap;
-
 typedef struct gui_toolbar_struct {
     const char              *label;
-    gui_bitmap              bitmap;
+    gui_res_id              bitmap_id;
     gui_ctl_id              id;
     const char              *hinttext;
     const char              *tip;
@@ -513,7 +511,7 @@ typedef struct gui_rect {
 } gui_rect;
 
 typedef struct gui_resource {
-    gui_bitmap              res;
+    gui_res_id              res_id;
     char                    *chars; /* Character based */
 } gui_resource;
 
@@ -690,10 +688,6 @@ extern int      GUIAPI GUIGetNumHotSpots( void );
 extern bool     GUIAPI GUIGetHotSpotSize( int hotspot_no, gui_coord *size );
 extern void     GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row, gui_ord indent, gui_attr attr );
 
-  extern bool     GUIAPI GUIGetHotSpotSize( int hotspot_no, gui_coord *size );
-  extern void     GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, 
-  gui_text_ord row, gui_ord indent, gui_attr attr );
-  
 /* Window Functions */
 
 extern gui_window * GUIAPI GUICreateWindow( gui_create_info *dlg_info );
@@ -965,8 +959,6 @@ extern bool     GUIAPI GUIAddText( gui_window *wnd, gui_ctl_id id, const char *t
 extern bool     GUIAPI GUISetListItemData( gui_window *wnd, gui_ctl_id id, int choice, void *data );
 extern void     * GUIAPI GUIGetListItemData( gui_window *wnd, gui_ctl_id id, int choice );
 extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *getstring );
-extern bool     GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *
-                       getstring );
 extern bool     GUIAPI GUIInsertText( gui_window *wnd, gui_ctl_id id, int choice, const char *text );
 extern bool     GUIAPI GUISetTopIndex( gui_window *wnd, gui_ctl_id id, int choice );
 extern int      GUIAPI GUIGetTopIndex( gui_window *wnd, gui_ctl_id id );

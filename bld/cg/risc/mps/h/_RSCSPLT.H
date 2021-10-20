@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2018 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -25,55 +25,18 @@
 *
 *  ========================================================================
 *
-* Description:  WHEN YOU FIGURE OUT WHAT THIS FILE DOES, PLEASE
-*               DESCRIBE IT HERE!
+* Description:  MIPS specific reduce function prototype declarations
 *
 ****************************************************************************/
 
 
-#include "guiwind.h"
-#include "guistr.h"
-#include "guirdlg.h"
-#include "guilog.h"
-
-
-/*
- * GUISetIcon --
- */
-
-bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
-{
-    WPI_HICON icon;
-
-    icon = (WPI_HICON)0;
-
-    if( res != NULL ) {
-        icon = _wpi_loadicon( GUIResHInst, MAKEINTRESOURCE(res->res_id) );
-    } else {
-        icon = _wpi_loadicon( GUIResHInst, LIT( ApplIcon ) );
-        if( icon == NULL ) {
-            icon = _wpi_getsysicon( NULLHANDLE, IDI_APPLICATION );
-        }
-    }
-
-    if( icon != NULL ) {
-        if( wnd->icon != NULL ) {
-            _wpi_destroyicon( wnd->icon );
-        }
-        wnd->icon = icon;
-    }
-
-#ifndef __OS2_PM__
-    // this code forces Windows to use the correct icon when you press
-    // alt-TAB
-    if( wnd->flags & IS_ROOT ) {
-        SET_HICON( wnd->hwnd, wnd->icon );
-    }
-#endif
-
-#ifdef __OS2_PM__
-    _wpi_sendmessage( wnd->hwnd_frame, WM_SETICON, icon, 0 );
-#endif
-
-    return( icon != NULL );
-}
+extern instruction      *rMOVEXX_8( instruction * );
+extern instruction      *rCONSTLOAD( instruction * );
+extern instruction      *rLOAD_4U( instruction * );
+extern instruction      *rALLOCA( instruction * );
+extern instruction      *rM_SIMPCMP( instruction * );
+extern instruction      *rSPLITOP( instruction * );
+extern instruction      *rSPLITMOVE( instruction * );
+extern instruction      *rSPLITNEG( instruction * );
+extern instruction      *rSPLITUNARY( instruction * );
+extern instruction      *rSPLITCMP( instruction * );

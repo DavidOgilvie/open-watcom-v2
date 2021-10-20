@@ -52,7 +52,7 @@ WPI_INST                        GUIResHInst;
 
 typedef struct GetClassMap {
     gui_control_class   control_class;
-    const char          *classname;
+    const char          *osclassname;
     DWORD               style;
     DWORD               mask;
 } GetClassMap;
@@ -78,43 +78,38 @@ static GetClassMap Map[] =
 #else
 // note: the order of entries in this table is important
 static GetClassMap Map[] =
-{
-    { GUI_GROUPBOX,         WC_BUTTON,      BS_GROUPBOX,        BS_GROUPBOX         }
-,   { GUI_RADIO_BUTTON,     WC_BUTTON,      BS_RADIOBUTTON,     BS_RADIOBUTTON      }
-,   { GUI_CHECK_BOX,        WC_BUTTON,      BS_CHECKBOX,        BS_CHECKBOX         }
-,   { GUI_DEFPUSH_BUTTON,   WC_BUTTON,      BS_DEFPUSHBUTTON,   BS_DEFPUSHBUTTON    }
-,   { GUI_PUSH_BUTTON,      WC_BUTTON,      0xffff,             0xffff              }
-,   { GUI_COMBOBOX,         WC_COMBOBOX,    CBS_DROPDOWNLIST,   CBS_DROPDOWNLIST    }
-,   { GUI_EDIT_COMBOBOX,    WC_COMBOBOX,    CBS_DROPDOWN,       CBS_DROPDOWN        }
-,   { GUI_EDIT_COMBOBOX,    WC_COMBOBOX,    0xffff,             0xffff              }
-,   { GUI_EDIT_MLE,         WC_EDIT,        ES_MULTILINE,       ES_MULTILINE        }
-,   { GUI_EDIT,             WC_EDIT,        0xffff,             0xffff              }
-,   { GUI_LISTBOX,          WC_LISTBOX,     0xffff,             0xffff              }
-,   { GUI_SCROLLBAR,        WC_SCROLLBAR,   0xffff,             0xffff              }
-,   { GUI_STATIC,           WC_STATIC,      0xffff,             0xffff              }
-};
+  {
+      { GUI_RADIO_BUTTON,     WC_SYS_BUTTON,           BS_RADIOBUTTON,     0xf             }
+  ,   { GUI_CHECK_BOX,        WC_SYS_BUTTON,           BS_CHECKBOX,        0xf             }
+  ,   { GUI_DEFPUSH_BUTTON,   WC_SYS_BUTTON,           BS_DEFAULT,         BS_DEFAULT      }
+  ,   { GUI_PUSH_BUTTON,      WC_SYS_BUTTON,           0xffff,             0xffff          }
+  ,   { GUI_GROUPBOX,         WC_SYS_STATIC,           SS_GROUPBOX,        SS_GROUPBOX     }
+  ,   { GUI_STATIC,           WC_SYS_STATIC,           0xffff,             0xffff          }
+  ,   { GUI_EDIT_COMBOBOX,    WC_SYS_COMBOBOX,         CBS_DROPDOWN,       CBS_DROPDOWN    }
+  ,   { GUI_EDIT_COMBOBOX,    WC_SYS_COMBOBOX,         CBS_SIMPLE,         CBS_SIMPLE      }
+  ,   { GUI_COMBOBOX,         WC_SYS_COMBOBOX,         0xffff,             0xffff          }
+  ,   { GUI_EDIT,             WC_SYS_ENTRYFIELD,       0xffff,             0xffff          }
+  ,   { GUI_EDIT_MLE,         WC_SYS_MLE,              0xffff,             0xffff          }
+  ,   { GUI_LISTBOX,          WC_SYS_LISTBOX,          0xffff,             0xffff          }
+  ,   { GUI_SCROLLBAR,        WC_SYS_SCROLLBAR,        0xffff,             0xffff          }
+  };
 #endif
 
 gui_control_class GUIGetControlClassFromHWND( HWND cntl )
 {
     gui_control_class   control_class;
-    char                classname[15];
+    char                osclassname[GUI_CLASSNAME_MAX + 1];
     DWORD               style;
     int                 index;
 
-    if( !_wpi_getclassname( cntl, classname, sizeof( classname ) ) ) {
-        return( GUI_BAD_CLASS );
-    }
-
-    style = _wpi_getwindowlong( cntl, GWL_STYLE );
     control_class = GUI_BAD_CLASS;
-
-    for( index = 0; ( index < GUI_ARRAY_SIZE( Map ) ) && ( control_class == GUI_BAD_CLASS ); index++ ) {
-        if( ( Map[index].classname != NULL ) && stricmp( Map[index].classname, classname ) == 0 ) {
-            if( Map[index].mask == 0xffff ) {
+    if( _wpi_getclassname( cntl, osclassname, sizeof( osclassname ) ) ) {
+      style = _wpi_getwindowlong( cntl, GWL_STYLE );
+      for( index = 0; ( index < GUI_ARRAY_SIZE( Map ) ) && ( control_class == GUI_BAD_CLASS ); index++ ) {
+          if( stricmp( Map[index].osclassname, osclassname ) == 0 ) {
+             if( Map[index].mask == 0xffff ) {
                 control_class = Map[index].control_class;
-            } else {
-                if( (style & Map[index].mask) == Map[index].style ) {
+            } else { if( (style & Map[index].mask) == Map[index].style ) {
                     control_class = Map[index].control_class;
                 }
             }

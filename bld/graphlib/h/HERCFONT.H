@@ -25,55 +25,10 @@
 *
 *  ========================================================================
 *
-* Description:  WHEN YOU FIGURE OUT WHAT THIS FILE DOES, PLEASE
-*               DESCRIBE IT HERE!
+* Description:  Hercules font definition.
 *
 ****************************************************************************/
 
 
-#include "guiwind.h"
-#include "guistr.h"
-#include "guirdlg.h"
-#include "guilog.h"
-
-
-/*
- * GUISetIcon --
- */
-
-bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
-{
-    WPI_HICON icon;
-
-    icon = (WPI_HICON)0;
-
-    if( res != NULL ) {
-        icon = _wpi_loadicon( GUIResHInst, MAKEINTRESOURCE(res->res_id) );
-    } else {
-        icon = _wpi_loadicon( GUIResHInst, LIT( ApplIcon ) );
-        if( icon == NULL ) {
-            icon = _wpi_getsysicon( NULLHANDLE, IDI_APPLICATION );
-        }
-    }
-
-    if( icon != NULL ) {
-        if( wnd->icon != NULL ) {
-            _wpi_destroyicon( wnd->icon );
-        }
-        wnd->icon = icon;
-    }
-
-#ifndef __OS2_PM__
-    // this code forces Windows to use the correct icon when you press
-    // alt-TAB
-    if( wnd->flags & IS_ROOT ) {
-        SET_HICON( wnd->hwnd, wnd->icon );
-    }
-#endif
-
-#ifdef __OS2_PM__
-    _wpi_sendmessage( wnd->hwnd_frame, WM_SETICON, icon, 0 );
-#endif
-
-    return( icon != NULL );
-}
+extern char _WCI86FAR _HercFont[];
+#pragma aux _HercFont "_*";

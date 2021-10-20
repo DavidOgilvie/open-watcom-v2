@@ -25,55 +25,34 @@
 *
 *  ========================================================================
 *
-* Description:  WHEN YOU FIGURE OUT WHAT THIS FILE DOES, PLEASE
-*               DESCRIBE IT HERE!
+* Description:  8x8 font definition.
 *
 ****************************************************************************/
 
 
-#include "guiwind.h"
-#include "guistr.h"
-#include "guirdlg.h"
-#include "guilog.h"
+typedef _Packed struct font_entry {
+    short                   type;       // 0 == bitmap, 1 == vector
+    short                   ascent;     // distance from top to baseline (in pixels)
+    short                   width;      // character width in pixels, 0 == proportional
+    short                   height;     // character height in pixels
+    short                   avgwidth;   // average character width
+    short                   firstchar;
+    short                   lastchar;
+    char                    filename[ 81 ];
+    char                    facename[ 32 ];
+    char                    filler;
+    short                   version;
+    char _WCI86FAR          *glyph_table;
+    char _WCI86FAR          *bitmap_table;
+    long                    start_offset;
+    long                    glyph_offset;
+    long                    bitmap_offset;
+    unsigned short          bitmap_size;
+    struct font_entry _WCI86FAR  *link;
+} FONT_ENTRY;
 
+extern char         _WCI86FAR _8x8Font[];
+#pragma aux _8x8Font "_*"
 
-/*
- * GUISetIcon --
- */
-
-bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
-{
-    WPI_HICON icon;
-
-    icon = (WPI_HICON)0;
-
-    if( res != NULL ) {
-        icon = _wpi_loadicon( GUIResHInst, MAKEINTRESOURCE(res->res_id) );
-    } else {
-        icon = _wpi_loadicon( GUIResHInst, LIT( ApplIcon ) );
-        if( icon == NULL ) {
-            icon = _wpi_getsysicon( NULLHANDLE, IDI_APPLICATION );
-        }
-    }
-
-    if( icon != NULL ) {
-        if( wnd->icon != NULL ) {
-            _wpi_destroyicon( wnd->icon );
-        }
-        wnd->icon = icon;
-    }
-
-#ifndef __OS2_PM__
-    // this code forces Windows to use the correct icon when you press
-    // alt-TAB
-    if( wnd->flags & IS_ROOT ) {
-        SET_HICON( wnd->hwnd, wnd->icon );
-    }
-#endif
-
-#ifdef __OS2_PM__
-    _wpi_sendmessage( wnd->hwnd_frame, WM_SETICON, icon, 0 );
-#endif
-
-    return( icon != NULL );
-}
+extern FONT_ENTRY   _WCI86FAR _8x8FontDef;
+#pragma aux _8x8FontDef "_*"

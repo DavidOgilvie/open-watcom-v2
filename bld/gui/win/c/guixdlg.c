@@ -717,10 +717,6 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
         old_dlgtemplate = new_dlgtemplate;
     }
     new_dlgtemplate = DoneAddingControls( old_dlgtemplate );
-//#if defined __NT__ ==1==
-// && !defined _WINDOWS_386__
-//        FixColours ( wnd->hwnd );
-//#endif
     DynamicDialogBox( GUIDialogDlgProc, GUIMainHInst, parent_hwnd, new_dlgtemplate, (WPI_PARAM2)wnd );
     return( true );
 }
