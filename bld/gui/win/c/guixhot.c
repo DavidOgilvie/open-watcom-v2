@@ -71,7 +71,7 @@ bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
                                                   LR_LOADMAP3DCOLORS );
         } else {
 #endif
-            GUIHotSpots[i].hbitmap = _wpi_loadbitmap( GUIResHInst, MAKEINTRESOURCE( hot[i].res ) );
+            GUIHotSpots[i].hbitmap = _wpi_loadbitmap( GUIResHInst, MAKEINTRESOURCE( hot[i].res_id ) );
 #ifdef __NT__
         }
 #endif
@@ -90,7 +90,7 @@ void GUIXCleanupHotSpots( void )
         _wpi_deletebitmap( GUIHotSpots[i].hbitmap );
     }
 #ifdef __NT__
-    if( hbitmap2 != NULL ) {
+    if( hbitmap2 != WPI_NULL ) {
         _wpi_deletebitmap( GUIHotSpots[i].hbitmap );
     }
 #endif
@@ -150,9 +150,9 @@ void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_CO
     if( size_wpi_point.x < 50 && size_wpi_point.y < 50) {
         /* New, on WIN32 platforms, use TB_TransparentBlt() */
         mem2 = _wpi_createcompatiblepres( hdc, GUIMainHInst, &new_hdc2 );
-        if( bitmap2 == NULL)
+        if( hbitmap2 == WPI_NULL)
            hbitmap2 = CreateCompatibleBitmap( hdc, 50, 50 );
-        old_hbmp2 = _wpi_selectbitmap( mem2, hbitmap2 );
+        old_hbitmap2 = _wpi_selectbitmap( mem2, hbitmap2 );
         /* Get background color of bitmap */
         /* Expects 0,0 pos in original to be in background/transp. color */
         cr = GetPixel(memDC, 0, 0);
@@ -186,4 +186,4 @@ void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_CO
     }
     _wpi_deletecompatiblepres( memDC, new_hdc );
 }
-154
+

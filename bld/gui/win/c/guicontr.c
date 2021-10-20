@@ -1,3 +1,4 @@
+// F:\newow\BLD\GUI\WIN\C\GUICONTR.C
 /****************************************************************************
 *
 *                            Open Watcom Project
@@ -25,44 +26,30 @@
 *
 *  ========================================================================
 *
-* Description:  WHEN YOU FIGURE OUT WHAT THIS FILE DOES, PLEASE
-*               DESCRIBE IT HERE!
+* Description:  This module does most of the heavy work managing GUI controls,
 *
 ****************************************************************************/
 
-
-#include "guiwind.h"	// In <OWROOT>\bld\gui\win\h\guiwind.h
+#include "guiwind.h"		// In <OWROOT>\bld\gui\win\h\guiwind.h
 #include <string.h>
 #include <stdlib.h>
-#include "guistyle.h"
-#include "guixutil.h"
-#include "guicontr.h"
-#include "guixwind.h"
-#include "guicombo.h"
-#include "guimapky.h"
-#include "guixdlg.h"
-//#include "guixhook.h"
-#include "ctl3dcvr.h"
-#include "guirdlg.h"
-#include "wclbproc.h"
-#include "guistyle.h"	// In <OWROOT>\bld\gui\win\h\guistyle.h
-#include "guixutil.h"	// In <OWROOT>\bld\gui\win\h\guixutil.h
-#include "guicontr.h"	// In <OWROOT>\bld\gui\win\h\guicontr.h
-#include "guixwind.h"	// In <OWROOT>\bld\gui\win\h\guixwind.h
-#include "guicombo.h"	// In <OWROOT>\bld\gui\win\h\guicombo.h
-#include "guimapky.h"	// In <OWROOT>\bld\gui\win\h\guimapky.h
-#include "guixdlg.h"	// In <OWROOT>\bld\gui\win\h\guixdlg.h
-//#include "guixhook.h"	
-#include "ctl3dcvr.h"	// In <OWROOT>\bld\commonui\h\ctl3dcvr.h
-#include "guirdlg.h"	// In <OWROOT>\bld\gui\win\h\guirdlg.h
-#include "wclbproc.h"	// In <OWROOT>\bld\watcom\h\wclbproc.h
+#include "guistyle.h"		// In <OWROOT>\bld\gui\win\h\guistyle.h
+#include "guixutil.h"		// In <OWROOT>\bld\gui\win\h\guixutil.h
+#include "guicontr.h"		// In <OWROOT>\bld\gui\win\h\guicontr.h
+#include "guixwind.h"		// In <OWROOT>\bld\gui\win\h\guixwind.h
+#include "guicombo.h"		// In <OWROOT>\bld\gui\win\h\guicombo.h
+#include "guimapky.h"		// In <OWROOT>\bld\gui\win\h\guimapky.h
+#include "guixdlg.h"		// In <OWROOT>\bld\gui\win\h\guixdlg.h
+#include "ctl3dcvr.h"		// In <OWROOT>\bld\commonui\h\ctl3dcvr.h
+#include "guirdlg.h"		// In <OWROOT>\bld\gui\win\h\guirdlg.h
+#include "wclbproc.h"		// In <OWROOT>\bld\watcom\h\wclbproc.h
 #ifdef __NT__
     #undef _WIN32_IE
     #define _WIN32_IE   0x0400
-    #include <commctrl.h>
+    #include <commctrl.h>	// In <OWROOT>\bld\w32api\nt\h\commctrl.h
 #endif
-#include "guilog.h"
-
+#include "oswincls.h"		// In <OWROOT>\bld\watcom\h\OSWINCLS.H
+#include "guilog.h"			// In <OWROOT>\bld\gui\win\h\guilog.h
 
 typedef struct dialog_wnd_node {
     gui_window              *wnd;
@@ -73,9 +60,11 @@ extern  bool            EditControlHasFocus;
 
 controls_struct GUIControls[GUI_NUM_CONTROL_CLASSES] = {
 #if defined( __NT__ ) && !defined( _WIN64 )
-    #define pick(enumcls,uitype,classn,classn_os2,style,xstyle_nt) {classn,style,xstyle_nt},
+    #define pick(enumcls,uitype,classn,classn_os2,style,xstyle_nt) {classn,classn,style,xstyle_nt},
+#elif defined( __OS2__ )
+    #define pick(enumcls,uitype,classn,classn_os2,style,xstyle_nt) {classn,classn_os2,style},
 #else
-    #define pick(enumcls,uitype,classn,classn_os2,style,xstyle_nt) {classn,style},
+    #define pick(enumcls,uitype,classn,classn_os2,style,xstyle_nt) {classn,classn,style},
 #endif
     #include "_guicont.h"
     #undef pick
@@ -85,8 +74,6 @@ static dialog_wnd_node  *DialogHead = NULL;
 
 WPI_MRESULT CALLBACK GUIEditFunc( HWND, WPI_MSG, WPI_PARAM1, WPI_PARAM2 );
 WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND, WPI_MSG, WPI_PARAM1, WPI_PARAM2 );
-extern void GUIDoSysColorChange ( void );
-
 
 bool GUIInsertCtrlWnd( gui_window *wnd )
 {
@@ -108,7 +95,7 @@ gui_window *GUIGetCtrlWnd( HWND hwnd )
     dialog_wnd_node    **owner;
     dialog_wnd_node    *curr;
 
- 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     for( owner = &DialogHead; (curr = *owner) != NULL; owner = &curr->next ) {
         if( curr->wnd->hwnd == hwnd ) {
             return( curr->wnd );
@@ -148,6 +135,7 @@ control_item *GUIGetControlByID( gui_window *parent_wnd, gui_ctl_id id )
 {
     control_item * curr;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     for( curr = parent_wnd->controls; curr != NULL; curr = curr->next ) {
         if( curr->id == id ) {
             return( curr );
@@ -165,6 +153,7 @@ control_item * GUIGetControlByHwnd( gui_window *parent_wnd, HWND control )
 {
     control_item        *curr;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     for( curr = parent_wnd->controls; curr != NULL; curr = curr->next ) {
         if( curr->hwnd == control ) {
             return( curr );
@@ -186,21 +175,17 @@ control_item *GUIControlInsert( gui_window *parent_wnd, gui_control_class contro
 
 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     item = (control_item *)GUIMemAlloc( sizeof( control_item ) );
-    if( item == NULL ) {
-        return( NULL );
+    if( item != NULL ) {
+        item->control_class = control_class;
+        item->text = ctl_info->text;
+        item->style = ctl_info->style;
+        item->checked = ctl_info->style & GUI_STYLE_CONTROL_CHECKED;
+        item->id = ctl_info->id;
+        item->hwnd = hwnd;
+        item->win_call_back = win_call_back;
+        item->next = parent_wnd->controls;
+        parent_wnd->controls = item;
     }
-    item->control_class = control_class;
-    item->text = ctl_info->text;
-    item->style = ctl_info->style;
-	if (item->control_class==GUI_EDIT) 
-		item->style|= GUI_STYLE_CONTROL_BORDER;
-    item->checked = ctl_info->style & GUI_STYLE_CONTROL_CHECKED;
-    item->id = ctl_info->id;
-    item->next = NULL;
-    item->hwnd = hwnd;
-    item->win_call_back = win_call_back;
-    item->next = parent_wnd->controls;
-    parent_wnd->controls = item;
     return( item );
 }
 
@@ -208,30 +193,29 @@ control_item *GUIControlInsertByHWND( HWND hwnd, gui_window *parent_wnd )
 {
     control_item        *item;
     HWND                phwnd;
+    gui_control_class   control_class;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     phwnd = _wpi_getparent( hwnd );
     if( ( parent_wnd == NULL ) || ( phwnd != parent_wnd->hwnd ) ) {
         return( NULL );
     }
     item = (control_item *)GUIMemAlloc( sizeof( control_item ) );
-    if( item == NULL ) {
-        return( NULL );
+    if( item != NULL ) {
+        memset( item, 0, sizeof( control_item ) );
+        control_class = GUIGetControlClassFromHWND( hwnd );
+        if( control_class == GUI_BAD_CLASS ) {
+            GUIMemFree( item );
+            return( NULL );
+        }
+        item->control_class = control_class;
+        item->style = GUIGetControlStylesFromHWND( hwnd, control_class );
+        item->id = _wpi_getdlgctrlid( hwnd );
+        item->next = NULL;
+        item->hwnd = hwnd;
+        item->next = parent_wnd->controls;
+        parent_wnd->controls = item;
     }
-    memset( item, 0, sizeof( control_item ) );
-    item->control_class = GUIGetControlClassFromHWND( hwnd );
-    if( item->control_class == GUI_BAD_CLASS ) {
-        GUIMemFree( item );
-        return( NULL );
-    }
-
-    item->style = GUIGetControlStylesFromHWND( hwnd, item->control_class );
-
-    item->id = _wpi_getdlgctrlid( hwnd );
-    item->next = NULL;
-    item->hwnd = hwnd;
-    item->next = parent_wnd->controls;
-    parent_wnd->controls = item;
-
     return( item );
 }
 
@@ -246,6 +230,7 @@ void GUIControlDelete( gui_window *wnd, gui_ctl_id id )
     control_item        *prev;
     control_item        *next;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     prev = NULL;
     for( curr = wnd->controls; curr != NULL; curr = next ) {
         next = curr->next;
@@ -275,6 +260,7 @@ void GUIControlDeleteAll( gui_window *wnd )
     control_item        *curr;
     control_item        *next;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     for( curr = wnd->controls; curr != NULL; curr = next ) {
         next = curr->next;
         GUIMemFree( curr );
@@ -289,7 +275,7 @@ void GUIControlDeleteAll( gui_window *wnd )
 
 WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    WINDOW_MSG _msg= message;
+    WINDOW_MSG 			_msg= message;
     control_item        *info;
     WPI_WNDPROC         win_call_back;
     HWND                parent;
@@ -318,9 +304,9 @@ WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam,
     win_call_back = info->win_call_back;
     switch( message ) {
 #ifndef __OS2_PM__
-	case WM_SYSCOLORCHANGE:
-		GUIDoSysColorChange ();
-		break;
+    case WM_SYSCOLORCHANGE:
+        GUIInitSystemRGB ();
+        break;
     case WM_SETFOCUS:
         EditControlHasFocus = true;
         break;
@@ -329,23 +315,6 @@ WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam,
         break;
     case WM_MOUSEACTIVATE:
         return( true );
-        break;
-    case WM_CHAR:
-        if( EditControlHasFocus ) {
-            if( GUIWindowsMapKey( wparam, lparam, &key_control.key_state.key ) ) {
-                GUIGetKeyState( &key_control.key_state.state );
-                if( key_control.key_state.key == GUI_KEY_ENTER ) {
-                    key_control.id = info->id;
-                    if( GUIEVENT( wnd, GUI_KEY_CONTROL, &key_control ) ) {
-                        return( 0L );
-                    }
-                }
-            }
-        //} else {
-            //if( GUICurrWnd != NULL ) {
-                //GUISendMessage( GUICurrWnd->hwnd, message, wparam, lparam );
-            //}
-        }
         break;
     case WM_KEYDOWN:
         if( EditControlHasFocus ) {
@@ -364,9 +333,10 @@ WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam,
             //}
         }
         break;
-#else
+#endif
     case WM_CHAR:
         if( EditControlHasFocus ) {
+#ifdef __OS2_PM__
             if( !IS_KEY_UP( wparam ) && GUIWindowsMapKey( wparam, lparam, &key_control.key_state.key ) ) {
                 switch( key_control.key_state.key ) {
                 //case GUI_KEY_ENTER:
@@ -379,13 +349,23 @@ WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam,
                     }
                 }
             }
+#else
+            if( GUIWindowsMapKey( wparam, lparam, &key_control.key_state.key ) ) {
+                GUIGetKeyState( &key_control.key_state.state );
+                if( key_control.key_state.key == GUI_KEY_ENTER ) {
+                    key_control.id = info->id;
+                    if( GUIEVENT( wnd, GUI_KEY_CONTROL, &key_control ) ) {
+                        return( 0L );
+                    }
+                }
+            }
+#endif
         //} else {
             //if( GUICurrWnd != NULL ) {
                 //GUISendMessage( GUICurrWnd->hwnd, message, wparam, lparam );
             //}
         }
         break;
-#endif
     case WM_RBUTTONUP:
         break;
     case WM_NCDESTROY:
@@ -402,7 +382,7 @@ WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam,
 
 WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    WINDOW_MSG _msg= message;
+    WINDOW_MSG 			_msg= message;
     control_item        *info;
     WPI_WNDPROC         win_call_back;
     WPI_PRES            hdc;
@@ -411,7 +391,7 @@ WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wpa
     gui_window          *wnd;
 
 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
-	GUIlog ("MSG %d(%d) %s %s(%d)\n", _msg, message, __func__, __FILE__, __LINE__ );
+    GUIlog ("MSG %d(%d) %s %s(%d)\n", _msg, message, __func__, __FILE__, __LINE__ );
     parent = _wpi_getparent( hwnd );
     wnd = GUIGetCtrlWnd( parent );
     info = NULL;
@@ -424,9 +404,9 @@ WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wpa
     win_call_back = info->win_call_back;
     switch( message ) {
 #ifndef __OS2_PM__
-	case WM_SYSCOLORCHANGE:
-		GUIDoSysColorChange ();
-		break;
+    case WM_SYSCOLORCHANGE:
+        GUIDoSysColorChange ();
+        break;
 #endif
     case WM_ERASEBKGND:
         hdc = _wpi_getpres( hwnd );
@@ -447,6 +427,7 @@ WPI_WNDPROC GUIDoSubClass( HWND hwnd, gui_control_class control_class )
 
     //CvrCtl3dSubclassCtl( hwnd );
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     switch( control_class ) {
     case GUI_EDIT_COMBOBOX:
         return( GUISubClassEditCombobox( hwnd ) );
@@ -476,9 +457,9 @@ WPI_WNDPROC GUIDoSubClass( HWND hwnd, gui_control_class control_class )
 
 LONG GUISetControlStyle( gui_control_info *ctl_info )
 {
-    LONG		ret_style;
+    LONG        ret_style;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+    GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     ret_style = GUIControls[ctl_info->control_class].style;
 
     /* The GUI library has a group marked by GUI_STYLE_CONTROL_GROUP on the first and
@@ -488,6 +469,7 @@ LONG GUISetControlStyle( gui_control_info *ctl_info )
      * everything is in a group of one, except GUI_STYLE_CONTROL_GROUPs, which are
      * grouped properly.
      */
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     if( !( ctl_info->style & GUI_INIT_INVISIBLE ) ) {
         ret_style |= WS_VISIBLE;
     }
@@ -579,8 +561,7 @@ LONG GUISetControlStyle( gui_control_info *ctl_info )
         }
         if( ctl_info->style & GUI_STYLE_CONTROL_BORDER ) {
             ret_style |= WS_BORDER;
-			ret_style ^= WS_CAPTION;
-		}
+        }
         break;
 #endif
     }
@@ -713,7 +694,7 @@ bool GUIAPI GUIAddControl( gui_control_info *ctl_info, gui_colour_set *plain, gu
         return( false );
     }
     if( GUIGetCtrlWnd( parent_wnd->hwnd ) == NULL ) {
-		if( !GUIInsertCtrlWnd( parent_wnd ) ) {
+        if( !GUIInsertCtrlWnd( parent_wnd ) ) {
             GUIControlDelete( parent_wnd, ctl_info->id );
             return( false );
         }
@@ -734,6 +715,7 @@ void GUIAPI GUIEnumControls( gui_window *wnd, CONTRENUMCALLBACK *func, void *par
 {
     control_item        *curr;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     for( curr = wnd->controls; curr != NULL; curr = curr->next ) {
         (*func)( wnd, curr->id, param );
     }
@@ -748,6 +730,7 @@ bool GUICheckRadioButton( gui_window *wnd, gui_ctl_id id )
     gui_ctl_id          last;
     bool                done;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     first = id;
     last = id;
     in_group = false;
@@ -792,6 +775,7 @@ bool GUIAPI GUIDeleteControl( gui_window *wnd, gui_ctl_id id )
 {
     control_item        *control;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     control = GUIGetControlByID( wnd, id );
     if( control != NULL ) {
         _wpi_destroywindow( control->hwnd );
@@ -806,6 +790,7 @@ bool GUIAPI GUILimitEditText( gui_window *wnd, gui_ctl_id id, int len )
     control_item        *control;
     HWND                hwnd;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     control = GUIGetControlByID( wnd, id );
     if( control != NULL ) {
         hwnd = _wpi_getdlgitem( wnd->hwnd, id );
@@ -826,6 +811,7 @@ static void ShowControl( gui_window *wnd, gui_ctl_id id, int show_flag )
 {
     control_item        *control;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     control = GUIGetControlByID( wnd, id );
     if( control != NULL ) {
         _wpi_showwindow( control->hwnd, show_flag );
@@ -834,11 +820,13 @@ static void ShowControl( gui_window *wnd, gui_ctl_id id, int show_flag )
 
 void GUIAPI GUIHideControl( gui_window *wnd, gui_ctl_id id )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     ShowControl( wnd, id, SW_HIDE );
 }
 
 void GUIAPI GUIShowControl( gui_window *wnd, gui_ctl_id id )
 {
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     ShowControl( wnd, id, SW_SHOW );
 }
 
@@ -846,6 +834,7 @@ bool GUIAPI GUIIsControlVisible( gui_window *wnd, gui_ctl_id id )
 {
     control_item        *control;
 
+	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     control = GUIGetControlByID( wnd, id );
     if( control != NULL ) {
         if( _wpi_iswindowvisible( control->hwnd ) ) {

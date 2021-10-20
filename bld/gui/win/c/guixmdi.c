@@ -55,8 +55,6 @@ typedef struct {
     gui_coord   bump;
 } cascade_info;
 
-void GUIDoSysColorChange ( gui_window * );
-
 static  mdi_info        MDIInfo;
 static  char            Buffer[MAX_LENGTH];
 static  bool            DoneMDIInit             = false;
@@ -281,7 +279,7 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
 			break;
 #ifndef __OS2_PM__
 		case WM_SYSCOLORCHANGE:
-			GUIDoSysColorChange ( wnd );
+			InitSystemRGB ();
 			break;
 #endif
 		}

@@ -93,7 +93,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     old_brush = WPI_NULL;
     brush = WPI_NULL;
     old_pen = WPI_NULL;
-    pen = NULLHANDLE;
+    pen = WPI_NULL;
     GUIGetMetrics( wnd );
     if( hotspot_no == 0 ) {
         height = AVGYCHAR( GUItm );

@@ -61,8 +61,6 @@
 #include "guilog.h"
 
 
-extern void 	GUIDoSysColorChange ( gui_window * );
-
 #if !defined(__NT__)
 #define WM_PAINTICON            0x0026
 #endif
@@ -915,7 +913,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
             return( ret );
 #ifndef __OS2_PM__
 		case WM_SYSCOLORCHANGE:
-			GUIDoSysColorChange ( wnd );
+			GUIInitSystemRGB ();
 			break;
 #endif
 		}
@@ -938,14 +936,9 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
             return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
 #ifndef __OS2_PM__
 		case WM_SYSCOLORCHANGE:
-			GUIDoSysColorChange ( wnd );
+			InitSystemRGB ();
 			break;
 #endif
-// Even the root window needs to get painted on a WM_SYSCOLORCHANGE  event
-		case WM_PAINT:
-			use_defproc = true;
-			GUIPaint( wnd, hwnd, true );
-			break;
 		}
     }
 
@@ -1378,7 +1371,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
         break;
 #ifndef __OS2_PM__
 	case WM_SYSCOLORCHANGE:
-		GUIDoSysColorChange ( wnd );
+		InitSystemRGB ();
 		break;
 #endif
     default:
@@ -1446,7 +1439,7 @@ WPI_MRESULT CALLBACK GUIFrameProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WP
             return( 0L );
 #ifndef __OS2_PM__
 		case WM_SYSCOLORCHANGE:
-			GUIDoSysColorChange ( wnd );
+            InitSystemRGB();
 			break;
 #endif
 		}
