@@ -108,7 +108,7 @@ void _GrClear( short x1, short y1, short x2, short y2 )
     Clear area of screen in graphics mode. */
 
 {
-    unsigned char       prev_mask[ MASK_LEN ];
+    unsigned char       prev_mask[MASK_LEN];
     grcolor             prev_colour;
     short               prev_action;
 

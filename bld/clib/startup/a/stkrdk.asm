@@ -34,8 +34,6 @@ include langenv.inc
 include mdef.inc
 include struct.inc
 
-include exitwmsg.inc
-
         modstart        stk
 
         assume  ds:DGROUP
@@ -54,9 +52,9 @@ include exitwmsg.inc
         sub     ebp,[ebp+8]
         jnc     chk_passed
 ;
-        int     3                       ; hit breakpoint if stack is out        
+        int     3                       ; hit breakpoint if stack is out
 
-chk_passed:        
+chk_passed:
         pop     ebp
         ret     4
         endproc __CHK

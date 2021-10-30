@@ -144,7 +144,7 @@ struct seg_table {
     PSEL                desc;
 };
 
-static struct seg_table _SegTable[ NUM_SELECTORS ] = {
+static struct seg_table _SegTable[NUM_SELECTORS] = {
     0xB000,     0x8000,     &_MonoSeg,
     0xB800,     0x8000,     &_CgaSeg,
     0xA000,     0x10000,    &_EgaSeg,

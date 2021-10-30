@@ -46,7 +46,7 @@
 /*  Table of values for CRT registers. Use 0x57 for the two 0x58 in the
     table to get 348 scan lines visible on the screen instead of 350.   */
 
-static char             GTable[ 12 ] = {
+static char             GTable[12] = {
     0x35, 0x2D, 0x2E, 0x07,
     0x5B, 0x02, 0x58, 0x58,
     0x02, 0x03, 0x00, 0x00

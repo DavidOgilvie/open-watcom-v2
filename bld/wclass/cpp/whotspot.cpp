@@ -54,11 +54,11 @@ WEXPORT WHotSpots::~WHotSpots() {
 }
 
 
-void WEXPORT WHotSpots::addHotSpot( WResource bitmap, char *ch_mode ) {
-/*********************************************************************/
-
+void WEXPORT WHotSpots::addHotSpot( WResourceId bitmap_id, char *ch_mode )
+/************************************************************************/
+{
     if( _hotSpotIndex < _numHotSpots ) {
-        _hotSpotItems[_hotSpotIndex].res = bitmap;
+        _hotSpotItems[_hotSpotIndex].res_id = bitmap_id;
         _hotSpotItems[_hotSpotIndex].chars = ch_mode;
         ++_hotSpotIndex;
     }

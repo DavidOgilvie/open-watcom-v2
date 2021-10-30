@@ -37,6 +37,7 @@ suffix_stack = s
 
 inc_dirs = -I. -I"$(graphlib_dir)/h" -I"$(mathlib_dir)/h"
 inc_dirs_dos = -I"$(clib_dir)/mbyte/h"
+inc_dirs_os2 = -I"$(clib_dir)/h" -I"$(clib_dir)/defwin/h" -I"$(lib_misc_dir)/h" -I"$(wpi_dir)/h"
 inc_dirs_win = -I"$(clib_dir)/h" -I"$(clib_dir)/defwin/h" -I"$(lib_misc_dir)/h" -I"$(wpi_dir)/h"
 
 extra_cpp_flags = -D_ENABLE_AUTODEPEND $(supervga_support) -D_FARD=
@@ -166,6 +167,7 @@ eng_nonwin_objs = &
     $(_subdir_)8x8font.obj &
     $(_subdir_)bit.obj &
     $(_subdir_)gstklow.obj &
+    $(_subdir_)hercfont.obj &
     $(_subdir_)l0drwlin.obj &
     $(_subdir_)l0ellips.obj &
     $(_subdir_)l1fill.obj &
@@ -180,7 +182,6 @@ english_objs = &
     $(_subdir_)cnvcolor.obj &
     $(_subdir_)egautils.obj &
     $(_subdir_)fast256.obj &
-    $(_subdir_)hercfont.obj &
     $(_subdir_)hgcutils.obj &
     $(_subdir_)vgautils.obj &
     $(_subdir_)grcga.obj &
@@ -240,7 +241,9 @@ wsplice_extra_opts = -d"depends.dep"
 !endif
 
 wsplice_opts_dos = -kDOS
+wsplice_opts_os2 = -kDOS
 wsplice_opts_qnx = -kQNX -u
+wsplice_opts_win = -kDOS
 
 wsplice_opts = $(wsplice_extra_opts) $(wsplice_opts_$(host_os))
 

@@ -34,7 +34,7 @@
 #ifndef whotspot_class
 #define whotspot_class
 
-#include "wres.hpp"
+#include "_windows.hpp"
 #include "wobject.hpp"
 #include "wvlist.hpp"
 #include "wpoint.hpp"
@@ -44,7 +44,7 @@ WCLASS WHotSpots : public WObject {
         WEXPORT WHotSpots( int );
         WEXPORT ~WHotSpots();
 
-        void WEXPORT addHotSpot( WResource, char * );
+        void WEXPORT addHotSpot( WResourceId, char * );
         void WEXPORT hotSpotSize( int, WPoint & );
         void WEXPORT attach();
 

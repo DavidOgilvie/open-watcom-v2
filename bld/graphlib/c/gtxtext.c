@@ -52,8 +52,8 @@ _WCRTLINK void _WCI86FAR _CGRAPH _gettextextent( short x, short y, char _WCI86FA
     y = _GetPhysY( y );
     _L1TXX( x, y, str, concat, extent );
     for( i = 0; i < 4; i++ ) {
-        extent[ i ].xcoord = _GetLogX( extent[ i ].xcoord );
-        extent[ i ].ycoord = _GetLogY( extent[ i ].ycoord );
+        extent[i].xcoord = _GetLogX( extent[i].xcoord );
+        extent[i].ycoord = _GetLogY( extent[i].ycoord );
     }
     concat->xcoord = _GetLogX( concat->xcoord );
     concat->ycoord = _GetLogY( concat->ycoord );

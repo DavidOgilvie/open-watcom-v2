@@ -55,7 +55,7 @@ static char * Declared = "Declared";
 
 const int CaptionGadgetSize = 150;   // FIXME -- this is a guess, should be system metrics
 
-static WResource DetailIcons[ DR_SYM_NOT_SYM ] = {
+static WResourceId DetailIcons[ DR_SYM_NOT_SYM ] = {
     DTFuncIcon,
     DTClassIcon,
     DTEnumIcon,

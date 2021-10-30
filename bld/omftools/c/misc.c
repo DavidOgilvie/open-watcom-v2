@@ -2,7 +2,7 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
+* Copyright (c) 2002-2020 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -81,8 +81,8 @@ static char *FixName( char *name )
     for( ptr = name; (hold = *ptr) != '\0'; ++ptr ) {
         if( hold == '/' ) {
             *ptr = '\\';
-        } else if( ( hold -= 'A' ) < 26 ) {     /* SIDE EFFECT!!! */
-            *ptr = hold + 'a';
+        } else if( hold >= 'A' && hold <= 'Z' ) {
+            *ptr = hold + 'a' - 'A';
         }
     }
 #elif defined( __OS2__ ) || defined( __NT__ )

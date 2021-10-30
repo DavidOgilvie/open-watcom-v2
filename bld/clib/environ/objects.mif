@@ -1,7 +1,7 @@
 #                       d16 d32 dpm nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32 lpc lmp rdu rdk
 #===================================================================================================
 !inject clearenv.obj    d16 d32     nt  nta ntp nvc nvl o16 o32 q16 q32 w16 w32 l32 lpc lmp rdu rdk
-!inject crtwenv.obj     d16 d32     nt  nta ntp         o16 o32 q16 q32 w16 w32 l32 lpc lmp
+!inject crtwenv.obj     d16 d32     nt  nta ntp         o16 o32         w16 w32
 !inject _cvtstr.obj     d16 d32     nt  nta ntp         o16 o32 q16 q32 w16 w32
 !inject environ.obj     d16 d32     nt  nta ntp nvc nvl o16 o32         w16 w32 l32 lpc lmp rdu rdk
 !inject envptr.obj      d16 d32     nt  nta ntp nvc nvl o16 o32         w16 w32             rdu rdk
@@ -35,12 +35,13 @@
 !inject uenvptr.obj     d16 d32     nt  nta ntp nvc nvl o16 o32         w16 w32
 !inject _ufinden.obj    d16 d32     nt  nta ntp         o16 o32         w16 w32
 !inject ugetenv.obj     d16 d32     nt  nta ntp         o16 o32         w16 w32
-!inject unsetenv.obj    d16 d32     nt  nta ntp         o16 o32 q16     w16 w32 l32 lpc lmp rdu rdk
+!inject unsetenv.obj    d16 d32     nt  nta ntp         o16 o32 q16 q32 w16 w32 l32 lpc lmp rdu rdk
 !inject _uosenv.obj                 nt  nta ntp
 !inject _uputenv.obj    d16 d32     nt  nta ntp         o16 o32         w16 w32
 !inject uputenv.obj     d16 d32     nt  nta ntp         o16 o32         w16 w32
 !inject usrchen.obj     d16 d32     nt  nta ntp         o16 o32         w16 w32
 !inject _usetenv.obj    d16 d32     nt  nta ntp         o16 o32         w16 w32
 !inject usetenv.obj     d16 d32     nt  nta ntp         o16 o32         w16 w32
+!inject uunseten.obj    d16 d32     nt  nta ntp         o16 o32         w16 w32
 
 !include ../../../../objlist.mif

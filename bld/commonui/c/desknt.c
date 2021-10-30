@@ -42,7 +42,7 @@
 /* Window callback functions prototypes */
 WINEXPORT LRESULT CALLBACK DesktopProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
 
-static HBITMAP  deskTopBitmap;
+static HBITMAP  deskTop_hbitmap;
 static short    screenWidth;
 static short    screenHeight;
 static HANDLE   thisInstance;
@@ -59,7 +59,7 @@ void SetDeskTopHook( deskNThook hook )
  */
 LRESULT CALLBACK DesktopProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
 {
-    static HBITMAP      oldbmp;
+    static HBITMAP      old_hbitmap;
     PAINTSTRUCT         ps;
     HDC                 hdc;
     HDC                 memdc;
@@ -76,23 +76,23 @@ LRESULT CALLBACK DesktopProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam 
     case WM_CREATE:
         hdc = GetDC( hwnd );
         memdc = CreateCompatibleDC( hdc );
-        oldbmp = SelectObject( memdc, deskTopBitmap );
+        old_hbitmap = SelectObject( memdc, deskTop_hbitmap );
         BitBlt( hdc, 0, 0, screenWidth, screenHeight, memdc, 0, 0, SRCCOPY );
-        SelectObject( memdc, oldbmp );
+        SelectObject( memdc, old_hbitmap );
         ReleaseDC( hwnd, hdc );
         DeleteDC( memdc );
         break;
     case WM_PAINT:
         hdc = BeginPaint( hwnd, &ps );
         memdc = CreateCompatibleDC( hdc );
-        oldbmp = SelectObject( memdc, deskTopBitmap );
+        old_hbitmap = SelectObject( memdc, deskTop_hbitmap );
         BitBlt( hdc, 0, 0, screenWidth, screenHeight, memdc, 0, 0, SRCCOPY );
-        SelectObject( memdc, oldbmp );
+        SelectObject( memdc, old_hbitmap );
         DeleteDC( memdc );
         EndPaint( hwnd, &ps );
         break;
     case WM_DESTROY:
-        DeleteObject( deskTopBitmap );
+        DeleteObject( deskTop_hbitmap );
         break;
     default:
         return( DefWindowProc( hwnd, msg, wparam, lparam ) );
@@ -130,16 +130,16 @@ static void getDesktopBitmap( void )
 {
     HDC         hdc;
     HDC         memdc;
-    HBITMAP     oldbmp;
+    HBITMAP     old_hbitmap;
 
     hdc = GetDC( (HWND)NULL );
     memdc = CreateCompatibleDC( hdc );
 
-    deskTopBitmap = CreateCompatibleBitmap( hdc, screenWidth, screenHeight );
-    oldbmp = SelectObject( memdc, deskTopBitmap );
+    deskTop_hbitmap = CreateCompatibleBitmap( hdc, screenWidth, screenHeight );
+    old_hbitmap = SelectObject( memdc, deskTop_hbitmap );
     BitBlt( memdc, 0, 0, screenWidth, screenHeight, hdc, 0, 0, SRCCOPY );
 
-    SelectObject( memdc, oldbmp );
+    SelectObject( memdc, old_hbitmap );
     DeleteDC( memdc );
     ReleaseDC( (HWND)NULL, hdc );
 

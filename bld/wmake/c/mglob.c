@@ -74,6 +74,7 @@ const char FAR BuiltIns[] = {
 
 #if defined( __DOS__ )
     "__MSDOS__=\n"
+    "__DOS__=\n"
 
 #elif defined( __NT__ )
     "__NT__=\n"

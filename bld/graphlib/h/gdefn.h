@@ -122,7 +122,7 @@ typedef struct {
 #if( defined( __WINDOWS__ ) || defined( __OS2__ ) )
     #define _DEFAULT_WINDOWS
     #if defined( __WINDOWS__ )
-        #include <win16.h>
+        #include <windows.h>
     #else
         #define __OS2_PM__
         #define INCL_WIN

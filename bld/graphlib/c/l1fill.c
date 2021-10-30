@@ -53,7 +53,7 @@ void _L1Fill( short x, short y, short length )
        x = abs( x - _PaRf_x ) & 7;
        y = abs( y - _PaRf_y ) & 7;
         fill = dev_ptr->fill;
-        ( *fill )( _Screen.mem, _CurrColor, ( x << 8 ) + _FillMask[ y ],
+        ( *fill )( _Screen.mem, _CurrColor, ( x << 8 ) + _FillMask[y],
                    length, _Screen.bit_pos << 8 );
     }
 }

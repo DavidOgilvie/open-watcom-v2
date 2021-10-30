@@ -35,12 +35,12 @@ struct picture {
     short           picwidth;               /* # of pixels across   */
     short           picheight;              /* # of pixels down     */
 #if defined( _DEFAULT_WINDOWS )
-    WPI_PRES        buffer;                  /* Handle for image     */
-    HBITMAP         bmp;
+    WPI_PRES        pres;                   /* Handle for image     */
+    WPI_HBITMAP     bmp;
     HDC             pdc;
 #else
     short           bpp;                    /* # of bits per pixel  */
-    char            buffer;                 /* buffer for image     */
+    char            buffer[];               /* buffer for image     */
 #endif
 };
 #pragma pack (__pop);

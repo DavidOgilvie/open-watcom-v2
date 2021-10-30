@@ -30,6 +30,14 @@
 ****************************************************************************/
 
 
+#include <ctype.h>
+#include <time.h>
+#if defined( __UNIX__ ) || defined( __WATCOMC__ )
+    #include <utime.h>
+    #include <fnmatch.h>
+#else
+    #include <sys/utime.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef __UNIX__
@@ -38,14 +46,9 @@
 #else
     #include <direct.h>
 #endif
-#if defined( __UNIX__ ) || defined( __WATCOMC__ )
-    #include <fnmatch.h>
-#endif
 #if defined( __WATCOMC__ ) || !defined( __UNIX__ )
     #include <process.h>
 #endif
-#include <ctype.h>
-#include <time.h>
 #ifdef __RDOS__
     #include "rdos.h"
 #endif
@@ -67,6 +70,7 @@
 #include "msuffix.h"
 #include "mupdate.h"
 #include "mvecstr.h"
+#include "pathgrp2.h"
 
 #include "clibext.h"
 
@@ -1480,14 +1484,12 @@ static bool IsDotOrDotDot( const char *fname )
     return( fname[0] == '.' && ( fname[1] == NULLCHAR || ( fname[1] == '.' && fname[2] == NULLCHAR ) ) );
 }
 
-#ifdef __UNIX__
 static bool chk_is_dir( const char *name )
 {
     struct stat     s;
 
     return( stat( name, &s ) == 0 && S_ISDIR( s.st_mode ) );
 }
-#endif
 
 static bool doRM( const char *fullpath, const rm_flags *flags )
 {
@@ -1613,15 +1615,10 @@ STATIC bool processRM( const char *name, const rm_flags *flags )
             return( RecursiveRM( ".", flags ) );
         } else if( strpbrk( name, WILD_METAS ) != NULL ) {
             /* don't process wild cards on directories */
+        } else if( chk_is_dir( name ) ) {
+            return( RecursiveRM( name, flags ) );
         } else {
-            struct stat buf;
-            if( stat( name, &buf ) == 0 ) {
-                if( S_ISDIR( buf.st_mode ) ) {
-                    return( RecursiveRM( name, flags ) );
-                } else {
-                    return( remove_item( name, flags, false ) );
-                }
-            }
+            return( remove_item( name, flags, false ) );
         }
         return( true );
     } else {
@@ -1751,6 +1748,138 @@ STATIC RET_T handleMkdir( char *cmd )
     }
     return( RET_SUCCESS );
 }
+
+static FILE *open_file( const char *name, const char *mode )
+/**********************************************************/
+{
+    FILE    *fp;
+
+    fp = fopen( name, mode );
+    if( fp == NULL )
+        PrtMsg( ERR | ERROR_OPENING_FILE, name );
+    return( fp );
+}
+
+static bool close_file( FILE *fp, const char *name )
+/**************************************************/
+{
+    if( fp != NULL ) {
+        if( fclose( fp ) ) {
+            PrtMsg( ERR | ERROR_CLOSING_FILE, name );
+            return( false );
+        }
+    }
+    return( true );
+}
+
+static size_t read_block( void *buf, size_t len, FILE *fp, const char *name )
+/***************************************************************************/
+{
+    size_t readlen;
+
+    readlen = fread( buf, 1, len, fp );
+    if( ferror( fp ) )
+        PrtMsg( ERR | READ_ERROR, name );
+    return( readlen );
+}
+
+static size_t write_block( const void *buf, size_t len, FILE *fp, const char *name )
+/**********************************************************************************/
+{
+    size_t writelen;
+
+    writelen = fwrite( buf, 1, len, fp );
+    if( ferror( fp ) )
+        PrtMsg( ERR | ERROR_WRITING_FILE, name );
+    return( writelen );
+}
+
+STATIC bool processCopy( const char *src, const char *dst )
+/*********************************************************/
+{
+    FILE            *fps;
+    FILE            *fpd;
+    bool            ok;
+    char            buf[FILE_BUFFER_SIZE];
+    size_t          len;
+    pgroup2         pg;
+    struct stat     st;
+    struct utimbuf  dsttimes;
+
+    if( chk_is_dir( dst ) ) {
+        _splitpath2( src, pg.buffer, NULL, NULL, &pg.fname, &pg.ext );
+        _makepath( buf, NULL, dst, pg.fname, pg.ext );
+        dst = strcpy( pg.buffer, buf );
+    }
+    ok = false;
+    fps = open_file( src, "rb" );
+    if( fps != NULL ) {
+        fpd = open_file( dst, "wb" );
+        if( fpd != NULL ) {
+            while( (len = read_block( buf, FILE_BUFFER_SIZE, fps, src )) == FILE_BUFFER_SIZE ) {
+                if( len != write_block( buf, len, fpd, dst ) ) {
+                    break;
+                }
+            }
+            if( len != FILE_BUFFER_SIZE ) {
+                ok = ( len == write_block( buf, len, fpd, dst ) );
+            }
+            ok &= close_file( fpd, dst );
+
+            stat( src, &st );
+            dsttimes.actime = st.st_atime;
+            dsttimes.modtime = st.st_mtime;
+            utime( dst, &dsttimes );
+            /*
+             * copy permissions: mostly necessary for the "x" bit
+             * some files is copied with the read-only permission
+             */
+            chmod( dst, st.st_mode );
+        }
+        ok &= close_file( fps, src );
+    }
+    return( ok );
+}
+
+STATIC bool handleCopy( char *arg )
+/***********************************
+ * "COPY" {ws}+ <source file> {ws}+ <destination file>
+ */
+{
+    char        *p;
+    char        *fn1, *fn2;
+
+    assert( arg != NULL );
+
+    if( Glob.noexec ) {
+        return( RET_SUCCESS );
+    }
+
+    /* Get first LFN */
+    p = arg + 4;    /* skip "COPY" */
+    p = SkipWS( p );
+    p = CmdGetFileName( p, &fn1, true );
+    if( *p == NULLCHAR || !cisws( *p ) ) {
+        PrtMsg( ERR | SYNTAX_ERROR_IN, dosInternals[COM_COPY] );
+        PrtMsg( INF | PRNTSTR, "First file" );
+        PrtMsg( INF | PRNTSTR, fn1 );
+        return( RET_ERROR );
+    }
+    *p++ = NULLCHAR;        /* terminate first file name */
+    /* skip ws after first and before second file name */
+    p = SkipWS( p );
+    /* Get second LFN as well */
+    p = CmdGetFileName( p, &fn2, true );
+    if( *p != NULLCHAR && !cisws( *p ) ) {
+        PrtMsg( ERR | SYNTAX_ERROR_IN, dosInternals[COM_COPY] );
+        return( RET_ERROR );
+    }
+    *p = NULLCHAR;          /* terminate second file name */
+    if( processCopy( fn1, fn2 ) )
+        return( RET_SUCCESS );
+    return( RET_ERROR );
+}
+
 
 STATIC RET_T handleRmdir( char *cmd )
 /************************************
@@ -2010,6 +2139,7 @@ STATIC RET_T shellSpawn( char *cmd, shell_flags flags )
         case COM_RM:    my_ret = handleRM( cmd );           break;
         case COM_MKDIR: my_ret = handleMkdir( cmd );        break;
         case COM_RMDIR: my_ret = handleRmdir( cmd );        break;
+        case COM_COPY:  my_ret = handleCopy( cmd );         break;
 #if defined( __OS2__ ) || defined( __NT__ ) || defined( __UNIX__ ) || defined( __RDOS__ )
         case COM_CD:
         case COM_CHDIR: my_ret = handleCD( cmd );           break;

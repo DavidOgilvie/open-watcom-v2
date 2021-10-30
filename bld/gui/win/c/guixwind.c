@@ -58,6 +58,7 @@
 #include "guimdi.h"
 #include "guistat.h"
 #include "wclbproc.h"
+#include "guicolor.h"	// in <OWROOT>\bld\gui\win\h\guicolor.h
 #include "guilog.h"
 
 
@@ -913,7 +914,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
             return( ret );
 #ifndef __OS2_PM__
 		case WM_SYSCOLORCHANGE:
-			GUIInitSystemRGB ();
+			InitSystemRGB ();
 			break;
 #endif
 		}

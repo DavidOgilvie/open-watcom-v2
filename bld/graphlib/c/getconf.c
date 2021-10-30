@@ -37,7 +37,7 @@
 
 #if !defined( _DEFAULT_WINDOWS )
 
-static short            _AdapTab[ 18 ] = {
+static short            _AdapTab[18] = {
     _NODISPLAY,     _MDPA,          _CGA,           _EGA,
     _EGA,           _EGA,           _UNKNOWN,       _VGA,
     _VGA,           _UNKNOWN,       _MCGA,          _MCGA,
@@ -45,7 +45,7 @@ static short            _AdapTab[ 18 ] = {
     _SVGA,          _SVGA
 };
 
-static short            _MonTab[ 18 ] = {
+static short            _MonTab[18] = {
     _NODISPLAY,     _MONO,          _COLOR,         _ENHANCED,
     _COLOR,         _MONO,          _UNKNOWN,       _ANALOGMONO,
     _ANALOGCOLOR,   _UNKNOWN,       _COLOR,         _ANALOGMONO,
@@ -53,7 +53,7 @@ static short            _MonTab[ 18 ] = {
     _ANALOGMONO,    _ANALOGCOLOR
 };
 
-static short            _MemoryTab[ 8 ] = {
+static short            _MemoryTab[8] = {
     0, 16, 16, 64, 256, -1, 256, 256
 };
 
@@ -182,9 +182,9 @@ void _GetState( void )
     _CurrState->vc.numcolors = 32;
     _CurrState->vc.mode = GetVideoMode();
     display = _SysMonType() & 0x00FF;
-    _CurrState->vc.adapter = _AdapTab[ display ];
-    _CurrState->vc.monitor = _MonTab[ display ];
-    _CurrState->vc.memory = _MemoryTab[ _CurrState->vc.adapter ];
+    _CurrState->vc.adapter = _AdapTab[display];
+    _CurrState->vc.monitor = _MonTab[display];
+    _CurrState->vc.memory = _MemoryTab[_CurrState->vc.adapter];
     if( _CurrState->vc.memory == -1 ) {     // EGA adapter
         _CurrState->vc.memory = 64 * ( 1 + ( EGA_Memory() & 0x00ff ) );
     }

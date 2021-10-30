@@ -58,6 +58,8 @@
 
 #define WPI_EXPORT                      WINEXPORT
 
+#define WPI_NULL                        ((WPI_HANDLE)NULL)
+
 /*************************/
 /* new types - both ways */
 /*************************/
@@ -133,6 +135,7 @@
     #define WPI_BITMAPINFOHEADER        BITMAPINFOHEADER
     #define WPI_BITMAPFILEHEADER        BITMAPFILEHEADER
     #define WPI_BMPBITS                 LPSTR
+    #define WPI_HBITMAP                 HBITMAP
     #define WPI_HLIB                    HANDLE
     #define WPI_TEXTMETRIC              TEXTMETRIC
     #define WPI_LPTEXTMETRIC            LPTEXTMETRIC
@@ -692,6 +695,7 @@ typedef enum {
     WPI_BITMAP_OBJ      = 5,
     WPI_PATBRUSH_OBJ    = 6,
     WPI_HLWBRUSH_OBJ    = 7,
+    WPI_DATA_OBJ        = 8,
 } WPI_OBJECTTYPE;
 
 typedef struct {
@@ -705,6 +709,7 @@ typedef struct {
         LINEBUNDLE      pen;
         WPI_BRUSHTYPE   brush;
         HBITMAP         bitmap;
+        ULONG           data;
     };
 } WPI_OBJECT;
 /*
@@ -712,12 +717,10 @@ typedef struct {
  * someone using WPI, this should all be invisible.
  */
 
-typedef LHANDLE         WPI_HANDLE;
+typedef WPI_OBJECT      *WPI_HANDLE;
 typedef AREABUNDLE      LOGBRUSH;
 typedef WPI_HANDLE      HBRUSH;
 typedef WPI_HANDLE      HPEN;
-typedef WPI_HANDLE      WPI_HBRUSH;
-typedef WPI_HANDLE      WPI_HPEN;
 typedef WPI_HANDLE      WPI_HBITMAP;
 
 /* This is used in OS/2 much like a Windows LOGFONT. Use it only

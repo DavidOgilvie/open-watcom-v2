@@ -83,7 +83,7 @@ static void _L0Line( short x1, short y1, short x2, short y2, grcolor color, unsi
 
     _StartDevice();
     dev_ptr = _CurrState->deviceptr;
-    putdot = dev_ptr->plot[ _PlotAct ];
+    putdot = dev_ptr->plot[_PlotAct];
     ( *dev_ptr->setup )( x1, y1, color );
 
     delta_x = x2 - x1;              /* select the move right or left        */

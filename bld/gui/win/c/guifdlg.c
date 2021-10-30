@@ -35,7 +35,6 @@
     #pragma library( "commdlg.lib" );
 #endif
 
-
 #include "guiwind.h"
 #include <string.h>
 #include <stdio.h>
@@ -47,33 +46,30 @@
 #include "guifdlg.h"
 #include "guixutil.h"
 #include "guistr.h"
+//#include "guixhook.h"
 #include "ctl3dcvr.h"
 #include "wclbproc.h"
 #include "guixwind.h"
 #include "pathgrp2.h"
+
 #include "clibext.h"
-#include "guilog.h"
-
-
-extern void InitSystemRGB ( void );
 
 
 /* Local Window callback functions prototypes */
 #ifndef __OS2_PM__
-	WINEXPORT UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
+WINEXPORT UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
 #endif
 
 #ifndef __OS2_PM__
-	static  char    *LastPath; // this is set in NT for the sake of viper
+static  char    *LastPath; // this is set in NT for the sake of viper
 #endif
 
 #if defined (__NT__)
-	/* Changed default from hook to not */
-	static  bool    hookFileDlg = false;
+/* Changed default from hook to not */
+static  bool    hookFileDlg = false;
 #else
-	static  bool    hookFileDlg = true;
+static  bool    hookFileDlg = true;
 #endif
-
 
 void GUIAPI GUIHookFileDlg( bool hook )
 {
@@ -272,10 +268,8 @@ static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
 
 UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
 {
-    WINDOW_MSG _msg= msg;
     UINT        ret;
 
-	_msg= msg;
     wparam = wparam;
     lparam = lparam;
     hwnd = hwnd;
@@ -292,12 +286,7 @@ UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lp
         CvrCtl3dSubclassDlgAll( hwnd );
         ret = true;
         break;
- 	case WM_SYSCOLORCHANGE:
-#ifndef __OS2_PM__
-		InitSystemRGB ();
-#endif		
-		break;
-   }
+    }
     return( ret );
 }
 

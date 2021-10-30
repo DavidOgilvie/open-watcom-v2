@@ -39,8 +39,6 @@
 include langenv.inc
 include xinit.inc
 
-include exitwmsg.inc
-
         name    dos16m
         .dosseg
 

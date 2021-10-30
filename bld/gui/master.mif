@@ -92,7 +92,6 @@ common_objs = &
     guiclass.obj   &
     guimenub.obj   &
     guitoolb.obj
-	
 mem_objs = &
     guimem.obj     &
     $(trmem_objs)

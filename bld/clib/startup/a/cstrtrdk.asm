@@ -35,8 +35,6 @@
 include langenv.inc
 include xinit.inc
 
-include exitwmsg.inc
-
         assume  nothing
 
         extrn   __RdosMain              : near

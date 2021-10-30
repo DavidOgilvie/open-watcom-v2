@@ -63,7 +63,7 @@ short _WCI86FAR _L2pie( short fill, short x1, short y1, short x2, short y2,
     short               clip1;
     short               clip2;
     WPI_PRES            dc;
-    HBITMAP             bm;
+    WPI_HBITMAP         bm;
     HBRUSH              brush;
     HBRUSH              old_brush;
     HPEN                pen;
@@ -159,7 +159,7 @@ short _WCI86FAR _L2pie( short fill, short x1, short y1, short x2, short y2,
             brush = _wpi_createsolidbrush( color );
         } else {
             // if a mask is defined, convert it to bitmap
-            bm = _Mask2Bitmap( dc, &_FillMask );
+            bm = _Mask2Bitmap( dc, _FillMask );
             brush = _wpi_createpatternbrush( bm );
         }
     } else {

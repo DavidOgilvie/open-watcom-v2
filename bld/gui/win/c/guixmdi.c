@@ -41,6 +41,7 @@
 #include "guiscrol.h"
 #include "guixwind.h"
 #include "guistyle.h"
+#include "guicolor.h"
 #include "guilog.h"
 
 
