@@ -83,12 +83,12 @@ int DebuggingLog::printf( const char * format, ... )
 //--------------------------------------------------
 // normal printf to the file
 {
-    va_list arglist;
+    va_list args;
     int     rc;
 
-    va_start( arglist, format );
-    rc = vfprintf( _fp, format, arglist );
-    va_end( arglist );
+    va_start( args, format );
+    rc = vfprintf( _fp, format, args );
+    va_end( args );
     fflush( _fp );
 
     if( rc < 0 ) {

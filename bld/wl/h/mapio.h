@@ -50,7 +50,7 @@ extern void     WriteLibsUsed( void );
 extern void     MapSizes( void );
 extern void     EndTime( void );
 extern void     WriteMapNL( unsigned );
-extern void     DoWriteMap( const char *, va_list * );
+extern void     DoWriteMap( const char *, va_list );
 extern void     WriteMap( const char *, ... );
 extern void     WriteFormat( size_t, const char *, ... );
 extern void     BufWrite( const char *, size_t );

@@ -2,7 +2,6 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (C) 1993 by Sun Microsystems, Inc.
 *    Portions Copyright (c) 2014 Open Watcom contributors. 
 *    All Rights Reserved.

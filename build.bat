@@ -4,7 +4,7 @@ set NUL=NUL
 if '%OS%' == 'Windows_NT' set NUL=
 if not exist %OWBINDIR%\%OWOBJDIR%\%NUL% mkdir %OWBINDIR%\%OWOBJDIR%
 set OWBUILDER_BOOTX_OUTPUT=%OWBINDIR%\%OWOBJDIR%\bootx.log
-if '%OS%' == 'Windows_NT' set OWBUILDER_REDIR_ERROUT=2^>^&1
+if '%OS%' == 'Windows_NT' set "OWBUILDER_REDIR_ERROUT=2>&1"
 if exist %OWBUILDER_BOOTX_OUTPUT% del %OWBUILDER_BOOTX_OUTPUT%
 cd %OWSRCDIR%\wmake
 if not exist %OWOBJDIR%\%NUL% mkdir %OWOBJDIR%
@@ -27,7 +27,7 @@ if not exist %OWOBJDIR%\%NUL% mkdir %OWOBJDIR%
 cd %OWOBJDIR%
 if exist %OWBINDIR%\%OWOBJDIR%\builder.exe del %OWBINDIR%\%OWOBJDIR%\builder.exe
 %OWBINDIR%\%OWOBJDIR%\wmake -f ..\binmake clean >>%OWBUILDER_BOOTX_OUTPUT% %OWBUILDER_REDIR_ERROUT%
-%OWBINDIR%\%OWOBJDIR%\wmake -f ..\binmake bootstrap=1 builder.exe >>%OWBUILDER_BOOTX_OUTPUT% %OWBUILDER_REDIR_ERROUT%
+%OWBINDIR%\%OWOBJDIR%\wmake -f ..\binmake bootstrap=1 >>%OWBUILDER_BOOTX_OUTPUT% %OWBUILDER_REDIR_ERROUT%
 if errorlevel == 1 goto exiterr
 if "%1" == "preboot" goto exiterr
 cd %OWSRCDIR%

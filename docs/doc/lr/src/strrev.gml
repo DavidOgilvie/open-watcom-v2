@@ -40,6 +40,8 @@ with a string whose characters are in the reverse order.
 .widefunc &wfunc. &funcb.
 .mbcsfunc &mfunc. &funcb.
 .farfunc &fmfunc. &mfunc.
+.np
+.deprfunc strrev _strrev
 .desc end
 .return begin
 The address of the original string

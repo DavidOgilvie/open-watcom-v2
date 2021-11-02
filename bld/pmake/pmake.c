@@ -130,14 +130,14 @@ static char *StringCopyLen( char *dst, const char *src, size_t len )
 
 static void error( const char *fmt, ... )
 {
-    va_list     arg;
+    va_list     args;
 
 #define PREFIX      "PMAKE: "
 
     StringCopy( Buff, PREFIX );
-    va_start( arg, fmt );
-    vsprintf( &Buff[sizeof( PREFIX )], fmt, arg );
-    va_end( arg );
+    va_start( args, fmt );
+    vsprintf( &Buff[sizeof( PREFIX )], fmt, args );
+    va_end( args );
     longjmp( exit_buff, 1 );
 }
 

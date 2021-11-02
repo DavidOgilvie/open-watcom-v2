@@ -131,6 +131,5 @@ extern const char FAR   POSIXSuffixList[];
 NO_RETURN( extern void ExitFatal( void ) );
 NO_RETURN( extern void ExitError( void ) );
 NO_RETURN( extern void ExitOK( void ) );
-extern void Header( void );
 
 #endif

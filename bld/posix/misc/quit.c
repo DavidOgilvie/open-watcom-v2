@@ -37,12 +37,12 @@
 void Quit( const char *usage_msg[], const char *str, ... )
 {
     int         i;
-    va_list     al;
+    va_list     args;
 
     if( str != NULL ) {
-        va_start( al, str );
-        vfprintf( stderr, str, al );
-        va_end( al );
+        va_start( args, str );
+        vfprintf( stderr, str, args );
+        va_end( args );
     }
     if( usage_msg == NULL ) {
         fprintf( stderr, "The Weenie That Wrote This Didn't Give A Usage String\n" );

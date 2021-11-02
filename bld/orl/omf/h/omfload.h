@@ -43,5 +43,6 @@ extern orl_return       OmfLoadFileStructure( omf_file_handle ofh );
 
 extern omf_sec_offset   OmfGetUWord( omf_bytes buffer, int wordsize );
 extern omf_sec_addend   OmfGetSWord( omf_bytes buffer, int wordsize );
+extern unsigned_16      OmfGetU16( omf_bytes buffer );
 
 #endif

@@ -94,8 +94,7 @@ static int __F_NAME(__sopen,__wsopen)( const CHAR_TYPE *name, unsigned mode, uns
 #endif
         if( mode & O_CREAT ) {
             perm = va_arg( args, int );
-                va_end( args );
-                perm &= ~_RWD_umaskval;             /* 05-jan-95 */
+            perm &= ~_RWD_umaskval;             /* 05-jan-95 */
             if( ( perm & S_IREAD ) && !( perm & S_IWRITE ) ) {
                 fileattr = FILE_ATTRIBUTE_READONLY;
             }
@@ -169,8 +168,11 @@ _WCRTLINK int __F_NAME(open,_wopen)( const CHAR_TYPE *name, int mode, ... )
 
 _WCRTLINK int __F_NAME(_sopen,_wsopen)( const CHAR_TYPE *name, int mode, int shflag, ... )
 {
-    va_list             args;
+    va_list     args;
+    int         ret;
 
     va_start( args, shflag );
-    return( __F_NAME(__sopen,__wsopen)( name, mode, shflag, args ) );
+    ret = __F_NAME(__sopen,__wsopen)( name, mode, shflag, args );
+    va_end( args );
+    return( ret );
 }

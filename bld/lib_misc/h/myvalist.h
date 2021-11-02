@@ -32,6 +32,7 @@
 
 
 #ifndef _MYVALIST_H_INCLUDED
+#define _MYVALIST_H_INCLUDED
 
 #include <stdarg.h>
 
@@ -39,11 +40,11 @@ typedef struct my_va_list {
     va_list v;
 } my_va_list;
 
-#if defined(__AXP__) || defined(__PPC__) || defined(__MIPS__)
-  #define MY_VA_LIST( a ) (*(my_va_list *)&(a))
-#else
-  #define MY_VA_LIST( a ) (*(my_va_list *)(a))
-#endif
+#define MY_VA_LIST              my_va_list
 
-#define _MYVALIST_H_INCLUDED
+#define MY_VA_LIST_DATA(a)      (*(MY_VA_LIST *)&(a))
+
+#define VA_LIST_DATA(my)   	    ((my)->v)
+
+
 #endif

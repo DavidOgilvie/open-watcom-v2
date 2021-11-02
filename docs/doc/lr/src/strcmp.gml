@@ -44,6 +44,7 @@ to the string pointed to by
 .farfuncp &ffunc. &funcb.
 .widefunc &wfunc. &funcb.
 .mbcsfunc &mfunc. &funcb.
+.farfuncp &fmfunc. &mfunc.
 .desc end
 .return begin
 The

@@ -123,9 +123,6 @@ The
 function is called by the system as the initial entry point for a
 Windows-based application.
 The
-.kw wWinMain
-function is a wide character version of
-.kw WinMain
 .reffunc wWinMain
 function is a wide character version of
 .reffunc WinMain

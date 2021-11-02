@@ -129,7 +129,6 @@ static int __F_NAME(__sopen,__wsopen)( const CHAR_TYPE *name, unsigned mode,
         }
         /* creating the file */
         permission = va_arg( args, int );
-        va_end( args );
         if( permission == 0 )
             permission = S_IWRITE | S_IREAD;
         permission &= ~_RWD_umaskval;               /* 05-jan-95 */
@@ -224,7 +223,10 @@ _WCRTLINK int __F_NAME(open,_wopen)( const CHAR_TYPE *name, int mode, ... )
 _WCRTLINK int __F_NAME(_sopen,_wsopen)( const CHAR_TYPE *name, int mode, int shflag, ... )
 {
     va_list     args;
+    int         ret;
 
     va_start( args, shflag );
-    return( __F_NAME(__sopen,__wsopen)( name, mode, shflag, args ) );
+    ret = __F_NAME(__sopen,__wsopen)( name, mode, shflag, args );
+    va_end( args );
+    return( ret );
 }

@@ -62,11 +62,12 @@ All uppercase characters from
 and
 .arg s2
 are mapped to lowercase for the purposes of doing the comparison.
-.im ansiconf
 .farfuncp &ffunc. &funcb.
 .widefunc &wfunc. &funcb.
 .mbcsfunc &mfunc. &funcb.
 .farfuncp &fmfunc. &mfunc.
+.np
+.deprfunc strnicmp _strnicmp
 .desc end
 .return begin
 The function returns an integer less than, equal to,

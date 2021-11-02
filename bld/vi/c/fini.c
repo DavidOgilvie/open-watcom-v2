@@ -93,7 +93,7 @@ char *OptEnvVar = "VI";
  */
 void Quit( const char **usage_msg, const char *str, ... )
 {
-    va_list     al;
+    va_list     args;
 
     /* unused parameters */ (void)usage_msg;
 
@@ -102,9 +102,9 @@ void Quit( const char **usage_msg, const char *str, ... )
         char    buff[MAX_STR];
 
         if( str != NULL ) {
-            va_start( al, str );
-            MyVSprintf( buff, str, al );
-            va_end( al );
+            va_start( args, str );
+            MyVSprintf( buff, str, args );
+            va_end( args );
         } else {
             buff[0] = '\0';
         }
@@ -116,9 +116,9 @@ void Quit( const char **usage_msg, const char *str, ... )
         int     cnt;
 
         if( str != NULL ) {
-            va_start( al, str );
-            MyVPrintf( str, al );
-            va_end( al );
+            va_start( args, str );
+            MyVPrintf( str, args );
+            va_end( args );
             cnt = 1;
         } else {
             cnt = sizeof( UsageMsg ) / sizeof( char *);

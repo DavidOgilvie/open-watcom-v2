@@ -46,19 +46,19 @@ static void error_printf( const char *str, va_list args )
 
 void Error( const char *str, ... )
 {
-    va_list     al;
+    va_list     args;
 
-    va_start( al, str );
-    error_printf( str, al );
-    va_end( al );
+    va_start( args, str );
+    error_printf( str, args );
+    va_end( args );
 }
 
 void Die( const char *str, ... )
 {
-    va_list     al;
+    va_list     args;
 
-    va_start( al, str );
-    error_printf( str, al );
-    va_end( al );
+    va_start( args, str );
+    error_printf( str, args );
+    va_end( args );
     exit( 1 );
 }

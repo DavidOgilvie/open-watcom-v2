@@ -46,7 +46,7 @@ function is identical to
 .id &funcb.
 except that it closes a
 directory of wide character filenames opened by
-.kw _wopendir
+.reffunc _wopendir
 .period
 .do end
 .desc end

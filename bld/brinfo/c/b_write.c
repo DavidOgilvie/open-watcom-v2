@@ -868,7 +868,7 @@ BRI_TypeID BRIAddType( BRI_HANDLE handle,
 /****************************************/
 {
     BRI_RecordType      type_rt = BRI_Rec_Type;
-    va_list             parms;
+    va_list             args;
     uint_32             op;
     int                 i;
 
@@ -878,12 +878,12 @@ BRI_TypeID BRIAddType( BRI_HANDLE handle,
     BRI_write( handle, &type_id, sizeof(type_id) );
     BRI_write( handle, &code, BRI_SIZE_TYPECODE );
     BRI_write( handle, &num_ops, sizeof(uint_32) );
-    va_start( parms, num_ops );
+    va_start( args, num_ops );
     for( i=0; i<num_ops; i++ ){
-        op = va_arg( parms, uint_32 );
+        op = va_arg( args, uint_32 );
         BRI_write( handle, &op, sizeof( uint_32 ) );
     }
-    va_end( parms );
+    va_end( args );
     handle->hdr->num_type += 1;
 
     return type_id;

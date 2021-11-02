@@ -49,7 +49,6 @@
     #endif
 #else
     #define __SLIB_CALLBACK
-    #define SLIB2CLIB(t,f)  ((t *)(f))
 #endif
 
 #endif

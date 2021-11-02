@@ -171,13 +171,13 @@ static void freePatterns( void )
 
 static void errorExit( const char *msg, ... )
 {
-    va_list arglist;
+    va_list args;
 
     if( (Flags & M_SUPPRESS_ERROR) == 0 ) {
         printf( "%s: ", OptEnvVar );
-        va_start( arglist, msg );
-        vprintf( msg, arglist );
-        va_end( arglist );
+        va_start( args, msg );
+        vprintf( msg, args );
+        va_end( args );
         printf( "%s", "\n" );
     }
     free( IObuffer );

@@ -64,7 +64,7 @@ and
 functions are identical to their
 .reffunc asctime
 and
-.kw _asctime
+.reffunc _asctime
 counterparts except that they deal with wide character strings.
 .do end
 .desc end

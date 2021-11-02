@@ -34,14 +34,14 @@
 #include "_preproc.h"
 
 
-static void MkMkDependency( const char *filename, size_t len, const char *fullname, int incl_type )
-/*************************************************************************************************/
+static void MkMkDependency( const char *filename, size_t len, const char *fullname, incl_type incltype )
+/******************************************************************************************************/
 {
     const char  *fmt;
 
     /* unused parameters */ (void)len;
 
-    if( incl_type == PPINCLUDE_SYS ) {
+    if( incltype == PPINCLUDE_SYS ) {
         fmt = "#include <%s>  ==> <%s>\n";
     } else {
         fmt = "#include \"%s\"  ==> \"%s\"\n";

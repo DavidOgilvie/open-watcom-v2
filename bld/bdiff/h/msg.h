@@ -35,7 +35,7 @@
 extern bool MsgInit( void );
 extern void MsgFini( void );
 extern bool GetMsg( char *, int );
-extern void MsgPrintf( int resourceid, va_list arglist );
+extern void MsgPrintf( int resourceid, va_list args );
 extern void Message( int format, ... );
 extern void PatchError( int format, ... );
 extern void FilePatchError( int format, ... );

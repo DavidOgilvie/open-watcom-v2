@@ -181,7 +181,7 @@ control_item *GUIControlInsert( gui_window *parent_wnd, gui_control_class contro
         item->style = ctl_info->style;
         item->checked = ctl_info->style & GUI_STYLE_CONTROL_CHECKED;
         item->id = ctl_info->id;
-18      item->next = NULL;
+        item->next = NULL;
         item->hwnd = hwnd;
         item->win_call_back = win_call_back;
         item->next = parent_wnd->controls;

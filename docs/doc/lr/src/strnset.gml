@@ -2,12 +2,8 @@
 .ansiname _strnset
 .synop begin
 #include <string.h>
-char *strnset( char *s, int fill, size_t count );
-.ixfunc2 '&String' &funcb
-.if &'length(&_func.) ne 0 .do begin
 char *_strnset( char *s, int fill, size_t count );
-.ixfunc2 '&String' &_func
-.do end
+.ixfunc2 '&String' _strnset
 .if &farfnc ne 0 .do begin
 char __far *_fstrnset( char __far *s,
                        int fill,
@@ -17,8 +13,8 @@ char __far *_fstrnset( char __far *s,
 .if &'length(&wfunc.) ne 0 .do begin
 #include <wchar.h>
 wchar_t *_wcsnset( wchar_t *s, int fill, size_t count );
-.ixfunc2 '&String' &wfunc
-.ixfunc2 '&Wide' &wfunc
+.ixfunc2 '&String' _wcsnset
+.ixfunc2 '&Wide' _wcsnset
 .do end
 .if &'length(&mfunc.) ne 0 .do begin
 #include <mbstring.h>
@@ -56,7 +52,6 @@ When the value of
 is greater than the length of the string, the entire string is filled.
 Otherwise, that number of characters at the start of the string are set
 to the fill character.
-.im ansiconf
 .farfunc &ffunc. &funcb.
 .widefunc &wfunc. &funcb.
 For &wfunc, the value of

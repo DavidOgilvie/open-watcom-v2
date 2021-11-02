@@ -132,13 +132,13 @@ static exe_info     new;
 
 static void stats( const char *format, ... )
 {
-    va_list     arg;
+    va_list     args;
 
     if( Verbose ) {
-        va_start( arg, format );
-        vprintf( format, arg );
+        va_start( args, format );
+        vprintf( format, args );
         fflush( stdout );
-        va_end( arg );
+        va_end( args );
     }
 }
 

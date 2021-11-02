@@ -36,7 +36,6 @@ and
 .arg s2
 are mapped to lowercase for the purposes of doing the comparison.
 .farfuncp &ffunc. &funcb.
-.im ansiconf
 .np
 .deprfunc memicmp _memicmp
 .desc end

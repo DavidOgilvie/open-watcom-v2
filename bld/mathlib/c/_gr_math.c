@@ -2,7 +2,6 @@
 *
 *                            Open Watcom Project
 *
-* Portions Copyright (c) 2014-2021 Open Watcom contributors. 
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================

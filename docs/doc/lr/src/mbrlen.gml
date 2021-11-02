@@ -4,7 +4,6 @@
 size_t mbrlen( const char *s, size_t n, mbstate_t *ps );
 .if &farfnc ne 0 .do begin
 size_t _fmbrlen( const char __far *s, size_t n, mbstate_t __far *ps );
-size_t _fmbrlen( const char far *s, size_t n, mbstate_t far *ps );
 .do end
 .synop end
 .desc begin

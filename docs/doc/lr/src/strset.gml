@@ -42,11 +42,12 @@ with the character
 .period
 The terminating null character in the original string remains
 unchanged.
-.im ansiconf
 .farfunc &ffunc. &funcb.
 .widefunc &wfunc. &funcb.
 .mbcsfunc &mfunc. &funcb.
 .farfunc &fmfunc. &mfunc.
+.np
+.deprfunc strset _strset
 .desc end
 .return begin
 The address of the original string

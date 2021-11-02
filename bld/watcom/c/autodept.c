@@ -2,7 +2,6 @@
 *
 *                            Open Watcom Project
 *
-* Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 *    Portions Copyright (c) 1983-2002 Sybase, Inc. All Rights Reserved.
 *
 *  ========================================================================
@@ -31,13 +30,11 @@
 
 
 #include <stdlib.h>
-//#include "watcom.h"
 #include "autodept.h"
 
 #include "clibext.h"
 
 
-#if !defined( WMAKE ) || !defined( BOOTSTRAP )
 char *_getFilenameFullPath( char *buff, char const *name, size_t max )
 /*********************************************************************/
 {
@@ -60,4 +57,3 @@ char *_getFilenameFullPath( char *buff, char const *name, size_t max )
 #endif
     return( p );
 }
-#endif
