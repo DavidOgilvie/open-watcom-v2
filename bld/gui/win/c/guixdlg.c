@@ -750,7 +750,8 @@ WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG message, WPI
     bool                ret;
 
 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
- 	GUIlog ("MSG %s(%s) %s %s(%d)\n",  strmsgenum (" ", _msg), message, __func__, __FILE__, __LINE__ );
+// 	GUIlog ("MSG %s(%d) %s %s(%d)\n",  strmsgenum (" ", _msg), message, __func__, __FILE__, __LINE__ );
+ 	GUIlog ("MSG %d(%d) %s %s(%d)\n",  _msg, message, __func__, __FILE__, __LINE__ );
     lparam = lparam;
     ret    = false;
 

@@ -61,7 +61,6 @@
 #include "guicolor.h"	// in <OWROOT>\bld\gui\win\h\guicolor.h
 #include "guilog.h"
 
-
 #if !defined(__NT__)
 #define WM_PAINTICON            0x0026
 #endif
@@ -267,7 +266,7 @@ int GUIXMain( int argc, char *argv[],
     bool        register_done;
 
     GUIset_log_mode( 1 );       // 1 to turn on standard tracing, usually 1
-    GUIset_crash_mode( 0 );    	// 1 to turn on crash-resistant log file writing (slow!), usually 0
+    GUIset_crash_mode( 1 );    	// 1 to turn on crash-resistant log file writing (slow!), usually 0
 	GUIjustify ( 0 );			// Close log file
 
 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );

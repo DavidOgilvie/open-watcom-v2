@@ -83,7 +83,8 @@ win_sysobjs = &
     guirmenu.obj &
     guiclen.obj  &
     guif1hk.obj	 &
-    guigetrc.obj
+    guigetrc.obj &
+	guilog.obj
 
 win_sysobjs_nt = &
     guisystr.obj

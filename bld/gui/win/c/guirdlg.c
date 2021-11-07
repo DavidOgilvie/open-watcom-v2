@@ -42,6 +42,7 @@
     #define _WIN32_IE   0x0400
     #include <commctrl.h>
 #endif
+#include "oswincls.h"
 #include "guilog.h"
 
 
@@ -58,7 +59,7 @@ typedef struct GetClassMap {
 } GetClassMap;
 
 #ifdef __OS2_PM__
-// note: the order of entries in this table is important
+// note: the order of entries this table is important
 static GetClassMap Map[] =
 {
     { GUI_RADIO_BUTTON,     WC_SYS_BUTTON,           BS_RADIOBUTTON,     0xf             }
@@ -76,7 +77,7 @@ static GetClassMap Map[] =
 ,   { GUI_SCROLLBAR,        WC_SYS_SCROLLBAR,        0xffff,             0xffff          }
 };
 #else
-// note: the order of entries in this table is important
+// note: the order of entries this table is important
 static GetClassMap Map[] =
 {
     { GUI_GROUPBOX,         WC_BUTTON,      BS_GROUPBOX,        BS_GROUPBOX         }
@@ -104,12 +105,12 @@ gui_control_class GUIGetControlClassFromHWND( HWND cntl )
 
     control_class = GUI_BAD_CLASS;
     if( _wpi_getclassname( cntl, osclassname, sizeof( osclassname ) ) ) {
-      style = _wpi_getwindowlong( cntl, GWL_STYLE );
-      for( index = 0; ( index < GUI_ARRAY_SIZE( Map ) ) && ( control_class == GUI_BAD_CLASS ); index++ ) {
-          if( stricmp( Map[index].osclassname, osclassname ) == 0 ) {
-             if( Map[index].mask == 0xffff ) {
-                control_class = Map[index].control_class;
-            } else if( (style & Map[index].mask) == Map[index].style ) {
+        style = _wpi_getwindowlong( cntl, GWL_STYLE );
+        for( index = 0; ( index < GUI_ARRAY_SIZE( Map ) ) && ( control_class == GUI_BAD_CLASS ); index++ ) {
+            if( stricmp( Map[index].osclassname, osclassname ) == 0 ) {
+                if( Map[index].mask == 0xffff ) {
+                    control_class = Map[index].control_class;
+                } else if( (style & Map[index].mask) == Map[index].style ) {
                     control_class = Map[index].control_class;
                 }
             }

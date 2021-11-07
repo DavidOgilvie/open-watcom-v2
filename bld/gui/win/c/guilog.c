@@ -10,22 +10,23 @@
 //		0.10	 Aug 18, 2021  David Ogilvie	 Revamped for OW GUI
 //		0.20	 Aug 20, 2021  David Ogilvie	 Added right justification
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <io.h>
-#include <errno.h>
-#include "guiwind.h"
-//#include "guicolor.h"
-//#include "guimenus.h"
-//#include "guiscale.h"
-#include "guixutil.h"
-#include "guilog.h"
+#include 	<stdlib.h>
+#include 	<string.h>
+#include 	<stdio.h>
+#include 	<stdarg.h>
+#include 	<io.h>
+#include 	<errno.h>
+#include 	<time.h>
+#include 	"guiwind.h"
+//#include 	"guicolor.h"
+//#include 	"guimenus.h"
+//#include 	"guiscale.h"
+#include 	"guixutil.h"
+#include 	"guilog.h"
 
 static  FILE    *fpDPTR= NULL;					// File pointer to filename
 static  char    DEBUGFILE[128]= "gui.log"; 		// Default filename
-static  char    FULLDEBUGFILE[128]; 			// <EMVVAR>+filename
+static  char    FULLDEBUGFILE[128]= "\0"; 		// <EMVVAR>+filename
 static  char    ENVVARNAME[128]= "zzzz"; 		// Sets environment variable to use
 static	int		DONEDEBUGFILE= 0;				// Becomes true once <owroot> is added
 static  int     DEBUG= 0;						// Logging turned off by default
@@ -93,20 +94,29 @@ int GUIset_log_filename(char *name)
 	
 int GUIopen_log(void)
 {
+	time_t	current_time;
+	char 	*current_time_string;
+	
 	if (!DONEDEBUGFILE) {
 		char *envstr;
 		envstr= getenv (ENVVARNAME);
 		if (envstr!=NULL)
 		sprintf (FULLDEBUGFILE, "%s\\%s", envstr, DEBUGFILE);
 		else
-		sprintf (FULLDEBUGFILE, "%s", DEBUGFILE);
+		strcpy (FULLDEBUGFILE, DEBUGFILE);
 		DONEDEBUGFILE= 1;
 	}
 	errno= 0; // Before call to fopen
     if (DEBUG) fpDPTR= fopen( FULLDEBUGFILE, "w" );
 	if (fpDPTR) {
-		GUIlog ("Started %s %s in ""%s"" in %s(%d)\n",
-			__DATE__, __TIME__, __FUNCTION__, __FILE__, __LINE__ );
+		current_time= time ( NULL );
+		current_time_string= ctime (&current_time);
+		fprintf (fpDPTR, 
+			"Started ""%s"" at %s===========================================\n",
+			FULLDEBUGFILE, current_time_string );
+		if (DOSLOWDUMP) {
+			fflush (fpDPTR);
+		}
 	} else {
 		GUIErrorSA ("Error %d opening log file ""%s"".\n%s.", 
 		errno, FULLDEBUGFILE, strerror ( errno ) );
@@ -162,8 +172,9 @@ int GUIlog (char *format, ...)
     if (strlen (format) != 0)
     {
         va_list arglist;
-        va_start (arglist, format);
+
 		if (!fpDPTR) GUIopen_log ();
+        va_start (arglist, format);
 		if (!JUSTIFY)
 			ret = vfprintf (fpDPTR, format, arglist);
 		else {
@@ -283,5 +294,5 @@ char *strmsgenum (char *dummy, ...) { // Actually only 1 parameter, but need to 
 	va_start (arglist, dummy);
 	msg= (char *)va_arg ( arglist, WINDOW_MSG );
 	va_end (arglist);
-	return (*msg);
+	return ("This is a test");
 }
