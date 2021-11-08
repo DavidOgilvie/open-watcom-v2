@@ -39,11 +39,19 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetRow -- ?
+ */
+
 gui_text_ord GUIAPI GUIGetRow( gui_window *wnd, const gui_point *in_pos )
 {
     GUIGetMetrics( wnd );
     return( GUIScaleToScreenV( in_pos->y ) / AVGYCHAR( GUItm ) );
 }
+
+/*
+ * GUIGetCol -- ?
+ */
 
 gui_text_ord GUIAPI GUIGetCol( gui_window *wnd, const char *text, const gui_point *in_pos )
 {

@@ -38,6 +38,10 @@
 #include "guilog.h"
 
 
+/*
+ * SetRange -- ?
+ */
+
 static void SetRange( gui_window *wnd, int bar, guix_ord range, guix_ord text_range )
 {
     int new_range;
@@ -66,7 +70,7 @@ static void SetRange( gui_window *wnd, int bar, guix_ord range, guix_ord text_ra
 }
 
 /*
- * GUISetHScrollRangeCols
+ * GUISetHScrollRangeCols -- ?
  */
 
 void GUIAPI GUISetHScrollRangeCols( gui_window *wnd, gui_text_ord text_range )
@@ -76,7 +80,7 @@ void GUIAPI GUISetHScrollRangeCols( gui_window *wnd, gui_text_ord text_range )
 }
 
 /*
- * GUISetVScrollRangeRows
+ * GUISetVScrollRangeRows -- ?
  */
 
 void GUIAPI GUISetVScrollRangeRows( gui_window *wnd, gui_text_ord text_range )
@@ -113,7 +117,7 @@ void GUIAPI GUISetVScrollRange( gui_window *wnd, gui_ord range )
 }
 
 /*
- * GUIGetHScrollRange
+ * GUIGetHScrollRange -- ?
  */
 
 gui_ord GUIAPI GUIGetHScrollRange( gui_window *wnd )
@@ -122,7 +126,7 @@ gui_ord GUIAPI GUIGetHScrollRange( gui_window *wnd )
 }
 
 /*
- * GUIGetVScrollRange
+ * GUIGetVScrollRange -- ?
  */
 
 gui_ord GUIAPI GUIGetVScrollRange( gui_window *wnd )
@@ -131,7 +135,7 @@ gui_ord GUIAPI GUIGetVScrollRange( gui_window *wnd )
 }
 
 /*
- * GUIGetVScrollRangeRows
+ * GUIGetVScrollRangeRows -- ?
  */
 
 gui_text_ord GUIAPI GUIGetVScrollRangeRows( gui_window *wnd )
@@ -148,7 +152,7 @@ gui_text_ord GUIAPI GUIGetVScrollRangeRows( gui_window *wnd )
 }
 
 /*
- * GUIGetHScrollRangeCols
+ * GUIGetHScrollRangeCols -- ?
  */
 
 gui_text_ord GUIAPI GUIGetHScrollRangeCols( gui_window *wnd )

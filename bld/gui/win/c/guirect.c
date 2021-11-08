@@ -38,6 +38,10 @@
 #include "guilog.h"
 
 
+/*
+ * DoGetRelRect -- ?
+ */
+
 void DoGetRelRect( HWND hwnd, const WPI_RECT *wpi_rect, gui_rect *rect, bool ispopup )
 {
     WPI_RECT    parent_wpi_rect;
@@ -67,6 +71,10 @@ void DoGetRelRect( HWND hwnd, const WPI_RECT *wpi_rect, gui_rect *rect, bool isp
         rect->y = GUIScreenToScaleY( _wpi_cvts_y( pos.y ) );
     }
 }
+
+/*
+ * GUIGetRelRect -- ?
+ */
 
 void GUIGetRelRect( HWND hwnd, gui_rect *rect, bool ispopup )
 {

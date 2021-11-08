@@ -60,6 +60,10 @@ void GUIAPI GUIWndDirty( gui_window *wnd )
     }
 }
 
+/*
+ * GUIWndDirtyControl -- ?
+ */
+
 void GUIAPI GUIWndDirtyControl( gui_window *wnd, gui_ctl_id id )
 {
     HWND        control;

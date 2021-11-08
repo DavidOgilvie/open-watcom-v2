@@ -34,7 +34,10 @@
 #include "guiwind.h"
 #include "guilog.h"
 
-
+/*
+ * GUIGetWindowClassName -- Returns the default class name
+ */
+ 
 char * GUIAPI GUIGetWindowClassName( void )
 {
     return( GUIDefaultClassName );

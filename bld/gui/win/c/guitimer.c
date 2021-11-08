@@ -39,42 +39,54 @@
 
 
 #if defined(__NT__)
-	/* Local Window callback functions prototypes */
-	WINEXPORT VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime );
+/* Local Window callback functions prototypes */
+WINEXPORT VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime );
 
 
-	VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime )
-	{
-		WINDOW_MSG _msg= uMsg;
-		gui_window      *wnd;
-		gui_timer_event timer;
+/*
+ * GUITimerProc -- ?
+ */
 
-		_msg= uMsg;
-		uMsg = uMsg; dwTime = dwTime;
-		wnd = GUIGetWindow( hwnd );
-		if( wnd == NULL ) {
-			GUITimer();
-		} else {
-			timer.id = idEvent;
-			GUIEVENT( wnd, GUI_TIMER_EVENT, &timer );
-		}
+VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime )
+{
+	WINDOW_MSG _msg= uMsg;
+	gui_window      *wnd;
+	gui_timer_event timer;
+
+	_msg= uMsg;
+	uMsg = uMsg; dwTime = dwTime;
+	wnd = GUIGetWindow( hwnd );
+	if( wnd == NULL ) {
+		GUITimer();
+	} else {
+		timer.id = idEvent;
+		GUIEVENT( wnd, GUI_TIMER_EVENT, &timer );
 	}
+}
 
-	void GUIStartTimer( gui_window *wnd, gui_timer_id id, int msec )
-	{
-		if( wnd != NULL ) {
-			SetTimer( wnd->hwnd, id, (UINT)msec, GUITimerProc );
-		} else {
-			SetTimer( NULL, id, (UINT)msec, GUITimerProc );
-		}
-	}
+/*
+ * GUIStartTimer -- ?
+ */
 
-	void GUIStopTimer( gui_window *wnd, gui_timer_id id )
-	{
-		if( wnd != NULL ) {
-			KillTimer( wnd->hwnd, id );
-		} else {
-			KillTimer( NULL, id );
-		}
+void GUIStartTimer( gui_window *wnd, gui_timer_id id, int msec )
+{
+	if( wnd != NULL ) {
+		SetTimer( wnd->hwnd, id, (UINT)msec, GUITimerProc );
+	} else {
+		SetTimer( NULL, id, (UINT)msec, GUITimerProc );
 	}
+}
+
+/*
+ * GUIStopTimer -- ?
+ */
+
+void GUIStopTimer( gui_window *wnd, gui_timer_id id )
+{
+	if( wnd != NULL ) {
+		KillTimer( wnd->hwnd, id );
+	} else {
+		KillTimer( NULL, id );
+	}
+}
 #endif

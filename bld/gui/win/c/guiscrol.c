@@ -39,6 +39,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetScrollScreenSize -- ?
+ */
+
 guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 {
     WPI_RECTDIM left, top, right, bottom;
@@ -55,6 +59,10 @@ guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
         }
     }
 }
+
+/*
+ * GUIGetScrollInc -- ?
+ */
 
 guix_ord GUIGetScrollInc( gui_window *wnd, int bar )
 {
@@ -73,6 +81,10 @@ guix_ord GUIGetScrollInc( gui_window *wnd, int bar )
         }
     }
 }
+
+/*
+ * GUIScroll -- ?
+ */
 
 void GUIScroll( gui_window *wnd, int bar, int change )
 {
@@ -111,6 +123,10 @@ void GUIScroll( gui_window *wnd, int bar, int change )
         }
     }
 }
+
+/*
+ * SetScroll -- ?
+ */
 
 static void SetScroll( gui_window *wnd, int bar, guix_ord pos )
 {
@@ -223,6 +239,10 @@ static void GUIHScroll( int diff, gui_window *wnd, gui_event gui_ev )
     }
 }
 
+/*
+ * GUIProcessScrollMsg -- ?
+ */
+
 void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
     WINDOW_MSG	_msg= msg;
@@ -328,6 +348,10 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
         }
     }
 }
+
+/*
+ * DoSetScroll -- ?
+ */
 
 static void DoSetScroll( gui_window *wnd, int bar, bool range_set,
                          bool chars, unsigned *p_range )

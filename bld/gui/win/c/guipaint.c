@@ -44,6 +44,7 @@
  */
 
 #ifndef __OS2_PM__FOO
+ 
 void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 {
     HDC         prev_hdc;
@@ -122,8 +123,10 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 }
 
 #else  // of #ifndef __OS2_PM__FOO
-
-// this is some experimental PM stuff
+/*
+ * GUIPaint -- this is some experimental PM stuff
+ */
+ 
 void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 {
     HDC         prev_hdc;
@@ -248,10 +251,18 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 
 #endif // of else for #ifndef __OS2_PM__FOO
 
+/*
+ * GUIInvalidatePaintHandles -- ?
+ */
+
 void GUIInvalidatePaintHandles( gui_window *wnd )
 {
     GUIFreeWndPaintHandles( wnd, false );
 }
+
+/*
+ * GUIFreeWndPaintHandles -- ?
+ */
 
 void GUIFreeWndPaintHandles( gui_window *wnd, int force )
 {
@@ -264,6 +275,10 @@ void GUIFreeWndPaintHandles( gui_window *wnd, int force )
     GUIFreePaintHandles( &wnd->hwnd_pinfo, force );
 #endif // of #ifdef __OS2_PM__
 }
+
+/*
+ * GUIFreePaintHandles -- ?
+ */
 
 void GUIFreePaintHandles( gui_paint_info *pinfo, int force )
 {

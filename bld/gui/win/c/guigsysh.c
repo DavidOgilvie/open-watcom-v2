@@ -37,12 +37,20 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetSysHandle -- This routine returns a handle to ?
+ */
+
 HWND GUIGetSysHandle( gui_window *wnd )
 {
     return( GUIGetTopParentHWND( wnd->hwnd ) );
 }
 
 #if 0
+/*
+ * GUIGetHInst -- ?
+ */
+
 WPI_INST GUIGetHInst( void )
 {
     return( GUIMainHInst );
@@ -50,6 +58,10 @@ WPI_INST GUIGetHInst( void )
 #endif
 
 #ifdef __OS2__
+/*
+ * GUIGetHAB -- ?
+ */
+
 HAB GUIGetHAB( void )
 {
     return( GUIMainHInst.hab );

@@ -52,6 +52,10 @@ static HINSTANCE    hInstUser = NULL;
 static PFNLI        pfnLoadImage;
 #endif
 
+/*
+ * GUIXInitHotSpots -- This routine returns true if ?
+ */
+
 bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
 {
     int         i;
@@ -82,6 +86,10 @@ bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
     return( true );
 }
 
+/*
+ * GUIXCleanupHotSpots -- ?
+ */
+
 void GUIXCleanupHotSpots( void )
 {
     int i;
@@ -96,6 +104,10 @@ void GUIXCleanupHotSpots( void )
 #endif
 }
 
+/*
+ * GUIDrawHotSpot -- ?
+ */
+
 void GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row, gui_ord indent, gui_attr attr )
 {
     gui_text_metrics    metrics;
@@ -108,6 +120,10 @@ void GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row, g
         GUIDrawBitmapAttr( wnd, &GUIHotSpots[hotspot_no - 1].size, &pos, attr, hotspot_no );
     }
 }
+
+/*
+ * GUIDrawBitmap -- ?
+ */
 
 void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_COLOUR bkcolour )
 {

@@ -45,11 +45,19 @@ static  void    (*MDIMaximize)(bool, gui_window *)      = NULL;
 static  bool    (*IsMDIChildWindow)(gui_window *)       = NULL;
 static  void    (*SetMDIRestoredSize)(HWND, const WPI_RECT *) = NULL;
 
+/*
+ * GUISetMDIProcessMessage -- ?
+ */
+
 void GUISetMDIProcessMessage( bool (*func)(gui_window *, HWND, WPI_MSG, WPI_PARAM1,
                               WPI_PARAM2, WPI_MRESULT *) )
 {
     ProcessMsg = func;
 }
+
+/*
+ * GUIMDIProcessMessage -- This routine returns true if ?
+ */
 
 bool GUIMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg,
                            WPI_PARAM1 wparam, WPI_PARAM2 lparam, WPI_MRESULT *ret )
@@ -60,6 +68,10 @@ bool GUIMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg,
     return( false );
 }
 
+/*
+ * GUIMDIMaximized -- This routine returns true if ?
+ */
+
 bool GUIMDIMaximized( gui_window *wnd )
 {
     if( IsMaximized != NULL ) {
@@ -67,6 +79,10 @@ bool GUIMDIMaximized( gui_window *wnd )
     }
     return( _wpi_iszoomed( GUIGetParentFrameHWND( wnd ) ) != 0 );
 }
+
+/*
+ * GUISetMDIMaximized -- ?
+ */
 
 void GUISetMDIMaximized( bool (*func)( gui_window * ) )
 {
@@ -81,15 +97,27 @@ bool GUIMDIUpdatedMenu( void )
     return( false );
 }
 
+/*
+ * GUISetMDIUpdatedMenu -- ?
+ */
+
 void GUISetMDIUpdatedMenu( bool (*func)( void ) )
 {
     UpdatedMenu = func;
 }
 
+/*
+ * GUISetIsMDIChildWindow -- ?
+ */
+
 void GUISetIsMDIChildWindow( bool (*func)( gui_window *) )
 {
     IsMDIChildWindow = func;
 }
+
+/*
+ * GUIIsMDIChildWindow -- This routine returns true if ?
+ */
 
 bool GUIIsMDIChildWindow( gui_window *wnd )
 {
@@ -99,10 +127,18 @@ bool GUIIsMDIChildWindow( gui_window *wnd )
     return( false );
 }
 
+/*
+ * GUISetMDINewWindow -- ?
+ */
+
 void GUISetMDINewWindow( bool (*func)(HWND) )
 {
     NewWindow = func;
 }
+
+/*
+ * GUIMDINewWindow -- This routine returns true if ?
+ */
 
 bool GUIMDINewWindow( HWND hwnd )
 {
@@ -112,6 +148,10 @@ bool GUIMDINewWindow( HWND hwnd )
         return( false );
     }
 }
+
+/*
+ * GUISetMDIMaximize -- ?
+ */
 
 void GUISetMDIMaximize( void (*func)(bool, gui_window *) )
 {
@@ -125,10 +165,18 @@ void GUIMDIMaximize( bool max, gui_window *wnd )
     }
 }
 
+/*
+ * GUISetSetMDIRestoredSize -- ?
+ */
+
 void GUISetSetMDIRestoredSize( void (*func)(HWND, const WPI_RECT *) )
 {
     SetMDIRestoredSize = func;
 }
+
+/*
+ * GUISetMDIRestoredSize -- ?
+ */
 
 void GUISetMDIRestoredSize( HWND hwnd, const WPI_RECT *wpi_rect )
 {

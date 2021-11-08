@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetSystemMetrics -- ?
+ */
+
 void GUIAPI GUIGetSystemMetrics( gui_system_metrics *metrics )
 {
     HDC       hdc;

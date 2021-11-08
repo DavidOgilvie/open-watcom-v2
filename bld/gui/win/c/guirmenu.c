@@ -36,10 +36,18 @@
 #include "guilog.h"
 
 
+/*
+ * GUIFreeGUIMenuStruct -- ?
+ */
+ 
 void GUIFreeGUIMenuStruct( gui_menu_items *menus )
 {
     /* unused parameters */ (void)menus;
 }
+
+/*
+ * GUICreateMenuStructFromRes -- This routine returns true if ?
+ */
 
 bool GUICreateMenuStructFromRes( res_name_or_id menu_id, gui_menu_items *menus )
 {

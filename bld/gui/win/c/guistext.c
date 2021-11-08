@@ -53,13 +53,17 @@ bool GUIAPI GUISetWindowText( gui_window *wnd, const char *data )
 }
 
 /*
- * GUIGetWindowText - get the window text
+ * GUIGetWindowText -- get the window text
  */
 
 size_t GUIAPI GUIGetWindowText( gui_window *wnd, char *buff, size_t buff_len )
 {
     return( _wpi_getwindowtext( GUIGetParentFrameHWND( wnd ), buff, buff_len ) );
 }
+
+/*
+ * GUIGetWindowTextLength -- ?
+ */
 
 size_t GUIAPI GUIGetWindowTextLength( gui_window *wnd )
 {

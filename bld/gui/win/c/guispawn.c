@@ -35,9 +35,17 @@
 #include "guilog.h"
 
 
+/*
+ * GUISpawnStart -- ?
+ */
+
 void GUIAPI GUISpawnStart( void )
 {
 }
+
+/*
+ * GUISpawnEnd -- ?
+ */
 
 void GUIAPI GUISpawnEnd( void )
 {

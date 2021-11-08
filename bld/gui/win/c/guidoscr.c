@@ -40,6 +40,10 @@
 #include "guilog.h"
 
 
+/*
+ * DoScroll -- ?
+ */
+
 static void DoScroll( gui_window *wnd, int rows, int cols, int start, int end, bool chars )
 {
     int         dx, dy;
@@ -133,26 +137,45 @@ static void DoScroll( gui_window *wnd, int rows, int cols, int start, int end, b
     _wpi_updatewindow( hwnd );
 }
 
+/*
+ * GUIDoVScroll -- ?
+ */
+
 void GUIAPI GUIDoVScroll( gui_window *wnd, int rows )
 {
     DoScroll( wnd, rows, 0, -1, -1, true );
 }
+
+/*
+ * GUIDoHScroll -- ?
+ */
 
 void GUIAPI GUIDoHScroll( gui_window *wnd, int cols )
 {
     DoScroll( wnd, 0, cols, -1, -1, true );
 }
 
+/*
+ * GUIDoVScrollClip -- ?
+ */
 
 void GUIAPI GUIDoVScrollClip( gui_window *wnd, int rows, int start, int end )
 {
     DoScroll( wnd, rows, 0, start, end, true );
 }
 
+/*
+ * GUIDoHScrollClip -- ?
+ */
+
 void GUIAPI GUIDoHScrollClip( gui_window *wnd, int cols, int start, int end )
 {
     DoScroll( wnd, 0, cols, start, end, true );
 }
+
+/*
+ * GUIDoScroll -- ?
+ */
 
 void GUIDoScroll( gui_window *wnd, int row_col, int bar )
 {

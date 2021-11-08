@@ -51,9 +51,10 @@
 #define BORDER_AMOUNT   1 /* space outside row of buttons */
 
 /*
- * GUIXCloseToolBar -- close the tool bar and free memory.  Can be called by
- *                    app.  Gets called when parent window closed or floating
- *                    toolbar window gets closed.
+ * GUIXCloseToolBar -- This routine returns true if it can close the 
+ *                     toolbar and free memory.  Can be called by app.  
+ *                     Gets called when parent window closed or floating
+ *                     toolbar window gets closed.
  */
 
 bool GUIXCloseToolBar( gui_window *wnd )
@@ -80,6 +81,10 @@ bool GUIXCloseToolBar( gui_window *wnd )
     return( true );
 }
 
+/*
+ * GetToolWnd -- ?
+ */
+
 static gui_window *GetToolWnd( HWND hwnd )
 {
     HWND        parent;
@@ -101,6 +106,10 @@ static gui_window *GetToolWnd( HWND hwnd )
     return( NULL );
 }
 
+/*
+ * guiToolBarHelp -- ?
+ */
+
 static void guiToolBarHelp( HWND hwnd, ctl_id id, bool down )
 {
     gui_window          *wnd;
@@ -114,7 +123,8 @@ static void guiToolBarHelp( HWND hwnd, ctl_id id, bool down )
 }
 
 /*
- * guiToolBarProc - hook message handler for the tool bar.
+ * guiToolBarProc -- This routine returns true if it can hook message 
+ *                   handler for the tool bar.
  */
 
 static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -208,7 +218,8 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
 }
 
 /*
- *  GUIXCreateToolBarWithTips -- create a tool bar, possibly with tooltips
+ * GUIXCreateToolBarWithTips -- This routine returns true if it can 
+ *                              create a tool bar, possibly with tooltips
  */
 
 bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
@@ -358,7 +369,8 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
 }
 
 /*
- *  GUIXCreateToolBar -- create a tool bar, fixed or not
+ * GUIXCreateToolBar -- This routine returns true if it can 
+ *                      create a tool bar, fixed or not
  */
 
 bool GUIXCreateToolBar( gui_window *wnd, bool fixed, gui_ord height,
@@ -403,10 +415,18 @@ void GUIResizeToolBar( gui_window *wnd )
     }
 }
 
+/*
+ * GUIHasToolBar -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIHasToolBar( gui_window *wnd )
 {
     return( wnd->tbar != NULL );
 }
+
+/*
+ * GUIChangeToolBar -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIChangeToolBar( gui_window *wnd )
 {
@@ -447,6 +467,10 @@ bool GUIAPI GUIChangeToolBar( gui_window *wnd )
     GUIEVENT( wnd, gui_ev, NULL );
     return( true );
 }
+
+/*
+ *  -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIToolBarFixed( gui_window *wnd )
 {

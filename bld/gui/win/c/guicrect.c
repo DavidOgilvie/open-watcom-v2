@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetClientRect -- ?
+ */
+
 void GUIAPI GUIGetClientRect( gui_window *wnd, gui_rect *rect )
 {
     WPI_RECT    wpi_rect;
@@ -52,6 +56,10 @@ void GUIAPI GUIGetClientRect( gui_window *wnd, gui_rect *rect )
     client.s_height = _wpi_getheightrect( wpi_rect );
     GUIClientToScaleRect( &client, rect );
 }
+
+/*
+ * GUIGetPaintRect -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetPaintRect( gui_window *wnd, gui_rect *rect )
 {

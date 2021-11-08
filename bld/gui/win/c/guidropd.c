@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIDropDown -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIDropDown( gui_window *wnd, gui_ctl_id id, bool drop )
 {
     gui_control_class control_class;

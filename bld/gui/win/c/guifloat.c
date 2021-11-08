@@ -46,6 +46,10 @@ extern  HMENU           GUIHFloatingPopup;
 static  gui_ctl_id      CurrId = 0;
 static  bool            InitComplete = false;
 
+/*
+ * GUITrackFloatingPopup -- This routine returns true if ?
+ */
+
 bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
                             gui_mouse_track track, gui_ctl_id *curr_id )
 {
@@ -111,7 +115,8 @@ bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
 }
 
 /*
- * GUIXCreateFloatingPopup -- create a floating popup menu
+ * GUIXCreateFloatingPopup -- This routine returns true if it succeeds in
+ *                            create a floating popup menu
  */
 
 bool GUIXCreateFloatingPopup( gui_window *wnd, const gui_point *location,
@@ -131,6 +136,10 @@ bool GUIXCreateFloatingPopup( gui_window *wnd, const gui_point *location,
 
     return( GUITrackFloatingPopup( wnd, location, track, curr_id ) );
 }
+
+/*
+ * GUIPopupMenuSelect -- ?
+ */
 
 void GUIPopupMenuSelect( WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {

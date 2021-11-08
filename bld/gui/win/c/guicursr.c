@@ -35,6 +35,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISetMouseCursor -- ?
+ */
+
 gui_mcursor_handle GUIAPI GUISetMouseCursor( gui_mcursor_type type )
 {
     HCURSOR     cursor;
@@ -56,6 +60,10 @@ gui_mcursor_handle GUIAPI GUISetMouseCursor( gui_mcursor_type type )
         return( (void *)_wpi_setcursor( cursor ) );
     return( NULL );
 }
+
+/*
+ * GUIResetMouseCursor -- ?
+ */
 
 void GUIAPI GUIResetMouseCursor( gui_mcursor_handle old )
 {

@@ -71,12 +71,20 @@ static  bool    hookFileDlg = false;
 static  bool    hookFileDlg = true;
 #endif
 
+/*
+ * GUIHookFileDlg -- ?
+ */
+
 void GUIAPI GUIHookFileDlg( bool hook )
 {
     hookFileDlg = hook;
 }
 
 #if defined( __OS2_PM__ )
+
+/*
+ * GUIGetFileName -- This routine returns an integer representing the ?
+ */
 
 int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
 {
@@ -236,6 +244,10 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
 
 #else
 
+/*
+ * GetStrFromEdit -- This routine returns a character string containing ?
+ */
+
 #if defined(__NT__)
 static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
 {
@@ -266,6 +278,10 @@ static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
 #define PATH_STATIC_CONTROL 1088
 #endif
 
+/*
+ * OpenOFNHookProc -- This is a callback routine for ?
+ */
+
 UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
 {
     UINT        ret;
@@ -289,6 +305,10 @@ UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lp
     }
     return( ret );
 }
+
+/*
+ * GUIGetFileName -- This routine returns an integer value representing ?
+ */
 
 int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
 {

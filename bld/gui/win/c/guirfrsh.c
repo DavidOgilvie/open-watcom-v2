@@ -35,6 +35,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIRefresh -- ?
+ */
+
 void GUIAPI GUIRefresh( void )
 {
 #if 0

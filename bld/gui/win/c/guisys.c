@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISysCleanUp -- ?
+ */
+
 void GUISysCleanUp( void )
 {
 }

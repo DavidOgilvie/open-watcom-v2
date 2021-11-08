@@ -62,11 +62,19 @@ static  bool            DoneMDIInit             = false;
 static  bool            DoingMaxRestore         = false;
 static  bool            ArrangeIcons            = false;
 
+/*
+ * StartMaxRestore -- ?
+ */
+
 static void StartMaxRestore( HWND hwnd )
 {
     hwnd = hwnd;
     DoingMaxRestore = true;
 }
+
+/*
+ * SetStyle -- ?
+ */
 
 static void SetStyle( HWND hwnd, bool max )
 {
@@ -102,6 +110,10 @@ static void SetStyle( HWND hwnd, bool max )
 #endif
 }
 
+/*
+ * EndMaxRestore -- ?
+ */
+
 static void EndMaxRestore( HWND hwnd )
 {
     gui_window  *wnd;
@@ -122,6 +134,10 @@ static void EndMaxRestore( HWND hwnd )
     GUIDoResize( wnd, hwnd, &scr_size );
 }
 
+/*
+ * SetWindowTitle -- ?
+ */
+
 static void SetWindowTitle( HWND hwnd )
 {
     char        buffer[MAX_LENGTH];
@@ -129,6 +145,10 @@ static void SetWindowTitle( HWND hwnd )
     _wpi_getwindowtext( hwnd, buffer, sizeof( buffer ) );
     MDISetMainWindowTitle( buffer );
 }
+
+/*
+ * XChangeTitle -- ?
+ */
 
 void XChangeTitle( gui_window *wnd )
 {
@@ -139,6 +159,10 @@ void XChangeTitle( gui_window *wnd )
         SetWindowTitle( wnd->hwnd );
     }
 }
+
+/*
+ * IsMaximized -- This routine returns true if ?
+ */
 
 static bool IsMaximized( gui_window *wnd )
 {
@@ -156,10 +180,18 @@ static bool IsMaximized( gui_window *wnd )
     }
 }
 
+/*
+ * UpdatedMenu -- This routine returns true if ?
+ */
+
 static bool UpdatedMenu( void )
 {
     return( MDIUpdatedMenu() );
 }
+
+/*
+ * MDIMaximize -- ?
+ */
 
 static void MDIMaximize( bool max, gui_window *wnd )
 {
@@ -175,15 +207,27 @@ static void MDIMaximize( bool max, gui_window *wnd )
 #endif
 }
 
+/*
+ * SetMDIRestoredSize -- ?
+ */
+
 static void SetMDIRestoredSize( HWND hwnd, const WPI_RECT *wpi_rect )
 {
     MDISetOrigSize( hwnd, wpi_rect );
 }
 
+/*
+ * IsMDIChildWindow -- This routine returns true if ?
+ */
+
 static bool IsMDIChildWindow( gui_window *wnd )
 {
     return( GUIGetParentWindow( wnd ) == GUIGetRootWindow() );
 }
+
+/*
+ * XInitMDI -- This routine returns true if ?
+ */
 
 bool XInitMDI( gui_window *wnd )
 {
@@ -209,6 +253,10 @@ bool XInitMDI( gui_window *wnd )
     }
 }
 
+/*
+ * GUIMDIBringToFront -- ?
+ */
+
 static void GUIMDIBringToFront( gui_window *wnd )
 {
     if( wnd != NULL ) {
@@ -221,6 +269,10 @@ static void GUIMDIBringToFront( gui_window *wnd )
         GUIBringToFront( wnd );
     }
 }
+
+/*
+ * MDIProcessMessage -- This routine returns true if ?
+ */
 
 static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam,
                                WPI_PARAM2 lparam, WPI_MRESULT *ret )
@@ -345,6 +397,10 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
     return( false );
 }
 
+/*
+ * GUIXMDIInit -- ?
+ */
+
 void GUIXMDIInit( void )
 {
     GUISetMDIProcessMessage( &MDIProcessMessage );
@@ -355,6 +411,10 @@ void GUIXMDIInit( void )
     GUISetSetMDIRestoredSize( &SetMDIRestoredSize );
     GUISetIsMDIChildWindow( &IsMDIChildWindow );
 }
+
+/*
+ * GUIInternalCascadeWindows -- ?
+ */
 
 static void GUIInternalCascadeWindows( gui_window *wnd, void *param )
 {
@@ -377,6 +437,10 @@ static void GUIInternalCascadeWindows( gui_window *wnd, void *param )
     info->num++;
     info->num = info->num % info->mod;
 }
+
+/*
+ * Cascade -- ?
+ */
 
 static void Cascade( gui_window *root, int num_windows, gui_rect *rect,
                      gui_coord *min_size )
@@ -408,6 +472,10 @@ static void Cascade( gui_window *root, int num_windows, gui_rect *rect,
     info.num = 0;
     GUIEnumChildWindows( root, &GUIInternalCascadeWindows, &info );
 }
+
+/*
+ * GUICascadeWindows -- This routine returns true if ?
+ */
 
 bool GUIAPI GUICascadeWindows( void )
 {

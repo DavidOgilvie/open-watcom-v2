@@ -36,11 +36,19 @@
 #include "guilog.h"
 
 
+/*
+ * TrayCallBack -- ?
+ */
+
 void TrayCallBack( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam )
 {
     hwnd=hwnd; wParam=wParam; lParam=lParam;
     return;
 }
+
+/*
+ * WndSizeChange -- ?
+ */
 
 void WndSizeChange( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam )
 {

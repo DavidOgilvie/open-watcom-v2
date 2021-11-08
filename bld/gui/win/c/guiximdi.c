@@ -39,6 +39,10 @@
 #include "guilog.h"
 
 
+/*
+ * BringWindowToFront -- ?
+ */
+
 static void BringWindowToFront( gui_window *wnd )
 {
     if( wnd != NULL ) {
@@ -48,6 +52,10 @@ static void BringWindowToFront( gui_window *wnd )
         GUIBringToFront( wnd );
     }
 }
+
+/*
+ * FakeMDIProcessMessage -- This routine returns true if ?
+ */
 
 static bool FakeMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam,
                                WPI_PARAM2 lparam, WPI_MRESULT *ret )
@@ -72,6 +80,10 @@ static bool FakeMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_
     }
     return( false );
 }
+
+/*
+ * XFakeInitMDI -- This routine returns true if ?
+ */
 
 bool XFakeInitMDI( gui_window *wnd )
 {

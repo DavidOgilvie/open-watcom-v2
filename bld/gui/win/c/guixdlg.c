@@ -50,12 +50,12 @@
 #include "guirdlg.h"
 #ifdef __NT__
 	#include <wingdi.h>
-#endif
+#endif  // of #ifdef __NT__
 #ifndef __OS2_PM__
 	#include "windlg.h"
-#else
+#else  // of #ifndef __OS2_PM__
 	#include "os2dlg.h"
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
 #include "guilog.h"
 
 
@@ -70,6 +70,10 @@ static  gui_coord       SizeScreen      = { 0, 0 };     /* of test dialog       
 /* Local Window callback functions prototypes */
 WINEXPORT WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
 
+/*
+ * GUISetJapanese -- Sets Japanese font and code page for menus
+ */
+ 
 void GUIAPI GUISetJapanese( void )
 {
 #ifndef __OS2_PM__
@@ -79,21 +83,22 @@ void GUIAPI GUISetJapanese( void )
   #if 0
         newfont = "";
         FontPointSize = 0;
-  #else
+  #else  // of #if 0
         /* following is DBCS text in Japanese "‚l‚r –¾’©" */
         newfont = "\x82\x6C\x82\x72\x20\x96\xBE\x92\xA9";
         FontPointSize = 10;
-  #endif
+  #endif  // of #else for #if 0
         if( Font != NULL ) {
             GUIMemFree( Font );
         }
         Font = GUIStrDup( newfont, NULL );
     }
-#endif
+#endif  // of #ifndef __OS2_PM__
 }
 
 /*
- * GUIInitControl
+ * GUIInitControl -- Initializes current control and sets to previous 
+ *                   value if needed
  */
 
 void GUIInitControl( control_item *item, gui_window *wnd, gui_ctl_id *focus_id )
@@ -125,10 +130,10 @@ void GUIInitControl( control_item *item, gui_window *wnd, gui_ctl_id *focus_id )
 }
 
 /*
- * InitDialog -- initialize the check boxes and radio buttons on the
- *               dialog box.  Also set the HWND properly for the dialog
- *               box and all of its controls.  Add text to list boxes and
- *               combo boxes.
+ * InitDialog -- This routine returns true if it can initialize the check 
+ *               boxes and radio buttons on the dialog box.  Also set the 
+ *               HWND properly for the dialog box and all of its controls.
+ *               Add text to list boxes and combo boxes.
  */
 
 static bool InitDialog( gui_window *wnd )
@@ -152,6 +157,13 @@ static bool InitDialog( gui_window *wnd )
     return( false );
 }
 
+/*
+ * GUIProcessControlNotification -- This routine returns true if it 
+ *                                  processes notifications to the current
+ *                                  control.  Does some of the same things
+ *                                  a callback routine would do for a window
+ */
+ 
 bool GUIProcessControlNotification( gui_ctl_id id, int wNotify, gui_window *wnd )
 {
     unsigned            check;
@@ -233,7 +245,7 @@ bool GUIProcessControlNotification( gui_ctl_id id, int wNotify, gui_window *wnd 
             case CBN_DBLCLK:
                 GUIEVENT( wnd, GUI_CONTROL_DCLICKED, &id );
                 return( true );
-#endif
+#endif  // of #ifndef __OS2_PM__
             case CBN_KILLFOCUS:
                 GUIEVENT( wnd, GUI_CONTROL_NOT_ACTIVE, &id );
                 return( true );
@@ -246,7 +258,8 @@ bool GUIProcessControlNotification( gui_ctl_id id, int wNotify, gui_window *wnd 
 }
 
 /*
- * GUIProcessControlMsg
+ * GUIProcessControlMsg -- This routine returns true if it unpacks 
+ *                         message info for a control
  */
 
 bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd, bool *pret )
@@ -278,7 +291,7 @@ bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd
         ret = true;
         break;
     }
-#else
+#else  // of #ifndef __OS2_PM__
     pret = pret;
 
     ret = false;
@@ -288,13 +301,13 @@ bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd
         GUIEVENT( wnd, GUI_CONTROL_CLICKED, &id );
         ret = true;
     }
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
     return( ret );
 }
 
 /*
- * GUIDialogDlgProc - callback function for all dynamically created dialog
- *                 boxes
+ * GUIDialogDlgProc -- callback function for all dynamically created dialog
+ *                     boxes
  */
 
 WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -323,7 +336,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
         wnd->hwnd_frame = hwnd;
 #ifdef __OS2_PM__
         wnd->hwnd_pinfo.normal_pres = _wpi_createos2normpres( GUIMainHInst, hwnd );
-#endif
+#endif  // of #ifdef __OS2_PM__
         _wpi_getclientrect( hwnd, &wnd->hwnd_client_rect );
         wnd->root_client_rect = wnd->hwnd_client_rect;
         GUIInsertCtrlWnd( wnd );
@@ -363,12 +376,12 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
             return( (WPI_DLGRESULT)wnd->bk_brush );
         }
         break;
-#endif
+#endif  // of #if defined(__NT__)
 	case WM_SYSCOLORCHANGE:
 		(void)CvrCtl3dColorChange();
 #ifndef __OS2_PM__
 		InitSystemRGB();  // Reset colours on change of colour scheme
-#endif
+#endif  // of #ifndef __OS2_PM__
         break;
     case WM_INITDIALOG:
         /* must return false or Windows will set input focus to the
@@ -383,13 +396,13 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
             // windowing system set the focus
             ret = true;
         }
-#else
+#else  // of #ifdef __OS2_PM__
         if( (wnd->flags & IS_RES_DIALOG) && hfocus == _wpi_getfocus() ) {
             // if the focus did not change then let the
             // windowing system set the focus
             ret = true;
         }
-#endif
+#endif  // of else for #ifdef __OS2_PM__
         break;
 #ifdef __OS2_PM__
     case WM_CONTROL:
@@ -409,7 +422,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
             msg_processed |= !SendPointEvent( wnd, GUI_RBUTTONDOWN, wparam, lparam, false );
         }
         break;
-#else
+#else  // of #ifdef __OS2_PM__
     case WM_PARENTNOTIFY:
         if( LOWORD(wparam) == WM_RBUTTONDOWN ) {
             WPI_MAKEPOINT( wparam, lparam, wpi_point );
@@ -424,7 +437,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
     case WM_RBUTTONDOWN:
         msg_processed = !SendPointEvent( wnd, GUI_RBUTTONDOWN, wparam, lparam, false );
         break;
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     case WM_RBUTTONUP:
         msg_processed = !SendPointEvent( wnd, GUI_RBUTTONUP, wparam, lparam, false );
         break;
@@ -447,7 +460,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
             if( wnd != NULL ) {
 #ifndef __OS2_PM__
                 escape_pressed = ( !GET_WM_COMMAND_CMD( wparam, lparam ) && ( id == IDCANCEL ) );
-#endif
+#endif  // of #ifndef __OS2_PM__
                 if( !escape_pressed ) {
                     GUIEVENT( wnd, GUI_CONTROL_CLICKED, &id );
                 }
@@ -455,9 +468,9 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
         } else {
 #ifdef __OS2_PM__
             escape_pressed = (((ULONG)lparam == 1) && (id == IDCANCEL));
-#else
+#else  // of #ifdef __OS2_PM__
             escape_pressed = ( !GET_WM_COMMAND_CMD( wparam, lparam ) && ( id == IDCANCEL ) );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
             if( !escape_pressed ) {
                 GUIProcessControlMsg( wparam, lparam, wnd, &ret );
             }
@@ -482,7 +495,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
 #ifndef __OS2_PM__
         break;
     case WM_NCDESTROY:
-#endif
+#endif  // of #ifndef __OS2_PM__
         if( wnd != NULL ) {
             GUIFreeWindowMemory( wnd, false, true );
         }
@@ -502,7 +515,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
         }
         ret = GUIEVENT( wnd, GUI_KEYTOITEM, &key_state );
         break;
-#endif
+#endif  // of #ifndef __OS2_PM__
     // the following code allows GUI dialogs to receive key msgs
     // this code must eventually be rationalized with the code in
     // guixwind.c
@@ -519,7 +532,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
             }
         }
         break;
-#else
+#else  // of #ifndef __OS2_PM__
     case WM_CHAR:
         GUIGetKeyState( &key_state.state );
         if( GUIWindowsMapKey( wparam, lparam, &key_state.key ) ) {
@@ -529,14 +542,14 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 
             }
         }
         break;
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
     }
 
 #ifdef __OS2_PM__
     if( !msg_processed ) {
         return( _wpi_defdlgproc( hwnd, message, wparam, lparam ) );
     }
-#endif
+#endif  // of #ifdef __OS2_PM__
     _wpi_dlgreturn( ret );
 }
 
@@ -562,6 +575,11 @@ static void AdjustToDialogUnits( guix_coord *scr_coord )
     ToDialogUnits( scr_coord );
 }
 
+/*
+ * AdjustForFrame -- Tweaks the size of client area of a window
+ *                   to account for frame size
+ */
+ 
 static void AdjustForFrame( guix_coord *scr_pos, guix_coord *scr_size )
 {
 #ifndef __OS2_PM__
@@ -585,12 +603,16 @@ static void AdjustForFrame( guix_coord *scr_pos, guix_coord *scr_size )
         scr_size->x -= ( 2 * xframe );
         scr_size->y -= ( 2 * yframe + ycaption );
     }
-#else
+#else  // of #ifndef __OS2_PM__
     scr_pos = scr_pos;
     scr_size = scr_size;
-#endif
+#endif  // of #ifndef __OS2_PM__
 }
 
+/*
+ * GUIDlgCalcLocation -- Calculates screen location to place a dialog box
+ */
+ 
 static void GUIDlgCalcLocation( const gui_rect *rect, guix_coord *scr_pos, guix_coord *scr_size )
 {
     scr_pos->x = GUIScaleToScreenH( rect->x );
@@ -600,7 +622,8 @@ static void GUIDlgCalcLocation( const gui_rect *rect, guix_coord *scr_pos, guix_
 }
 
 /*
- * GUIXCreateDialog -- create a dialog with the specified controls
+ * GUIXCreateDialog -- This routine returns true if it can create a 
+ *                     dialog with the specified controls
  */
 
 bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
@@ -624,7 +647,7 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
     void                *pctldata;
     int                 pctldatalen;
     ENTRYFDATA          edata;
-#endif
+#endif  // of #ifdef __OS2_PM__
     size_t              templatelen;
 
  	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
@@ -681,7 +704,7 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
             pctldata = &edata;
             pctldatalen = sizeof( edata );
         }
-#endif
+#endif  // of #ifdef __OS2_PM__
         GUIDlgCalcLocation( &ctl_info->rect, &scr_pos, &scr_size );
         AdjustToDialogUnits( &scr_pos );
         AdjustToDialogUnits( &scr_size );
@@ -701,11 +724,11 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
         new_dlgtemplate = AddControl( old_dlgtemplate, scr_pos.x, scr_pos.y, scr_size.x, scr_size.y, ctl_info->id,
                           style, GUIControls[ctl_info->control_class].classname, captiontext,
                           pctldata, (BYTE)pctldatalen, &templatelen );
-#else
+#else  // of #ifdef __OS2_PM__
         new_dlgtemplate = AddControl( old_dlgtemplate, scr_pos.x, scr_pos.y, scr_size.x, scr_size.y, ctl_info->id,
                           style, GUIControls[ctl_info->control_class].classname, captiontext,
                           NULL, 0, &templatelen );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
         if( new_dlgtemplate == NULL  ) {
             GlobalFree( old_dlgtemplate );
             return( false );
@@ -737,9 +760,9 @@ void GUIAPI GUICloseDialog( gui_window * wnd )
 static WPI_FONT         DlgFont;
 
 /*
- * GUIInitDialogFuncDlgProc - callback function the test dialog box used to get the
- *                     dialog box font info and client size info
- *
+ * GUIInitDialogFuncDlgProc -- callback function the test dialog box used
+ *                             to get the dialog box font info and client 
+ *                             size info
  */
 
 WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -763,14 +786,14 @@ WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG message, WPI
     case WM_SETFONT:
         DlgFont = (WPI_FONT)wparam;
         break;
-#endif
+#endif  // of #ifndef __OS2_PM__
     case WM_INITDIALOG:
         hdc = _wpi_getpres( hwnd );
 #ifndef __OS2_PM__
         _wpi_selectfont( hdc, DlgFont );
-#else
+#else  // of #ifndef __OS2_PM__
         DlgFont = NULLHANDLE;
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
         _wpi_gettextmetrics( hdc, &GUIDialogtm );
         _wpi_releasepres( hwnd, hdc );
 
@@ -782,12 +805,16 @@ WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG message, WPI
 #ifdef __OS2_PM__
     default:
         return( _wpi_defdlgproc( hwnd, message, wparam, lparam ) );
-#endif
+#endif  // of #ifdef __OS2_PM__
     }
 
     _wpi_dlgreturn( ret );
 }
 
+/*
+ * GUIFiniDialog -- Remove the handle for the font used in the dialog
+ */
+ 
 void GUIFiniDialog( void )
 {
     if( Font != NULL ) {
@@ -795,6 +822,10 @@ void GUIFiniDialog( void )
         Font = NULL;
     }
 }
+
+/*
+ * GUIInitDialog -- Sets font and other attributes for a new dialog box
+ */
 
 void GUIInitDialog( void )
 {
@@ -808,9 +839,9 @@ void GUIInitDialog( void )
    font_set = false;
 #ifdef __OS2_PM__
     Font = GUIStrDup( LIT( OS2_Dialog_Font ), NULL );
-#else
+#else  // of #ifdef __OS2_PM__
     Font = GUIStrDup( LIT( Windows_Dialog_Font ), NULL );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     if( Font ) {
         cp = strrchr( Font, '.' );
         if( cp ) {
@@ -848,6 +879,7 @@ void GUIInitDialog( void )
  */
 
 #ifdef THIS_CODE_IS_STUPID
+
 static void ScaleGrow( gui_coord * coord )
 {
     if( coord != NULL ) {
@@ -855,7 +887,7 @@ static void ScaleGrow( gui_coord * coord )
         coord->y = GUIMulDiv( int, coord->y, ActualSize.y, ExpectedSize.y );
     }
 }
-#endif
+#endif  // of #ifdef THIS_CODE_IS_STUPID
 
 /*
  * GUIGetDlgTextMetrics -- get the metrics of the text used in dialog boxes
@@ -868,6 +900,6 @@ void GUIAPI GUIGetDlgTextMetrics( gui_text_metrics * metrics )
 #ifdef THIS_CODE_IS_STUPID
         ScaleGrow( &metrics->avg );
         ScaleGrow( &metrics->max );
-#endif
+#endif  // of #ifdef THIS_CODE_IS_STUPID
     }
 }

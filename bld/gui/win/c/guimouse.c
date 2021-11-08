@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetMousePosn -- 
+ */
+
 bool GUIAPI GUIGetMousePosn( gui_window *wnd, gui_point *point )
 {
     WPI_POINT   wpi_point;

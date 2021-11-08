@@ -36,7 +36,10 @@
 #include "guiscale.h"
 #include "guilog.h"
 
-
+/*
+ * GUIGetAbsRect --
+ */
+ 
 void GUIAPI GUIGetAbsRect( gui_window *wnd, gui_rect *rect )
 {
     HWND        hwnd;

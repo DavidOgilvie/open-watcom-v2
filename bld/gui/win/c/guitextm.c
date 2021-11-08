@@ -38,6 +38,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISetMetrics -- ?
+ */
+
 void GUISetMetrics( gui_text_metrics *metrics, WPI_TEXTMETRIC *tm )
 {
     metrics->avg.x = GUIScreenToScaleH( AVGXCHAR( *tm ) );
@@ -45,6 +49,10 @@ void GUISetMetrics( gui_text_metrics *metrics, WPI_TEXTMETRIC *tm )
     metrics->max.x = GUIScreenToScaleH( MAXXCHAR( *tm ) );
     metrics->max.y = GUIScreenToScaleV( MAXYCHAR( *tm ) );
 }
+
+/*
+ * GUIGetTextMetrics -- ?
+ */
 
 void GUIAPI GUIGetTextMetrics( gui_window *wnd, gui_text_metrics *metrics )
 {

@@ -41,8 +41,10 @@
 
 
 /*
- * GUIControlSetRedraw -- set the redraw flag for a given window control
+ * GUIControlSetRedraw -- This routine returns true if it can set the 
+ *                        redraw flag for a given window control
  */
+
 bool GUIAPI GUIControlSetRedraw( gui_window *wnd, gui_ctl_id id, bool redraw )
 {
     HWND        hwnd;
@@ -54,7 +56,8 @@ bool GUIAPI GUIControlSetRedraw( gui_window *wnd, gui_ctl_id id, bool redraw )
 }
 
 /*
- * GUIAddText -- add the text to the given list/combo box
+ * GUIAddText -- This routine returns true if it can add the text to 
+ *               the given list/combo box
  */
 
 bool GUIAPI GUIAddText( gui_window *wnd, gui_ctl_id id, const char *text )
@@ -80,6 +83,10 @@ bool GUIAPI GUIAddText( gui_window *wnd, gui_ctl_id id, const char *text )
     return( false );
 }
 
+/*
+ * GUIAddTextList -- This routine returns true if ?
+ */
+ 
 bool GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const void *data_handle, GUIPICKGETTEXT *getstring )
 {
     int     i;
@@ -95,7 +102,8 @@ bool GUIAPI GUIAddTextList( gui_window *wnd, gui_ctl_id id, int num_items, const
 }
 
 /*
- * GUIInsertText -- insert the text to the given list/combo box at position
+ * GUIInsertText -- This routine returns true if it can insert the 
+ *                  text to the given list/combo box at position
  *                  indicated
  */
 
@@ -109,7 +117,8 @@ bool GUIAPI GUIInsertText( gui_window *wnd, gui_ctl_id id, int choice, const cha
 }
 
 /*
- * GUISetTopIndex -- change which item is at the top of the list/combo box
+ * GUISetTopIndex -- This routine returns true if it can change which 
+ *                   item is at the top of the list/combo box
  */
 
 bool GUIAPI GUISetTopIndex( gui_window *wnd, gui_ctl_id id, int choice )
@@ -119,7 +128,8 @@ bool GUIAPI GUISetTopIndex( gui_window *wnd, gui_ctl_id id, int choice )
 }
 
 /*
- * GUIGetTopIndex -- get index of item which is at the top of the list/combo
+ * GUIGetTopIndex -- This routine returns an integer value representing 
+ *                   the index of item which is at the top of the list/combo
  *                   box
  */
 
@@ -129,7 +139,8 @@ int GUIAPI GUIGetTopIndex( gui_window *wnd, gui_ctl_id id )
 }
 
 /*
- * GUISetHorizontalExtent -- set the width of items in the list box
+ * GUISetHorizontalExtent -- This routine returns true if it can set the 
+ *                           width of items in the list box
  */
 
 bool GUIAPI GUISetHorizontalExtent( gui_window *wnd, gui_ctl_id id, int extentx )
@@ -145,7 +156,7 @@ bool GUIAPI GUISetHorizontalExtent( gui_window *wnd, gui_ctl_id id, int extentx 
 }
 
 /*
- *  GUIGetListSize
+ * GUIGetListSize --
  */
 
 int GUIAPI GUIGetListSize( gui_window *wnd, gui_ctl_id id )
@@ -153,6 +164,10 @@ int GUIAPI GUIGetListSize( gui_window *wnd, gui_ctl_id id )
     return( (int)GUIToComboList( wnd, id, LB_GETCOUNT, CB_GETCOUNT, (WPI_PARAM1)0, (WPI_PARAM2)0, (WPI_MRESULT)0 ) );
 }
 
+/*
+ * GUIDeleteItem -- This routine returns true if ?
+ */
+ 
 bool GUIAPI GUIDeleteItem( gui_window *wnd, gui_ctl_id id, int choice )
 {
     if( ( choice >= 0 ) && ( choice < GUIGetListSize( wnd, id ) ) ) {
@@ -163,7 +178,8 @@ bool GUIAPI GUIDeleteItem( gui_window *wnd, gui_ctl_id id, int choice )
 }
 
 /*
- * GUIClearList -- clear the contents of the list/combo box
+ * GUIClearList -- This routine returns true if it can clear the 
+ *                 contents of the list/combo box
  */
 
 bool GUIAPI GUIClearList( gui_window *wnd, gui_ctl_id id )
@@ -173,7 +189,8 @@ bool GUIAPI GUIClearList( gui_window *wnd, gui_ctl_id id )
 }
 
 /*
- * GUISetText - Set the text of the given control to the given text
+ * GUISetText -- This routine returns true if it can set the text of 
+ *               the given control to the given text
  */
 
 bool GUIAPI GUISetText( gui_window *wnd, gui_ctl_id id, const char *text )
@@ -262,8 +279,9 @@ bool GUIAPI GUIGetCurrSelect( gui_window *wnd, gui_ctl_id id, int *choice )
 }
 
 /*
- *  GUISetCurrSelect -- if the combo/list box contains enough items, set the
- *                      current selection to the indicated choice
+ *  GUISetCurrSelect -- This routine returns true if the combo/list 
+ *                      box contains enough items, set the current 
+ *                      selection to the indicated choice
  */
 
 bool GUIAPI GUISetCurrSelect( gui_window *wnd, gui_ctl_id id, int choice )
@@ -276,6 +294,10 @@ bool GUIAPI GUISetCurrSelect( gui_window *wnd, gui_ctl_id id, int choice )
     return( true );
 }
 
+/*
+ * GUIGetListItem -- This routine returns a character string containing ?
+ */
+ 
 char * GUIAPI GUIGetListItem( gui_window *wnd, gui_ctl_id id, int choice )
 {
     int         length;
@@ -297,6 +319,10 @@ char * GUIAPI GUIGetListItem( gui_window *wnd, gui_ctl_id id, int choice )
     return( text );
 }
 
+/*
+ * GUISetListItemData -- This routine returns true if ?
+ */
+ 
 bool GUIAPI GUISetListItemData( gui_window *wnd, gui_ctl_id id, int choice, void *data )
 {
     WPI_MRESULT ret;
@@ -312,6 +338,10 @@ bool GUIAPI GUISetListItemData( gui_window *wnd, gui_ctl_id id, int choice, void
 #endif
 }
 
+/*
+ * GUIGetListItemData -- ?
+ */
+ 
 void * GUIAPI GUIGetListItemData( gui_window *wnd, gui_ctl_id id, int choice )
 {
     return( (void *)GUIToComboList( wnd, id, LB_GETITEMDATA, CB_GETITEMDATA, (WPI_PARAM1)choice, (WPI_PARAM2)0, (WPI_MRESULT)0 ) );

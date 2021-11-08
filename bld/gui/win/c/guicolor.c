@@ -229,6 +229,10 @@ void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back );
 void InitRootWindowRGB ( gui_window *wnd );
 
 #ifndef __OS2_PM__
+/*
+ * InitSystemRGB -- ?
+ */
+
 void InitSystemRGB( void )
 {
 /*****************************************************
@@ -434,6 +438,10 @@ or COLOR_HOTLITE
 					Background			Purpose
 */
 
+/*
+ * GUISetRGB -- This routine returns true if ?
+ */
+
 bool GUIAPI GUISetRGB( gui_colour colour, gui_rgb rgb )
 {
     if( colour < GUI_NUM_COLOURS  ) {
@@ -442,6 +450,10 @@ bool GUIAPI GUISetRGB( gui_colour colour, gui_rgb rgb )
     }
     return( false );
 }
+
+/*
+ * FillInRGB -- ?
+ */
 
 static void FillInRGB( WPI_COLOUR colour, gui_rgb *rgb )
 {
@@ -455,6 +467,10 @@ static void FillInRGB( WPI_COLOUR colour, gui_rgb *rgb )
     *rgb = GUIRGB( r, g, b );
 }
 
+/*
+ * GUIGetRGB -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIGetRGB( gui_colour colour, gui_rgb *rgb )
 {
     if( ( colour < GUI_NUM_COLOURS ) && ( rgb != NULL ) ) {
@@ -463,6 +479,10 @@ bool GUIAPI GUIGetRGB( gui_colour colour, gui_rgb *rgb )
     }
     return( false );
 }
+
+/*
+ * GUIGetWndColour -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetWndColour( gui_window *wnd, gui_attr attr, gui_colour_set *colour_set )
 {
@@ -476,6 +496,10 @@ bool GUIAPI GUIGetWndColour( gui_window *wnd, gui_attr attr, gui_colour_set *col
     }
     return( false );
 }
+
+/*
+ * SetBKBrush -- ?
+ */
 
 static void SetBKBrush( gui_window *wnd )
 {
@@ -493,6 +517,10 @@ static void SetBKBrush( gui_window *wnd )
     wnd->bk_brush = _wpi_createsolidbrush(GUIGetBack( wnd, GUI_BACKGROUND ));
     GUIGetRGB( WNDATTRBG( wnd, GUI_BACKGROUND ), &wnd->bk_rgb );
 }
+
+/*
+ * ChangeBKBrush -- ?
+ */
 
 static void ChangeBKBrush( gui_window *wnd )
 {
@@ -513,6 +541,11 @@ static void ChangeBKBrush( gui_window *wnd )
 }
 
 #if 0
+
+/*
+ * GUICheckBKBrush -- ?
+ */
+
 void GUICheckBKBrush( gui_window *wnd )
 {
     gui_rgb             rgb;
@@ -525,6 +558,10 @@ void GUICheckBKBrush( gui_window *wnd )
     }
 }
 #endif
+
+/*
+ * GUISetWndColour -- This routine returns true if ?
+ */
 
 bool GUIAPI GUISetWndColour( gui_window *wnd, gui_attr attr, gui_colour_set *colour_set )
 {
@@ -541,6 +578,10 @@ bool GUIAPI GUISetWndColour( gui_window *wnd, gui_attr attr, gui_colour_set *col
     }
     return( false );
 }
+
+/*
+ * GUIGetRGBFromUser -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetRGBFromUser( gui_rgb init_rgb, gui_rgb *new_rgb )
 {
@@ -610,7 +651,8 @@ bool GUIAPI GUIGetRGBFromUser( gui_rgb init_rgb, gui_rgb *new_rgb )
 }
 
 /*
- * GUIXSetColours -- record the colours selected by the application
+ * GUIXSetColours -- This routine returns true if it can record the 
+ *                   colours selected by the application
  */
 
 bool GUIXSetColours( gui_window *wnd, int num_attrs, gui_colour_set *colours )
@@ -632,10 +674,18 @@ bool GUIXSetColours( gui_window *wnd, int num_attrs, gui_colour_set *colours )
     return( false );
 }
 
+/*
+ * GUIXGetWindowColours -- ?
+ */
+
 void GUIXGetWindowColours( gui_window *wnd, gui_colour_set *colours )
 {
     memcpy( colours, wnd->attrs, sizeof( gui_colour_set ) * wnd->num_attrs );
 }
+
+/*
+ * GUIFreeBKBrush -- This routine returns the handle to the brush of ?
+ */
 
 HBRUSH GUIFreeBKBrush( gui_window * wnd )
 {
@@ -655,6 +705,10 @@ HBRUSH GUIFreeBKBrush( gui_window * wnd )
     return( brush );
 }
 
+/*
+ * GUISetWindowColours -- ?
+ */
+
 void GUIAPI GUISetWindowColours( gui_window *wnd, int num_colours,
                           gui_colour_set *colours )
 {
@@ -664,15 +718,29 @@ void GUIAPI GUISetWindowColours( gui_window *wnd, int num_colours,
     GUIWndDirty( wnd );
 }
 
+/*
+ * GUIGetFore -- This routine returns the foreground colour being used by
+ *               the current Windows colour scheme
+ */
+
 WPI_COLOUR GUIGetFore( gui_window *wnd, gui_attr attr )
 {
     return( GUIColours[WNDATTRFG( wnd, attr )] );
 }
 
+/*
+ * GUIGetBack -- This routine returns the background colour being used by
+ *               the Windows colour scheme
+ */
+ 
 WPI_COLOUR GUIGetBack( gui_window *wnd, gui_attr attr )
 {
     return( GUIColours[WNDATTRBG( wnd, attr )] );
 }
+
+/*
+ * SetTextColorByScheme -- ?
+ */
 
 void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 {
@@ -681,6 +749,11 @@ void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 }
 
 #ifndef __OS2_PM__
+
+/*
+ * GUIDoSysColorChange -- ?
+ */
+
 void GUIDoSysColorChange ( gui_window *wnd ) {
 	InitSystemRGB (); 
 	InitRootWindowRGB ( wnd );
@@ -688,10 +761,13 @@ void GUIDoSysColorChange ( gui_window *wnd ) {
 	_wpi_sendmessage( wnd->hwnd, WM_PAINT, 0, 0 );
 }
 
+// This routine may not be required if I can set up a RootWinDproc
+// that can process a WM_SYSCOLORCHANGE message from Windows.
 // The GUI colour controls only work on windows that are created by 
 // the GUI library.  Most routines create thier own root windows.
 // This routine finds those root windows and inserts the GUI 
 // attribs and colour control on them.
+
 void InitRootWindowRGB ( gui_window *wnd ) {
 	HWND	this;
 	gui_window	*thiswnd= wnd;			// Root window candidate

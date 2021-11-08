@@ -62,6 +62,10 @@ static void SetText( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
     _wpi_setbackcolour( wnd->hdc, _wpi_getnearestcolor( wnd->hdc , back ) );
 }
 
+/*
+ * GUIDrawTextBitmapRGB -- ?
+ */
+
 static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
                             unsigned in_width, unsigned in_height, const gui_coord *pos,
                             WPI_COLOUR fore, WPI_COLOUR back, gui_ord extentx,
@@ -185,6 +189,10 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     }
 }
 
+/*
+ * GUIDrawBitmapAttr -- ?
+ */
+
 void GUIDrawBitmapAttr( gui_window *wnd, const guix_coord *size, const gui_coord *pos, gui_attr attr, int hotspot_no )
 {
     WPI_COLOUR  fore, back;
@@ -205,6 +213,10 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
 
     GUIDrawTextBitmapRGB( wnd, text, length, 0, pos, fore, back, extentx, draw_extent, 0 );
 }
+
+/*
+ * GUIXDrawTextRGB -- ?
+ */
 
 void GUIXDrawTextRGB( gui_window *wnd, const char *text, size_t length, const gui_coord *pos,
                       gui_rgb fore, gui_rgb back, gui_ord extentx, bool draw_extent )

@@ -35,6 +35,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISetDClickRate -- ?
+ */
+
 void GUIAPI GUISetDClickRate( unsigned dclick_ms )
 {
     _wpi_setdoubleclicktime( dclick_ms );

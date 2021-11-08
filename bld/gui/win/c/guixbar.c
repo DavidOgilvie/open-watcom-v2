@@ -42,6 +42,10 @@
 #define BAR_INSET       2
 
 
+/*
+ * DrawSimpleBar -- This routine returns true if ?
+ */
+
 static bool DrawSimpleBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR colour,
                     bool selected, bool full_bar )
 {
@@ -108,6 +112,10 @@ static bool DrawSimpleBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
 
     return( true );
 }
+
+/*
+ * DrawShadowBar -- This routine returns true if ?
+ */
 
 static bool DrawShadowBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR colour, bool selected )
 {
@@ -194,6 +202,10 @@ static bool DrawShadowBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
     return( true );
 }
 
+/*
+ * GUIDrawBar -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIDrawBar( gui_window *wnd, gui_text_ord row, gui_ord start, gui_ord width,
                  gui_bar_styles bstyle, gui_attr attr, bool selected )
 {
@@ -238,6 +250,9 @@ bool GUIAPI GUIDrawBar( gui_window *wnd, gui_text_ord row, gui_ord start, gui_or
     return( ret );
 }
 
+/*
+ * GUIDrawBarGroup -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIDrawBarGroup( gui_window *wnd, gui_text_ord row, gui_ord start,
                       gui_ord width1, gui_ord width2, gui_bar_styles bstyle,

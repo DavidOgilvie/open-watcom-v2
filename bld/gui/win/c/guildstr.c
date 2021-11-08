@@ -42,10 +42,18 @@ static  bool        GUIMsgInitFlag = false;
 static  bool        external = false;
 
 
+/*
+ * GUIIsLoadStrInitialized -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIIsLoadStrInitialized( void )
 {
     return( GUIMsgInitFlag );
 }
+
+/*
+ * GUILoadStrInit -- This routine returns true if ?
+ */
 
 bool GUIAPI GUILoadStrInit( const char * fname )
 {
@@ -76,6 +84,10 @@ bool GUIAPI GUILoadStrInit( const char * fname )
     }
 }
 
+/*
+ * GUILoadStrFini -- This routine returns true if ?
+ */
+
 bool GUIAPI GUILoadStrFini( void )
 {
     if( GUIMsgInitFlag ) {
@@ -89,6 +101,10 @@ bool GUIAPI GUILoadStrFini( void )
 
     return( true );
 }
+
+/*
+ * GUILoadString -- This routine returns true if ?
+ */
 
 bool GUIAPI GUILoadString( gui_res_id id, char *buffer, int buffer_length )
 {

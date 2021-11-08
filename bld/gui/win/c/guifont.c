@@ -47,6 +47,10 @@
 #define MAX_STR 256
 
 
+/*
+ * SetFont -- ?
+ */
+
 #ifndef __OS2_PM__
 static void SetFont( gui_window *wnd, HFONT font )
 {
@@ -55,6 +59,10 @@ static void SetFont( gui_window *wnd, HFONT font )
     GUISetScroll( wnd );
     GUIEVENT( wnd, GUI_FONT_CHANGED, NULL );
 }
+
+/*
+ * GUIChooseFont -- This routine returns true if ?
+ */
 
 static bool GUIChooseFont( HFONT font, LOGFONT *lf, HWND hwnd )
 {
@@ -123,6 +131,10 @@ static bool GUIChooseFont( HFONT font, LOGFONT *lf, HWND hwnd )
 }
 #endif
 
+/*
+ * GUIChangeFont -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIChangeFont( gui_window *wnd )
 {
 #ifndef __OS2_PM__
@@ -146,6 +158,10 @@ bool GUIAPI GUIChangeFont( gui_window *wnd )
 #endif
 }
 
+/*
+ * GetFontInfo -- This routine returns a character string containing ?
+ */
+
 #ifndef __OS2_PM__
 static char *GetFontInfo( LOGFONT *lf )
 {
@@ -155,6 +171,10 @@ static char *GetFontInfo( LOGFONT *lf )
     return( GUIStrDup( buff, NULL ) );
 }
 #endif
+
+/*
+ * GUIGetFontInfo -- This routine returns a character string containing ?
+ */
 
 char * GUIAPI GUIGetFontInfo( gui_window *wnd )
 {
@@ -172,8 +192,9 @@ char * GUIAPI GUIGetFontInfo( gui_window *wnd )
 }
 
 /*
- * GUIGetFontFromUser -- create font dialog to get font info from use,
- *                       initializing with font info given
+ * GUIGetFontFromUser -- This routine returns true if it can create font 
+ *                       dialog to get font info from use, initializing with 
+ *                       font info given
  */
 
 char * GUIAPI GUIGetFontFromUser( char *fontinfo )
@@ -201,6 +222,10 @@ char * GUIAPI GUIGetFontFromUser( char *fontinfo )
 #endif
 }
 
+/*
+ * GUISetFontInfo -- This routine returns true if ?
+ */
+
 bool GUIAPI GUISetFontInfo( gui_window *wnd, char *fontinfo )
 {
 #ifndef __OS2_PM__
@@ -227,6 +252,10 @@ bool GUIAPI GUISetFontInfo( gui_window *wnd, char *fontinfo )
 #endif
 }
 
+/*
+ * GUIFontsSupported -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIFontsSupported( void )
 {
 #ifndef __OS2_PM__
@@ -235,6 +264,10 @@ bool GUIAPI GUIFontsSupported( void )
     return( false );
 #endif
 }
+
+/*
+ * GUISetSystemFont -- This routine returns true if ?
+ */
 
 bool GUIAPI GUISetSystemFont( gui_window *wnd, bool fixed )
 {

@@ -37,6 +37,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIFlushKeys -- ?
+ */
+
 void GUIAPI GUIFlushKeys( void )
 {
     HWND        hwnd;

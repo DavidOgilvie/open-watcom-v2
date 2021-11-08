@@ -35,6 +35,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISysFini -- ?
+ */
+
 void GUIAPI GUISysFini( void  )
 {
 }

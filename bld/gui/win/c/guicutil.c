@@ -38,12 +38,21 @@
 #include "guilog.h"
 
 
+/*
+ * GUIGetControlHWND -- This routine returns a handle to a window
+ *                      of a control that 
+ */
+
 static HWND GUIGetControlHWND( gui_window *wnd, gui_ctl_id id )
 {
     HWND                control;
     control = _wpi_getdlgitem( wnd->hwnd, id );
     return( control );
 }
+
+/*
+ * GUIToControl -- This routine returns true if ?
+ */
 
 bool GUIToControl( gui_window *wnd, gui_ctl_id id, WPI_MSG msg,
                    WPI_PARAM1 wparam, WPI_PARAM2 lparam, WPI_MRESULT *ret )
@@ -62,11 +71,19 @@ bool GUIToControl( gui_window *wnd, gui_ctl_id id, WPI_MSG msg,
     return( false );
 }
 
+/*
+ * GUIToComboListControl -- This routine returns true if ?
+ */
+
 static bool GUIToComboListControl( gui_window *wnd, gui_ctl_id id, WPI_MSG msg,
                             WPI_PARAM1 wparam, WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {
     return( GUIToControl( wnd, id, msg, wparam, lparam, ret ) );
 }
+
+/*
+ * GUIToComboList -- ?
+ */
 
 WPI_MRESULT GUIToComboList( gui_window *wnd, gui_ctl_id id, WPI_MSG lb_msg, WPI_MSG cb_msg,
                             WPI_PARAM1 wparam, WPI_PARAM2 lparam, WPI_MRESULT ret )
@@ -91,6 +108,10 @@ WPI_MRESULT GUIToComboList( gui_window *wnd, gui_ctl_id id, WPI_MSG lb_msg, WPI_
     }
     return( my_ret );
 }
+
+/*
+ * GUIGetControlClass -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetControlClass( gui_window *wnd, gui_ctl_id id, gui_control_class *control_class )
 {

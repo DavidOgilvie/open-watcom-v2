@@ -40,6 +40,10 @@
 #include "guilog.h"
 
 
+/*
+ * ActivateNC -- ?
+ */
+
 void ActivateNC( gui_window *wnd, bool activate )
 {
     gui_window  *current;
@@ -51,6 +55,10 @@ void ActivateNC( gui_window *wnd, bool activate )
         }
     }
 }
+
+/*
+ * GUIBringToFront -- ?
+ */
 
 void GUIAPI GUIBringToFront( gui_window *wnd )
 {
@@ -96,6 +104,10 @@ void GUIAPI GUIBringToFront( gui_window *wnd )
         ActivateNC( wnd->parent, true );
     }
 }
+
+/*
+ * GUIActivateNC -- ?
+ */
 
 void GUIAPI GUIActivateNC( gui_window *wnd, bool activate )
 {

@@ -75,6 +75,10 @@ static dialog_wnd_node  *DialogHead = NULL;
 WPI_MRESULT CALLBACK GUIEditFunc( HWND, WPI_MSG, WPI_PARAM1, WPI_PARAM2 );
 WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND, WPI_MSG, WPI_PARAM1, WPI_PARAM2 );
 
+/*
+ * GUIInsertCtrlWnd -- This routine returns true if ?
+ */
+
 bool GUIInsertCtrlWnd( gui_window *wnd )
 {
     dialog_wnd_node     *dlg_wnd_node;
@@ -90,6 +94,10 @@ bool GUIInsertCtrlWnd( gui_window *wnd )
     return( false );
 }
 
+/*
+ * GUIGetCtrlWnd -- ?
+ */
+
 gui_window *GUIGetCtrlWnd( HWND hwnd )
 {
     dialog_wnd_node    **owner;
@@ -103,6 +111,10 @@ gui_window *GUIGetCtrlWnd( HWND hwnd )
     }
     return( NULL );
 }
+
+/*
+ * GUIDeleteCtrlWnd -- ?
+ */
 
 static void GUIDeleteCtrlWnd( gui_window *wnd )
 {
@@ -127,8 +139,8 @@ static void GUIDeleteCtrlWnd( gui_window *wnd )
 }
 
 /*
- * GUIGetControlByID - get the first control_item* in the given HWND with the
- *                     given id
+ * GUIGetControlByID -- get the first control_item* in the given HWND with the
+ *                      given id
  */
 
 control_item *GUIGetControlByID( gui_window *parent_wnd, gui_ctl_id id )
@@ -145,8 +157,8 @@ control_item *GUIGetControlByID( gui_window *parent_wnd, gui_ctl_id id )
 }
 
 /*
- * GUIGetControlByHWND - get the first control_item * in the given HWND with the
- *                       given HWND
+ * GUIGetControlByHWND -- get the first control_item * in the given HWND with the
+ *                        given HWND
  */
 
 control_item * GUIGetControlByHwnd( gui_window *parent_wnd, HWND control )
@@ -163,8 +175,8 @@ control_item * GUIGetControlByHwnd( gui_window *parent_wnd, HWND control )
 }
 
 /*
- * GUIControlInsert - insert a control_item associated with the given
- *                    gui_window for the given class
+ * GUIControlInsert -- insert a control_item associated with the given
+ *                     gui_window for the given class
  */
 
 control_item *GUIControlInsert( gui_window *parent_wnd, gui_control_class control_class,
@@ -189,6 +201,10 @@ control_item *GUIControlInsert( gui_window *parent_wnd, gui_control_class contro
     }
     return( item );
 }
+
+/*
+ * GUIControlInsertByHWND -- ?
+ */
 
 control_item *GUIControlInsertByHWND( HWND hwnd, gui_window *parent_wnd )
 {
@@ -221,8 +237,8 @@ control_item *GUIControlInsertByHWND( HWND hwnd, gui_window *parent_wnd )
 }
 
 /*
- * GUIControlDelete - delete the control_item with the given it which is
- *                 associated with the given window handle
+ * GUIControlDelete -- delete the control_item with the given it which is
+ *                     associated with the given window handle
  */
 
 void GUIControlDelete( gui_window *wnd, gui_ctl_id id )
@@ -271,7 +287,7 @@ void GUIControlDeleteAll( gui_window *wnd )
 }
 
 /*
- * GUIEditFunc - callback function for all edit windows
+ * GUIEditFunc -- callback function for all edit windows
  */
 
 WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -378,7 +394,7 @@ WPI_MRESULT CALLBACK GUIEditFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam,
 }
 
 /*
- * GUIGroupBoxFunc - callback function for all GroupBox windows
+ * GUIGroupBoxFunc -- callback function for all GroupBox windows
  */
 
 WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -419,6 +435,10 @@ WPI_MRESULT CALLBACK GUIGroupBoxFunc( HWND hwnd, WPI_MSG message, WPI_PARAM1 wpa
     return( (WPI_MRESULT)_wpi_callwindowproc( win_call_back, hwnd, message, wparam, lparam ) );
 }
 
+/*
+ * GUIDoSubClass -- ?
+ */
+ 
 WPI_WNDPROC GUIDoSubClass( HWND hwnd, gui_control_class control_class )
 {
     WPI_WNDPROC old;
@@ -455,6 +475,11 @@ WPI_WNDPROC GUIDoSubClass( HWND hwnd, gui_control_class control_class )
         return( NULL );
     }
 }
+
+/*
+ * GUISetControlStyle -- This routine sets the style bits for the 
+ *                       current contrl
+ */
 
 LONG GUISetControlStyle( gui_control_info *ctl_info )
 {
@@ -570,6 +595,11 @@ LONG GUISetControlStyle( gui_control_info *ctl_info )
     return( ret_style );
 }
 
+/*
+ * CreateControl -- This routine creates a new control and returns the 
+ *                  handle to that control
+ */
+
 static HWND CreateControl( gui_control_info *ctl_info, gui_window *parent_wnd, const guix_coord *scr_pos, const guix_coord *scr_size )
 {
     DWORD       style;
@@ -670,7 +700,7 @@ static HWND CreateControl( gui_control_info *ctl_info, gui_window *parent_wnd, c
 }
 
 /*
- * GUIAddControl - add the given control to the parent window
+ * GUIAddControl -- add the given control to the parent window
  */
 
 bool GUIAPI GUIAddControl( gui_control_info *ctl_info, gui_colour_set *plain, gui_colour_set *standout )
@@ -712,6 +742,10 @@ bool GUIAPI GUIAddControl( gui_control_info *ctl_info, gui_colour_set *plain, gu
     return( true );
 }
 
+/*
+ * GUIEnumControls -- ?
+ */
+
 void GUIAPI GUIEnumControls( gui_window *wnd, CONTRENUMCALLBACK *func, void *param )
 {
     control_item        *curr;
@@ -721,6 +755,10 @@ void GUIAPI GUIEnumControls( gui_window *wnd, CONTRENUMCALLBACK *func, void *par
         (*func)( wnd, curr->id, param );
     }
 }
+
+/*
+ * GUICheckRadioButton -- This routine returns true if ?
+ */
 
 bool GUICheckRadioButton( gui_window *wnd, gui_ctl_id id )
 {
@@ -772,6 +810,10 @@ bool GUICheckRadioButton( gui_window *wnd, gui_ctl_id id )
     return( false );
 }
 
+/*
+ * GUIDeleteControl -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIDeleteControl( gui_window *wnd, gui_ctl_id id )
 {
     control_item        *control;
@@ -785,6 +827,10 @@ bool GUIAPI GUIDeleteControl( gui_window *wnd, gui_ctl_id id )
     }
     return( false );
 }
+
+/*
+ * GUILimitEditText -- This routine returns true if ?
+ */
 
 bool GUIAPI GUILimitEditText( gui_window *wnd, gui_ctl_id id, int len )
 {
@@ -808,6 +854,10 @@ bool GUIAPI GUILimitEditText( gui_window *wnd, gui_ctl_id id, int len )
     return( false );
 }
 
+/*
+ * ShowControl -- ?
+ */
+
 static void ShowControl( gui_window *wnd, gui_ctl_id id, int show_flag )
 {
     control_item        *control;
@@ -819,17 +869,29 @@ static void ShowControl( gui_window *wnd, gui_ctl_id id, int show_flag )
     }
 }
 
+/*
+ * GUIHideControl -- ?
+ */
+
 void GUIAPI GUIHideControl( gui_window *wnd, gui_ctl_id id )
 {
 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     ShowControl( wnd, id, SW_HIDE );
 }
 
+/*
+ * GUIShowControl -- ?
+ */
+
 void GUIAPI GUIShowControl( gui_window *wnd, gui_ctl_id id )
 {
 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
     ShowControl( wnd, id, SW_SHOW );
 }
+
+/*
+ * GUIIsControlVisible -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIIsControlVisible( gui_window *wnd, gui_ctl_id id )
 {

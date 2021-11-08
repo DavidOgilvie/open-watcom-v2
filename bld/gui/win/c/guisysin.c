@@ -35,6 +35,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISysInit -- This routine returns true if ?
+ */
+
 bool GUIAPI GUISysInit( init_mode install )
 {
     /* unused parameters */ (void)install;

@@ -96,6 +96,10 @@ static GetClassMap Map[] =
 };
 #endif
 
+/*
+ * GUIGetControlClassFromHWND -- ?
+ */
+
 gui_control_class GUIGetControlClassFromHWND( HWND cntl )
 {
     gui_control_class   control_class;
@@ -118,6 +122,10 @@ gui_control_class GUIGetControlClassFromHWND( HWND cntl )
     }
     return( control_class );
 }
+
+/*
+ * GUIGetControlStylesFromHWND -- ?
+ */
 
 gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class control_class )
 {
@@ -187,11 +195,19 @@ gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class con
     return( styles );
 }
 
+/*
+ * InsertResDlgCntlFunc -- This callback routine returns true if ?
+ */
+
 BOOL CALLBACK InsertResDlgCntlFunc( HWND hwnd, LPARAM lparam )
 {
     GUIControlInsertByHWND( hwnd, (gui_window *)lparam );
     return( TRUE );
 }
+
+/*
+ * GUIInsertResDialogControls -- This routine returns true if ?
+ */
 
 bool GUIInsertResDialogControls( gui_window *wnd )
 {
@@ -210,6 +226,10 @@ bool GUIInsertResDialogControls( gui_window *wnd )
 #endif
     return( true );
 }
+
+/*
+ * GUICreateDialogFromRes -- This routine returns true if ?
+ */
 
 bool GUICreateDialogFromRes( res_name_or_id dlg_id, gui_window *parent_wnd, GUICALLBACK *gui_call_back, void *extra )
 {

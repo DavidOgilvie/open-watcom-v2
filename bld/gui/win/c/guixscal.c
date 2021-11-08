@@ -40,6 +40,10 @@
 
 WPI_TEXTMETRIC GUItm;
 
+/*
+ * GUIClientToScaleRect -- ?
+ */
+
 void GUIClientToScaleRect( const guix_rect *client, gui_rect *rect )
 {
     GUIScreenToScaleRect( client, rect );
@@ -86,7 +90,8 @@ guix_ord GUIFromTextY( gui_text_ord text_ord, gui_window *wnd )
 }
 
 /*
- * GUIGetTheDC - get the device context using font information in wnd
+ * GUIGetTheDC -- This routine returns true if it can get the device 
+ *                context using font information in wnd
  */
 
 bool GUIGetTheDC( gui_window *wnd )
@@ -102,6 +107,10 @@ bool GUIGetTheDC( gui_window *wnd )
     }
     return( false );
 }
+
+/*
+ * GUIReleaseTheDC -- ?
+ */
 
 void GUIReleaseTheDC( gui_window *wnd )
 {
@@ -119,7 +128,7 @@ void GUIReleaseTheDC( gui_window *wnd )
 }
 
 /*
- * GUIGetMetrics - Initialize the tm structure with info for the given window
+ * GUIGetMetrics -- Initialize the tm structure with info for the given window
  */
 
 void GUIGetMetrics( gui_window *wnd )
@@ -137,11 +146,10 @@ void GUIGetMetrics( gui_window *wnd )
 /*
  * GUIGetUpdateRows -- get the start row and number of rows to get
  *                     updated.  Must have called GUIBeginPaint first.
- */
-
-
-/* We assume that this function is only called between GUIBeginPaint and
- * GUIEndPaint, so the wnd->hdc is valid and wnd->font is selected
+ *
+ *                     We assume that this function is only called between 
+ *                     GUIBeginPaint and GUIEndPaint, so the wnd->hdc is 
+ *                     valid and wnd->font is selected
  */
 
 void GUIGetUpdateRows( gui_window *wnd, HWND hwnd, gui_text_ord *start, gui_text_ord *num )

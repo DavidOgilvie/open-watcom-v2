@@ -37,7 +37,8 @@
 
 
 /*
- * GUISetFocus -- set input focus to a control in a dialog box or in a window
+ * GUISetFocus -- This routine returns true if  it can set input focus 
+ *                to a control in a dialog box or in a window
  */
 
 bool GUIAPI GUISetFocus( gui_window *wnd, gui_ctl_id id )
@@ -68,6 +69,10 @@ bool GUIAPI GUISetFocus( gui_window *wnd, gui_ctl_id id )
 
     return( false );
 }
+
+/*
+ * GUIGetFocus -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetFocus( gui_window *wnd, gui_ctl_id *id )
 {

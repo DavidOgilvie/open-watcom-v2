@@ -48,11 +48,19 @@ statwnd         *GUIStatusWnd;
 static  void    (*ResizeStatus)( gui_window * ) = NULL;
 static  void    (*FreeStatus)( void )           = NULL;
 
+/*
+ * DoFreeStatus -- ?
+ */
+
 static void DoFreeStatus( void )
 {
     StatusWndDestroy( GUIStatusWnd );
     StatusWndFini();
 }
+
+/*
+ * SetStatusRect -- ?
+ */
 
 static void SetStatusRect( HWND parent, WPI_RECT *status_wpi_rect, guix_ord x, guix_ord height )
 {
@@ -68,6 +76,10 @@ _wpi_getclientrect( parent, &wpi_rect );
     h = _wpi_cvth_y_plus1( bottom - top, bottom - top );
     _wpi_setwrectvalues( status_wpi_rect, x, y, right - left, h );
 }
+
+/*
+ * DoResizeStatus -- ?
+ */
 
 static void DoResizeStatus( gui_window *wnd )
 {
@@ -86,6 +98,10 @@ static void DoResizeStatus( gui_window *wnd )
     }
 }
 
+/*
+ * CalcStatusRect -- ?
+ */
+
 static void CalcStatusRect( gui_window *wnd, gui_ord x, gui_ord height, WPI_RECT *wpi_rect )
 {
     gui_text_metrics    metrics;
@@ -102,8 +118,9 @@ static void CalcStatusRect( gui_window *wnd, gui_ord x, gui_ord height, WPI_RECT
 }
 
 /*
- * GUICreateStatusWindow -- create a status window.  For now, only look
- *                          at rect.left and rect.height for inforamation.
+ * GUICreateStatusWindow -- This routine returns true if it can create a 
+ *                          status window.  For now, only look at 
+ *                          rect.left and rect.height for inforamation.
  *                          Tie the rest to the parent window.
  */
 
@@ -133,6 +150,10 @@ bool GUIAPI GUICreateStatusWindow( gui_window *wnd, gui_ord x, gui_ord height,
     return( true );
 }
 
+/*
+ * GUIDrawStatusText -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIDrawStatusText( gui_window *wnd, const char *text )
 {
     WPI_PRES    pres;
@@ -155,11 +176,18 @@ bool GUIAPI GUIDrawStatusText( gui_window *wnd, const char *text )
     return( true );
 }
 
+/*
+ * GUIHasStatus -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIHasStatus( gui_window *wnd )
 {
     return( wnd->status != NULLHANDLE );
 }
 
+/*
+ * GUICloseStatusWindow -- This routine returns true if ?
+ */
 
 bool GUIAPI GUICloseStatusWindow( gui_window *wnd )
 {
@@ -173,6 +201,10 @@ bool GUIAPI GUICloseStatusWindow( gui_window *wnd )
     GUIResizeBackground( wnd, true );
     return( true );
 }
+
+/*
+ * GUIResizeStatusWindow -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIResizeStatusWindow( gui_window *wnd, gui_ord x, gui_ord height )
 {
@@ -195,6 +227,10 @@ void GUIResizeStatus( gui_window *wnd )
         (*ResizeStatus)( wnd );
     }
 }
+
+/*
+ * GUIFreeStatus -- ?
+ */
 
 void GUIFreeStatus( void )
 {

@@ -45,6 +45,10 @@ static bool Init;
 static bool IsDBCS;
 
 
+/*
+ * MBInit -- ?
+ */
+
 static void MBInit( void )
 /************************/
 {
@@ -111,6 +115,10 @@ static void MBInit( void )
 
 }
 
+/*
+ * GUICharLen -- This routine returns an integer representing ?
+ */
+
 int GUIAPI GUICharLen( int ch )
 {
     if( !Init ) {
@@ -119,6 +127,10 @@ int GUIAPI GUICharLen( int ch )
     }
     return( __CharLenTable[ch] );
 }
+
+/*
+ * GUIIsDBCS -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIIsDBCS( void )
 {

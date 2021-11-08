@@ -41,6 +41,10 @@
 #define NUM_SYSTEM_MENUS        9
 
 
+/*
+ * FreeSystemMenu -- ?
+ */
+
 static void FreeSystemMenu( gui_window *wnd )
 {
     int             num_items;
@@ -59,6 +63,10 @@ static void FreeSystemMenu( gui_window *wnd )
         }
     }
 }
+
+/*
+ * GUIResetMenus -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIResetMenus( gui_window *wnd, const gui_menu_items *menus )
 {

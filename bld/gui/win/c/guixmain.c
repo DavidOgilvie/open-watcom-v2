@@ -47,7 +47,7 @@ bool    GUIMainTouched = false;
 #if defined( __OS2_PM__ )
 
 /*
- * main - main entry point for PM
+ * main -- main entry point for PM
  */
 
 int main( SHORT sArgc, CHAR *ppArgv[] )

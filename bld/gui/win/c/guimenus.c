@@ -54,6 +54,10 @@ static gui_menu_struct GUIHint[] = {
 
 static gui_menu_items menu_GUIHint = GUI_MENU_ARRAY( GUIHint );
 
+/*
+ * GUIInitGUIMenuHint -- ?
+ */
+
 void GUIInitGUIMenuHint( void )
 {
     GUIHint[GUI_MENU_IDX( GUI_CHANGE_FONT )].label = LIT( Change_XFont_ );
@@ -61,6 +65,10 @@ void GUIInitGUIMenuHint( void )
     GUIHint[GUI_MENU_IDX( GUI_FIX_TOOLBAR )].label = LIT( XFix_Tool_Bar );
     GUIHint[GUI_MENU_IDX( GUI_FIX_TOOLBAR )].hinttext = LIT( Make_Tool_Bar_Fixed );
 }
+
+/*
+ * GUIAppendSystemMenuItem -- ?
+ */
 
 void GUIAppendSystemMenuItem( HMENU hsysmenu, int menu_idx )
 {
@@ -70,6 +78,10 @@ void GUIAppendSystemMenuItem( HMENU hsysmenu, int menu_idx )
         }
     }
 }
+
+/*
+ * GetMenuFlags -- This routine returns true if ?
+ */
 
 static bool GetMenuFlags( HMENU hmenu, gui_ctl_id id_position, bool by_position,
                           unsigned *menu_flags, unsigned *attr_flags )
@@ -84,6 +96,10 @@ static bool GetMenuFlags( HMENU hmenu, gui_ctl_id id_position, bool by_position,
 
     return( false );
 }
+
+/*
+ * GetParentMenuPos -- This routine returns true if ?
+ */
 
 static bool GetParentMenuPos( HMENU hmenu, HMENU hpopup, HMENU *hparent, int *position )
 {
@@ -113,6 +129,10 @@ static bool GetParentMenuPos( HMENU hmenu, HMENU hpopup, HMENU *hparent, int *po
     return( false );
 }
 
+/*
+ * GetPopupHMENU -- This routine returns a handle to a menu if ?
+ */
+
 static HMENU GetPopupHMENU( gui_window *wnd, HMENU hmenu, gui_ctl_id id,
                             HMENU *hparent, int *position, hint_type type )
 {
@@ -139,6 +159,10 @@ static HMENU GetPopupHMENU( gui_window *wnd, HMENU hmenu, gui_ctl_id id,
 }
 
 #if 0
+/*
+ * GetStateForMenu -- ?
+ */
+
 void GetStateForMenu( gui_window *wnd, gui_ctl_id id, WPI_MENUSTATE *mstate )
 {
     HMENU           hmenu, hpopup, hparent;
@@ -158,6 +182,10 @@ void GetStateForMenu( gui_window *wnd, gui_ctl_id id, WPI_MENUSTATE *mstate )
     }
 }
 
+/*
+ * GUIIsMenuItemChecked -- This routine returns true if ?
+ */
+
 bool GUIIsMenuItemChecked( gui_window *wnd, gui_ctl_id id )
 {
     WPI_MENUSTATE       mstate;
@@ -166,6 +194,10 @@ bool GUIIsMenuItemChecked( gui_window *wnd, gui_ctl_id id )
 
     return( _wpi_ismenucheckedfromstate( &mstate ) );
 }
+
+/*
+ * GUIIsMenuItemEnabled -- This routine returns true if ?
+ */
 
 bool GUIIsMenuItemEnabled( gui_window *wnd, gui_ctl_id id )
 {
@@ -176,6 +208,10 @@ bool GUIIsMenuItemEnabled( gui_window *wnd, gui_ctl_id id )
     return( _wpi_ismenuenabledfromstate( &mstate ) );
 }
 #endif
+
+/*
+ * GUISetMenu -- ?
+ */
 
 void GUISetMenu( gui_window *wnd, HMENU hmenu )
 {
@@ -207,6 +243,10 @@ void GUISetMenu( gui_window *wnd, HMENU hmenu )
 #endif
 }
 
+/*
+ * GetPopupId -- This routine returns true if ?
+ */
+
 static bool GetPopupId( gui_window *wnd, HMENU hmenu, gui_ctl_id *id )
 {
     popup_info  *info;
@@ -220,6 +260,9 @@ static bool GetPopupId( gui_window *wnd, HMENU hmenu, gui_ctl_id *id )
     return( false );
 }
 
+/*
+ * InsertPopup -- This routine returns true if ?
+ */
 
 static bool InsertPopup( gui_window *wnd, gui_ctl_id id, HMENU hpopup, hint_type type )
 {
@@ -240,6 +283,10 @@ static bool InsertPopup( gui_window *wnd, gui_ctl_id id, HMENU hpopup, hint_type
     return( true );
 }
 
+/*
+ * DeletePopup -- ?
+ */
+
 static void DeletePopup( gui_window *wnd, gui_ctl_id id )
 {
     popup_info  *curr;
@@ -258,6 +305,10 @@ static void DeletePopup( gui_window *wnd, gui_ctl_id id )
         }
     }
 }
+
+/*
+ * GUIDeleteFloatingPopups -- ?
+ */
 
 void GUIDeleteFloatingPopups( gui_window *wnd )
 {
@@ -283,6 +334,10 @@ void GUIDeleteFloatingPopups( gui_window *wnd )
     }
 }
 
+/*
+ * GUIFreePopupList -- ?
+ */
+
 void GUIFreePopupList( gui_window *wnd )
 {
     popup_info  *curr;
@@ -294,6 +349,10 @@ void GUIFreePopupList( gui_window *wnd )
     }
     wnd->popup = NULLHANDLE;
 }
+
+/*
+ * GUISetGUIHint -- ?
+ */
 
 void GUISetGUIHint( gui_window *wnd )
 {
@@ -320,6 +379,10 @@ HMENU GUIGetHMENU( gui_window *wnd )
     return( hmenu );
 }
 
+/*
+ * GUIDrawMenuBar -- ?
+ */
+
 static void GUIDrawMenuBar( gui_window *wnd )
 {
     if( wnd->root_frame != NULLHANDLE ) {
@@ -334,6 +397,11 @@ static void GUIDrawMenuBar( gui_window *wnd )
         }
     }
 }
+
+/*
+ * GUIGetMenuPopupCount -- This routine returns an integer value 
+ *                         representing ?
+ */
 
 int GUIAPI GUIGetMenuPopupCount( gui_window *wnd, gui_ctl_id id )
 {
@@ -356,6 +424,10 @@ int GUIAPI GUIGetMenuPopupCount( gui_window *wnd, gui_ctl_id id )
 
     return( num_items );
 }
+
+/*
+ * GetOrMakeHMENU -- This routine returns a handle to a menu if ?
+ */
 
 static HMENU GetOrMakeHMENU( gui_window *wnd, bool floating, bool *made_root )
 {
@@ -425,10 +497,18 @@ bool GUIAPI GUIDeleteMenuItem( gui_window *wnd, gui_ctl_id id, bool floating )
     return( true );
 }
 
+/*
+ * CheckItem -- ?
+ */
+
 static void CheckItem( HMENU hmenu, gui_ctl_id id, bool check )
 {
     _wpi_checkmenuitem( hmenu, id, ( check ) ? TRUE : FALSE, FALSE );
 }
+
+/*
+ * CheckPopup -- ?
+ */
 
 static void CheckPopup( HMENU hmenu, int position, bool check )
 {
@@ -436,7 +516,8 @@ static void CheckPopup( HMENU hmenu, int position, bool check )
 }
 
 /*
- * GUICheckMenuItem -- check or uncheck a menu item
+ * GUICheckMenuItem -- This routine returns true if  the routine can 
+ *                     check or uncheck a menu item
  */
 
 bool GUIAPI GUICheckMenuItem( gui_window *wnd, gui_ctl_id id, bool check, bool floating )
@@ -470,10 +551,18 @@ bool GUIAPI GUICheckMenuItem( gui_window *wnd, gui_ctl_id id, bool check, bool f
     return( true );
 }
 
+/*
+ * EnableItem -- ?
+ */
+
 static void EnableItem( HMENU hmenu, gui_ctl_id id, bool enable )
 {
     _wpi_enablemenuitem( hmenu, id, ( enable ) ? TRUE : FALSE, FALSE );
 }
+
+/*
+ * EnablePopup -- ?
+ */
 
 static void EnablePopup( HMENU hmenu, int position, bool enable )
 {
@@ -481,8 +570,9 @@ static void EnablePopup( HMENU hmenu, int position, bool enable )
 }
 
 /*
- * GUIEnableSystemMenuItem -- enable or disable a system menu item.  Used
- *                         by GUI library only
+ * GUIEnableSystemMenuItem -- This routine returns true if it can enable 
+ *                            or disable a system menu item.  Used by GUI 
+ *                            library only
  */
 
 bool GUIEnableSystemMenuItem( gui_window *wnd, gui_ctl_id id, bool enable )
@@ -497,7 +587,8 @@ bool GUIEnableSystemMenuItem( gui_window *wnd, gui_ctl_id id, bool enable )
 }
 
 /*
- * GUIEnableMenuItem -- enable or disable a menu item
+ * GUIEnableMenuItem -- This routine returns true if it can enable or 
+ *                      disable a menu item
  */
 
 bool GUIAPI GUIEnableMenuItem( gui_window *wnd, gui_ctl_id id, bool enable, bool floating )
@@ -532,7 +623,8 @@ bool GUIAPI GUIEnableMenuItem( gui_window *wnd, gui_ctl_id id, bool enable, bool
 }
 
 /*
- * GUISetMenuText -- change the text of a menu item
+ * GUISetMenuText -- This routine returns true if it can change the 
+ *                   text of a menu item
  */
 
 bool GUIAPI GUISetMenuText( gui_window *wnd, gui_ctl_id id, const char *text, bool floating )
@@ -590,6 +682,10 @@ void GUICreateMenuFlags( gui_menu_styles style, unsigned *menu_flags, unsigned *
     }
 }
 
+/*
+ * GUICreateSubMenu -- This routine returns a handle to a menu when ?
+ */
+
 HMENU GUICreateSubMenu( gui_window *wnd, const gui_menu_items *menus, hint_type type )
 {
     HMENU       hmenu;
@@ -616,7 +712,8 @@ HMENU GUICreateSubMenu( gui_window *wnd, const gui_menu_items *menus, hint_type 
 }
 
 /*
- * AppendMenus -- menu items to a HMENU
+ * AppendMenus -- This routine returns true if it can append menu items 
+ *                to a HMENU
  */
 
 static bool AppendMenus( gui_window *wnd, HMENU hmenu, const gui_menu_items *menus )
@@ -635,7 +732,8 @@ static bool AppendMenus( gui_window *wnd, HMENU hmenu, const gui_menu_items *men
 }
 
 /*
- * GUICreateMenus -- create a menu resourse
+ * GUICreateMenus -- This routine returns true if it can create a menu 
+ *                   resourse
  */
 
 bool GUICreateMenus( gui_window *wnd, const gui_menu_items *menus, HMENU *hmenu )
@@ -655,8 +753,9 @@ bool GUICreateMenus( gui_window *wnd, const gui_menu_items *menus, HMENU *hmenu 
 }
 
 /*
- * GUIAddToSystemMenu -- add menus items to the system menus.  Used to give
- *                       menu items to child windows
+ * GUIAddToSystemMenu -- This routine returns true if it can add menus 
+ *                       items to the system menus.  Used to give menu 
+ *                       items to child windows
  */
 
 bool GUIAddToSystemMenu( gui_window *wnd, HWND hwnd, const gui_menu_items *menus, gui_create_styles style )
@@ -789,6 +888,10 @@ static void DisplayMenuHintText( gui_window *wnd, WPI_PARAM1 wparam, WPI_PARAM2 
     GUIDisplayHintText( top_wnd, wnd, id, type, style );
 }
 
+/*
+ * GUIProcessMenuSelect -- ?
+ */
+
 WPI_MRESULT GUIProcessMenuSelect( gui_window *wnd, HWND hwnd, WPI_MSG msg,
                                   WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
@@ -807,6 +910,9 @@ WPI_MRESULT GUIProcessMenuSelect( gui_window *wnd, HWND hwnd, WPI_MSG msg,
     return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
 }
 
+/*
+ * GUIProcessInitMenuPopup -- ?
+ */
 
 WPI_MRESULT GUIProcessInitMenuPopup ( gui_window *wnd, HWND hwnd, WPI_MSG msg,
                                       WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -821,6 +927,9 @@ WPI_MRESULT GUIProcessInitMenuPopup ( gui_window *wnd, HWND hwnd, WPI_MSG msg,
     return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
 }
 
+/*
+ * AddMenu -- This routine returns true if ?
+ */
 
 static bool AddMenu( HMENU hmenu, gui_window *wnd, const gui_menu_struct *menu,
                      bool insert, gui_ctl_id id_position, bool by_position,
@@ -871,6 +980,10 @@ static bool AddMenu( HMENU hmenu, gui_window *wnd, const gui_menu_struct *menu,
     return( true );
 }
 
+/*
+ * GUIInsertMenuByIdx -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIInsertMenuByIdx( gui_window *wnd, int position, const gui_menu_struct *menu, bool floating )
 {
     HMENU       hmenu;
@@ -890,6 +1003,10 @@ bool GUIAPI GUIInsertMenuByIdx( gui_window *wnd, int position, const gui_menu_st
     }
     return( ret );
 }
+
+/*
+ * GUIInsertMenuByID -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIInsertMenuByID( gui_window *wnd, gui_ctl_id id, const gui_menu_struct *menu )
 {
@@ -915,6 +1032,10 @@ bool GUIAPI GUIInsertMenuByID( gui_window *wnd, gui_ctl_id id, const gui_menu_st
     return( ret );
 }
 
+/*
+ * GUIAppendMenu -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIAppendMenu( gui_window *wnd, const gui_menu_struct *menu, bool floating )
 {
     HMENU       hmenu;
@@ -934,6 +1055,10 @@ bool GUIAPI GUIAppendMenu( gui_window *wnd, const gui_menu_struct *menu, bool fl
     }
     return( ret );
 }
+
+/*
+ * GUIAppendMenuByIdx -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIAppendMenuByIdx( gui_window *wnd, int position, const gui_menu_struct *menu )
 {
@@ -957,6 +1082,10 @@ bool GUIAPI GUIAppendMenuByIdx( gui_window *wnd, int position, const gui_menu_st
     return( ret );
 }
 
+/*
+ * ChangeMenuToPopup -- This routine returns true if ?
+ */
+
 static HMENU ChangeMenuToPopup ( gui_window *wnd, HMENU hmenu, gui_ctl_id id, hint_type type )
 {
     HMENU               hpopup;
@@ -975,6 +1104,10 @@ static HMENU ChangeMenuToPopup ( gui_window *wnd, HMENU hmenu, gui_ctl_id id, hi
 
     return( hpopup );
 }
+
+/*
+ * AddPopup -- This routine returns true if ?
+ */
 
 static bool AddPopup( gui_window *wnd, gui_ctl_id id, const gui_menu_struct *menu,
                       bool insert, int position, bool floating )
@@ -1002,11 +1135,19 @@ static bool AddPopup( gui_window *wnd, gui_ctl_id id, const gui_menu_struct *men
     return( AddMenu( hpopup, wnd, menu, insert, position, true, type ) );
 }
 
+/*
+ * GUIInsertMenuToPopup -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIInsertMenuToPopup( gui_window *wnd, gui_ctl_id id, int position,
                                 const gui_menu_struct *menu, bool floating )
 {
     return( AddPopup( wnd, id, menu, true, position, floating ) );
 }
+
+/*
+ * GUIAppendMenuToPopup -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIAppendMenuToPopup( gui_window *wnd, gui_ctl_id id,
                                 const gui_menu_struct *menu, bool floating )

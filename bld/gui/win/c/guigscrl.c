@@ -37,6 +37,10 @@
 #include "guilog.h"
 
 
+/*
+ * GetPos -- ?
+ */
+
 static guix_ord GetPos( gui_window *wnd, int bar )
 {
     if( GUIScrollOn( wnd, bar ) ) {
@@ -64,6 +68,9 @@ gui_text_ord GUIAPI GUIGetVScrollRow( gui_window *wnd )
     return( GUIToTextY( GetPos( wnd, SB_VERT ), wnd ) );
 }
 
+/*
+ * GetScroll -- ?
+ */
 
 static gui_ord GetScroll( gui_window *wnd, int bar )
 {

@@ -52,6 +52,10 @@ extern  controls_struct GUIControls[];
 /* Local Window callback functions prototypes */
 WINEXPORT BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam );
 
+/*
+ * GUISubClassEditComboboxEnumFunc -- This routine returns true if ?
+ */
+
 BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
 {
     char        osclassname[GUI_CLASSNAME_MAX + 1];
@@ -73,6 +77,11 @@ BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
     }
     return( TRUE );
 }
+
+/*
+ * GUISubClassEditCombobox -- This routine handles the processing for
+ *                            events directed to a combobox
+ */
 
 WPI_WNDPROC GUISubClassEditCombobox( HWND hwnd )
 {

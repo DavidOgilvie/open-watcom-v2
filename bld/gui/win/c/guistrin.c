@@ -38,6 +38,10 @@
 #include "guilog.h"
 
 
+/*
+ * DoReturn -- ?
+ */
+
 static gui_text_ord DoReturn( gui_text_ord ret, gui_window *wnd, bool got_new )
 {
     if( got_new ) {
@@ -47,7 +51,7 @@ static gui_text_ord DoReturn( gui_text_ord ret, gui_window *wnd, bool got_new )
 }
 
 /*
- * GUIGetStringPos
+ * GUIGetStringPos -- ?
  */
 
 gui_text_ord GUIAPI GUIGetStringPos( gui_window *wnd, gui_ord indent, const char *string, gui_ord mouse_x )

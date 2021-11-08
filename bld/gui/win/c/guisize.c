@@ -42,6 +42,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIResizeWindow -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIResizeWindow( gui_window *wnd, const gui_rect *rect )
 {
     guix_coord  scr_pos;
@@ -93,6 +97,10 @@ bool GUIAPI GUIResizeWindow( gui_window *wnd, const gui_rect *rect )
     return( true );
 }
 
+/*
+ * GUISetRestoredSize -- ?
+ */
+
 void GUIAPI GUISetRestoredSize( gui_window *wnd, const gui_rect *rect )
 {
     guix_coord          scr_pos;
@@ -124,6 +132,10 @@ void GUIAPI GUISetRestoredSize( gui_window *wnd, const gui_rect *rect )
     }
 }
 
+/*
+ * GUIGetRestoredSize -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIGetRestoredSize( gui_window *wnd, gui_rect *rect )
 {
     HWND                top_hwnd;
@@ -142,12 +154,20 @@ bool GUIAPI GUIGetRestoredSize( gui_window *wnd, gui_rect *rect )
     return( false );
 }
 
+/*
+ * GUIMinimizeWindow -- ?
+ */
+
 void GUIAPI GUIMinimizeWindow( gui_window *wnd )
 {
     if( wnd->style & GUI_MINIMIZE ) {
         _wpi_minimizewindow( GUIGetParentFrameHWND( wnd ) );
     }
 }
+
+/*
+ * GUIMaximizeWindow -- ?
+ */
 
 void GUIAPI GUIMaximizeWindow( gui_window *wnd )
 {
@@ -160,10 +180,18 @@ void GUIAPI GUIMaximizeWindow( gui_window *wnd )
     }
 }
 
+/*
+ * GUIHideWindow -- ?
+ */
+
 void GUIAPI GUIHideWindow( gui_window *wnd )
 {
     _wpi_showwindow( GUIGetParentFrameHWND( wnd ), SW_HIDE );
 }
+
+/*
+ * GUIIsWindowVisible -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIIsWindowVisible( gui_window *wnd )
 {
@@ -178,6 +206,10 @@ bool GUIAPI GUIIsWindowVisible( gui_window *wnd )
     return( false );
 }
 
+/*
+ * GUIRestoreWindow -- ?
+ */
+
 void GUIAPI GUIRestoreWindow( gui_window *wnd )
 {
     if( GUIIsMDIChildWindow( wnd ) && GUIMDIMaximized( wnd ) ) {
@@ -186,6 +218,10 @@ void GUIAPI GUIRestoreWindow( gui_window *wnd )
         _wpi_restorewindow( GUIGetParentFrameHWND( wnd ) );
     }
 }
+
+/*
+ * GUIIsMaximized -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIIsMaximized( gui_window *wnd )
 {
@@ -198,6 +234,10 @@ bool GUIAPI GUIIsMaximized( gui_window *wnd )
     }
     return( maximized );
 }
+
+/*
+ * GUIIsMinimized -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIIsMinimized( gui_window *wnd )
 {

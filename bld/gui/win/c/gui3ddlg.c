@@ -35,12 +35,19 @@
 #include "guixwind.h"
 #include "guilog.h"
 
-
+/*
+ * GUI3DDialogInit -- 
+ */
+ 
 bool GUIAPI GUI3DDialogInit( void )
 {
     return( CvrCtl3DInit( GUIMainHInst ) );
 }
 
+/*
+ * GUI3DDialogFini -- 
+ */
+ 
 void GUIAPI GUI3DDialogFini( void )
 {
     (void)CvrCtl3dUnregister( GUIMainHInst );

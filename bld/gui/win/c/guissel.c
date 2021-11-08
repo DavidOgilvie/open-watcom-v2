@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUISelect -- This routine returns true if ?
+ */
+
 static bool GUISelect( gui_window *wnd, gui_ctl_id id, bool set, WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {
     gui_control_class   control_class;
@@ -80,6 +84,10 @@ bool GUIAPI GUISetEditSelect( gui_window *wnd, gui_ctl_id id, int start, int end
     return( GUISelect( wnd, id, true, (WPI_PARAM2)MAKELONG( start, end ), NULL ) );
 }
 
+/*
+ * GUIGetEditSelect -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIGetEditSelect( gui_window *wnd, gui_ctl_id id, int *start, int *end )
 {
     bool        ret;
@@ -94,6 +102,10 @@ bool GUIAPI GUIGetEditSelect( gui_window *wnd, gui_ctl_id id, int *start, int *e
     }
     return( ret );
 }
+
+/*
+ * GUIScrollCaret -- ?
+ */
 
 void GUIAPI GUIScrollCaret( gui_window *wnd, gui_ctl_id id )
 {

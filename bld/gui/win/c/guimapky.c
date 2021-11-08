@@ -58,7 +58,6 @@ typedef struct {
     gui_key         ctrl;
 } keytable;
 
-
 static keytable vk_table[] = {
     { 0xbc,     ',',    '<', GUI_KEY_ALT_COMMA,         0       },
     { 0xbe,     '.',    '>', GUI_KEY_ALT_PERIOD,        0       },
@@ -114,6 +113,10 @@ static gui_key AltFunc[] =
     GUI_KEY_ALT_Z
 };
 
+/*
+ * convert_shiftkeys -- This routine returns true if ?
+ */
+
 static bool convert_shiftkeys( WORD vk, gui_key *key,
                                char *regular, char *shifted )
 {
@@ -139,6 +142,10 @@ static bool convert_shiftkeys( WORD vk, gui_key *key,
     }
     return( false );
 }
+
+/*
+ * discard_this_vk -- This routine returns true if ?
+ */
 
 static bool discard_this_vk( WORD vk )
 {
@@ -176,6 +183,10 @@ static bool discard_this_vk( WORD vk )
     return( discard );
 }
 
+/*
+ * convert_numeric -- This routine returns true if ?
+ */
+
 static bool convert_numeric( WORD ch, gui_key *key )
 {
     int         t;
@@ -210,6 +221,10 @@ static bool convert_numeric( WORD ch, gui_key *key )
     return( false );
 }
 
+/*
+ * convert_alpha -- This routine returns true if ?
+ */
+
 static bool convert_alpha( WORD ch, gui_key *key )
 {
     gui_key     t;
@@ -231,10 +246,18 @@ static bool convert_alpha( WORD ch, gui_key *key )
     return( false );
 }
 
+/*
+ * convert_otherkeys -- This routine returns true if ?
+ */
+
 static bool convert_otherkeys( WORD vk, gui_key *key )
 {
     return( convert_shiftkeys( vk, key, c_regular, c_shifted ) );
 }
+
+/*
+ * convert_ascii -- This routine returns true if ?
+ */
 
 static bool convert_ascii( WORD ch, gui_key *key )
 {
@@ -246,6 +269,10 @@ static bool convert_ascii( WORD ch, gui_key *key )
         return( true );
     return( false );
 }
+
+/*
+ * convert_keytable -- This routine returns true if ?
+ */
 
 static bool convert_keytable( WORD vk, gui_key *key )
 {
@@ -269,6 +296,11 @@ static bool convert_keytable( WORD vk, gui_key *key )
 }
 
 #ifndef __OS2_PM__
+
+/*
+ * convert_numpad -- This routine returns true if ?
+ */
+
 static bool convert_numpad( WORD vk, gui_key *key )
 {
     if( ( vk >= VK_NUMPAD0 ) && ( vk <= VK_NUMPAD9 ) ) {
@@ -278,6 +310,10 @@ static bool convert_numpad( WORD vk, gui_key *key )
     return( false );
 }
 #endif
+
+/*
+ * GUIConvertVirtKeyToGUIKey -- This routine returns true if ?
+ */
 
 static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
 {
@@ -415,7 +451,7 @@ static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
 }
 
 /*
- *  GUISetKeyState
+ *  GUISetKeyState -- ?
  */
 
 void GUISetKeyState( void )
@@ -450,6 +486,10 @@ void GUISetKeyState( void )
 
 #ifndef __OS2_PM__
 
+/*
+ * GUIWindowsMapKey -- This routine returns true if ?
+ */
+
 bool GUIWindowsMapKey( WPI_PARAM1 vk, WPI_PARAM2 data, gui_key *scan )
 {
     if( scan == NULL ) {
@@ -459,6 +499,10 @@ bool GUIWindowsMapKey( WPI_PARAM1 vk, WPI_PARAM2 data, gui_key *scan )
     *scan = HIWORD( LOBYTE( data ) );
     return( GUIConvertVirtKeyToGUIKey( (WORD)vk, scan ) );
 }
+
+/*
+ * GUIProcesskey -- 
+ */
 
 WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
@@ -562,6 +606,10 @@ static ctrlkey alt_table[] = {
     GUI_KEY_ALT_EQUAL,  '=',
 };
 
+/*
+ * convert_table -- ?
+ */
+
 static bool convert_table( WORD vk, gui_key *key, ctrlkey *table, int size )
 {
     int         i;
@@ -574,6 +622,10 @@ static bool convert_table( WORD vk, gui_key *key, ctrlkey *table, int size )
     }
     return( false );
 }
+
+/*
+ * GUIWindowsMapKey -- This routine returns true if ?
+ */
 
 bool GUIWindowsMapKey( WPI_PARAM1 p1, WPI_PARAM2 p2, gui_key *key )
 {
@@ -615,6 +667,10 @@ bool GUIWindowsMapKey( WPI_PARAM1 p1, WPI_PARAM2 p2, gui_key *key )
     }
     return( false );
 }
+
+/*
+ * GUIProcesskey -- ?
+ */
 
 WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {

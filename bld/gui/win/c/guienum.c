@@ -48,6 +48,10 @@ typedef struct {
     void                *param;
 } enum_info;
 
+/*
+ * GUIEnumChildWindowsEnumFunc -- This routine returns true if ?
+ */
+
 BOOL CALLBACK GUIEnumChildWindowsEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
 {
     gui_window  *wnd;
@@ -78,6 +82,10 @@ BOOL CALLBACK GUIEnumChildWindowsEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
     }
     return( TRUE );
 }
+
+/*
+ * GUIEnumChildWindows -- ?
+ */
 
 void GUIAPI GUIEnumChildWindows( gui_window *wnd, ENUMCALLBACK *func, void *param )
 {

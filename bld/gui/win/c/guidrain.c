@@ -36,6 +36,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIDrainEvents -- ?
+ */
+
 void GUIAPI GUIDrainEvents( void )
 {
     WPI_QMSG    msg;

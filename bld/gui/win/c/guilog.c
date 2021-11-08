@@ -34,10 +34,11 @@ static  int     DOSLOWDUMP= 0;					// Crash-proof logging turned off
 static	int		LOGWIDTH= 78;					// Width of log if justified
 static	int		JUSTIFY= 1;						// Put routine and line number on right
 	
-/* -----------------------------------------------------------------------
-*   This routine sets the environment variable name that is prepended to
-*	the log file name.                                                  */
-
+/*
+ * GUIset_log_envvar -- This routine sets the environment variable 
+ *                      name that is prepended to the log file name.
+ */
+ 
 int GUIset_log_envvar (char *envname)
 {
     strcpy(ENVVARNAME, envname);
@@ -54,10 +55,11 @@ int GUIset_log_envvar (char *envname)
 	return (1);
 }
 	
-/* -----------------------------------------------------------------------
-*   This routine sets the debug mode
-*	0= off, don't write to log file
-*	1= on, write to log file                                            */
+/*
+ * GUIset_log_mode -- This routine sets the debug mode
+ *                        0= off, don't write to log file
+ *                        1= on, write to log file
+ */
 
 int GUIset_log_mode(int mode)
 {
@@ -65,9 +67,10 @@ int GUIset_log_mode(int mode)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*    This routine sets the debug crash mode (very slow)
-*	 Log file is flushed to disk after each call                        */
+/*
+ * GUIset_crash_mode -- This routine sets the debug crash mode (very slow)
+ *                      Log file is flushed to disk after each call
+ */
 
 int GUIset_crash_mode(int mode)
 {
@@ -75,8 +78,9 @@ int GUIset_crash_mode(int mode)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*   This routine sets the debug file name                               */
+/*
+ * GUIset_log_filename -- This routine sets the debug file name
+ */
 
 int GUIset_log_filename(char *name)
 {
@@ -89,8 +93,9 @@ int GUIset_log_filename(char *name)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*   This routine opens the debug file                                   */
+/*
+ * GUIopen_log -- This routine opens the debug file
+ */
 	
 int GUIopen_log(void)
 {
@@ -112,7 +117,7 @@ int GUIopen_log(void)
 		current_time= time ( NULL );
 		current_time_string= ctime (&current_time);
 		fprintf (fpDPTR, 
-			"Started ""%s"" at %s===========================================\n",
+			"Started \"%s\" on %s===========================================\n",
 			FULLDEBUGFILE, current_time_string );
 		if (DOSLOWDUMP) {
 			fflush (fpDPTR);
@@ -125,8 +130,9 @@ int GUIopen_log(void)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*   This routine closes the debug file                                  */
+/*
+ * GUIclose_log-- This routine closes the debug file
+ */
 	
 int GUIclose_log(void)
 {
@@ -134,8 +140,9 @@ int GUIclose_log(void)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*   This routine sets the width of the log file, if right justified     */
+/*
+* GUIlog_width -- This routine sets the width of the log file, if right justified
+*/
 	
 int GUIlog_width (int width)
 {
@@ -143,16 +150,19 @@ int GUIlog_width (int width)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*   This routine sets whether right justify mode is on or off. If it is set
-*	to on, the calling routine must supply __FUNCTION__ and __LINE__ as the
-*	last 2 parameters of the call.  At some point I will try to find out 
-*	how to find the file and line number of the calling routine.  This will 
-*	likely be in the Code > Callers menu item.  Until then, this will have 
-*	to do. Note that turning this on and off can have parts of the log file
-*	with justification, but part of the log that deals with a long string 
-*   of events within a small portion of the same file can have justification
-*	disabled.  (Saves on file size and time.)                           */
+/*
+ * GUIjustify -- This routine sets whether right justify mode is on or off. 
+ *               If it is set to on, the calling routine must supply 
+ *               __FUNCTION__ and __LINE__ as the last 2 parameters 
+ *               of the call.  At some point I will try to find out how to 
+ *               find the file and line number of the calling routine.
+ *               This will likely be in the Code > Callers menu item.
+ *               Until then, this will have to do. Note that turning this 
+ *               on and off can have parts of the log file with 
+ *               justification, but part of the log that deals with a long 
+ *               string of events within a small portion of the same file 
+ *               can have justification (Saves on file size and time.)
+ */
 
 int GUIjustify (int value)
 {
@@ -160,9 +170,10 @@ int GUIjustify (int value)
 	return (1);
 }
 
-/* -----------------------------------------------------------------------
-*   This routine writes a record to the debug file, ensuring that it is
-*   written to the disk.                                               */
+/*
+ * GUIlog -- This routine writes a record to the debug file, ensuring 
+ *           that it is written to the disk.
+ */
 
 int GUIlog (char *format, ...)
 {
@@ -280,12 +291,14 @@ Entered GUIGetClientRect 									  ..\c\guicrect.c(45)
 ...																			   */
 }
 
-/* -----------------------------------------------------------------------
- * In this routine, I will try to get at the name of an arglist value
- * by examining the info available in the argument list, which hopefully
- * will supply the type of the enum and a pointer to its list values.
- * I note that this is done in the debugger, so hopefully I can reverse
- * engineer the process here.                                          */
+/*
+ * strmsgenum -- In this routine, I will try to get at the name of an 
+ *               arglist value by examining the info available in the 
+ *               argument list, which hopefully will supply the type of 
+ *               the enum and a pointer to its list values.  I note that 
+ *               this is done in the debugger, so hopefully I can reverse
+ *               engineer the process here.
+ */
  
 char *strmsgenum (char *dummy, ...) { // Actually only 1 parameter, but need to get at list
 	va_list		arglist;

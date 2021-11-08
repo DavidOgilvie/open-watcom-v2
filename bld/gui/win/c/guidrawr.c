@@ -39,6 +39,10 @@
 #include "guilog.h"
 
 
+/*
+ * DrawRect -- This routine returns true if ?
+ */
+
 static bool DrawRect( gui_window *wnd, const gui_rect *rect, WPI_COLOUR colour, bool fill, bool outline )
 {
     WPI_RECT    wpi_rect;
@@ -97,25 +101,45 @@ static bool DrawRect( gui_window *wnd, const gui_rect *rect, WPI_COLOUR colour, 
     return( true );
 }
 
+/*
+ * GUIFillRect -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIFillRect( gui_window *wnd, const gui_rect *rect, gui_attr attr )
 {
     return( DrawRect( wnd, rect, GUIGetFore( wnd, attr ), true, false ) );
 }
+
+/*
+ * GUIDrawRect -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIDrawRect( gui_window *wnd, const gui_rect *rect, gui_attr attr )
 {
     return( DrawRect( wnd, rect, GUIGetFore( wnd, attr ), false, true ) );
 }
 
+/*
+ * GUIFillRectRGB -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIFillRectRGB( gui_window *wnd, const gui_rect *rect, gui_rgb rgb )
 {
     return( DrawRect( wnd, rect, GETRGB( rgb ), true, false ) );
 }
 
+/*
+ * GUIDrawRectRGB -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIDrawRectRGB( gui_window *wnd, const gui_rect *rect, gui_rgb rgb )
 {
     return( DrawRect( wnd, rect, GETRGB( rgb ), false, true ) );
 }
+
+/*
+ * DrawLine -- This routine returns true if ?
+ */
 
 static bool DrawLine( gui_window *wnd, const gui_point *start, const gui_point *end,
                       gui_line_styles style, gui_ord thickness, WPI_COLOUR colour )
@@ -197,11 +221,19 @@ static bool DrawLine( gui_window *wnd, const gui_point *start, const gui_point *
     return( true );
 }
 
+/*
+ * GUIDrawLine -- This routine returns true if ?
+ */
+
 bool GUIAPI GUIDrawLine( gui_window *wnd, const gui_point *start, const gui_point *end,
                   gui_line_styles style, gui_ord thickness, gui_attr attr )
 {
     return( DrawLine( wnd, start, end, style, thickness, GUIGetFore( wnd, attr ) ) );
 }
+
+/*
+ * GUIDrawLineRGB -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIDrawLineRGB( gui_window *wnd, const gui_point *start, const gui_point *end,
                      gui_line_styles style, gui_ord thickness, gui_rgb rgb )

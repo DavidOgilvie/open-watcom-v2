@@ -36,7 +36,10 @@
 #include "guixdlg.h"
 #include "guilog.h"
 
-
+/*
+ * GUIIsChecked -- Indicates whether a checkbox is checked or not
+ */
+ 
 unsigned GUIAPI GUIIsChecked( gui_window *wnd, gui_ctl_id id )
 {
     unsigned    ret;
@@ -46,6 +49,10 @@ unsigned GUIAPI GUIIsChecked( gui_window *wnd, gui_ctl_id id )
     return( ret & 0x3 );
 }
 
+/*
+ * GUISetChecked -- Sets the current checkbox control to checked
+ */
+ 
 bool GUIAPI GUISetChecked( gui_window *wnd, gui_ctl_id id, unsigned check )
 {
     if( ( check == GUI_CHECKED ) && (wnd->flags & IS_RES_DIALOG) == 0 ) {

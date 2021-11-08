@@ -53,13 +53,21 @@ static  HOOKPROC        F1ProcInst;
 static  PFN             F1ProcInst;
 #endif
 
-// What the hell does this do??!!
+
+/*
+ * scroll_catch_check -- This routine returns true if ?
+ */
+
 static bool scroll_catch_check( WPI_QMSG *qmsg )
 {
     (void)qmsg;
 
     return( false );
 }
+
+/*
+ * getFirstGUIParent -- ?
+ */
 
 static gui_window *getFirstGUIParent( HWND hwnd )
 {
@@ -83,6 +91,10 @@ static gui_window *getFirstGUIParent( HWND hwnd )
 
     return( wnd );
 }
+
+/*
+ * F1Proc -- This is the callback routine for the ?
+ */
 
 #ifdef __OS2_PM__
 int CALLBACK F1Proc( HAB hab, WPI_QMSG *qmsg, ULONG fs )
@@ -140,6 +152,10 @@ LRESULT CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param )
 #endif
 }
 
+/*
+ * GUIHookF1 -- ?
+ */
+ 
 void GUIAPI GUIHookF1( void )
 {
     if( F1Hooked == 0 ) {
@@ -164,6 +180,10 @@ void GUIAPI GUIHookF1( void )
     }
     F1Hooked++;
 }
+
+/*
+ * GUIUnHookF1 -- ?
+ */
 
 void GUIAPI GUIUnHookF1( void )
 {

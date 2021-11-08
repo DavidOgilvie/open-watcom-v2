@@ -35,10 +35,18 @@
 #include "guilog.h"
 
 
+/*
+ * GUISetBetweenTitles -- ?
+ */
+
 void GUIAPI GUISetBetweenTitles( int between_titles )
 {
     (void)between_titles;
 }
+
+/*
+ * GUIGetCursorPos -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetCursorPos( gui_window *wnd, gui_point *point )
 {
@@ -47,12 +55,20 @@ bool GUIAPI GUIGetCursorPos( gui_window *wnd, gui_point *point )
     return( false );
 }
 
+/*
+ * GUISetCursorPos -- This routine returns true if ?
+ */
+
 bool GUIAPI GUISetCursorPos( gui_window *wnd, const gui_point *point )
 {
     (void)wnd;
     (void)point;
     return( false );
 }
+
+/*
+ * GUIGetCursorType -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIGetCursorType( gui_window *wnd, gui_cursor_type *cursor )
 {
@@ -61,12 +77,20 @@ bool GUIAPI GUIGetCursorType( gui_window *wnd, gui_cursor_type *cursor )
     return( false );
 }
 
+/*
+ * GUISetCursorType -- This routine returns true if ?
+ */
+
 bool GUIAPI GUISetCursorType( gui_window *wnd, gui_cursor_type cursor )
 {
     (void)wnd;
     (void)cursor;
     return( false );
 }
+
+/*
+ * GUISetBackgroundChar -- This routine returns true if ?
+ */
 
 bool GUIAPI GUISetBackgroundChar( gui_window *wnd, char background )
 {
@@ -75,34 +99,62 @@ bool GUIAPI GUISetBackgroundChar( gui_window *wnd, char background )
     return( false );
 }
 
+/*
+ * GUIGMouseOn -- ?
+ */
+
 void GUIAPI GUIGMouseOn( void )
 {
 }
 
+/*
+ * GUIGMouseOff -- ?
+ */
+
 void GUIAPI GUIGMouseOff( void )
 {
 }
+
+/*
+ * GUISetBackgroundColour -- ?
+ */
 
 void GUIAPI GUISetBackgroundColour( gui_colour_set *colour )
 {
     (void)colour;
 }
 
+/*
+ * GUISetDialogColours -- ?
+ */
+
 void GUIAPI GUISetDialogColours( gui_colour_set *colours )
 {
     (void)colours;
 }
+
+/*
+ * GUIGetDialogColours -- ?
+ */
 
 void GUIAPI GUIGetDialogColours( gui_colour_set *colours )
 {
     (void)colours;
 }
 
+/*
+ * GUISetCharacter -- ?
+ */
+
 void GUIAPI GUISetCharacter( gui_draw_char draw_char, int new )
 {
     (void)draw_char;
     (void)new;
 }
+
+/*
+ * GUIGetCharacter -- This routine returns an integer value representing ?
+ */
 
 int GUIAPI GUIGetCharacter( gui_draw_char draw_char )
 {

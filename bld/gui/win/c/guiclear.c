@@ -35,7 +35,10 @@
 #include "guicontr.h"
 #include "guilog.h"
 
-
+/*
+ * GUIClearText -- This routine returns true if ?
+ */
+ 
 bool GUIAPI GUIClearText( gui_window *wnd, gui_ctl_id id )
 {
     HWND                control;
@@ -46,6 +49,10 @@ bool GUIAPI GUIClearText( gui_window *wnd, gui_ctl_id id )
     }
     return( true );
 }
+
+/*
+ * GUIEnableControl -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIEnableControl( gui_window *wnd, gui_ctl_id id, bool enable )
 {
@@ -58,6 +65,10 @@ bool GUIAPI GUIEnableControl( gui_window *wnd, gui_ctl_id id, bool enable )
     }
     return( false );
 }
+
+/*
+ * GUIIsControlEnabled -- This routine returns true if ?
+ */
 
 bool GUIAPI GUIIsControlEnabled( gui_window *wnd, gui_ctl_id id )
 {

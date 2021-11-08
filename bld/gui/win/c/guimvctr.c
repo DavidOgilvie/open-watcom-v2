@@ -38,6 +38,10 @@
 #include "guilog.h"
 
 
+/*
+ * GUIResizeControl -- 
+ */
+
 bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *rect )
 {
     guix_coord  scr_pos;
@@ -52,6 +56,10 @@ bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *re
     }
     return( false );
 }
+
+/*
+ * GUIGetControlRect -- 
+ */
 
 bool GUIAPI GUIGetControlRect( gui_window *wnd, gui_ctl_id id, gui_rect *rect )
 {

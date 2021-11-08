@@ -55,7 +55,7 @@ static MessageTypes Types[] = {
 };
 
 /*
- * GUIDisplayMessage - display a message with requested types of icon and
+ * GUIDisplayMessage -- display a message with requested types of icon and
  *                      return user's response.
  */
 

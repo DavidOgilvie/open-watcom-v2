@@ -36,7 +36,10 @@
 #include "guixwind.h"
 #include "guilog.h"
 
-
+/*
+ * GUIWinMessageLoop -- Main message loop for the gui library
+ */
+ 
 int GUIWinMessageLoop( void )
 {
     WPI_PARAM1  param1;
