@@ -58,6 +58,7 @@ static bool DrawSimpleBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
     guix_ord    vscroll;
     guix_ord    win_height;
 
+	GUIlog_entering_function ();
     if( ( rect->s_width == 0 ) || ( rect->s_height == 0 ) ) {
         return( false );
     }
@@ -130,6 +131,7 @@ static bool DrawShadowBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
     guix_ord    vscroll;
     guix_ord    win_height;
 
+	GUIlog_entering_function ();
     if( ( rect->s_width == 0 ) || ( rect->s_height == 0 ) ) {
         return( false );
     }
@@ -182,9 +184,9 @@ static bool DrawShadowBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
     if( shadow_offset != 0 ) {
 #ifndef __OS2_PM__
         _wpi_setrectvalues( &shadow_wpi_rect, pos.x + shadow_offset, pos.y + shadow_offset, pos.x + size.x, pos.y + size.y );
-#else
+#else  // of #ifndef __OS2_PM__
         _wpi_setrectvalues( &shadow_wpi_rect, pos.x + shadow_offset, pos.y, pos.x + size.x, pos.y + size.y - shadow_offset );
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
         shadow_brush = _wpi_createsolidbrush( RGB(0,0,0) );
         _wpi_fillrect( wnd->hdc, &shadow_wpi_rect, RGB(0,0,0), shadow_brush );
         _wpi_deletebrush( shadow_brush );
@@ -192,9 +194,9 @@ static bool DrawShadowBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
 
 #ifndef __OS2_PM__
     _wpi_setrectvalues( &bar_wpi_rect, pos.x, pos.y, pos.x + size.x - shadow_offset, pos.y + size.y - shadow_offset );
-#else
+#else  // of #ifndef __OS2_PM__
     _wpi_setrectvalues( &bar_wpi_rect, pos.x, pos.y + shadow_offset, pos.x + size.x - shadow_offset, pos.y + size.y );
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
     interior_brush = _wpi_createsolidbrush( colour );
     _wpi_fillrect( wnd->hdc, &bar_wpi_rect, colour, interior_brush );
     _wpi_deletebrush( interior_brush );
@@ -214,6 +216,7 @@ bool GUIAPI GUIDrawBar( gui_window *wnd, gui_text_ord row, gui_ord start, gui_or
     gui_text_metrics    metrics;
     WPI_COLOUR          colour;
 
+	GUIlog_entering_function ();
     if( (wnd == NULL) || (wnd->hdc == NULLHANDLE) || (wnd->ps == NULL) ) {
         return( false );
     }
@@ -261,6 +264,7 @@ bool GUIAPI GUIDrawBarGroup( gui_window *wnd, gui_text_ord row, gui_ord start,
     gui_ord     stretch_width;
     bool        ret;
 
+	GUIlog_entering_function ();
     if( width1 == 0 ) {
         ret = true;
     } else {

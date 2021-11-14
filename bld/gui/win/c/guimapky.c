@@ -47,7 +47,7 @@ extern  gui_keystate    KeyState;
 	static  bool            RetTrue = false; /* set to true of app returned
 												true to last WM_SYSKEYDOWN or
 												WM_SYSKEYUP message */
-#endif
+#endif  // of ifndef __OS2_PM__
 
 
 typedef struct {
@@ -78,10 +78,10 @@ static char num_shifted[] = "!@#$%^&*()";
 #ifndef __OS2_PM__
 static char c_regular[]   = "1234567890`-=[]\\;',./";
 static char c_shifted[]   = "!@#$%^&*()~_+{}|:\"<>?";
-#else
+#else  // of #ifndef __OS2_PM__
 static char c_regular[]   = "1234567890`-=[]\\;',./*+";
 static char c_shifted[]   = "!@#$%^&*()~_+{}|:\"<>?*+";
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
 
 static gui_key AltFunc[] =
 {
@@ -122,6 +122,7 @@ static bool convert_shiftkeys( WORD vk, gui_key *key,
 {
     char        *str;
 
+	GUIlog_entering_function ();
     str = strchr( regular, vk );
     if( CHK_KS_SHIFT ) {
         if( str != NULL ) {
@@ -151,6 +152,7 @@ static bool discard_this_vk( WORD vk )
 {
     bool        discard;
 
+	GUIlog_entering_function ();
     discard = false;
 
     switch( vk ) {
@@ -159,7 +161,7 @@ static bool discard_this_vk( WORD vk )
     case VK_CAPITAL:
 #ifndef __OS2_PM__
     case VK_MENU:
-#endif
+#endif  // of #ifndef __OS2_PM__
     case VK_NUMLOCK:
     case VK_PAUSE:
     case VK_LBUTTON:
@@ -168,14 +170,14 @@ static bool discard_this_vk( WORD vk )
     case VK_SNAPSHOT:
 #ifdef __OS2_PM__
     case VK_ALT:
-#else
+#else  // of #ifdef __OS2_PM__
     case VK_CLEAR:
     case VK_SELECT:
     case VK_CANCEL:
     case VK_EXECUTE:
     case VK_HELP:
     case VK_SEPARATOR:
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
         discard = true;
         break;
     }
@@ -191,6 +193,7 @@ static bool convert_numeric( WORD ch, gui_key *key )
 {
     int         t;
 
+	GUIlog_entering_function ();
     if( isdigit( ch ) ) {
         if( CHK_KS_SHIFT ) {
             if( convert_shiftkeys( ch, key, num_regular, num_shifted ) )
@@ -229,6 +232,7 @@ static bool convert_alpha( WORD ch, gui_key *key )
 {
     gui_key     t;
 
+	GUIlog_entering_function ();
     if( isalpha( ch ) ) {
         t = toupper( ch ) - 'A';
         if( CHK_KS_ALT ) {
@@ -252,6 +256,7 @@ static bool convert_alpha( WORD ch, gui_key *key )
 
 static bool convert_otherkeys( WORD vk, gui_key *key )
 {
+	GUIlog_entering_function ();
     return( convert_shiftkeys( vk, key, c_regular, c_shifted ) );
 }
 
@@ -261,6 +266,7 @@ static bool convert_otherkeys( WORD vk, gui_key *key )
 
 static bool convert_ascii( WORD ch, gui_key *key )
 {
+	GUIlog_entering_function ();
     if( convert_alpha( ch, key ) )
         return( true );
     if( convert_numeric( ch, key ) )
@@ -278,6 +284,7 @@ static bool convert_keytable( WORD vk, gui_key *key )
 {
     int         i;
 
+	GUIlog_entering_function ();
     for( i = 0; i < GUI_ARRAY_SIZE( vk_table ); i++ ) {
         if( vk == vk_table[i].value ) {
             if( CHK_KS_SHIFT ) {
@@ -303,13 +310,14 @@ static bool convert_keytable( WORD vk, gui_key *key )
 
 static bool convert_numpad( WORD vk, gui_key *key )
 {
+	GUIlog_entering_function ();
     if( ( vk >= VK_NUMPAD0 ) && ( vk <= VK_NUMPAD9 ) ) {
         *key = '0' + ( vk - VK_NUMPAD0 );
         return( true );
     }
     return( false );
 }
-#endif
+#endif  // of #ifndef __OS2_PM__
 
 /*
  * GUIConvertVirtKeyToGUIKey -- This routine returns true if ?
@@ -317,6 +325,7 @@ static bool convert_numpad( WORD vk, gui_key *key )
 
 static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
 {
+	GUIlog_entering_function ();
     if( key == NULL ) {
         return( false );
     }
@@ -328,7 +337,7 @@ static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
 #ifndef __OS2_PM__
     } else if( convert_numpad( vk, key ) ) {
         // do nothing
-#endif
+#endif  // of #ifndef __OS2_PM__
     } else {
         switch( vk ) {
         case VK_TAB:
@@ -342,7 +351,7 @@ static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
             break;
 #ifdef __OS2_PM__
         case VK_ENTER:
-#endif
+#endif  // of #ifdef __OS2_PM__
         case VK_RETURN:
             *key= GUIMapKey( GUI_KEY_ENTER );
             break;
@@ -419,7 +428,7 @@ static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
         case VK_BACKTAB:
             *key= GUI_KEY_SHIFT_TAB;
             break;
-#else
+#else  // of #ifdef __OS2_PM__
         case VK_DECIMAL:
             *key = GUIMapKey( GUI_KEY_KP_PERIOD );
             break;
@@ -435,7 +444,7 @@ static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
         case VK_MULTIPLY:
             *key = GUIMapKey( GUI_KEY_KP_ASTERISK );
             break;
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
         default:
             if( convert_keytable( vk, key ) ) {
                 return( *key != 0 );
@@ -460,6 +469,7 @@ void GUISetKeyState( void )
     bool        shift;
     bool        caplock;
 
+	GUIlog_entering_function ();
     KeyState = GUI_KS_NONE;
     shift = _wpi_getkeystate( VK_SHIFT ) < 0;
 
@@ -477,9 +487,9 @@ void GUISetKeyState( void )
     }
 #ifndef __OS2_PM__
     if( _wpi_getkeystate( VK_MENU ) < 0 ) {
-#else
+#else  // of #ifndef __OS2_PM__
     if( _wpi_getkeystate( VK_ALT ) < 0 ) {
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
         SET_KS_ALT;
     }
 }
@@ -492,6 +502,7 @@ void GUISetKeyState( void )
 
 bool GUIWindowsMapKey( WPI_PARAM1 vk, WPI_PARAM2 data, gui_key *scan )
 {
+	GUIlog_entering_function ();
     if( scan == NULL ) {
         return( false );
     }
@@ -501,7 +512,7 @@ bool GUIWindowsMapKey( WPI_PARAM1 vk, WPI_PARAM2 data, gui_key *scan )
 }
 
 /*
- * GUIProcesskey -- 
+ * GUIProcesskey --
  */
 
 WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
@@ -511,6 +522,7 @@ WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2
     gui_event           gui_ev;
     HWND                low_l;
 
+	GUIlog_entering_function ();
     switch( msg ) {
     case WM_MENUCHAR:
         low_l = GET_WM_COMMAND_HWND( wparam, lparam );
@@ -519,7 +531,7 @@ WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2
                so tell windows not to beep */
             return( MAKELONG( 0, 1 ) );
         } else {
-#ifndef __OS2_PM__
+ #ifndef __OS2_PM__
             // if the last syskey was not recognized as a macro key
             // then lets check to see of the key press could have
             // activated the main menu
@@ -530,9 +542,9 @@ WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2
             } else {
                 return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
             }
-#else
+ #else  // of #ifndef __OS2_PM__
             return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
-#endif
+ #endif  // of #else for #ifndef __OS2_PM__
         }
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP:
@@ -614,6 +626,7 @@ static bool convert_table( WORD vk, gui_key *key, ctrlkey *table, int size )
 {
     int         i;
 
+	GUIlog_entering_function ();
     for( i = 0; i < size; i++ ) {
         if( vk == table[i].scan ) {
             *key = table[i].key;
@@ -635,6 +648,7 @@ bool GUIWindowsMapKey( WPI_PARAM1 p1, WPI_PARAM2 p2, gui_key *key )
     char            scan;
     char            pm_scan;
 
+	GUIlog_entering_function ();
     flags       = SHORT1FROMMP( p1 );
     vk          = SHORT2FROMMP( p2 );
     ch          = CHAR1FROMMP( p2 );
@@ -677,6 +691,7 @@ WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2
     gui_key_state       key_state;
     gui_event           gui_ev;
 
+	GUIlog_entering_function ();
     switch( msg ) {
     case WM_TRANSLATEACCEL:
         // Don't let OS/2 process F10 as an accelerator

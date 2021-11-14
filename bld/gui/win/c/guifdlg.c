@@ -33,7 +33,7 @@
 
 #if defined( __WINDOWS__ ) && defined( _M_I86 )
     #pragma library( "commdlg.lib" );
-#endif
+#endif  // of #if defined( __WINDOWS__ ) && defined( _M_I86 )
 
 #include "guiwind.h"
 #include <string.h>
@@ -51,25 +51,25 @@
 #include "wclbproc.h"
 #include "guixwind.h"
 #include "pathgrp2.h"
-
+#include "guilog.h"
 #include "clibext.h"
 
 
 /* Local Window callback functions prototypes */
 #ifndef __OS2_PM__
 WINEXPORT UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
-#endif
+#endif  // of #ifndef __OS2_PM__
 
 #ifndef __OS2_PM__
 static  char    *LastPath; // this is set in NT for the sake of viper
-#endif
+#endif  // of #ifndef __OS2_PM__
 
 #if defined (__NT__)
 /* Changed default from hook to not */
 static  bool    hookFileDlg = false;
-#else
+#else  // of #if defined (__NT__)
 static  bool    hookFileDlg = true;
-#endif
+#endif  // of #else for #if defined (__NT__)
 
 /*
  * GUIHookFileDlg -- ?
@@ -77,6 +77,7 @@ static  bool    hookFileDlg = true;
 
 void GUIAPI GUIHookFileDlg( bool hook )
 {
+	GUIlog_entering_function ();
     hookFileDlg = hook;
 }
 
@@ -88,9 +89,9 @@ void GUIAPI GUIHookFileDlg( bool hook )
 
 int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
 {
-  #ifdef _M_I86
+ #ifdef _M_I86
     /* unused parameters */ (void)wnd; (void)ofn;
-  #else
+ #else  // of #ifdef _M_I86
     FILEDLG             fdlg;
     int                 str_index;
     int                 rc;
@@ -104,6 +105,7 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
     pgroup2             pg2;
     char                *cwd;
 
+	GUIlog_entering_function ();
     cwd = getcwd( pg2.buffer, sizeof( pg2.buffer ) );
     if( cwd != NULL ) {
         _splitpath2( cwd, pg1.buffer, NULL, &pg1.dir, NULL, NULL );
@@ -238,23 +240,24 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
     if( rc ) {
         return( FN_RC_FILE_SELECTED );
     }
-  #endif
+ #endif  // of #else for #ifdef _M_I86
     return( FN_RC_FAILED_TO_INITIALIZE );
 } /* GUIGetFileName */
 
-#else
+#else  // of #if defined( __OS2_PM__ )
 
 /*
  * GetStrFromEdit -- This routine returns a character string containing ?
  */
 
-#if defined(__NT__)
+ #if defined(__NT__)
 static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
 {
     char    *cp;
     LRESULT text_length;
     LRESULT text_copied;
 
+	GUIlog_entering_function ();
     text_length = SendDlgItemMessage( hDlg, id, WM_GETTEXTLENGTH, 0, 0 );
     cp = (char *)GUIMemAlloc( text_length + 1 );
     if( cp == NULL ) {
@@ -272,11 +275,11 @@ static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
 
     return( cp );
 }
-#endif
+ #endif
 
-#ifdef __NT__
+ #ifdef __NT__
 #define PATH_STATIC_CONTROL 1088
-#endif
+ #endif
 
 /*
  * OpenOFNHookProc -- This is a callback routine for ?
@@ -286,16 +289,17 @@ UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lp
 {
     UINT        ret;
 
+	GUIlog_entering_callback ();
     wparam = wparam;
     lparam = lparam;
     hwnd = hwnd;
     ret = false;
     switch( msg ) {
-  #if defined(__NT__)
+ #if defined(__NT__)
     case WM_DESTROY:
         LastPath = GetStrFromEdit( hwnd, PATH_STATIC_CONTROL );
         break;
-  #endif
+ #endif  // of #if defined(__NT__)
     case WM_INITDIALOG:
         // We must call this to subclass the directory listbox even
         // if the app calls Ctl3dAutoSubclass (commdlg bug)
@@ -318,6 +322,7 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
     int                 new_drive;
     int                 old_drive;
 
+	GUIlog_entering_function ();
     LastPath = NULL;
     new_drive = 0;
     if( ofn->initial_dir != NULL && ofn->initial_dir[0] != '\0' && ofn->initial_dir[1] == ':' ) {
@@ -404,4 +409,4 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
     return( FN_RC_FAILED_TO_INITIALIZE );
 } /* _GUIGetFileName */
 
-#endif
+#endif  // of #else for #if defined( __OS2_PM__ )

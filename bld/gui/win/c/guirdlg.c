@@ -41,7 +41,7 @@
     #undef _WIN32_IE
     #define _WIN32_IE   0x0400
     #include <commctrl.h>
-#endif
+#endif  // of #ifdef __NT__
 #include "oswincls.h"
 #include "guilog.h"
 
@@ -76,7 +76,7 @@ static GetClassMap Map[] =
 ,   { GUI_LISTBOX,          WC_SYS_LISTBOX,          0xffff,             0xffff          }
 ,   { GUI_SCROLLBAR,        WC_SYS_SCROLLBAR,        0xffff,             0xffff          }
 };
-#else
+#else  // of #ifdef __OS2_PM__
 // note: the order of entries this table is important
 static GetClassMap Map[] =
 {
@@ -94,7 +94,7 @@ static GetClassMap Map[] =
 ,   { GUI_SCROLLBAR,        WC_SCROLLBAR,   0xffff,             0xffff              }
 ,   { GUI_STATIC,           WC_STATIC,      0xffff,             0xffff              }
 };
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 
 /*
  * GUIGetControlClassFromHWND -- ?
@@ -107,6 +107,7 @@ gui_control_class GUIGetControlClassFromHWND( HWND cntl )
     DWORD               style;
     int                 index;
 
+	GUIlog_entering_function ();
     control_class = GUI_BAD_CLASS;
     if( _wpi_getclassname( cntl, osclassname, sizeof( osclassname ) ) ) {
         style = _wpi_getwindowlong( cntl, GWL_STYLE );
@@ -132,6 +133,7 @@ gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class con
     gui_control_styles  styles;
     DWORD               style;
 
+	GUIlog_entering_function ();
     styles = GUI_STYLE_CONTROL_NOSTYLE;
     style = _wpi_getwindowlong( cntl, GWL_STYLE );
 
@@ -188,7 +190,7 @@ gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class con
         if( style & MLS_READONLY ) {
             styles |= GUI_STYLE_CONTROL_READONLY;
         }
-#endif
+#endif  // of #ifdef __OS2_PM__
         break;
     }
 
@@ -201,6 +203,7 @@ gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class con
 
 BOOL CALLBACK InsertResDlgCntlFunc( HWND hwnd, LPARAM lparam )
 {
+	GUIlog_entering_function ();
     GUIControlInsertByHWND( hwnd, (gui_window *)lparam );
     return( TRUE );
 }
@@ -214,16 +217,18 @@ bool GUIInsertResDialogControls( gui_window *wnd )
 #ifdef __OS2_PM__
     WPI_ENUMPROC        wndenumproc;
 
+	GUIlog_entering_function ();
     wndenumproc = _wpi_makeenumprocinstance( InsertResDlgCntlFunc, GUIMainHInst );
     _wpi_enumchildwindows( wnd->hwnd, wndenumproc, (LPARAM)wnd );
     _wpi_freeenumprocinstance( wndenumproc );
-#else
+#else  // of #ifdef __OS2_PM__
     WNDENUMPROC         wndenumproc;
 
+	GUIlog_entering_function ();
     wndenumproc = MakeProcInstance_WNDENUM( InsertResDlgCntlFunc, GUIMainHInst );
     EnumChildWindows( wnd->hwnd, wndenumproc, (LPARAM)wnd );
     FreeProcInstance_WNDENUM( wndenumproc );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     return( true );
 }
 
@@ -235,14 +240,15 @@ bool GUICreateDialogFromRes( res_name_or_id dlg_id, gui_window *parent_wnd, GUIC
 {
 #ifdef __OS2_PM__
     WPI_DLGPROC     dlgproc;
-#else
+#else  // of #ifdef __OS2_PM__
     DLGPROC         dlgproc;
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     HWND            parent_hwnd;
     bool            ok;
 
     /* unused parameters */ (void)gui_call_back;
 
+	GUIlog_entering_function ();
     parent_hwnd = parent_wnd->hwnd;
     if( parent_hwnd == NULLHANDLE )
         parent_hwnd = HWND_DESKTOP;
@@ -253,13 +259,13 @@ bool GUICreateDialogFromRes( res_name_or_id dlg_id, gui_window *parent_wnd, GUIC
         ok = ( _wpi_dialogbox( parent_hwnd, dlgproc, GUIResHInst, dlg_id, extra ) != -1 );
         _wpi_freedlgprocinstance( dlgproc );
     }
-#else
+#else  // of #ifdef __OS2_PM__
     dlgproc = MakeProcInstance_DLG( GUIDialogDlgProc, GUIMainHInst );
     ok = ( dlgproc != NULL );
     if( ok ) {
         ok = ( DialogBoxParam( GUIResHInst, dlg_id, parent_hwnd, dlgproc, (LPARAM)extra ) != -1 );
         FreeProcInstance_DLG( dlgproc );
     }
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     return( ok );
 }

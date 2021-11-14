@@ -40,7 +40,7 @@ typedef struct {
     DWORD               style;
 #if defined( __NT__ ) && !defined( _WIN64 )
     DWORD               xstyle;
-#endif
+#endif  // of #if defined( __NT__ ) && !defined( _WIN64 )
 } controls_struct;
 
 extern control_item *GUIGetControlByID( gui_window *parent_wnd, gui_ctl_id id );

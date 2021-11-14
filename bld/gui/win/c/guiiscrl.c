@@ -46,7 +46,7 @@ static void InitScroll( gui_window *wnd, int bar, guix_ord pos )
     guix_ord old;
     guix_ord max;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     if( GUIScrollOn( wnd, bar ) ) {
         if( pos >= 0 ) {
             old = GUIGetScrollPos( wnd, bar );
@@ -70,6 +70,7 @@ static void InitScroll( gui_window *wnd, int bar, guix_ord pos )
 
 void GUIAPI GUIInitVScrollRow( gui_window *wnd, gui_text_ord vscroll_pos )
 {
+	GUIlog_entering_function ();
     InitScroll( wnd, SB_VERT, GUIFromTextY( vscroll_pos, wnd ) );
 }
 
@@ -79,6 +80,7 @@ void GUIAPI GUIInitVScrollRow( gui_window *wnd, gui_text_ord vscroll_pos )
 
 void GUIAPI GUIInitHScrollCol( gui_window *wnd, gui_text_ord hscroll_pos )
 {
+	GUIlog_entering_function ();
     InitScroll( wnd, SB_HORZ, GUIFromTextX( hscroll_pos, wnd ) );
 }
 
@@ -90,7 +92,7 @@ void GUIAPI GUIInitVScroll( gui_window *wnd, gui_ord vscroll_pos )
 {
     guix_ord    scr_y;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     scr_y = GUIScaleToScreenV( vscroll_pos );
     if( ( vscroll_pos != 0 ) && ( scr_y == 0 ) ) {
         scr_y++;
@@ -106,6 +108,7 @@ void GUIAPI GUIInitHScroll( gui_window *wnd, gui_ord hscroll_pos )
 {
     guix_ord    scr_x;
 
+	GUIlog_entering_function ();
     scr_x = GUIScaleToScreenH( hscroll_pos );
     if( ( hscroll_pos != 0 ) && ( scr_x == 0 ) ) {
         scr_x++;

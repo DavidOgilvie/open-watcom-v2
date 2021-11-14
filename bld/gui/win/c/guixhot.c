@@ -41,7 +41,7 @@
 
 #ifdef __NT__
 typedef HANDLE (WINAPI *PFNLI)( HINSTANCE, LPCSTR, UINT, int, int, UINT );
-#endif
+#endif  // of #ifdef __NT__
 
 #ifdef __NT__
 // For TransparentBlt function
@@ -50,7 +50,7 @@ typedef HANDLE (WINAPI *PFNLI)( HINSTANCE, LPCSTR, UINT, int, int, UINT );
 static HBITMAP      hbitmap2 = WPI_NULL;
 static HINSTANCE    hInstUser = NULL;
 static PFNLI        pfnLoadImage;
-#endif
+#endif  // of #ifdef __NT__
 
 /*
  * GUIXInitHotSpots -- This routine returns true if ?
@@ -62,6 +62,7 @@ bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
     int         bm_w;
     int         bm_h;
 
+	GUIlog_entering_function ();
     for( i = 0; i < num_hot_spots; i++ ) {
 #ifdef __NT__
         if( hInstUser == NULL ) {
@@ -74,11 +75,11 @@ bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
                                                   IMAGE_BITMAP, 0, 0,
                                                   LR_LOADMAP3DCOLORS );
         } else {
-#endif
+#endif  // of #ifdef __NT__
             GUIHotSpots[i].hbitmap = _wpi_loadbitmap( GUIResHInst, MAKEINTRESOURCE( hot[i].res_id ) );
 #ifdef __NT__
         }
-#endif
+#endif  // of #ifdef __NT__
         _wpi_getbitmapdim( GUIHotSpots[i].hbitmap, &bm_w, &bm_h );
         GUIHotSpots[i].size.x = bm_w;
         GUIHotSpots[i].size.y = bm_h;
@@ -94,6 +95,7 @@ void GUIXCleanupHotSpots( void )
 {
     int i;
 
+	GUIlog_entering_function ();
     for( i = 0; i < GUINumHotSpots; i++ ) {
         _wpi_deletebitmap( GUIHotSpots[i].hbitmap );
     }
@@ -101,7 +103,7 @@ void GUIXCleanupHotSpots( void )
     if( hbitmap2 != WPI_NULL ) {
         _wpi_deletebitmap( GUIHotSpots[i].hbitmap );
     }
-#endif
+#endif  // of #ifdef __NT__
 }
 
 /*
@@ -113,6 +115,7 @@ void GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row, g
     gui_text_metrics    metrics;
     gui_coord           pos;
 
+	GUIlog_entering_function ();
     if( ( hotspot_no > 0 ) && ( hotspot_no <= GUINumHotSpots ) ) {
         GUIGetTextMetrics( wnd, &metrics );
         pos.x = indent;
@@ -139,12 +142,13 @@ void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_CO
     HBITMAP     old_hbitmap2;
     HDC         mem2;
     COLORREF    cr;
-#endif
+#endif  // of #ifdef __NT__
 
 #ifndef __NT__
     /* unused parameters */ (void)bkcolour;
-#endif
+#endif  // of #ifndef __NT__
 
+	GUIlog_entering_function ();
     hbitmap = GUIHotSpots[hotspot_no - 1].hbitmap;
     size_wpi_point.x = GUIHotSpots[hotspot_no - 1].size.x;
     size_wpi_point.y = GUIHotSpots[hotspot_no - 1].size.y;
@@ -190,12 +194,12 @@ void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_CO
                      src_wpi_point.x, src_wpi_point.y, SRCCOPY );
     }
 
-#else
+#else  // of #ifdef __NT__
 
     _wpi_bitblt( hdc, dst_wpi_point.x, dst_wpi_point.y, size_wpi_point.x, size_wpi_point.y, memDC,
                  src_wpi_point.x, src_wpi_point.y, SRCCOPY );
 
-#endif
+#endif  // of #else for #ifdef __NT__
 
     if( old_hbitmap != WPI_NULL ) {
         _wpi_getoldbitmap( memDC, old_hbitmap );

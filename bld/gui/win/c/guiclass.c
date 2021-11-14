@@ -40,5 +40,6 @@
  
 char * GUIAPI GUIGetWindowClassName( void )
 {
+	GUIlog_entering_function ();
     return( GUIDefaultClassName );
 }

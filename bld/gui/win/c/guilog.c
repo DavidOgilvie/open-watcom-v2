@@ -1,15 +1,57 @@
-//      GUIDEBUG.C  Update History
-//
-//      Copyright 2001, David Ogilvie, Ogilvie Consulting, All rights reserved
-//
-//      Description:
-//
-//      Version  Date          Updated by        Comments
-//      -------  ------------  ----------------  ----------------------------
-//      0.00     May 15, 2000  David Ogilvie     Original version
-//		0.10	 Aug 18, 2021  David Ogilvie	 Revamped for OW GUI
-//		0.20	 Aug 20, 2021  David Ogilvie	 Added right justification
-
+/*      GUIDEBUG.C  Update History
+ *
+ *      Copyright 2001, David Ogilvie, Ogilvie Consulting, All rights reserved
+ *
+ *      Description:
+ *
+ *      Version  Date          Updated by        Comments
+ *      -------  ------------  ----------------  ----------------------------
+ *      0.00     May 15, 2000  David Ogilvie     Original version
+ *		0.10	 Aug 18, 2021  David Ogilvie	 Revamped for OW GUI
+ *		0.20	 Aug 20, 2021  David Ogilvie	 Added full justification
+ *		0.30	 Nov 12, 2021  David Ogilvie	 Added various macros and 
+ *													switcher routines
+ *
+ *		GUILOG calls and macros.  Note: ^ denotes "still needs implimenting"
+ ***************************************************************************
+ * 	GUIlog_set_logging_mode(mode) Start/stop logging (mode= 1/0)
+ *^ GUIlog_set_logging_mode_from_ini() Start/stop logging using settings contained 
+ *									in "guilog.ini" file located on the 
+ *									desktop
+ * 	GUIlog_set_filename(name)	  Set filename for log file
+ * 	GUIlog_set_envvar (envname)	  Sets environment variable to use, such as 
+ *									OWROOT preceeding filename
+ * 	GUIlog_set_crash_mode(mode)	  Sets crash-resistant mode on or off with 
+ *									"mode" (1/0)
+ * 	GUIlog_set_justify_mode
+ *						(value)	  Turns justification on or off.  If on, log
+ *									file includes __FILE__, __ROUTINE__ and
+ *									__LINE__ for each call to GUIlog, right 
+ *									justified and showing only the items that
+ *									changed from the previous call.
+ * 	GUIlog_set_justify_width(int) Number of columns to use for right 
+ *									justification of log file output
+ * 	GUIlog_open_logfile()		  Initializes log file for logging.
+ * 	GUIlog_close_logfile()		  Shuts down logging
+ * 	GUIlog (format, ...)		  Logging routine for tracing code.  Use 
+ *		(macro to GUIlog2)			similarly to how you would use printf
+ * 	GUIlog_entering_function()	  Use at the start of every routine to log
+ *		(macro to GUIlog2)			entry into that routine
+ *^	GUIlog_win_msg ();()	  		  Use to display window messages inn a winproc
+ *		(macro to GUIlog2)			callback routine
+ *		(macro)						log into about WM_???? messages
+ *^ GUIlog_justify_mode_on()	 Turn justification on
+ *^ GUIlog_justify_mode_off()	 Turn justification off
+ *^ GUIlog_crash_mode_on()		  Sets crash-resistant mode on
+ *^ GUIlog_crash_mode_off()		  Sets crash-resistant mode off
+ *  GUIlog_logging_on ();
+ *  GUIlog_logging_off ();
+ *^	GUIlog_enterubg_on()		  Turn display of entering messages on
+ *^	GUIlog_entering_off()		  Turn display of entering messages off
+ *^	GUIlog_win_msg ();_on()		  	Turn window messaging info on
+ *^	GUIlog_win_msg ();_off()		  Turn window messaging info off
+ */
+ 
 #include 	<stdlib.h>
 #include 	<string.h>
 #include 	<stdio.h>
@@ -22,24 +64,33 @@
 //#include 	"guimenus.h"
 //#include 	"guiscale.h"
 #include 	"guixutil.h"
+#define _GUILOG_H_
 #include 	"guilog.h"
 
-static  FILE    *fpDPTR= NULL;					// File pointer to filename
-static  char    DEBUGFILE[128]= "gui.log"; 		// Default filename
-static  char    FULLDEBUGFILE[128]= "\0"; 		// <EMVVAR>+filename
-static  char    ENVVARNAME[128]= "zzzz"; 		// Sets environment variable to use
-static	int		DONEDEBUGFILE= 0;				// Becomes true once <owroot> is added
-static  int     DEBUG= 0;						// Logging turned off by default
-static  int     DOSLOWDUMP= 0;					// Crash-proof logging turned off
-static	int		LOGWIDTH= 78;					// Width of log if justified
-static	int		JUSTIFY= 1;						// Put routine and line number on right
-	
+static  int GUIlog_open_logfile (void);			// Opens log file (gui.log in root air)
+
+static  FILE    *fpDPTR= NULL;				// File pointer to filename
+static  char    DEBUGFILE[128]= "gui.log"; 	// Default filename
+static  char    FULLDEBUGFILE[128]= "\0"; 	// <EMVVAR>+filename
+static  char    ENVVARNAME[128]= "zzzz"; 	// Sets environment variable to use
+static	int		DONEDEBUGFILE= 0;			// Becomes true once <owroot> is added
+static  int     DEBUG= 0;					// Logging turned off by default
+static  int     DOSLOWDUMP= 0;				// Crash-proof logging turned off
+static	int		LOGWIDTH= 76;				// Width of log if justified
+static	int		JUSTIFY= 1;					// Put routine and line number on right
+static	int		ENTERING= 1;				// Log lines for entering routines
+static	int		CALLBACKS= 1;				// Log lines for entering windprocs
+static	int		WIN_MSG= 1;					// Log lines that show window messages
+static  char   *oldFILE= NULL;
+static  char   *oldFUNC= NULL;
+static  int		oldLINE= 0;
+
 /*
- * GUIset_log_envvar -- This routine sets the environment variable 
+ * GUIset_log_envvar -- This routine sets the environment variable
  *                      name that is prepended to the log file name.
  */
- 
-int GUIset_log_envvar (char *envname)
+
+int GUIlog_set_envvar (char *envname)
 {
     strcpy(ENVVARNAME, envname);
 /* Notes on using this feature
@@ -50,39 +101,42 @@ int GUIset_log_envvar (char *envname)
  *		the log file using GUIopen_log.
  * 4)	A "/" is inserted between the environment variable and the file name
  * 5)	If no environment name is provided "" is assumed.
- * 6)	If no environment variable is provided and the filename is a simple 
+ * 6)	If no environment variable is provided and the filename is a simple
  *		filename such as "gui.log", the file will be placed on the desktop */
 	return (1);
 }
-	
-/*
- * GUIset_log_mode -- This routine sets the debug mode
- *                        0= off, don't write to log file
- *                        1= on, write to log file
- */
-
-int GUIset_log_mode(int mode)
-{
-    DEBUG= mode;
-	return (1);
-}
 
 /*
- * GUIset_crash_mode -- This routine sets the debug crash mode (very slow)
- *                      Log file is flushed to disk after each call
+ * Set various loggin parameters on or off
+ */
+ 
+int GUIlog_set_logging_mode	(int mode) 	{ DEBUG= mode; 		return (1); }
+int GUIlog_logging_on		(void) 		{ DEBUG= 1; 		return (1); }
+int GUIlog_logging_off		(void) 		{ DEBUG= 0; 		return (1); }
+int GUIlog_set_crash_mode	(int mode)	{ DOSLOWDUMP= mode;	return (1); }
+int GUIlog_crash_mode_on	(void)		{ DOSLOWDUMP= 1;	return (1); }
+int GUIlog_crash_mode_off	(void)		{ DOSLOWDUMP= 0;	return (1); }
+int GUIlog_set_justify_mode (int value) { JUSTIFY= value;	return (1); }
+int GUIlog_justify_mode_on	(void) 		{ JUSTIFY= 1;		return (1); }
+int GUIlog_justify_mode_off (void) 		{ JUSTIFY= 0;		return (1); }
+int GUIlog_set_justify_width(int width) { LOGWIDTH= width;	return (1); }
+
+/*
+ * Turn logging classes on or off
  */
 
-int GUIset_crash_mode(int mode)
-{
-    DOSLOWDUMP= mode;
-	return (1);
-}
+int GUIlog_functions_on		(void)		{ ENTERING= 1;		return (1); }
+int GUIlog_functions_off	(void)		{ ENTERING= 0;		return (1); }
+int GUIlog_callbacks_on		(void)		{ CALLBACKS= 1;		return (1); }
+int GUIlog_callbacks_off	(void)		{ CALLBACKS= 0;		return (1); }
+int GUIlog_win_msg_on		(void) 		{ WIN_MSG= 1; 		return (1); }
+int GUIlog_win_msg_off		(void)		{ WIN_MSG= 0;		return (1); }
 
 /*
  * GUIset_log_filename -- This routine sets the debug file name
  */
 
-int GUIset_log_filename(char *name)
+int GUIlog_set_filename(char *name)
 {
 	if (fpDPTR) { // Log file was already open with another name
 		fclose (fpDPTR);
@@ -94,14 +148,14 @@ int GUIset_log_filename(char *name)
 }
 
 /*
- * GUIopen_log -- This routine opens the debug file
+ * GUIlog_open_logfile -- This routine opens the debug file
  */
-	
-int GUIopen_log(void)
+
+static int GUIlog_open_logfile(void)
 {
 	time_t	current_time;
 	char 	*current_time_string;
-	
+
 	if (!DONEDEBUGFILE) {
 		char *envstr;
 		envstr= getenv (ENVVARNAME);
@@ -116,14 +170,14 @@ int GUIopen_log(void)
 	if (fpDPTR) {
 		current_time= time ( NULL );
 		current_time_string= ctime (&current_time);
-		fprintf (fpDPTR, 
-			"Started \"%s\" on %s===========================================\n",
+		fprintf (fpDPTR,
+			"Started \"%s\" on %s=============================================\n",
 			FULLDEBUGFILE, current_time_string );
 		if (DOSLOWDUMP) {
 			fflush (fpDPTR);
 		}
 	} else {
-		GUIErrorSA ("Error %d opening log file ""%s"".\n%s.", 
+		GUIErrorSA ("Error %d opening log file ""%s"".\n%s.",
 		errno, FULLDEBUGFILE, strerror ( errno ) );
 		exit (1);
 	}
@@ -133,115 +187,98 @@ int GUIopen_log(void)
 /*
  * GUIclose_log-- This routine closes the debug file
  */
-	
-int GUIclose_log(void)
+
+int GUIlog_close_logfile(void)
 {
     if (DEBUG) fclose(fpDPTR);
 	return (1);
 }
 
 /*
-* GUIlog_width -- This routine sets the width of the log file, if right justified
-*/
-	
-int GUIlog_width (int width)
-{
-    LOGWIDTH= width;
-	return (1);
-}
-
-/*
- * GUIjustify -- This routine sets whether right justify mode is on or off. 
- *               If it is set to on, the calling routine must supply 
- *               __FUNCTION__ and __LINE__ as the last 2 parameters 
- *               of the call.  At some point I will try to find out how to 
+ * GUIlog_set_justify_mode -- This routine sets whether right justify mode is on or off.
+ *               If it is set to on, the calling routine must supply
+ *               __FUNCTION__ and __LINE__ as the last 2 parameters
+ *               of the call.  At some point I will try to find out how to
  *               find the file and line number of the calling routine.
  *               This will likely be in the Code > Callers menu item.
- *               Until then, this will have to do. Note that turning this 
- *               on and off can have parts of the log file with 
- *               justification, but part of the log that deals with a long 
- *               string of events within a small portion of the same file 
+ *               Until then, this will have to do. Note that turning this
+ *               on and off can have parts of the log file with
+ *               justification, but part of the log that deals with a long
+ *               string of events within a small portion of the same file
  *               can have justification (Saves on file size and time.)
  */
 
-int GUIjustify (int value)
-{
-    JUSTIFY= value;
-	return (1);
-}
 
 /*
- * GUIlog -- This routine writes a record to the debug file, ensuring 
+ * GUIlog -- This routine writes a record to the debug file, ensuring
  *           that it is written to the disk.
  */
 
-int GUIlog (char *format, ...)
+int GUIlog2 (char *FUNC, char *FILE, int LINE, char *format, ...)
 {
-    int ret;
-
+	int 		ret, length, len1, len2;
+	char		_format[128]= "\0";
+	char		_format2[128]= "\0", *pos;
+	char		_format3[32]= "\0";
+	char		*blanks= "  ";
+	
     if (!DEBUG) return (0);
+	if (!ENTERING&&(ENTERING_FORMAT==format)) return (0);
+	if (!CALLBACKS&&(CALLBACK_FORMAT==format)) return (0);
+	if (!WIN_MSG&&(WIN_MSG_FORMAT==format)) return (0);
     if (strlen (format) != 0)
     {
         va_list arglist;
 
-		if (!fpDPTR) GUIopen_log ();
-        va_start (arglist, format);
-		if (!JUSTIFY)
+		if (!fpDPTR) GUIlog_open_logfile ();
+
+		va_start (arglist, format);
+
+		if (!JUSTIFY) {
 			ret = vfprintf (fpDPTR, format, arglist);
-		else {
-			/* If justification is turned on, then there should be 
-			some stuff on the left, then a blank, then the module
-			path and the line number.  If I search from the end of
-			the string to the first blank, change that blank to abort
-			null character, then I'll have two strings, one with the
-			left side and the other with the right side.  I can then 
-			search backwards on the right side to see if there is a 
-			backslash that might be just to the left of the relative
-			path.  I can then move the pointer of the right side 
-			string right one character to get the beginning of the 
-			module name.  For example
-			    Entered module HELP ..\..\dohelp.c(46)\n
-			                       ^     ^
-			             last blank     last backslash
-			If I put /0 at the blank and put the start of the second 
-			line right by one character, I get the two stringss:
-			"   Entered module HELP" and "dohelp.c(46)\n"
-			I can then esily calculate the number of blanks needed to
-			pad the line.  I can then do a sprintf of the two string
-			and the padding count as follows
-			sprintf (strfmt, "%s\%%d%s", str1, count str2)
-			If you need 20 blanks, the string would become
-			"   Entered module HELP%20sdohelp.c(46)\n"
-			and you can print it with fprintf with
-			fprintf (fpDPTR, string, " ");
-			The blank will be padded to 20 characters			*/
-			 
-/*
-			char	_format[128]= "\0";
-			ret = vsprintf (_format, format, arglist);
-			int len1= stelen (_format);
-			// search backwards for the last blank, so that 
-			// we just have the file name, not the relative pathname
-			int loc = strrchr (_format, " ");
-			*_format+loc= "\0";
-			// get the length of the second part of the string from
-			// the character after the last /.
-			lnt length= LOG_WIDTH-(loc-loc2);
-			// Calculate the number of spaces we need to pad the line 
-			// so that the right end if justified at the correct column
-			int i= *loc-*_format;
-			// Create the formatting string for the fprintf call.
-			char fmtstr[]= _format//i//_format2;
-			// now call fprintf with the correct string
-			ret= fprintf (fpDPTR, fmtstr, _format, " ", _format2);
-			
-*/
+			ret = fprintf  (fpDPTR, "\n");
 		}
-        if (ret < 0)
+		else {
+
+			ret = vsprintf (_format, format, arglist);
+			len1= strlen (_format);
+			// Extension:
+			// search backwards for the last blank, so that
+			// we just have the file name, not the relative pathname
+
+			if (oldFILE!=FILE) {
+				sprintf (_format2, "%s %s:%d", FILE, FUNC, LINE);
+				oldFILE= FILE; 
+			}
+			else if (oldFUNC!=FUNC) {
+				sprintf (_format2, "%s:%d", FUNC, LINE);
+				oldFUNC= FUNC;
+			}
+			else {
+				sprintf (_format2, ":%d", LINE);
+				oldLINE= LINE;
+			}
+			pos= strrchr (_format2, '\\');
+			if (pos!=NULL) pos++;
+//				_format2= *(_format2)+pos+1;
+			
+			if (pos==NULL) 	len2= strlen (_format2);
+			else			len2= strlen (pos);
+			
+			length= LOGWIDTH-len1-len2;
+
+			// ret should return total # of characterss printed, hopefully
+			// the same value as LOGWIDTH.  This may not work if this is
+			// not compiled as C99.
+			sprintf (_format3, "%%s %%%ds %%s\n", length);
+			if (pos==NULL) 	ret= fprintf(fpDPTR, _format3, _format, blanks, _format2);
+			else			ret= fprintf(fpDPTR, _format3, _format, blanks, pos);
+		}
+		va_end (arglist);
+        if (ret < 0)  // We have an error and cannot continue
         {
             GUIError ("GuiLog failed with error %d\n%s", ret, strerror (ret) );
-        }        
-		va_end (arglist);
+        }
     }
     if (DOSLOWDUMP) {
         fflush (fpDPTR);
@@ -292,18 +329,18 @@ Entered GUIGetClientRect 									  ..\c\guicrect.c(45)
 }
 
 /*
- * strmsgenum -- In this routine, I will try to get at the name of an 
- *               arglist value by examining the info available in the 
- *               argument list, which hopefully will supply the type of 
- *               the enum and a pointer to its list values.  I note that 
+ * strmsgenum -- In this routine, I will try to get at the name of an
+ *               arglist value by examining the info available in the
+ *               argument list, which hopefully will supply the type of
+ *               the enum and a pointer to its list values.  I note that
  *               this is done in the debugger, so hopefully I can reverse
  *               engineer the process here.
  */
- 
+
 char *strmsgenum (char *dummy, ...) { // Actually only 1 parameter, but need to get at list
 	va_list		arglist;
 	char 		*msg;
-	
+
 	va_start (arglist, dummy);
 	msg= (char *)va_arg ( arglist, WINDOW_MSG );
 	va_end (arglist);

@@ -45,6 +45,7 @@ bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
 {
     WPI_HICON icon;
 
+	GUIlog_entering_function ();
     icon = (WPI_HICON)0;
 
     if( res != NULL ) {
@@ -69,11 +70,11 @@ bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
     if( wnd->flags & IS_ROOT ) {
         SET_HICON( wnd->hwnd, wnd->icon );
     }
-#endif
+#endif  // of #ifndef __OS2_PM__
 
 #ifdef __OS2_PM__
     _wpi_sendmessage( wnd->hwnd_frame, WM_SETICON, icon, 0 );
-#endif
+#endif  // of #ifdef __OS2_PM__
 
     return( icon != NULL );
 }

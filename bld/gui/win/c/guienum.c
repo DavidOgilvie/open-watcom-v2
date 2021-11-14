@@ -60,6 +60,7 @@ BOOL CALLBACK GUIEnumChildWindowsEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
     bool        is_gui;
     int         len;
 
+	GUIlog_entering_callback ();
     len = _wpi_getclassname( hwnd, osclassname, sizeof( osclassname ) );
     osclassname[len] = '\0';
     is_gui = ( strcmp( osclassname, GUIClass ) == 0 );
@@ -72,7 +73,7 @@ BOOL CALLBACK GUIEnumChildWindowsEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
             is_gui = ( strcmp( osclassname, GUIClass ) == 0 );
         }
     }
-#endif
+#endif  // of #ifdef __OS2_PM__
     if( is_gui ) {
         info = (enum_info *)lparam;
         wnd = GUIGetWindow( hwnd );
@@ -92,10 +93,11 @@ void GUIAPI GUIEnumChildWindows( gui_window *wnd, ENUMCALLBACK *func, void *para
     enum_info       info;
 #ifdef __OS2_PM__
     WPI_ENUMPROC    wndenumproc;
-#else
+#else  // of #ifdef __OS2_PM__
     WNDENUMPROC    	wndenumproc;
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 
+	GUIlog_entering_function ();
     info.parent = wnd;
     info.func = func;
     info.param = param;
@@ -103,9 +105,9 @@ void GUIAPI GUIEnumChildWindows( gui_window *wnd, ENUMCALLBACK *func, void *para
     wndenumproc = _wpi_makeenumprocinstance( GUIEnumChildWindowsEnumFunc, GUIMainHInst );
     _wpi_enumchildwindows( wnd->hwnd, wndenumproc, (LPARAM)&info );
     _wpi_freeenumprocinstance( wndenumproc );
-#else
+#else  // of #ifdef __OS2_PM__
     wndenumproc = MakeProcInstance_WNDENUM( GUIEnumChildWindowsEnumFunc, GUIMainHInst );
     EnumChildWindows( wnd->hwnd, wndenumproc, (LPARAM)&info );
     FreeProcInstance_WNDENUM( wndenumproc );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 }

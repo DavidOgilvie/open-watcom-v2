@@ -40,19 +40,19 @@
 #include "guimenus.h"
 #include "guixutil.h"
 #include "guirdlg.h"
-
+#include "guilog.h"
 
 /* total height/width taken up by outline around  bitmap, on button */
 #if defined (__NT__)
 #define OUTLINE_AMOUNT  4   // Should be changed later.
-#else
+#else  // of #if defined (__NT__)
 #define OUTLINE_AMOUNT  4
-#endif
+#endif  // of #else for #if defined (__NT__)
 #define BORDER_AMOUNT   1 /* space outside row of buttons */
 
 /*
- * GUIXCloseToolBar -- This routine returns true if it can close the 
- *                     toolbar and free memory.  Can be called by app.  
+ * GUIXCloseToolBar -- This routine returns true if it can close the
+ *                     toolbar and free memory.  Can be called by app.
  *                     Gets called when parent window closed or floating
  *                     toolbar window gets closed.
  */
@@ -62,6 +62,7 @@ bool GUIXCloseToolBar( gui_window *wnd )
     toolbarinfo     *tbar;
     int             i;
 
+	GUIlog_entering_function ();
     tbar = wnd->tbar;
     if( tbar != NULL ) {
         wnd->tbar = NULL;
@@ -89,12 +90,13 @@ static gui_window *GetToolWnd( HWND hwnd )
 {
     HWND        parent;
 
+	GUIlog_entering_function ();
 #ifndef __OS2_PM__
     parent = _wpi_getparent( hwnd );
     if( parent != HWND_DESKTOP ) {
         return( GUIGetWindow( parent ) );
     }
-#else
+#else  // of #ifndef __OS2_PM__
     parent = _wpi_getparent(_wpi_getparent( hwnd ));
     if( parent == HWND_DESKTOP ) {
         parent = _wpi_getowner( _wpi_getparent( hwnd ) );
@@ -102,7 +104,7 @@ static gui_window *GetToolWnd( HWND hwnd )
     if( parent != HWND_DESKTOP ) {
         return( GUIGetWindow( parent ) );
     }
-#endif
+#endif  // of #else of #ifndef __OS2_PM__
     return( NULL );
 }
 
@@ -115,6 +117,7 @@ static void guiToolBarHelp( HWND hwnd, ctl_id id, bool down )
     gui_window          *wnd;
     gui_menu_styles     style;
 
+	GUIlog_entering_function ();
     wnd = GetToolWnd( hwnd );
     if( wnd != NULL ) {
         style = ( down ) ? GUI_STYLE_MENU_ENABLED : GUI_STYLE_MENU_IGNORE;
@@ -123,7 +126,7 @@ static void guiToolBarHelp( HWND hwnd, ctl_id id, bool down )
 }
 
 /*
- * guiToolBarProc -- This routine returns true if it can hook message 
+ * guiToolBarProc -- This routine returns true if it can hook message
  *                   handler for the tool bar.
  */
 
@@ -134,6 +137,7 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
     HMENU                   hsysmenu;
     gui_ctl_id              id;
 
+	GUIlog_entering_function ();
     wnd = GetToolWnd( hwnd );
     if( wnd == NULL ) {
         return( false );
@@ -151,12 +155,12 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
 #ifdef __OS2_PM__
     case WM_CHAR:
     case WM_TRANSLATEACCEL:
-#else
+#else  // of #ifdef __OS2_PM__
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP:
     case WM_KEYUP:
     case WM_KEYDOWN:
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
         return( GUIProcesskey( hwnd, msg, wparam, lparam ) != 0 );
     case WM_MENUSELECT:
         GUIProcessMenuSelect( wnd, hwnd, msg, wparam, lparam );
@@ -170,7 +174,7 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
         break;
 #ifndef __OS2_PM__
     case WM_NCLBUTTONDBLCLK:
-#endif
+#endif  // of #ifndef __OS2_PM__
     case WM_RBUTTONDBLCLK:
     case WM_LBUTTONDBLCLK:
         /* flip the current state of the toolbar -
@@ -183,9 +187,9 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
             // the message is coming from.
             if( (ULONG)wparam != 0x0FFFFFFF )
                 GUIChangeToolBar( wnd );
-#else
+#else  // of #ifdef __OS2_PM__
             GUIChangeToolBar( wnd );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
             return( true );
         }
         break;
@@ -202,9 +206,9 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
         {
 #ifdef __WINDOWS_386__
             WPI_MINMAXINFO __far *minmax= (WPI_MINMAXINFO __far *)MK_FP32( (void *)lparam );
-#else
+#else  // of #ifdef __WINDOWS_386__
             WPI_MINMAXINFO *minmax = (WPI_MINMAXINFO *)lparam;
-#endif
+#endif  // of #else for #ifdef __WINDOWS_386__
             _wpi_setmintracksize( minmax,
                 ( tbar->info.border_size.x + _wpi_getsystemmetrics( SM_CXFRAME ) ) * 2 + tbar->info.button_size.x,
                 ( tbar->info.border_size.y + _wpi_getsystemmetrics( SM_CYFRAME ) ) * 2 + tbar->info.button_size.y + _wpi_getsystemmetrics( SM_CYCAPTION ) );
@@ -218,7 +222,7 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
 }
 
 /*
- * GUIXCreateToolBarWithTips -- This routine returns true if it can 
+ * GUIXCreateToolBarWithTips -- This routine returns true if it can
  *                              create a tool bar, possibly with tooltips
  */
 
@@ -247,6 +251,7 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
     int                 h;
     int                 num_items;
 
+	GUIlog_entering_function ();
     excl = excl;
     plain = plain;
     standout = standout;
@@ -311,7 +316,7 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
     bottom = _wpi_cvth_y_plus1( bottom, h );
 #ifdef __OS2_PM__
     bottom -= 2;
-#endif
+#endif  // of #ifdef __OS2_PM__
     new_right = width * num_items -
                 ( num_items - 1 ) * tbar->info.border_size.x +
                 left + 2 * _wpi_getsystemmetrics( SM_CXFRAME ) +
@@ -369,7 +374,7 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
 }
 
 /*
- * GUIXCreateToolBar -- This routine returns true if it can 
+ * GUIXCreateToolBar -- This routine returns true if it can
  *                      create a tool bar, fixed or not
  */
 
@@ -378,6 +383,7 @@ bool GUIXCreateToolBar( gui_window *wnd, bool fixed, gui_ord height,
                         bool excl, gui_colour_set *plain,
                         gui_colour_set *standout, const gui_rect *float_pos )
 {
+	GUIlog_entering_function ();
     return( GUIXCreateToolBarWithTips( wnd, fixed, height, toolinfo,
                                        excl, plain, standout, float_pos, false ) );
 }
@@ -395,6 +401,7 @@ void GUIResizeToolBar( gui_window *wnd )
     WPI_RECTDIM t, h;
     toolbarinfo *tbar;
 
+	GUIlog_entering_function ();
     tbar = wnd->tbar;
     if( tbar != NULL ) {
         wpi_rect = wnd->root_client_rect;
@@ -421,6 +428,7 @@ void GUIResizeToolBar( gui_window *wnd )
 
 bool GUIAPI GUIHasToolBar( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( wnd->tbar != NULL );
 }
 
@@ -436,6 +444,7 @@ bool GUIAPI GUIChangeToolBar( gui_window *wnd )
     int         t;
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     tbar = wnd->tbar;
     if( !tbar->info.is_fixed ) {
         tbar->info.is_fixed = true;
@@ -474,6 +483,7 @@ bool GUIAPI GUIChangeToolBar( gui_window *wnd )
 
 bool GUIAPI GUIToolBarFixed( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( GUIHasToolBar( wnd ) ) {
         return( wnd->tbar->info.is_fixed );
     }

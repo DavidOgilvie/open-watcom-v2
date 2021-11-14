@@ -41,6 +41,7 @@
 
 void GUIAPI GUISetBetweenTitles( int between_titles )
 {
+	GUIlog_entering_function ();
     (void)between_titles;
 }
 
@@ -50,6 +51,7 @@ void GUIAPI GUISetBetweenTitles( int between_titles )
 
 bool GUIAPI GUIGetCursorPos( gui_window *wnd, gui_point *point )
 {
+	GUIlog_entering_function ();
     (void)wnd;
     (void)point;
     return( false );
@@ -61,6 +63,7 @@ bool GUIAPI GUIGetCursorPos( gui_window *wnd, gui_point *point )
 
 bool GUIAPI GUISetCursorPos( gui_window *wnd, const gui_point *point )
 {
+	GUIlog_entering_function ();
     (void)wnd;
     (void)point;
     return( false );
@@ -72,6 +75,7 @@ bool GUIAPI GUISetCursorPos( gui_window *wnd, const gui_point *point )
 
 bool GUIAPI GUIGetCursorType( gui_window *wnd, gui_cursor_type *cursor )
 {
+	GUIlog_entering_function ();
     (void)wnd;
     (void)cursor;
     return( false );
@@ -83,6 +87,7 @@ bool GUIAPI GUIGetCursorType( gui_window *wnd, gui_cursor_type *cursor )
 
 bool GUIAPI GUISetCursorType( gui_window *wnd, gui_cursor_type cursor )
 {
+	GUIlog_entering_function ();
     (void)wnd;
     (void)cursor;
     return( false );
@@ -94,6 +99,7 @@ bool GUIAPI GUISetCursorType( gui_window *wnd, gui_cursor_type cursor )
 
 bool GUIAPI GUISetBackgroundChar( gui_window *wnd, char background )
 {
+	GUIlog_entering_function ();
     (void)wnd;
     (void)background;
     return( false );
@@ -105,6 +111,7 @@ bool GUIAPI GUISetBackgroundChar( gui_window *wnd, char background )
 
 void GUIAPI GUIGMouseOn( void )
 {
+	GUIlog_entering_function ();
 }
 
 /*
@@ -113,6 +120,7 @@ void GUIAPI GUIGMouseOn( void )
 
 void GUIAPI GUIGMouseOff( void )
 {
+	GUIlog_entering_function ();
 }
 
 /*
@@ -121,6 +129,7 @@ void GUIAPI GUIGMouseOff( void )
 
 void GUIAPI GUISetBackgroundColour( gui_colour_set *colour )
 {
+	GUIlog_entering_function ();
     (void)colour;
 }
 
@@ -130,6 +139,7 @@ void GUIAPI GUISetBackgroundColour( gui_colour_set *colour )
 
 void GUIAPI GUISetDialogColours( gui_colour_set *colours )
 {
+	GUIlog_entering_function ();
     (void)colours;
 }
 
@@ -139,6 +149,7 @@ void GUIAPI GUISetDialogColours( gui_colour_set *colours )
 
 void GUIAPI GUIGetDialogColours( gui_colour_set *colours )
 {
+	GUIlog_entering_function ();
     (void)colours;
 }
 
@@ -148,6 +159,7 @@ void GUIAPI GUIGetDialogColours( gui_colour_set *colours )
 
 void GUIAPI GUISetCharacter( gui_draw_char draw_char, int new )
 {
+	GUIlog_entering_function ();
     (void)draw_char;
     (void)new;
 }
@@ -158,6 +170,7 @@ void GUIAPI GUISetCharacter( gui_draw_char draw_char, int new )
 
 int GUIAPI GUIGetCharacter( gui_draw_char draw_char )
 {
+	GUIlog_entering_function ();
     (void)draw_char;
     return( ' ');
 }

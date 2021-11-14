@@ -41,11 +41,11 @@
 #define EDIT_STYLE          ES_AUTOHSCROLL | ES_MARGIN
 #define LISTBOX_STYLE       LBS_NOTIFY
 #define STATIC_STYLE        SS_LEFTNOWORDWRAP | DT_WORDBREAK
-#else
+#else  // of #ifdef __OS2_PM__
 #define EDIT_STYLE          ES_AUTOHSCROLL
 #define LISTBOX_STYLE       WS_VSCROLL | LBS_NOTIFY
 #define STATIC_STYLE        SS_LEFTNOWORDWRAP
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 
 #define EDIT_MLE_STYLE      EDIT_STYLE | ES_MULTILINE
 #define SCROLLBAR_STYLE     0

@@ -35,18 +35,18 @@
 #define _GUIWIND_H_
 
 
-#ifdef __OS2_PM__
+ #ifdef __OS2_PM__
     #include <stddef.h>     /* NULL value */
     #define INCL_GPI
     #define INCL_WIN
     #define INCL_DOSNLS
     #define INCL_DOSMISC
     #include <wos2.h>
-#else
+ #else  // of #ifdef __OS2_PM__
     #define INCLUDE_COMMDLG_H
     #define NOCOMM
     #include <wwindows.h>   /* NULL value */
-#endif
+ #endif  // of #else for #ifdef __OS2_PM__
 
 #include "gui.h"
 #include "wpi.h"
@@ -188,11 +188,11 @@ struct gui_window {
 #define MAXYCHAR( tm ) ( _wpi_metricheight(tm) + _wpi_metricexleading(tm) )
 #define EXTRA_SIZE              sizeof( LONG_PTR )
 #define GUI_CONTAINER_WORD1     0
-#if defined(__NT__)
+ #if defined(__NT__)
 #define GUI_CONTAINER_WORD2     1       // NT needs 2 longs for MDI
-#else
+ #else  // of #if defined(__NT__)
 #define GUI_CONTAINER_WORD2     0
-#endif
+ #endif  // of #else for #if defined(__NT__)
 #define GUI_EXTRA_WORD          ( GUI_CONTAINER_WORD2 + 1 )
 #define GUI_MDI_WORD            ( GUI_EXTRA_WORD + 1 )
 #define NUM_EXTRA_WORDS         ( GUI_MDI_WORD + 1 )

@@ -54,6 +54,7 @@ static  void    (*FreeStatus)( void )           = NULL;
 
 static void DoFreeStatus( void )
 {
+	GUIlog_entering_function ();
     StatusWndDestroy( GUIStatusWnd );
     StatusWndFini();
 }
@@ -69,8 +70,8 @@ static void SetStatusRect( HWND parent, WPI_RECT *status_wpi_rect, guix_ord x, g
     guix_ord    y;
     guix_ord    h;
 
-   	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
-_wpi_getclientrect( parent, &wpi_rect );
+	GUIlog_entering_function ();
+	_wpi_getclientrect( parent, &wpi_rect );
     _wpi_getrectvalues( wpi_rect, &left, &top, &right, &bottom );
     y = _wpi_cvth_y_plus1( bottom - height, bottom - top );
     h = _wpi_cvth_y_plus1( bottom - top, bottom - top );
@@ -86,6 +87,7 @@ static void DoResizeStatus( gui_window *wnd )
     WPI_RECT    wpi_rect;
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     if( GUIHasStatus( wnd ) ) {
         _wpi_getwindowrect( wnd->status, &wpi_rect );
         _wpi_mapwindowpoints( HWND_DESKTOP, wnd->root, (WPI_LPPOINT)&wpi_rect, 2 );
@@ -107,6 +109,7 @@ static void CalcStatusRect( gui_window *wnd, gui_ord x, gui_ord height, WPI_RECT
     gui_text_metrics    metrics;
     guix_ord            size_y;
 
+	GUIlog_entering_function ();
     if( height == 0 ) {
         GUIGetTextMetrics( wnd, &metrics );
         /* windows is 2 pixels higher than client */
@@ -118,8 +121,8 @@ static void CalcStatusRect( gui_window *wnd, gui_ord x, gui_ord height, WPI_RECT
 }
 
 /*
- * GUICreateStatusWindow -- This routine returns true if it can create a 
- *                          status window.  For now, only look at 
+ * GUICreateStatusWindow -- This routine returns true if it can create a
+ *                          status window.  For now, only look at
  *                          rect.left and rect.height for inforamation.
  *                          Tie the rest to the parent window.
  */
@@ -129,7 +132,7 @@ bool GUIAPI GUICreateStatusWindow( gui_window *wnd, gui_ord x, gui_ord height,
 {
     WPI_RECT    wpi_rect;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     colour = colour;
     if( wnd->root == NULLHANDLE ) {
         return( false );
@@ -159,6 +162,7 @@ bool GUIAPI GUIDrawStatusText( gui_window *wnd, const char *text )
     WPI_PRES    pres;
     const char  *out_text;
 
+	GUIlog_entering_function ();
     if( !GUIHasStatus( wnd) ) {
         return( false );
     }
@@ -182,6 +186,7 @@ bool GUIAPI GUIDrawStatusText( gui_window *wnd, const char *text )
 
 bool GUIAPI GUIHasStatus( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( wnd->status != NULLHANDLE );
 }
 
@@ -192,6 +197,8 @@ bool GUIAPI GUIHasStatus( gui_window *wnd )
 bool GUIAPI GUICloseStatusWindow( gui_window *wnd )
 {
     HWND        status;
+
+	GUIlog_entering_function ();
     if( !GUIHasStatus( wnd ) ) {
         return( false );
     }
@@ -211,6 +218,7 @@ bool GUIAPI GUIResizeStatusWindow( gui_window *wnd, gui_ord x, gui_ord height )
     WPI_RECT    wpi_rect;
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     if( !GUIHasStatus( wnd ) ) {
         return( false );
     }
@@ -223,6 +231,7 @@ bool GUIAPI GUIResizeStatusWindow( gui_window *wnd, gui_ord x, gui_ord height )
 
 void GUIResizeStatus( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( ResizeStatus != NULL ) {
         (*ResizeStatus)( wnd );
     }
@@ -234,6 +243,7 @@ void GUIResizeStatus( gui_window *wnd )
 
 void GUIFreeStatus( void )
 {
+	GUIlog_entering_function ();
     if( FreeStatus != NULL ) {
         (*FreeStatus)();
     }

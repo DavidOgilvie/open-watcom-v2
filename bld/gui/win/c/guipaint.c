@@ -44,7 +44,7 @@
  */
 
 #ifndef __OS2_PM__FOO
- 
+
 void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 {
     HDC         prev_hdc;
@@ -57,7 +57,7 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
     RECTL       client;
  #endif // of #ifdef __OS2_PM__
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     isdlg=isdlg;
     /* save old state */
     prev_hdc = wnd->hdc;
@@ -126,7 +126,7 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 /*
  * GUIPaint -- this is some experimental PM stuff
  */
- 
+
 void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 {
     HDC         prev_hdc;
@@ -143,7 +143,7 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
     int                 compat_created;
     gui_paint_info      *pinfo;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     // figure out which paint info to use
     if( !isdlg && wnd->root == hwnd ) {
         pinfo = &wnd->root_pinfo;
@@ -257,6 +257,7 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 
 void GUIInvalidatePaintHandles( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     GUIFreeWndPaintHandles( wnd, false );
 }
 
@@ -266,6 +267,7 @@ void GUIInvalidatePaintHandles( gui_window *wnd )
 
 void GUIFreeWndPaintHandles( gui_window *wnd, int force )
 {
+	GUIlog_entering_function ();
     force=force;
     if( wnd == NULL ) {
         return;
@@ -282,6 +284,7 @@ void GUIFreeWndPaintHandles( gui_window *wnd, int force )
 
 void GUIFreePaintHandles( gui_paint_info *pinfo, int force )
 {
+	GUIlog_entering_function ();
     if( pinfo == NULL ) {
         return;
     }

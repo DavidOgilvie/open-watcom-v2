@@ -41,6 +41,7 @@
 
 void GUIAPI GUISpawnStart( void )
 {
+	GUIlog_entering_function ();
 }
 
 /*
@@ -49,4 +50,5 @@ void GUIAPI GUISpawnStart( void )
 
 void GUIAPI GUISpawnEnd( void )
 {
+	GUIlog_entering_function ();
 }

@@ -49,6 +49,7 @@ void GUIAPI GUIWndDirtyRect( gui_window *wnd, const gui_rect *rect )
     WPI_RECT    wpi_rect;
     int         left, top, right, bottom;
 
+	GUIlog_entering_function ();
     GUIScaleToScreenRect( rect, &scr_rect );
     left = scr_rect.s_x;
     if( GUI_DO_HSCROLL( wnd ) ) {

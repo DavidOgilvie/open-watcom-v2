@@ -36,7 +36,7 @@
     #include <winnls.h>
 #elif defined __WINDOWS__
     #include <windows.h>
-#endif
+#endif  // of #elif defined __WINDOWS__
 #include "guilog.h"
 
 
@@ -62,14 +62,15 @@ static void MBInit( void )
     CHAR                leadBytes[12];
   #ifdef _M_I86
         USHORT          rc;
-  #else
+  #else  // of #ifdef _M_I86
         APIRET          rc;
-  #endif
+  #endif  // of else for #ifdef _M_I86
 #elif defined( __WINDOWS__ )
     int                 countVal;
     DWORD               version;
-#endif
+#endif  // of #elif defined( __WINDOWS__ )
 
+	GUIlog_entering_function ();
     memset( __CharLenTable, 1, sizeof( __CharLenTable ) );              /* zero table to start */
 
 #if defined( __NT__)
@@ -89,9 +90,9 @@ static void MBInit( void )
     countryInfo.codepage = 0;       /* specified code page */
   #ifdef _M_I86
     rc = DosGetDBCSEv( 12, &countryInfo, leadBytes );
-  #else
+  #else  // of #ifdef _M_I86
     rc = DosQueryDBCSEnv( 12, &countryInfo, leadBytes );
-  #endif
+  #endif  // of #else for #ifdef _M_I86
     if( rc != 0 )
         return;
     for( countRange = 0; !( leadBytes[countRange] == 0 && leadBytes[countRange + 1] == 0 ); countRange += 2 ) {
@@ -111,7 +112,7 @@ static void MBInit( void )
             IsDBCS = true;
         }
     }
-#endif
+#endif  // of #else for #elif defined( __WINDOWS__ )
 
 }
 
@@ -121,6 +122,7 @@ static void MBInit( void )
 
 int GUIAPI GUICharLen( int ch )
 {
+	GUIlog_entering_function ();
     if( !Init ) {
         MBInit();
         Init = true;
@@ -134,6 +136,7 @@ int GUIAPI GUICharLen( int ch )
 
 bool GUIAPI GUIIsDBCS( void )
 {
+	GUIlog_entering_function ();
     if( !Init ) {
         MBInit();
         Init = true;

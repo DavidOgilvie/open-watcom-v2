@@ -53,6 +53,7 @@ VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime
 	gui_window      *wnd;
 	gui_timer_event timer;
 
+	GUIlog_entering_callback ();
 	_msg= uMsg;
 	uMsg = uMsg; dwTime = dwTime;
 	wnd = GUIGetWindow( hwnd );
@@ -70,6 +71,7 @@ VOID CALLBACK GUITimerProc( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime
 
 void GUIStartTimer( gui_window *wnd, gui_timer_id id, int msec )
 {
+	GUIlog_entering_function ();
 	if( wnd != NULL ) {
 		SetTimer( wnd->hwnd, id, (UINT)msec, GUITimerProc );
 	} else {
@@ -83,10 +85,11 @@ void GUIStartTimer( gui_window *wnd, gui_timer_id id, int msec )
 
 void GUIStopTimer( gui_window *wnd, gui_timer_id id )
 {
+	GUIlog_entering_function ();
 	if( wnd != NULL ) {
 		KillTimer( wnd->hwnd, id );
 	} else {
 		KillTimer( NULL, id );
 	}
 }
-#endif
+#endif  // of #if defined(__NT__)

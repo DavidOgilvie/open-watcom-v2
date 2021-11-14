@@ -45,6 +45,7 @@
 
 static void BringWindowToFront( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( wnd != NULL ) {
         if( GUIIsMinimized( wnd ) ) {
             GUIRestoreWindow( wnd );
@@ -60,6 +61,7 @@ static void BringWindowToFront( gui_window *wnd )
 static bool FakeMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam,
                                WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {
+	GUIlog_entering_function ();
     gui_ctl_id  id;
 
     ret=ret;
@@ -87,6 +89,7 @@ static bool FakeMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_
 
 bool XFakeInitMDI( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     GUISetMDIProcessMessage( &FakeMDIProcessMessage );
     return( wnd->root == NULLHANDLE );
 }

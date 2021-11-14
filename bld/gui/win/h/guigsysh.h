@@ -33,4 +33,4 @@
 extern HWND     GUIGetSysHandle( gui_window *wnd );
 #ifdef __OS2__
 extern HAB      GUIGetHAB( void );
-#endif
+#endif  // of #ifdef __OS2__

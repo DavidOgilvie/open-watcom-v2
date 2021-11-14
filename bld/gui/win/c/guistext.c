@@ -43,11 +43,12 @@
 
 bool GUIAPI GUISetWindowText( gui_window *wnd, const char *data )
 {
+	GUIlog_entering_function ();
 #if defined( __OS2__ ) && defined( _M_I86 )
      _wpi_setwindowtext( GUIGetParentFrameHWND( wnd ), (char *)data );
-#else
+#else  // of #if defined( __OS2__ ) && defined( _M_I86 )
      _wpi_setwindowtext( GUIGetParentFrameHWND( wnd ), data );
-#endif
+#endif  // of #else for #if defined( __OS2__ ) && defined( _M_I86 )
      GUIChangeMDITitle( wnd );
      return( true );
 }
@@ -58,6 +59,7 @@ bool GUIAPI GUISetWindowText( gui_window *wnd, const char *data )
 
 size_t GUIAPI GUIGetWindowText( gui_window *wnd, char *buff, size_t buff_len )
 {
+	GUIlog_entering_function ();
     return( _wpi_getwindowtext( GUIGetParentFrameHWND( wnd ), buff, buff_len ) );
 }
 
@@ -67,5 +69,6 @@ size_t GUIAPI GUIGetWindowText( gui_window *wnd, char *buff, size_t buff_len )
 
 size_t GUIAPI GUIGetWindowTextLength( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( _wpi_getwindowtextlength( GUIGetParentFrameHWND( wnd ) ) );
 }

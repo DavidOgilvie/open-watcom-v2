@@ -69,6 +69,7 @@ gui_message_return GUIAPI GUIDisplayMessage( gui_window *wnd, const char *messag
     int                 i;
 
 
+	GUIlog_entering_function ();
     if( ( message == NULL ) || ( title == NULL ) ) {
         return( GUI_RET_ABORT );
     }

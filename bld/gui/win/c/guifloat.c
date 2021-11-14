@@ -60,6 +60,7 @@ bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
     guix_ord    scr_x;
     guix_ord    scr_y;
 
+	GUIlog_entering_function ();
     if( ( hpopup = GUIHFloatingPopup ) == NULLHANDLE ) {
         return( false );
     }
@@ -123,6 +124,7 @@ bool GUIXCreateFloatingPopup( gui_window *wnd, const gui_point *location,
                              const gui_menu_items *menus,
                              gui_mouse_track track, gui_ctl_id *curr_id )
 {
+	GUIlog_entering_function ();
     if( GUIHFloatingPopup != NULLHANDLE ) {
         _wpi_destroymenu( GUIHFloatingPopup );
         GUIHFloatingPopup = NULLHANDLE;
@@ -149,21 +151,22 @@ void GUIPopupMenuSelect( WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 #ifdef __OS2_PM__
     WPI_MENUSTATE       mstate;
     HMENU               hmenu;
-#endif
+#endif  // of #ifdef __OS2_PM__
 
+	GUIlog_entering_function ();
     lparam=lparam;
     id = GET_WM_MENUSELECT_ITEM( wparam, lparam );
     menu_closed = ( _wpi_is_close_menuselect( wparam, lparam ) != 0 );
 
 #ifndef __OS2_PM__
     is_hilite = ( (GET_WM_MENUSELECT_FLAGS( wparam, lparam ) & MF_HILITE) != 0 );
-#else
+#else  // of #ifndef __OS2_PM__
     hmenu = (HMENU)lparam;
     if( !menu_closed && !WinSendMsg( hmenu, MM_QUERYITEM, MPFROM2SHORT( id, true ), MPFROMP( &mstate ) ) ) {
         return;
     }
     is_hilite = ( (mstate.afAttribute & MF_HILITE) != 0 );
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
 
     if( menu_closed ) {
         CurrId = 0;

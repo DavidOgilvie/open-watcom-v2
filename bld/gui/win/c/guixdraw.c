@@ -58,6 +58,7 @@ typedef struct draw_cache {
 
 static void SetText( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 {
+	GUIlog_entering_function ();
     _wpi_settextcolor( wnd->hdc, _wpi_getnearestcolor( wnd->hdc, fore ) );
     _wpi_setbackcolour( wnd->hdc, _wpi_getnearestcolor( wnd->hdc , back ) );
 }
@@ -88,6 +89,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     WPI_RECTDIM paint_left, paint_top, paint_right, paint_bottom;
     //draw_cache        dcache;
 
+	GUIlog_entering_function ();
     if( ( wnd->hdc == NULLHANDLE ) || ( wnd->ps == NULL ) ||
         ( ( text == NULL ) && ( hotspot_no == 0 ) ) ||
         ( ( hotspot_no > 0 ) && ( in_height == 0 ) ) ) {
@@ -153,16 +155,16 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
         old_pen = _wpi_selectpen( wnd->hdc, pen );
 #ifdef __OS2_PM__
         _wpi_rectangle( wnd->hdc, nDrawX, nDrawY + 1, right, nDrawY + height - 1 );
-#else
+#else  // of #ifdef __OS2_PM__
         _wpi_rectangle( wnd->hdc, nDrawX, nDrawY, right, nDrawY + height );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 
         /* if visible even with scrolling */
         if( nDrawX < ( paint_right + hscroll_pos ) ) {
             if( hotspot_no == 0 ) {
 #ifdef __OS2_PM__
                 nDrawY += _wpi_metricdescent( GUItm );
-#endif
+#endif  // of #ifdef __OS2_PM__
                 old_rop = _wpi_setrop2( wnd->hdc, R2_COPYPEN );
 				SetText( wnd, fore, back );
                 _wpi_textout( wnd->hdc, nDrawX, nDrawY, text, num_chars );
@@ -197,6 +199,7 @@ void GUIDrawBitmapAttr( gui_window *wnd, const guix_coord *size, const gui_coord
 {
     WPI_COLOUR  fore, back;
 
+	GUIlog_entering_function ();
     fore = GUIGetFore( wnd, attr );
     back = GUIGetBack( wnd, attr );
 
@@ -208,6 +211,7 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
 {
     WPI_COLOUR  fore, back;
 
+	GUIlog_entering_function ();
     fore = GUIGetFore( wnd, attr );
     back = GUIGetBack( wnd, attr );
 
@@ -221,5 +225,6 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
 void GUIXDrawTextRGB( gui_window *wnd, const char *text, size_t length, const gui_coord *pos,
                       gui_rgb fore, gui_rgb back, gui_ord extentx, bool draw_extent )
 {
+	GUIlog_entering_function ();
     GUIDrawTextBitmapRGB( wnd, text, length, 0, pos, GETRGB( fore ), GETRGB( back ), extentx, draw_extent, 0 );
 }

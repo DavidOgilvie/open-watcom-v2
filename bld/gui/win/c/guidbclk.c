@@ -41,5 +41,6 @@
 
 void GUIAPI GUISetDClickRate( unsigned dclick_ms )
 {
+	GUIlog_entering_function ();
     _wpi_setdoubleclicktime( dclick_ms );
 }

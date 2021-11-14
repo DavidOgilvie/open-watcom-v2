@@ -49,6 +49,7 @@ void DoGetRelRect( HWND hwnd, const WPI_RECT *wpi_rect, gui_rect *rect, bool isp
     gui_coord   pos;
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     _wpi_getrectvalues( *wpi_rect, &left, &top, &right, &bottom );
     rect->width = GUIScreenToScaleH( right - left );
     rect->height = GUIScreenToScaleV( bottom - top );
@@ -56,9 +57,9 @@ void DoGetRelRect( HWND hwnd, const WPI_RECT *wpi_rect, gui_rect *rect, bool isp
     pos.x = left;
 #ifdef __OS2_PM__
     pos.y = bottom - 1;
-#else
+#else  // of #ifdef __OS2_PM__
     pos.y = top;
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     parent = _wpi_getparent( hwnd );
     if( parent != HWND_DESKTOP && !ispopup ) {
         _wpi_getclientrect( parent, &parent_wpi_rect );
@@ -80,6 +81,7 @@ void GUIGetRelRect( HWND hwnd, gui_rect *rect, bool ispopup )
 {
     WPI_RECT    wpi_rect;
 
+	GUIlog_entering_function ();
     _wpi_getwindowrect( hwnd, &wpi_rect );
 
     DoGetRelRect( hwnd, &wpi_rect, rect, ispopup );
@@ -92,5 +94,6 @@ void GUIGetRelRect( HWND hwnd, gui_rect *rect, bool ispopup )
 
 void GUIAPI GUIGetRect( gui_window *wnd, gui_rect *rect )
 {
+	GUIlog_entering_function ();
     GUIGetRelRect( GUIGetParentFrameHWND( wnd ), rect, (wnd->style & GUI_POPUP) != 0 );
 }

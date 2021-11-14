@@ -47,7 +47,7 @@ static void SetRange( gui_window *wnd, int bar, guix_ord range, guix_ord text_ra
     int new_range;
     guix_ord screen_size;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     screen_size = GUIGetScrollScreenSize( wnd, bar );
     if( bar == SB_HORZ ) {
         if( !GUI_HSCROLL_ON( wnd ) ) {
@@ -75,6 +75,7 @@ static void SetRange( gui_window *wnd, int bar, guix_ord range, guix_ord text_ra
 
 void GUIAPI GUISetHScrollRangeCols( gui_window *wnd, gui_text_ord text_range )
 {
+	GUIlog_entering_function ();
     wnd->flags |= HRANGE_COL;
     SetRange( wnd, SB_HORZ, GUIFromTextX( text_range, wnd ), text_range );
 }
@@ -85,7 +86,7 @@ void GUIAPI GUISetHScrollRangeCols( gui_window *wnd, gui_text_ord text_range )
 
 void GUIAPI GUISetVScrollRangeRows( gui_window *wnd, gui_text_ord text_range )
 {
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     wnd->flags |= VRANGE_ROW;
     SetRange( wnd, SB_VERT, GUIFromTextY( text_range, wnd ), text_range );
 }
@@ -98,6 +99,7 @@ void GUIAPI GUISetHScrollRange( gui_window *wnd, gui_ord range )
 {
     guix_ord    scr_range;
 
+	GUIlog_entering_function ();
     wnd->flags &= ~HRANGE_COL;
     scr_range = GUIScaleToScreenH( range );
     SetRange( wnd, SB_HORZ, scr_range, scr_range );
@@ -111,6 +113,7 @@ void GUIAPI GUISetVScrollRange( gui_window *wnd, gui_ord range )
 {
     guix_ord    scr_range;
 
+	GUIlog_entering_function ();
     wnd->flags &= ~VRANGE_ROW;
     scr_range = GUIScaleToScreenV( range );
     SetRange( wnd, SB_VERT, scr_range, scr_range );
@@ -122,6 +125,7 @@ void GUIAPI GUISetVScrollRange( gui_window *wnd, gui_ord range )
 
 gui_ord GUIAPI GUIGetHScrollRange( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( GUIScreenToScaleH( GUIGetScrollRange( wnd, SB_HORZ ) ) );
 }
 
@@ -131,6 +135,7 @@ gui_ord GUIAPI GUIGetHScrollRange( gui_window *wnd )
 
 gui_ord GUIAPI GUIGetVScrollRange( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( GUIScreenToScaleV( GUIGetScrollRange( wnd, SB_VERT ) ) );
 }
 
@@ -142,7 +147,7 @@ gui_text_ord GUIAPI GUIGetVScrollRangeRows( gui_window *wnd )
 {
     guix_ord    range;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     range = GUIGetScrollRange( wnd, SB_VERT );
     if( range == GUI_NO_ROW ) {
         return( GUI_TEXT_NO_ROW );
@@ -159,6 +164,7 @@ gui_text_ord GUIAPI GUIGetHScrollRangeCols( gui_window *wnd )
 {
     guix_ord    range;
 
+	GUIlog_entering_function ();
     range = GUIGetScrollRange( wnd, SB_HORZ );
     if( range == GUI_NO_COLUMN ) {
         return( GUI_TEXT_NO_COLUMN );

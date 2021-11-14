@@ -42,4 +42,5 @@
 
 void GUISysCleanUp( void )
 {
+	GUIlog_entering_function ();
 }

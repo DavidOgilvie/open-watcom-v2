@@ -43,6 +43,7 @@
 
 HWND GUIGetSysHandle( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( GUIGetTopParentHWND( wnd->hwnd ) );
 }
 
@@ -53,9 +54,10 @@ HWND GUIGetSysHandle( gui_window *wnd )
 
 WPI_INST GUIGetHInst( void )
 {
+	GUIlog_entering_function ();
     return( GUIMainHInst );
 }
-#endif
+#endif  // of #if 0
 
 #ifdef __OS2__
 /*
@@ -64,6 +66,7 @@ WPI_INST GUIGetHInst( void )
 
 HAB GUIGetHAB( void )
 {
+	GUIlog_entering_function ();
     return( GUIMainHInst.hab );
 }
-#endif
+#endif  // of #ifdef __OS2__

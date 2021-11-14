@@ -36,7 +36,7 @@
 #ifdef __OS2_PM__
 #define IS_VKEY_F10(wp,lp)  ((SHORT1FROMMP( wp ) & KC_VIRTUALKEY) && (SHORT2FROMMP( lp ) == VK_F10))
 #define IS_KEY_UP(wp)       (SHORT1FROMMP( wp ) & KC_KEYUP)
-#endif
+#endif  // of #ifdef __OS2_PM__
 
 extern bool         GUIWindowsMapKey( WPI_PARAM1 vk, WPI_PARAM2 data, gui_key *scan );
 extern WPI_MRESULT  GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );

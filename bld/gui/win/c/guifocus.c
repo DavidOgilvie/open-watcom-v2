@@ -37,7 +37,7 @@
 
 
 /*
- * GUISetFocus -- This routine returns true if  it can set input focus 
+ * GUISetFocus -- This routine returns true if  it can set input focus
  *                to a control in a dialog box or in a window
  */
 
@@ -47,6 +47,7 @@ bool GUIAPI GUISetFocus( gui_window *wnd, gui_ctl_id id )
     control_item        *info;
     HWND                hwnd;
 
+	GUIlog_entering_function ();
     if( !GUIGetControlClass( wnd, id, &control_class ) ) {
         return( false );
     }
@@ -80,6 +81,7 @@ bool GUIAPI GUIGetFocus( gui_window *wnd, gui_ctl_id *id )
     HWND                parent;
     HWND                hwnd;
 
+	GUIlog_entering_function ();
     if( id != NULL ) {
         hwnd = _wpi_getfocus();
         parent = _wpi_getparent( hwnd );

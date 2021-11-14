@@ -43,6 +43,7 @@ gui_mcursor_handle GUIAPI GUISetMouseCursor( gui_mcursor_type type )
 {
     HCURSOR     cursor;
 
+	GUIlog_entering_function ();
     switch( type ) {
     case GUI_ARROW_CURSOR:
         cursor = _wpi_getsyscursor( IDC_ARROW );
@@ -67,6 +68,7 @@ gui_mcursor_handle GUIAPI GUISetMouseCursor( gui_mcursor_type type )
 
 void GUIAPI GUIResetMouseCursor( gui_mcursor_handle old )
 {
+	GUIlog_entering_function ();
     if( old != NULL ) {
         _wpi_setcursor( (HCURSOR)(pointer_uint)old );
     }

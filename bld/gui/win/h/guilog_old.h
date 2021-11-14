@@ -2,9 +2,8 @@
   DEBUG.H  Update History
 
 Version  Date          Updated by        Comments
--------  ------------  --------------  ----------------
-0.00     May 15, 2000	D. Ogilvie		Original version
-0.10	 Aug 26, 2021	D. Ogilvie		Added window messages enum 
+-------  ------------  ----------------  ----------------
+0.00     May 15, 2000  D. Ogilvie        Original version
 */
 
 // Window messages enum
@@ -35,7 +34,7 @@ typedef enum {
  _WM_WININICHANGE=0x001A,                 // 0x001A
 #if (WINVER >= 0x0400)
  _WM_SETTINGCHANGE=0x001A,                // 0x001A
-#endif  // of #if (WINVER >= 0x0400)
+#endif
  _WM_DEVMODECHANGE=0x001B,                // 0x001B
  _WM_ACTIVATEAPP,                         // 0x001C
  _WM_FONTCHANGE,                          // 0x001D
@@ -63,7 +62,7 @@ typedef enum {
  _WM_COMPAREITEM=0x0039,                  // 0x0039
 #if (WINVER >= 0x0500)
  _WM_GETOBJECT=0x003D,                    // 0x003D
-#endif  // of #if (WINVER >= 0x0500)
+#endif
  _WM_COMPACTING=0x0041,                   // 0x0041
  _WM_COMMNOTIFY=0x0044,                   // 0x0044
  _WM_WINDOWPOSCHANGING=0x0046,            // 0x0046
@@ -85,7 +84,7 @@ typedef enum {
  _WM_DISPLAYCHANGE,                       // 0x007E
  _WM_GETICON,                             // 0x007F
  _WM_SETICON,                             // 0x0080
-#endif  // of #if (WINVER >= 0x0400)
+#endif
  _WM_NCCREATE=0x0081,                     // 0x0081
  _WM_NCDESTROY,                           // 0x0082
  _WM_NCCALCSIZE,                          // 0x0083
@@ -108,11 +107,11 @@ typedef enum {
  _WM_NCXBUTTONDOWN=0x00AB,                // 0x00AB
  _WM_NCXBUTTONUP,                         // 0x00AC
  _WM_NCXBUTTONDBLCLK,                     // 0x00AD
-#endif  // of #if (_WIN32_WINNT >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0501)
  _WM_INPUT_DEVICE_CHANGE0x00FE,           // 0x00FE
  _WM_INPUT,                               // 0x00FF
-#endif  // of #if (_WIN32_WINNT >= 0x0501)
+#endif
  _WM_KEYFIRST=0x0100,                     // 0x0100
  _WM_KEYDOWN=0x0100,                      // 0x0100
  _WM_KEYUP,                               // 0x0101
@@ -125,15 +124,15 @@ typedef enum {
 #if (_WIN32_WINNT >= 0x0501)
  _WM_UNICHAR=0x0109,                      // 0x0109
  _WM_KEYLAST=0x0109,                      // 0x0109
-#else  // of #if (_WIN32_WINNT >= 0x0501)
+#else
  _WM_KEYLAST=0x0108,                      // 0x0108
-#endif  // of #else for #if (_WIN32_WINNT >= 0x0501)
+#endif
 #if (WINVER >= 0x0400)
  _WM_IME_STARTCOMPOSITION=0x010D,         // 0x010D
  _WM_IME_ENDCOMPOSITION,                  // 0x010E
  _WM_IME_COMPOSITION,                     // 0x010F
  _WM_IME_KEYLAST=0x010F,                  // 0x010F
-#endif  // of #if (WINVER >= 0x0400)
+#endif
  _WM_INITDIALOG=0x0110,                   // 0x0110
  _WM_COMMAND,                             // 0x0111
  _WM_SYSCOMMAND,                          // 0x0112
@@ -145,7 +144,7 @@ typedef enum {
 #if (WINVER >= 0x0601)
  _WM_GESTURE=0x0119,                      // 0x0119
  _WM_GESTUREINPUT,                        // 0x011A
-#endif  // of #if (WINVER >= 0x0601)
+#endif
  _WM_MENUSELECT=0x011F,                   // 0x011F
  _WM_MENUCHAR,                            // 0x0120
  _WM_ENTERIDLE,                           // 0x0121
@@ -155,12 +154,12 @@ typedef enum {
  _WM_MENUGETOBJECT,                       // 0x0124
  _WM_UNINITMENUPOPUP,                     // 0x0125
  _WM_MENUCOMMAND,                         // 0x0126
-#endif  // of #if (WINVER >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0500)
  _WM_CHANGEUISTATE=0x0127,                // 0x0127
  _WM_UPDATEUISTATE,                       // 0x0128
  _WM_QUERYUISTATE,                        // 0x0129
-#endif  // of #if (_WIN32_WINNT >= 0x0500)
+#endif
  _WM_CTLCOLORMSGBOX=0x0132,               // 0x0132
  _WM_CTLCOLOREDIT,                        // 0x0133
  _WM_CTLCOLORLISTBOX,                     // 0x0134
@@ -182,22 +181,22 @@ typedef enum {
  _WM_MBUTTONDBLCLK,                       // 0x0209
 #if (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400)
  _WM_MOUSEWHEEL,                          // 0x020A
-#endif  // of #if (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400)
+#endif
 #if (_WIN32_WINNT >= 0x0500)
  _WM_XBUTTONDOWN=0x020B,                  // 0x020B
  _WM_XBUTTONUP,                           // 0x020C
  _WM_XBUTTONDBLCLK,                       // 0x020D
-#endif  // of #if (_WIN32_WINNT >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0600)
  _WM_MOUSEHWHEEL=0x020E,                  // 0x020E
  _WM_MOUSELAST=0x020E,                    // 0x020E
- #elif (_WIN32_WINNT >= 0x0500)
+#elif (_WIN32_WINNT >= 0x0500)
  _WM_MOUSELAST=0x020D,                    // 0x020D
- #elif (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400)
+#elif (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400)
  _WM_MOUSELAST=0x020A,                    // 0x020A
-#else  // of #if (_WIN32_WINNT >= 0x0600)
+#else
  _WM_MOUSELAST=0x0209,                    // 0x0209
-#endif  // of #else for #if (_WIN32_WINNT >= 0x0600)
+#endif
  _WM_PARENTNOTIFY=0x0210,                 // 0x0210
  _WM_ENTERMENULOOP,                       // 0x0211
  _WM_EXITMENULOOP,                        // 0x0212
@@ -208,7 +207,7 @@ typedef enum {
  _WM_MOVING,                              // 0x0216
  _WM_POWERBROADCAST=0x0218,               // 0x0218
  _WM_DEVICECHANGE,                        // 0x0219
-#endif  // of #if (WINVER >= 0x0400)
+#endif
  _WM_MDICREATE=0x0220,                    // 0x0220
  _WM_MDIDESTROY,                          // 0x0221
  _WM_MDIACTIVATE,                         // 0x0222
@@ -226,7 +225,7 @@ typedef enum {
  _WM_MDIREFRESHMENU,                      // 0x0234
 #if (WINVER >= 0x0601)
  _WM_TOUCH=0x0240,                        // 0x0240
-#endif  // of #if (WINVER >= 0x0601)
+#endif
 #if (WINVER >= 0x0400)
  _WM_IME_SETCONTEXT=0x0281,               // 0x0281
  _WM_IME_NOTIFY,                          // 0x0282
@@ -234,31 +233,31 @@ typedef enum {
  _WM_IME_COMPOSITIONFULL,                 // 0x0284
  _WM_IME_SELECT,                          // 0x0285
  _WM_IME_CHAR,                            // 0x0286
-#endif  // #if (WINVER >= 0x0400)
+#endif
 #if (WINVER >= 0x0500)
  _WM_IME_REQUEST=0x0288,                  // 0x0288
-#endif  // of #if (WINVER >= 0x0500)
+#endif
 #if (WINVER >= 0x0400)
  _WM_IME_KEYDOWN=0x0290,                  // 0x0290
  _WM_IME_KEYUP,                           // 0x0291
-#endif  // #if (WINVER >= 0x0400)
+#endif
 #if (WINVER >= 0x0500)
  _WM_NCMOUSEHOVER=0x02A0,                 // 0x02A0
-#endif  // of #if (WINVER >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0400) || (WINVER >= 0x0500)
  _WM_MOUSEHOVER=0x02A1,                   // 0x02A1
-#endif  // of #if (_WIN32_WINNT >= 0x0400) || (WINVER >= 0x0500)
+#endif
 #if (WINVER >= 0x0500)
  _WM_NCMOUSELEAVE=0x02A2,                 // 0x02A2
-#endif  // of #if (WINVER >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0400) || (WINVER >= 0x0500)
  _WM_MOUSELEAVE=0x02A3,                   // 0x02A3
-#endif  // of #if (_WIN32_WINNT >= 0x0400) || (WINVER >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0501)
  _WM_WTSSESSION_CHANGE=0x02B1,            // 0x02B1
  _WM_TABLET_FIRST=0x02C0,                 // 0x02C0
  _WM_TABLET_LAST=0x02DF,                  // 0x02DF
-#endif  // of #if (_WIN32_WINNT >= 0x0501)
+#endif
  _WM_CUT=0x0300,                          // 0x0300
  _WM_COPY,                                // 0x0301
  _WM_PASTE,                               // 0x0302
@@ -281,101 +280,63 @@ typedef enum {
 #if (WINVER >= 0x0400)
  _WM_PRINT=0x0317,                        // 0x0317
  _WM_PRINTCLIENT,                         // 0x0318
-#endif  // of #if (WINVER >= 0x0400)
+#endif
 #if (_WIN32_WINNT >= 0x0500)
  _WM_APPCOMMAND=0x0319                    // 0x0319
-#endif  // of #if (_WIN32_WINNT >= 0x0500)
+#endif
 #if (_WIN32_WINNT >= 0x0501)
  _WM_THEMECHANGED=0x031A,                 // 0x031A
-#endif  // of #if (_WIN32_WINNT >= 0x0501)
+#endif
 #if (_WIN32_WINNT >= 0x0501)
  _WM_CLIPBOARDUPDATE=0x031D,              // 0x031D
-#endif  // of #if (_WIN32_WINNT >= 0x0501)
+#endif
 #if (_WIN32_WINNT >= 0x0600)
  _WM_DWMCOMPOSITIONCHANGED=0x031E,        // 0x031E
  _WM_DWMNCRENDERINGCHANGED,               // 0x031F
  _WM_DWMCOLORIZATIONCOLORCHANGED,         // 0x0320
  _WM_DWMWINDOWMAXIMIZEDCHANGED,           // 0x0321
-#endif  // of #if (_WIN32_WINNT >= 0x0600)
+#endif
 #if (_WIN32_WINNT >= 0x0601)
  _WM_DWMSENDICONICTHUMBNAIL=0x0323,       // 0x0323
  _WM_DWMSENDICONICLIVEPREVIEWBITMAP=0x0326,// 0x0326
-#endif  // of #if (_WIN32_WINNT >= 0x0601)
+#endif
 #if (WINVER >= 0x0600)
  _WM_GETTITLEBARINFOEX=0x033F,            // 0x033F
-#endif  // of #if (WINVER >= 0x0600)
+#endif
 #if (WINVER >= 0x0400)
  _WM_HANDHELDFIRST=0x0358,                // 0x0358
  _WM_HANDHELDLAST=0x035F,                 // 0x035F
  _WM_AFXFIRST,                            // 0x0360
  _WM_AFXLAST=0x037F,                      // 0x037F
-#endif  // of #if (WINVER >= 0x0400)
+#endif
  _WM_PENWINFIRST=0x0380,                  // 0x0380
  _WM_PENWINLAST=0x038F,                   // 0x038F
  _WM_USER=0x0400,                         // 0x0400
 #if (WINVER >= 0x0400)
  _WM_APP=0x8000,                          // 0x8000
-#endif  // of #if (WINVER >= 0x0400)
+#endif
  _WM_DUMMY
 } WINDOW_MSG;
 
 /*
- * Global variables for formats.  We hant all the guilog calls everywhere
- * to see the same address so that we can ignore function entry notifiers and
- * window message notifiers if the address being passed to guilog2 is the same
- * as the tow format variables below.
- */
- 
-#ifdef _GUILOG_H_
-	char ENTERING_FORMAT[]= "Function %s";
-	char CALLBACK_FORMAT[]= "Callback %s";
-	char WIN_MSG_FORMAT[]= " MSG %d(%d),w=0x%06X,l=0x%06X";
-#else  // of #ifdef _GUILOG_H_
-	extern char ENTERING_FORMAT[];
-	extern char CALLBACK_FORMAT[];
-	extern char WIN_MSG_FORMAT[];
-#endif  // of #else for #ifdef _GUILOG_H_
-
-/*
   Prototypes
 */
- int GUIlog_set_logging_mode (int);			// Turns logging on or off
- int GUIlog_set_logging_mode_from_ini ();	// Turns logging on or off, set
-											// by guilog.ini on desktop
- int GUIlog_set_filename (char *);			// Set log file name
- int GUIlog_set_envvar (char *);			// Set log file environment name
- int GUIlog_set_crash_mode (int);			// Crash-proof looging on or off
- int GUIlog_set_justify_mode (int value);	// Set justification mode on/off
- int GUIlog_set_justify_width (int width);	// Set justification width
+#ifndef GUILOG 
+	#define DOEXTERN extern
+#else
+	#define DOEXTERN
+#endif
 
- int GUIlog_close_logfile (void);			// Close log file
+DOEXTERN int	GUIset_log_filename (char *);	// Set log file name
+DOEXTERN int	GUIset_log_envvar (char *);		// Set log file environment name
+DOEXTERN int	GUIopen_log (void);				// Opens log file (gui.log in root air)
+DOEXTERN int	GUIset_log_mode (int);			// Turns logging on or off
+DOEXTERN int	GUIset_crash_mode (int);		// Crash-proof looging on or off
+DOEXTERN int	GUIlog (char *format, ...);		// Write to the log file
+DOEXTERN int	GUIclose_log (void);			// Close log file
+DOEXTERN int	GUIlog_width (int width);		// Close log file
+DOEXTERN int	GUIjustify (int value);			// Close log file
+DOEXTERN char  *strmsgenum (char *, ...);			// This has 1 paramerter, the enum
+												// but we need the dummy parameter for 
+												// va_list to work
 
-// Loggin settings on/off
- int GUIlog_justify_mode_on();				// Set justification mode on
- int GUIlog_justify_mode_off();				// Set justification mode off
- int GUIlog_crash_mode_on ();				// Crash-proof looging on 
- int GUIlog_crash_mode_off ();				// Crash-proof looging off
- int GUIlog_logging_on();					// Turns logging off temporarily
- int GUIlog_logging_off();					// Turns logging on after being paused
-
-// Logging classes on/off
- int GUIlog_functions_on ();				// Turn routine entering messages on
- int GUIlog_functions_off ();				// Turn routine entering messages off
- int GUIlog_callbacks_on ();				// Turn entering windprocs notices on
- int GUIlog_callbacks_off ();		// Turn entering windprocs messages notices off
- int GUIlog_win_msg_on ();					// Turn window messages notices on
- int GUIlog_win_msg_off ();					// Turn window messages notices off
-
-// Workhorse routine thaht makes this all possible
- int GUIlog2 (char *FUNC, char *FILE, int LINE, 
-					  char *format, ...);	// Write to the log file
-
-// Helper routines 
- char *strmsgenum (char *, ...);			// Hopefully an enum value to enum
-											// string conversion routine
-
-// Macros
-#define GUIlog(...) GUIlog2(__FUNCTION__,__FILE__,__LINE__,__VA_ARGS__)
-#define GUIlog_entering_function() (GUIlog(ENTERING_FORMAT,__FUNCTION__))
-#define GUIlog_entering_callback() (GUIlog(CALLBACK_FORMAT,__FUNCTION__))
-#define GUIlog_win_msg() (GUIlog(WIN_MSG_FORMAT,_msg,msg, wparam,lparam))

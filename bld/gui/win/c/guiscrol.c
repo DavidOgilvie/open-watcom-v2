@@ -47,6 +47,7 @@ guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 {
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     _wpi_getclientrect( wnd->hwnd, &wnd->hwnd_client_rect );
     _wpi_getrectvalues( wnd->hwnd_client_rect, &left, &top, &right, &bottom );
     if( bar == SB_HORZ ) {
@@ -66,7 +67,7 @@ guix_ord GUIGetScrollScreenSize( gui_window *wnd, int bar )
 
 guix_ord GUIGetScrollInc( gui_window *wnd, int bar )
 {
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     if( bar == SB_HORZ ) {
         if( GUI_HSCROLL_COLS( wnd ) ) {
             return( GUIFromTextX( 1, wnd ) );
@@ -93,6 +94,7 @@ void GUIScroll( gui_window *wnd, int bar, int change )
     guix_ord    range;
     guix_ord    screen_size;
 
+	GUIlog_entering_function ();
     old = GUIGetScrollPos( wnd, bar );
     new = old + change;
     if( change < 0 ) {
@@ -130,6 +132,7 @@ void GUIScroll( gui_window *wnd, int bar, int change )
 
 static void SetScroll( gui_window *wnd, int bar, guix_ord pos )
 {
+	GUIlog_entering_function ();
     if( bar == SB_VERT ) {
         if( GUI_VSCROLL_ON( wnd ) ) {
             GUIScroll( wnd, bar, pos - GUIGetScrollPos( wnd, bar ) );
@@ -148,6 +151,7 @@ static void SetScroll( gui_window *wnd, int bar, guix_ord pos )
 
 void GUIAPI GUISetVScrollRow( gui_window *wnd, gui_text_ord vscroll_pos )
 {
+	GUIlog_entering_function ();
     SetScroll( wnd, SB_VERT, GUIFromTextY( vscroll_pos, wnd ) );
 }
 
@@ -157,6 +161,7 @@ void GUIAPI GUISetVScrollRow( gui_window *wnd, gui_text_ord vscroll_pos )
 
 void GUIAPI GUISetHScrollCol( gui_window *wnd, gui_text_ord hscroll_pos )
 {
+	GUIlog_entering_function ();
     SetScroll( wnd, SB_HORZ, GUIFromTextX( hscroll_pos, wnd ) );
 }
 
@@ -169,6 +174,7 @@ void GUIAPI GUISetVScroll( gui_window *wnd, gui_ord vscroll_pos )
 {
     guix_ord    scr_y;
 
+	GUIlog_entering_function ();
     scr_y = GUIScaleToScreenV( vscroll_pos );
     if( ( vscroll_pos != 0 ) && ( scr_y == 0 ) ) {
         scr_y++;
@@ -185,6 +191,7 @@ void GUIAPI GUISetHScroll( gui_window *wnd, gui_ord hscroll_pos )
 {
     guix_ord    scr_x;
 
+	GUIlog_entering_function ();
     scr_x = GUIScaleToScreenH( hscroll_pos );
     if( ( hscroll_pos != 0 ) && ( scr_x == 0 ) ) {
         scr_x++;
@@ -199,7 +206,7 @@ void GUIAPI GUISetHScroll( gui_window *wnd, gui_ord hscroll_pos )
 
 static void GUIVScroll( int diff, gui_window *wnd, gui_event gui_ev )
 {
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     if( diff == 0 ) {
         return;
     }
@@ -223,6 +230,7 @@ static void GUIVScroll( int diff, gui_window *wnd, gui_event gui_ev )
 
 static void GUIHScroll( int diff, gui_window *wnd, gui_event gui_ev )
 {
+	GUIlog_entering_function ();
     if( diff == 0 ) {
         return;
     }
@@ -251,8 +259,8 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
     int         mult;
     int         bar;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
-	GUIlog ("MSG %d(%d) %s %s(%d)\n", _msg, msg, __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
+	GUIlog ("MSG %d(%d)", _msg, msg );
     wparam = wparam;
     lparam = lparam;
 
@@ -282,7 +290,7 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
             diff = GUIGetScrollRange( wnd, bar ) - GUIGetScrollPos( wnd, bar );
             GUIVScroll( diff, wnd, GUI_SCROLL_BOTTOM );
             break;
-#endif
+#endif  // of #ifndef __OS2_PM__
         case SB_THUMBPOSITION:
             if( wnd->scroll_style & GUI_VDRAG ) {
                 param = GET_WM_VSCROLL_POS( wparam, lparam );
@@ -327,7 +335,7 @@ void GUIProcessScrollMsg( gui_window *wnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_P
             diff = GUIGetScrollRange( wnd, bar ) - GUIGetScrollPos( wnd, bar );
             GUIHScroll( diff, wnd, GUI_SCROLL_FULL_RIGHT );
             break;
-#endif
+#endif  // of #ifndef __OS2_PM__
         case SB_THUMBPOSITION:
             if( wnd->scroll_style & GUI_HDRAG ) {
                 param = GET_WM_HSCROLL_POS( wparam, lparam );
@@ -360,6 +368,7 @@ static void DoSetScroll( gui_window *wnd, int bar, bool range_set,
     guix_ord        pos;
     guix_ord        screen_size;
 
+	GUIlog_entering_function ();
     screen_size = GUIGetScrollScreenSize( wnd, bar );
     if( range_set ) { /* app explicitly set scroll range        */
                       /* need to adjust range if size changed   */
@@ -393,6 +402,7 @@ static void DoSetScroll( gui_window *wnd, int bar, bool range_set,
 
 void GUISetScroll( gui_window *wnd )
 {
+	GUIlog_entering_function ();
 
     if( GUI_HSCROLL_ON( wnd ) && GUI_DO_HSCROLL( wnd ) ) {
         DoSetScroll( wnd, SB_HORZ, GUI_HRANGE_SET( wnd ), wnd->flags & HRANGE_COL, &wnd->hscroll_range );

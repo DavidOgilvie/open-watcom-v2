@@ -41,5 +41,6 @@
 
 gui_text_ord GUIAPI GUIGetNumRows( gui_window * wnd )
 {
+	GUIlog_entering_function ();
     return( wnd->num_rows );
 }

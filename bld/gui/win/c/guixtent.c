@@ -41,7 +41,7 @@
 /*
  * GetExtent -- This routine returns true if ?
  */
- 
+
 static bool GetExtent( gui_window *wnd, const char *text, size_t in_length, gui_coord *extent )
 {
     size_t      length;
@@ -49,6 +49,7 @@ static bool GetExtent( gui_window *wnd, const char *text, size_t in_length, gui_
     WPI_RECTDIM extentx;
     WPI_RECTDIM extenty;
 
+	GUIlog_entering_function ();
     if( wnd != NULL && text != NULL ) {
         got_new = GUIGetTheDC( wnd );
         length = strlen( text );
@@ -71,11 +72,12 @@ static bool GetExtent( gui_window *wnd, const char *text, size_t in_length, gui_
 /*
  * GUIGetExtentX -- ?
  */
- 
+
 gui_ord GUIAPI GUIGetExtentX( gui_window *wnd, const char *text, size_t length )
 {
     gui_coord extent;
 
+	GUIlog_entering_function ();
     if( GetExtent( wnd, text, length, &extent ) ) {
         return( extent.x );
     }
@@ -85,11 +87,12 @@ gui_ord GUIAPI GUIGetExtentX( gui_window *wnd, const char *text, size_t length )
 /*
  * GUIGetExtentY -- ?
  */
- 
+
 gui_ord GUIAPI GUIGetExtentY( gui_window *wnd, const char *text )
 {
     gui_coord extent;
 
+	GUIlog_entering_function ();
     if( GetExtent( wnd, text, (size_t)-1, &extent ) ) {
         return( extent.y );
     }
@@ -99,9 +102,10 @@ gui_ord GUIAPI GUIGetExtentY( gui_window *wnd, const char *text )
 /*
  * GetControlInfo -- This routine returns true if ?
  */
- 
+
 static bool GetControlInfo( gui_window *wnd, gui_ctl_id id, HWND *hwnd, WPI_PRES *dc )
 {
+	GUIlog_entering_function ();
     if( wnd && wnd->hwnd ) {
         *hwnd = _wpi_getdlgitem( wnd->hwnd, id );
         if( *hwnd != NULLHANDLE ) {
@@ -115,7 +119,7 @@ static bool GetControlInfo( gui_window *wnd, gui_ctl_id id, HWND *hwnd, WPI_PRES
 /*
  * GetControlExtent -- This routine returns true if ?
  */
- 
+
 static bool GetControlExtent( gui_window *wnd, gui_ctl_id id, const char *text, size_t in_length, gui_coord *extent )
 {
     size_t      length;
@@ -126,6 +130,7 @@ static bool GetControlExtent( gui_window *wnd, gui_ctl_id id, const char *text, 
     WPI_RECTDIM extentx;
     WPI_RECTDIM extenty;
 
+	GUIlog_entering_function ();
     if( text != NULL && GetControlInfo( wnd, id, &hwnd, &dc ) ) {
         length = strlen( text );
         if( in_length != (size_t)-1 ) {
@@ -153,11 +158,12 @@ static bool GetControlExtent( gui_window *wnd, gui_ctl_id id, const char *text, 
 /*
  * GUIGetControlExtentX -- ?
  */
- 
+
 gui_ord GUIAPI GUIGetControlExtentX( gui_window *wnd, gui_ctl_id id, const char *text, size_t length )
 {
     gui_coord   extent;
 
+	GUIlog_entering_function ();
     if( GetControlExtent( wnd, id, text, length, &extent ) ) {
         return( extent.x );
     }
@@ -167,11 +173,12 @@ gui_ord GUIAPI GUIGetControlExtentX( gui_window *wnd, gui_ctl_id id, const char 
 /*
  * GUIGetControlExtentY -- ?
  */
- 
+
 gui_ord GUIAPI GUIGetControlExtentY( gui_window *wnd, gui_ctl_id id, const char *text )
 {
     gui_coord extent;
 
+	GUIlog_entering_function ();
     if( GetControlExtent( wnd, id, text, (size_t)-1, &extent ) ) {
         return( extent.y );
     }

@@ -41,4 +41,5 @@
 
 void GUIAPI GUISysFini( void  )
 {
+	GUIlog_entering_function ();
 }

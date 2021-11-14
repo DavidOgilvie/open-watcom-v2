@@ -51,7 +51,7 @@
             *frame_hwnd = WinCreateWindow( parent_hwnd, class, name, style, \
                                            x, y, width, height, parent_hwnd, \
                                            HWND_TOP, id, param, NULL );
-#else
+#else  // of #ifdef __OS2_PM__
     #define _wpi_createwindow_ex( exstyle, class, name, frame_style, create_flags, \
                     client_style, x, y, width, height, parent, menu, inst, \
                     pparam, pframe_hwnd ) \
@@ -70,7 +70,7 @@
                         parent_hwnd, menu, inst, param, hwnd, id, frame ) \
         *hwnd = CreateWindow( class, name, style, x, y, width, height, \
                 parent_hwnd, menu, inst, param );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 
 #ifdef __OS2_PM__
     #define _wpi_cvth_y_plus1( y, h ) ((h) - (y))
@@ -97,7 +97,7 @@
         (prect)->yTop -= (prect)->yBottom; \
         (prect)->yBottom = 0;
     #define _wpi_dlgreturn( flag )              return( MRFROMSHORT( flag ) )
-#else
+#else  // of #ifdef __OS2_PM__
     #define _wpi_cvth_y_plus1( y, h ) (y)
     #define _wpi_cvth_y_size( y, h, size ) (y)
     #define _wpi_cvth_y_size_plus1( y, h, size ) (y)
@@ -113,4 +113,4 @@
         (prect)->bottom -= (prect)->top; \
         (prect)->top = 0;
     #define _wpi_dlgreturn( flag )              return( flag )
-#endif
+#endif  // of #elsee for #ifdef __OS2_PM__

@@ -45,6 +45,7 @@ guix_ord GUIGetTextExtentX( gui_window *wnd, const char *str, gui_text_ord cnt )
     WPI_RECTDIM extentx;
     WPI_RECTDIM extenty;
 
+	GUIlog_entering_function ();
     _wpi_gettextextent( wnd->hdc, str, cnt, &extentx, &extenty );
 
     return( extentx );
@@ -59,6 +60,7 @@ guix_ord GUIGetTextExtentY( gui_window *wnd, const char *str, gui_text_ord cnt )
     WPI_RECTDIM extentx;
     WPI_RECTDIM extenty;
 
+	GUIlog_entering_function ();
     _wpi_gettextextent( wnd->hdc, str, cnt, &extentx, &extenty );
 
     return( extenty );
@@ -70,5 +72,6 @@ guix_ord GUIGetTextExtentY( gui_window *wnd, const char *str, gui_text_ord cnt )
 
 void GUIGetTextExtent( gui_window *wnd, const char *str, gui_text_ord cnt, WPI_RECTDIM *extentx, WPI_RECTDIM *extenty )
 {
+	GUIlog_entering_function ();
     _wpi_gettextextent( wnd->hdc, str, cnt, extentx, extenty );
 }

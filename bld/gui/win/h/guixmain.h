@@ -40,11 +40,11 @@ extern bool     GUIMainTouched;
 
 extern int  GUIXMain( int argc, char *argv[] );
 
-#else
+#else  // of if defined( __OS2_PM__ )
 
 extern int  GUIXMain( int argc, char *argv[],
                     WPI_INST inst, WPI_INST hPrevInstance, LPSTR lpCmdLine,
                     int nShowCmd );
-#endif
+#endif  // of #else for if defined( __OS2_PM__ )
 
 #endif // _GUIXMAIN_H_

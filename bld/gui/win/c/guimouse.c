@@ -37,13 +37,14 @@
 
 
 /*
- * GUIGetMousePosn -- 
+ * GUIGetMousePosn --
  */
 
 bool GUIAPI GUIGetMousePosn( gui_window *wnd, gui_point *point )
 {
     WPI_POINT   wpi_point;
 
+	GUIlog_entering_function ();
     if( !_wpi_getsystemmetrics( SM_MOUSEPRESENT ) ) {
         return( false );
     }
@@ -52,7 +53,7 @@ bool GUIAPI GUIGetMousePosn( gui_window *wnd, gui_point *point )
     _wpi_screentoclient( wnd->hwnd, &wpi_point );
     wpi_point.y = _wpi_cvtc_y( wnd->hwnd, wpi_point.y );
     _wpi_clienttoscreen( wnd->hwnd, &wpi_point );
-#endif
+#endif  // of #ifdef __OS2_PM__ // close your eyes!!! gross hack coming up
     GUIMakeRelative( wnd, &wpi_point, point );
     return( true );
 }

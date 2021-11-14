@@ -48,7 +48,7 @@ static void SetScrollThumb( gui_window * wnd, int percent, int bar )
     guix_ord    new;
     bool        range_set;
 
- 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     if( GUIScrollOn( wnd, bar ) ) {
         old = GUIGetScrollPos( wnd, bar );
         if( percent < 0 ) {
@@ -80,6 +80,7 @@ static void SetScrollThumb( gui_window * wnd, int percent, int bar )
 
 void GUIAPI GUISetVScrollThumb( gui_window * wnd, int percent )
 {
+	GUIlog_entering_function ();
     SetScrollThumb( wnd, percent, SB_VERT );
 }
 
@@ -89,5 +90,6 @@ void GUIAPI GUISetVScrollThumb( gui_window * wnd, int percent )
 
 void GUIAPI GUISetHScrollThumb( gui_window * wnd, int percent )
 {
+	GUIlog_entering_function ();
     SetScrollThumb( wnd, percent, SB_HORZ );
 }

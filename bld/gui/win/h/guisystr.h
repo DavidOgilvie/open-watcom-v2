@@ -43,4 +43,4 @@ extern void TrayCallBack( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam );
 // Function to allow use of system tray when objects are minimized - include in app
 extern void WndSizeChange( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam );
 
-#endif
+#endif  // of #ifdef __NT__

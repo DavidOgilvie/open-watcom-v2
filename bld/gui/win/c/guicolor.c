@@ -32,12 +32,12 @@
 
 #if defined __WINDOWS__ && defined __GUI_IS_GUI__
 #include <winuser.h>
-#endif
+#endif  // of #if defined __WINDOWS__ && defined __GUI_IS_GUI__
 #include "guiwind.h"	// in <OWROOT>\bld\gui\win\h\guiwind.h
 #include <string.h>
 #if defined(__WINDOWS__) && !defined(__WINDOWS_386__)
 #include <commdlg.h>	// In <OWROOT>\bld\w16api\wini86\commdlg.h
-#endif
+#endif  // of #if defined(__WINDOWS__) && !defined(__WINDOWS_386__)
 #include "guicolor.h"	// in <OWROOT>\bld\gui\win\h\guicolor.h
 #include "guiwnclr.h"	// in <OWROOT>\bld\gui\h\guiwnclr.h
 #include "guixwind.h"	// in <OWROOT>\bld\gui\win\h\guixwind.h
@@ -48,22 +48,22 @@ void GUIDoSysColorChange ( gui_window * );
 
 /***************************************************************/
 // Variables used in guicolor.c and throughout this gui libary
-// gui_colour 
+// gui_colour
 //		Size: GUI_NUM_COLOURS
 //			Type: last element of the enum gui_colour
-//			Deined in:	
+//			Deined in:
 //		Type: WPI_COLOUR
 //			Defined in:	gui\ui\gui.h
 //			Defined as type: COLOR
 //		Purpose: This contains a list of standard colour names and
-//			RGB values as well as the RGB values for all Windows 
+//			RGB values as well as the RGB values for all Windows
 //			screen elements that can be obtained through GetSysColour
 //			in the routine InitSystemRGB (see below)
-// gui_colour_set 
+// gui_colour_set
 //		Size: GUI_NUM_ATTRS
 //		Defined in: gui\c\guiwnclr.c
 //		Type: (fore RGB, back RGB)
-//		Purpose: The foreground and packground colours of a particular 
+//		Purpose: The foreground and packground colours of a particular
 //			display element.
 
 // GUIColors contaus GUI_NUM_COLOURS elemets.  The colour names are
@@ -222,7 +222,7 @@ WPI_COLOUR GUIColours[] = {
     0x00808080, // GUIEX_WINDOW_TEXT,
     0x00000000, // GUIEX_WND_BKGRND,
     0x00808080  // GUIEX_WND_TEXT,
-#endif             
+#endif  // of #else for #ifdef __OS2_PM__
 };
 
 void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back );
@@ -236,7 +236,7 @@ void InitRootWindowRGB ( gui_window *wnd );
 void InitSystemRGB( void )
 {
 /*****************************************************
-// From WINuSER.H, these are the values for each of the 
+// From WINuSER.H, these are the values for each of the
 //	Code									Value
 	COLOR_SCROLLBAR                     	0
 	COLOR_BACKGROUND                   		1
@@ -284,7 +284,7 @@ void InitSystemRGB( void )
     #define COLOR_BTNHILIGHT                COLOR_BTNHIGHLIGHT
 #endif  // Of info from WINUSER.H
 ******************************************************************/
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
 // These aren't available outside of Windows
 #if (winver >= 0x0400)
 	GUIColours[GUIEX_3DDKSHADOW]= 			GetSysColor( COLOR_3DDKSHADOW ); // 21
@@ -293,7 +293,7 @@ void InitSystemRGB( void )
 	GUIColours[GUIEX_3DHILIGHT]= 			GetSysColor( COLOR_3DHILIGHT ); //20
 	GUIColours[GUIEX_3DLIGHT]= 				GetSysColor( COLOR_3DLIGHT ); // 22
 	GUIColours[GUIEX_3DSHADOW]= 			GetSysColor( COLOR_3DSHADOW ); // 16
-#endif
+#endif  // OF #if (winver >= 0x0400)
 GUIColours[GUIEX_ACTIVEBORDER]= 			GetSysColor( COLOR_ACTIVEBORDER ); // 10
 GUIColours[GUIEX_ACTIVECAPTION]=			GetSysColor( COLOR_ACTIVECAPTION ); // 2
 GUIColours[GUIEX_APPWORKSPACE]= 			GetSysColor( COLOR_APPWORKSPACE ); // 12
@@ -303,14 +303,14 @@ GUIColours[GUIEX_BTNHIGHLIGHT]= 			GetSysColor( COLOR_BTNHIGHLIGHT ); // 20
 #ifndef __WINDOWS__
 // These aren't available to this OS
 GUIColours[GUIEX_BTNHILIGHT]= 				GetSysColor( COLOR_BTNHILIGHT ); // 20
-#endif
+#endif  // OF #ifndef __WINDOWS__
 GUIColours[GUIEX_BTNSHADOW]= 				GetSysColor( COLOR_BTNSHADOW ); // 16
 GUIColours[GUIEX_BTNTEXT]= 					GetSysColor( COLOR_BTNTEXT ); // 18
 GUIColours[GUIEX_CAPTIONTEXT]= 				GetSysColor( COLOR_CAPTIONTEXT ); // 9
 #ifndef __WINDOWS__
 // These aren't available to this OS
 GUIColours[GUIEX_DESKTOP]= 					GetSysColor( COLOR_DESKTOP ); // 1
-#endif
+#endif  // OF #ifndef __WINDOWS__
 GUIColours[GUIEX_DLG_BACKGRND]= 			GetSysColor( COLOR_BTNFACE ); // 15
 GUIColours[GUIEX_DLG_BKGRND]= 				GetSysColor( COLOR_BTNFACE ); // 15
 GUIColours[GUIEX_DLG_TEXT]= 				GetSysColor( COLOR_BTNTEXT ); // 18
@@ -319,7 +319,7 @@ GUIColours[GUIEX_FRAME_INACTIVE]= 			GetSysColor( COLOR_INACTIVEBORDER ); // 11
 #if (WINVER >= 0x0500)
 GUIColours[GUIEX_GRADIENTACTIVECAPTION]= 	GetSysColor( COLOR_GRADIENTACTIVECAPTION ); // 27
 GUIColours[GUIEX_GRADIENTINACTIVECAPTION]= 	GetSysColor( COLOR_GRADIENTINACTIVECAPTION ); // 28
-#endif
+#endif  // OF #if (WINVER >= 0x0500)
 GUIColours[GUIEX_GRAYTEXT]= 				GetSysColor( COLOR_GRAYTEXT ); // 17
 GUIColours[GUIEX_HIGHLIGHT]= 				GetSysColor( COLOR_HIGHLIGHT ); // 13
 GUIColours[GUIEX_HIGHLIGHT_TEXT]= 			GetSysColor( COLOR_HIGHLIGHTTEXT );  // 14
@@ -330,7 +330,7 @@ GUIColours[GUIEX_HIGHLITETEXT]= 			GetSysColor( COLOR_HIGHLIGHTTEXT ); // 14
 #if (WINVER >= 0x0500)
 GUIColours[GUIEX_HOTLITE]= 					GetSysColor( COLOR_HOTLIGHT ); // 26
 GUIColours[GUIEX_HOTLIGHT]= 				GetSysColor( COLOR_HOTLIGHT ); // 26
-#endif
+#endif  // of #if (WINVER >= 0x0500)
 GUIColours[GUIEX_INACTIVEBORDER]= 			GetSysColor( COLOR_INACTIVEBORDER ); // 11
 GUIColours[GUIEX_INACTIVECAPTION]= 			GetSysColor( COLOR_INACTIVECAPTION ); // 3
 GUIColours[GUIEX_INACTIVECAPTIONTEXT]= 		GetSysColor( COLOR_INACTIVECAPTIONTEXT ); // 19
@@ -341,7 +341,7 @@ GUIColours[GUIEX_INFO_TEXT]= 				GetSysColor( COLOR_INFOTEXT ); // 23
 GUIColours[GUIEX_INFOBACKGROUND]= 			GetSysColor( COLOR_INFOBK ); // 24
 GUIColours[GUIEX_INFOBK]= 					GetSysColor( COLOR_INFOBK ); // 24
 GUIColours[GUIEX_INFOTEXT]= 				GetSysColor( COLOR_INFOTEXT ); // 23
-#endif
+#endif  // of #ifndef __WINDOWS__
 GUIColours[GUIEX_MENU]= 					GetSysColor( COLOR_MENU ); // 4
 GUIColours[GUIEX_MENU_INACTIVE_TEXT]= 		GetSysColor( COLOR_GRAYTEXT ); // 17
 GUIColours[GUIEX_MENU_TEXT]= 				GetSysColor( COLOR_MENUTEXT ); // 7
@@ -349,7 +349,7 @@ GUIColours[GUIEX_MENU_TEXT_GRAYED]= 		GetSysColor( COLOR_GRAYTEXT ); // 17
 #if (WINVER >= 0x0501)
 GUIColours[GUIEX_MENUBAR]= 					GetSysColor( COLOR_MENUBAR ); // 30
 GUIColours[GUIEX_MENUHILIGHT]= 				GetSysColor( COLOR_MENUHILIGHT ); // 29
-#endif
+#endif  // of #if (WINVER >= 0x0501)
 GUIColours[GUIEX_MENUTEXT]= 				GetSysColor( COLOR_MENUTEXT ); // 7
 GUIColours[GUIEX_SCROLLBAR]= 				GetSysColor( COLOR_SCROLLBAR ); // 0
 GUIColours[GUIEX_WINDOW]= 					GetSysColor( COLOR_WINDOW ); // 5
@@ -359,44 +359,44 @@ GUIColours[GUIEX_WINDOW_TEXT]= 				GetSysColor( COLOR_WINDOWTEXT ); // 8
 GUIColours[GUIEX_WND_BKGRND]= 				GetSysColor( COLOR_WINDOW ); // 5
 GUIColours[GUIEX_WND_TEXT]= 				GetSysColor( COLOR_WINDOWTEXT ); // 8
 }
-#endif
+#endif  // of #ifndef __OS2_PM__
 
 /*
 	 What can CetSysColor get in Windows?
 	-------- 3D elements ------
 Text				Background			Purpose
 					COLOR_3DDKSHADOW	Dark shadow for 3D display elements.
-					COLOR_3DFACE		Face color for 3D display elements 
+					COLOR_3DFACE		Face color for 3D display elements
 											and for dialog box backgrounds.
-					COLOR_3DHIGHLIGHT	Highlight color for 3D display elements 
+					COLOR_3DHIGHLIGHT	Highlight color for 3D display elements
 											(for edges facing the light source.)
-					COLOR_3DHILIGHT		Highlight color for 3D display elements 
+					COLOR_3DHILIGHT		Highlight color for 3D display elements
 											(for edges facing the light source.)
-					COLOR_3DLIGHT		Light color for 3D display elements 
+					COLOR_3DLIGHT		Light color for 3D display elements
 											(for edges facing the light source.)
-					COLOR_3DSHADOW		Shadow color 
-											for 3D display elements (for edges 
+					COLOR_3DSHADOW		Shadow color
+											for 3D display elements (for edges
 											facing away from the light source).
-					COLOR_BTNSHADOW		Shadow color for 3D display elements 
+					COLOR_BTNSHADOW		Shadow color for 3D display elements
 											(for edges facing away from the light source).
-COLOR_BTNTEXT		COLOR_BTNFACE		Highlight color for 3D display elements 
+COLOR_BTNTEXT		COLOR_BTNFACE		Highlight color for 3D display elements
 											(for edges facing the light source.)
 	------ Title bar gradient elements ------
 Background								Purpose
-COLOR_GRADIENTACTIVECAPTION				Right side color in the color gRadient of 
-											an active window's title bar.   		
-											Use SPI_GETGRADIENTCAPTIONS with the 
-											SystemParametersInfo function to determine 
+COLOR_GRADIENTACTIVECAPTION				Right side color in the color gRadient of
+											an active window's title bar.
+											Use SPI_GETGRADIENTCAPTIONS with the
+											SystemParametersInfo function to determine
 											whether the gradient effect is enabled.
-											COLOR_ACTIVECAPTION specifies the left 
+											COLOR_ACTIVECAPTION specifies the left
 											side color.
-COLOR_GRADIENTINACTIVECAPTION			Right side color in the color gradient of an 
-											inactive window's title bar. 
-											COLOR_INACTIVECAPTION specifies the left 
-											side color.			
-COLOR_GRADIENTINACTIVECAPTION			Right side color in the color gradient of an 
+COLOR_GRADIENTINACTIVECAPTION			Right side color in the color gradient of an
+											inactive window's title bar.
+											COLOR_INACTIVECAPTION specifies the left
+											side color.
+COLOR_GRADIENTINACTIVECAPTION			Right side color in the color gradient of an
 											inactive window's title bar
-											COLOR_INACTIVECAPTION specifies the left 
+											COLOR_INACTIVECAPTION specifies the left
 											side color.
 	------ Elements common to 2D and 3D objects ------
 Text				Background			Purpose
@@ -405,33 +405,33 @@ COLOR_CAPTIONTEXT	COLOR_ACTIVECAPTION	Active window title bar.
 					COLOR_APPWORKSPACE	Background color of MDI applications.
 					COLOR_BACKGROUND	Desktop
 					COLOR_DESKTOP		Same as COLOR_BACKGROUND
-					COLOR_BTNHILIGHT	Highlight color for 3D display elements 
+					COLOR_BTNHILIGHT	Highlight color for 3D display elements
 											(for edges facing the light source.)
 COLOR_GRAYTEXT							Grayed (disabled) text
 COLOR_HIGHLIGHTTEXT	COLOR_HIGHLIGHT		Item(s) selected in a control.
-COLOR_HOTLIGHT		COLOR_WINDOW		Color for a hyperlink or hot-tracked item. 
+COLOR_HOTLIGHT		COLOR_WINDOW		Color for a hyperlink or hot-tracked item.
 				COLOR_INACTIVEBORDER	Inactive window border.
 COLOR_INACTIVECAPTIONTEXT
-				COLOR_INACTIVECAPTION	Inactive window caption.  Specifies the 
-											left side color in the color 
-											gradient of an inactive window's 
-											title bar if the gradient effect is 
+				COLOR_INACTIVECAPTION	Inactive window caption.  Specifies the
+											left side color in the color
+											gradient of an inactive window's
+											title bar if the gradient effect is
 											enabled.
 COLOR_INFOTEXT		COLOR_INFOBK		Background color for tooltip controls.
 COLOR_MENUTEXT		COLOR_MENU			Menu background.
-					COLOR_MENUHILIGHT	The color used to highlight menu items 
-											when the menu appears as a flat menu 
-											(see SystemParametersInfo). The 
-											highlighted menu item is outlined with 
-											COLOR_HIGHLIGHT.  Windows 2000:  This 
+					COLOR_MENUHILIGHT	The color used to highlight menu items
+											when the menu appears as a flat menu
+											(see SystemParametersInfo). The
+											highlighted menu item is outlined with
+											COLOR_HIGHLIGHT.  Windows 2000:  This
 											value is not supported.
-					COLOR_MENUBAR		The background color for the menu bar when 
-											menus appear as flat menus (see 
-											SystemParametersInfo). However, 
-											COLOR_MENU continues to specify the 
+					COLOR_MENUBAR		The background color for the menu bar when
+											menus appear as flat menus (see
+											SystemParametersInfo). However,
+											COLOR_MENU continues to specify the
 											background color of the menu popup.
 					COLOR_SCROLLBAR		Scroll bar gray area.
-COLOR_WINDOWTEXT	COLOR_WINDOW		Window background. 
+COLOR_WINDOWTEXT	COLOR_WINDOW		Window background.
 or COLOR_HOTLITE
 					COLOR_WINDOWFRAME	Window frame.
 
@@ -444,6 +444,7 @@ or COLOR_HOTLITE
 
 bool GUIAPI GUISetRGB( gui_colour colour, gui_rgb rgb )
 {
+	GUIlog_entering_function ();
     if( colour < GUI_NUM_COLOURS  ) {
         GUIColours[colour] = GETRGB( rgb );
         return( true );
@@ -461,6 +462,7 @@ static void FillInRGB( WPI_COLOUR colour, gui_rgb *rgb )
     BYTE        g;
     BYTE        b;
 
+	GUIlog_entering_function ();
     r = GetRValue( colour );
     g = GetGValue( colour );
     b = GetBValue( colour );
@@ -473,7 +475,8 @@ static void FillInRGB( WPI_COLOUR colour, gui_rgb *rgb )
 
 bool GUIAPI GUIGetRGB( gui_colour colour, gui_rgb *rgb )
 {
-    if( ( colour < GUI_NUM_COLOURS ) && ( rgb != NULL ) ) {
+	GUIlog_entering_function ();
+   if( ( colour < GUI_NUM_COLOURS ) && ( rgb != NULL ) ) {
         FillInRGB( GUIColours[colour], rgb );
         return( true );
     }
@@ -486,6 +489,7 @@ bool GUIAPI GUIGetRGB( gui_colour colour, gui_rgb *rgb )
 
 bool GUIAPI GUIGetWndColour( gui_window *wnd, gui_attr attr, gui_colour_set *colour_set )
 {
+	GUIlog_entering_function ();
     if( colour_set == NULL ) {
         return( false );
     }
@@ -505,11 +509,12 @@ static void SetBKBrush( gui_window *wnd )
 {
     static bool sys_rgb_initialized = false;
 
+	GUIlog_entering_function ();
     if( !sys_rgb_initialized ) {
 #ifndef __OS2_PM__
         InitSystemRGB();
 		InitRootWindowRGB ( wnd );
-#endif
+#endif  // of #ifndef __OS2_PM__
         sys_rgb_initialized = true;
     }
 
@@ -527,6 +532,7 @@ static void ChangeBKBrush( gui_window *wnd )
     HBRUSH      prev;
     HBRUSH      curr;
 
+	GUIlog_entering_function ();
     curr = wnd->bk_brush;
     prev = GUIFreeBKBrush( wnd );
     SetBKBrush( wnd );
@@ -537,7 +543,7 @@ static void ChangeBKBrush( gui_window *wnd )
     } else {
         SET_HBRBACKGROUND( wnd->hwnd, wnd->bk_brush );
     }
-#endif
+#endif  // of #ifndef __OS2_PM__
 }
 
 #if 0
@@ -551,13 +557,14 @@ void GUICheckBKBrush( gui_window *wnd )
     gui_rgb             rgb;
     gui_colour_set      set;
 
+	GUIlog_entering_function ();
     GUIGetWndColour( wnd, GUI_BACKGROUND, &set );
     GUIGetRGB( set.back, &rgb );
     if( rgb != wnd->bk_rgb ) {
         ChangeBKBrush( wnd );
     }
 }
-#endif
+#endif  // of #if 0
 
 /*
  * GUISetWndColour -- This routine returns true if ?
@@ -565,6 +572,7 @@ void GUICheckBKBrush( gui_window *wnd )
 
 bool GUIAPI GUISetWndColour( gui_window *wnd, gui_attr attr, gui_colour_set *colour_set )
 {
+	GUIlog_entering_function ();
     if( colour_set == NULL ) {
         return( false );
     }
@@ -589,7 +597,7 @@ bool GUIAPI GUIGetRGBFromUser( gui_rgb init_rgb, gui_rgb *new_rgb )
     /* unused parameters */ (void)init_rgb; (void)new_rgb;
 
     return( false );
-#else
+#else  // of #ifdef __OS2_PM__
     CHOOSECOLOR     choose;
     bool            ret;
  #if defined(__WINDOWS__)
@@ -598,9 +606,10 @@ bool GUIAPI GUIGetRGBFromUser( gui_rgb init_rgb, gui_rgb *new_rgb )
   #ifdef __WINDOWS_386__
     HINDIR          hIndir;
     DWORD           guiColoursAlias;
-  #endif
- #endif
+  #endif  // of #ifdef __WINDOWS_386__
+ #endif  // of #if defined(__WINDOWS__)
 
+	GUIlog_entering_function ();
     if( new_rgb == NULL ) {
         return( false );
     }
@@ -611,12 +620,12 @@ bool GUIAPI GUIGetRGBFromUser( gui_rgb init_rgb, gui_rgb *new_rgb )
     choose.rgbResult = GETRGB( init_rgb );
  #ifndef __WINDOWS_386__
     choose.lpCustColors = GUIColours;
- #endif
+ #endif  // of #ifndef __WINDOWS_386__
     choose.lStructSize = sizeof( CHOOSECOLOR );
 
  #if defined(__NT__)
     ret = ( ChooseColor( &choose ) != 0 );
- #else
+ #else  // of #if defined(__NT__)
     h = LoadLibrary( "COMMDLG.DLL" );
     if( (UINT)h < 32 ) {
         return( false );
@@ -638,20 +647,20 @@ bool GUIAPI GUIGetRGBFromUser( gui_rgb init_rgb, gui_rgb *new_rgb )
         FreeAlias16( guiColoursAlias );
     }
     FreeIndirectFunctionHandle( hIndir );
-  #else
+  #else  // of #ifdef __WINDOWS_386__
     ret = ((BOOL(WINAPI *)(LPCHOOSECOLOR))func)( &choose ) != 0;
-  #endif
+  #endif  // of #else for #ifdef __WINDOWS_386__
     FreeLibrary( h );
- #endif
+ #endif  // of #else for #if defined(__NT__)
     if( ret ) {
         FillInRGB( choose.rgbResult, new_rgb );
     }
     return( ret );
-#endif
+#endif  // of else for #ifdef __OS2_PM__
 }
 
 /*
- * GUIXSetColours -- This routine returns true if it can record the 
+ * GUIXSetColours -- This routine returns true if it can record the
  *                   colours selected by the application
  */
 
@@ -660,6 +669,7 @@ bool GUIXSetColours( gui_window *wnd, int num_attrs, gui_colour_set *colours )
     size_t          size;
     gui_colour_set  *attrs;
 
+	GUIlog_entering_function ();
     if( colours != NULL ) {
         size = sizeof( gui_colour_set ) * num_attrs;
         attrs = (gui_colour_set *)GUIMemAlloc( size );
@@ -680,6 +690,7 @@ bool GUIXSetColours( gui_window *wnd, int num_attrs, gui_colour_set *colours )
 
 void GUIXGetWindowColours( gui_window *wnd, gui_colour_set *colours )
 {
+	GUIlog_entering_function ();
     memcpy( colours, wnd->attrs, sizeof( gui_colour_set ) * wnd->num_attrs );
 }
 
@@ -691,6 +702,7 @@ HBRUSH GUIFreeBKBrush( gui_window * wnd )
 {
     HBRUSH brush = NULLHANDLE;
 
+	GUIlog_entering_function ();
     if( wnd->bk_brush != WPI_NULL ) {
         /* make sure bk_brush is not the currently the background brush
          * and, therefore, a system resource */
@@ -698,7 +710,7 @@ HBRUSH GUIFreeBKBrush( gui_window * wnd )
         if( wnd->hwnd != NULLHANDLE ) {  /* NULL if create failed */
             brush = SET_HBRBACKGROUND( wnd->hwnd, NULL );
         }
-#endif
+#endif  // of #ifndef __OS2_PM__
         _wpi_deletebrush( wnd->bk_brush );
         wnd->bk_brush = NULLHANDLE;
     }
@@ -712,6 +724,7 @@ HBRUSH GUIFreeBKBrush( gui_window * wnd )
 void GUIAPI GUISetWindowColours( gui_window *wnd, int num_colours,
                           gui_colour_set *colours )
 {
+	GUIlog_entering_function ();
     GUIFreeColours( wnd );
     GUIFreeBKBrush( wnd );
     GUISetColours( wnd, num_colours, colours );
@@ -725,6 +738,7 @@ void GUIAPI GUISetWindowColours( gui_window *wnd, int num_colours,
 
 WPI_COLOUR GUIGetFore( gui_window *wnd, gui_attr attr )
 {
+	GUIlog_entering_function ();
     return( GUIColours[WNDATTRFG( wnd, attr )] );
 }
 
@@ -732,9 +746,10 @@ WPI_COLOUR GUIGetFore( gui_window *wnd, gui_attr attr )
  * GUIGetBack -- This routine returns the background colour being used by
  *               the Windows colour scheme
  */
- 
+
 WPI_COLOUR GUIGetBack( gui_window *wnd, gui_attr attr )
 {
+	GUIlog_entering_function ();
     return( GUIColours[WNDATTRBG( wnd, attr )] );
 }
 
@@ -744,6 +759,7 @@ WPI_COLOUR GUIGetBack( gui_window *wnd, gui_attr attr )
 
 void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 {
+	GUIlog_entering_function ();
     _wpi_settextcolor( wnd->hdc, _wpi_getnearestcolor( wnd->hdc, fore ) );
     _wpi_setbackcolour( wnd->hdc, _wpi_getnearestcolor( wnd->hdc , back ) );
 }
@@ -755,7 +771,8 @@ void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
  */
 
 void GUIDoSysColorChange ( gui_window *wnd ) {
-	InitSystemRGB (); 
+	GUIlog_entering_function ();
+	InitSystemRGB ();
 	InitRootWindowRGB ( wnd );
 	_wpi_invalidaterect( wnd->hwnd, NULL, TRUE );
 	_wpi_sendmessage( wnd->hwnd, WM_PAINT, 0, 0 );
@@ -763,16 +780,17 @@ void GUIDoSysColorChange ( gui_window *wnd ) {
 
 // This routine may not be required if I can set up a RootWinDproc
 // that can process a WM_SYSCOLORCHANGE message from Windows.
-// The GUI colour controls only work on windows that are created by 
+// The GUI colour controls only work on windows that are created by
 // the GUI library.  Most routines create thier own root windows.
-// This routine finds those root windows and inserts the GUI 
+// This routine finds those root windows and inserts the GUI
 // attribs and colour control on them.
 
 void InitRootWindowRGB ( gui_window *wnd ) {
 	HWND	this;
 	gui_window	*thiswnd= wnd;			// Root window candidate
 	BOOL		DCwas0= false;
-	
+
+	GUIlog_entering_function ();
 	this= wnd->hwnd;
 	if (!thiswnd->flags&IS_ROOT)
 		this= thiswnd->root;
@@ -782,7 +800,7 @@ void InitRootWindowRGB ( gui_window *wnd ) {
 			thiswnd->hdc= GetDC (this);
 			DCwas0= true;
 		}
-		SetTextColorByScheme( 	thiswnd, 
+		SetTextColorByScheme( 	thiswnd,
 								GUIGetFore (thiswnd, GUIEX_MENU_TEXT),
 								GUIGetBack (thiswnd, GUIEX_MENU));
 		_wpi_invalidaterect( this, NULL, TRUE );
@@ -794,4 +812,4 @@ void InitRootWindowRGB ( gui_window *wnd ) {
 		}
 	}
 }
-#endif
+#endif  // of #ifndef __OS2_PM__

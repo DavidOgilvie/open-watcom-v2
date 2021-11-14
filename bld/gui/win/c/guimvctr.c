@@ -39,7 +39,7 @@
 
 
 /*
- * GUIResizeControl -- 
+ * GUIResizeControl --
  */
 
 bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *rect )
@@ -48,6 +48,7 @@ bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *re
     guix_coord  scr_size;
     HWND        control;
 
+	GUIlog_entering_function ();
     control = _wpi_getdlgitem( wnd->hwnd, id );
     if( control != NULLHANDLE ) {
         GUICalcLocation( rect, &scr_pos, &scr_size, wnd->hwnd );
@@ -58,14 +59,14 @@ bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *re
 }
 
 /*
- * GUIGetControlRect -- 
+ * GUIGetControlRect --
  */
 
 bool GUIAPI GUIGetControlRect( gui_window *wnd, gui_ctl_id id, gui_rect *rect )
 {
     HWND        control;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     control = _wpi_getdlgitem( wnd->hwnd, id );
     if( control != NULLHANDLE ) {
         GUIGetRelRect( control, rect, false );

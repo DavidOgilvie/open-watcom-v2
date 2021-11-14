@@ -55,7 +55,7 @@ static bool DrawRect( gui_window *wnd, const gui_rect *rect, WPI_COLOUR colour, 
     gui_ord     pos;
     gui_ord     size;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     if( ( rect->width == 0 ) || ( rect->height == 0 ) ) {
         return( false );
     }
@@ -107,6 +107,7 @@ static bool DrawRect( gui_window *wnd, const gui_rect *rect, WPI_COLOUR colour, 
 
 bool GUIAPI GUIFillRect( gui_window *wnd, const gui_rect *rect, gui_attr attr )
 {
+	GUIlog_entering_function ();
     return( DrawRect( wnd, rect, GUIGetFore( wnd, attr ), true, false ) );
 }
 
@@ -116,6 +117,7 @@ bool GUIAPI GUIFillRect( gui_window *wnd, const gui_rect *rect, gui_attr attr )
 
 bool GUIAPI GUIDrawRect( gui_window *wnd, const gui_rect *rect, gui_attr attr )
 {
+	GUIlog_entering_function ();
     return( DrawRect( wnd, rect, GUIGetFore( wnd, attr ), false, true ) );
 }
 
@@ -125,6 +127,7 @@ bool GUIAPI GUIDrawRect( gui_window *wnd, const gui_rect *rect, gui_attr attr )
 
 bool GUIAPI GUIFillRectRGB( gui_window *wnd, const gui_rect *rect, gui_rgb rgb )
 {
+	GUIlog_entering_function ();
     return( DrawRect( wnd, rect, GETRGB( rgb ), true, false ) );
 }
 
@@ -134,6 +137,7 @@ bool GUIAPI GUIFillRectRGB( gui_window *wnd, const gui_rect *rect, gui_rgb rgb )
 
 bool GUIAPI GUIDrawRectRGB( gui_window *wnd, const gui_rect *rect, gui_rgb rgb )
 {
+	GUIlog_entering_function ();
     return( DrawRect( wnd, rect, GETRGB( rgb ), false, true ) );
 }
 
@@ -156,6 +160,7 @@ static bool DrawLine( gui_window *wnd, const gui_point *start, const gui_point *
     guix_ord    scroll;
     WPI_POINT   wpi_point;
 
+	GUIlog_entering_function ();
     switch( style ) {
     case GUI_PEN_SOLID:
         win_style = PS_SOLID;
@@ -228,6 +233,7 @@ static bool DrawLine( gui_window *wnd, const gui_point *start, const gui_point *
 bool GUIAPI GUIDrawLine( gui_window *wnd, const gui_point *start, const gui_point *end,
                   gui_line_styles style, gui_ord thickness, gui_attr attr )
 {
+	GUIlog_entering_function ();
     return( DrawLine( wnd, start, end, style, thickness, GUIGetFore( wnd, attr ) ) );
 }
 
@@ -238,5 +244,6 @@ bool GUIAPI GUIDrawLine( gui_window *wnd, const gui_point *start, const gui_poin
 bool GUIAPI GUIDrawLineRGB( gui_window *wnd, const gui_point *start, const gui_point *end,
                      gui_line_styles style, gui_ord thickness, gui_rgb rgb )
 {
+	GUIlog_entering_function ();
     return( DrawLine( wnd, start, end, style, thickness, GETRGB( rgb ) ) );
 }

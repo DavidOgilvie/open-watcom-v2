@@ -68,6 +68,7 @@ static  bool            ArrangeIcons            = false;
 
 static void StartMaxRestore( HWND hwnd )
 {
+	GUIlog_entering_function ();
     hwnd = hwnd;
     DoingMaxRestore = true;
 }
@@ -82,7 +83,7 @@ static void SetStyle( HWND hwnd, bool max )
     DWORD		style;
     gui_window  *wnd;
 
- 	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     wnd = GUIGetWindow( hwnd );
     style = _wpi_getwindowlong( hwnd, GWL_STYLE );
     if( max ) {
@@ -104,10 +105,11 @@ static void SetStyle( HWND hwnd, bool max )
         style |= COMMON_STYLES;
     }
     _wpi_setwindowlong( hwnd, GWL_STYLE, style );
-#else
+#else  // of #ifndef __OS2_PM__
+	GUIlog_entering_function ();
     hwnd = hwnd;
     max = max;
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
 }
 
 /*
@@ -120,6 +122,7 @@ static void EndMaxRestore( HWND hwnd )
     WPI_RECT    wpi_rect;
     guix_coord  scr_size;
 
+	GUIlog_entering_function ();
     wnd = GUIGetWindow( hwnd );
     if( GUI_HSCROLL_ON( wnd ) ) {
         GUISetRangePos( wnd, SB_HORZ );
@@ -142,6 +145,7 @@ static void SetWindowTitle( HWND hwnd )
 {
     char        buffer[MAX_LENGTH];
 
+	GUIlog_entering_function ();
     _wpi_getwindowtext( hwnd, buffer, sizeof( buffer ) );
     MDISetMainWindowTitle( buffer );
 }
@@ -152,6 +156,7 @@ static void SetWindowTitle( HWND hwnd )
 
 void XChangeTitle( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( wnd->root != NULLHANDLE ) {
         _wpi_getwindowtext( wnd->root, Buffer, sizeof( Buffer ) );
         MDIInitMenu();
@@ -168,6 +173,7 @@ static bool IsMaximized( gui_window *wnd )
 {
     HWND        hwnd;
 
+	GUIlog_entering_function ();
     if( MDIIsMaximized() ) {
         hwnd = GUIGetParentFrameHWND( wnd );
         if( GUIIsMDIChildWindow( wnd ) ) {
@@ -186,6 +192,7 @@ static bool IsMaximized( gui_window *wnd )
 
 static bool UpdatedMenu( void )
 {
+	GUIlog_entering_function ();
     return( MDIUpdatedMenu() );
 }
 
@@ -195,16 +202,17 @@ static bool UpdatedMenu( void )
 
 static void MDIMaximize( bool max, gui_window *wnd )
 {
+	GUIlog_entering_function ();
 #ifndef __OS2_PM__
     if( max ) {
         GUISendMessage( wnd->hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0 );
     } else {
         GUISendMessage( wnd->hwnd, WM_SYSCOMMAND, SC_RESTORE, 0 );
     }
-#else
+#else  // of #ifndef __OS2_PM__
     max = max;
     wnd = wnd;
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
 }
 
 /*
@@ -213,6 +221,7 @@ static void MDIMaximize( bool max, gui_window *wnd )
 
 static void SetMDIRestoredSize( HWND hwnd, const WPI_RECT *wpi_rect )
 {
+	GUIlog_entering_function ();
     MDISetOrigSize( hwnd, wpi_rect );
 }
 
@@ -222,6 +231,7 @@ static void SetMDIRestoredSize( HWND hwnd, const WPI_RECT *wpi_rect )
 
 static bool IsMDIChildWindow( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     return( GUIGetParentWindow( wnd ) == GUIGetRootWindow() );
 }
 
@@ -231,6 +241,7 @@ static bool IsMDIChildWindow( gui_window *wnd )
 
 bool XInitMDI( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( wnd->root != NULLHANDLE ) {
         /* root window */
         memset( &MDIInfo, 0, sizeof( mdi_info ) );
@@ -259,6 +270,7 @@ bool XInitMDI( gui_window *wnd )
 
 static void GUIMDIBringToFront( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( wnd != NULL ) {
         if( MDIIsMaximized() && GUIIsMinimized( wnd ) ) {
             GUIMDIMaximize( true, wnd );
@@ -277,10 +289,11 @@ static void GUIMDIBringToFront( gui_window *wnd )
 static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam,
                                WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {
+	GUIlog_entering_function ();
     gui_ctl_id  id;
 #ifndef __OS2_PM__
     WINDOWPOS   *pos;
-#endif
+#endif  // of #ifndef __OS2_PM__
 
     if( wnd->root == hwnd ) {
         /* message for root window */
@@ -295,7 +308,7 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
                 return( true );
             }
             break;
-#endif
+#endif  // of #ifndef __OS2_PM__
         case WM_COMMAND:
             if( DoneMDIInit && MDIIsSysCommand( hwnd, msg, wparam, lparam ) ) {
                 *ret = 0;
@@ -334,7 +347,7 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
 		case WM_SYSCOLORCHANGE:
 			InitSystemRGB ();
 			break;
-#endif
+#endif  // of #ifndef __OS2_PM__
 		}
     } else if( wnd->root == NULLHANDLE ) {
         /* child window */
@@ -358,7 +371,7 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
             *ret = GUISendMessage( GUIGetTopParentHWND( hwnd ), msg, wparam, lparam );
             return( true );
             break;
-#endif
+#endif  // of #ifndef __OS2_PM__
         case WM_MOVE:
         case WM_SIZE:
             if( DoingMaxRestore ) {
@@ -371,13 +384,13 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
             SetFocus( hwnd );
             *ret = MA_ACTIVATE;
             return( true );
-#else
+#else  // of #ifndef __OS2_PM__
         case WM_ACTIVATE:
             if( wparam ) {
                 SetFocus( hwnd );
                 return( true );
             }
-#endif
+#endif  // of #else for #ifndef __OS2_PM__
         case WM_GETMINMAXINFO:
             /* don't want app to fool with this */
             *ret = _wpi_defwindowproc( hwnd, msg, wparam, lparam );
@@ -403,6 +416,7 @@ static bool MDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg, WPI_PARA
 
 void GUIXMDIInit( void )
 {
+	GUIlog_entering_function ();
     GUISetMDIProcessMessage( &MDIProcessMessage );
     GUISetMDIMaximized( &IsMaximized );
     GUISetMDIUpdatedMenu( &UpdatedMenu );
@@ -421,6 +435,7 @@ static void GUIInternalCascadeWindows( gui_window *wnd, void *param )
     cascade_info        *info;
     gui_rect            rect;
 
+	GUIlog_entering_function ();
     if( GUIIsMinimized( wnd ) ) {
         return;
     }
@@ -450,6 +465,7 @@ static void Cascade( gui_window *root, int num_windows, gui_rect *rect,
     gui_text_metrics    metrics;
     gui_system_metrics  sys_metrics;
 
+	GUIlog_entering_function ();
     GUIGetSystemMetrics( &sys_metrics );
     GUIGetTextMetrics( root, &metrics );
     info.bump.y = sys_metrics.caption_size + sys_metrics.resize_border.y;
@@ -485,6 +501,7 @@ bool GUIAPI GUICascadeWindows( void )
     gui_coord           min_size;
     int                 total_icons;
 
+	GUIlog_entering_function ();
     root = GUIGetRootWindow();
     total_icons = GUIGetNumIconicWindows();
     num_windows = GUIGetNumChildWindows() - total_icons;

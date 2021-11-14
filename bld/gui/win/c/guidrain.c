@@ -44,6 +44,7 @@ void GUIAPI GUIDrainEvents( void )
 {
     WPI_QMSG    msg;
 
+	GUIlog_entering_function ();
     // Dispatch all pending messages
     while( _wpi_peekmessage( GUIMainHInst, &msg, NULLHANDLE, 0, 0, PM_REMOVE ) ) {
         _wpi_translatemessage( &msg );

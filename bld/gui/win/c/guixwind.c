@@ -98,9 +98,10 @@ static WPI_WNDPROC          oldFrameProc;
 /* forward reference */
 
 #ifdef __OS2_PM__
-WPI_MRESULT CALLBACK GUIFrameProc( HWND, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
+WPI_MRESULT CALLBACK GUIFrameProc		( HWND, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
 #endif  // of #ifdef __OS2_PM__
-WPI_MRESULT CALLBACK GUIWindowProc( HWND, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
+WPI_MRESULT CALLBACK GUIWindowProc		( HWND, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
+WPI_MRESULT CALLBACK GUIRootWindowProc	( HWND, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam );
 
 /*
  * GUIXSetupWnd -- set the default values in the gui_window structure
@@ -109,6 +110,7 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PA
 
 void GUIXSetupWnd( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     wnd->flags = NONE_SET;
     wnd->vrange = -1;
     wnd->hrange = -1;
@@ -122,7 +124,8 @@ static void GUISetWindowClassName( void )
 {
     char        *class_name;
 
-    class_name = GUIGetWindowClassName();           /* user replaceable stub function */
+ 	GUIlog_entering_function ();
+   class_name = GUIGetWindowClassName();           /* user replaceable stub function */
     if( class_name == NULL || *class_name == '\0' ) {
         class_name = GUIDefaultClassName;
     }
@@ -136,6 +139,7 @@ static void GUISetWindowClassName( void )
 
 void GUIAPI GUIWantPartialRows( gui_window *wnd, bool want )
 {
+	GUIlog_entering_function ();
     if( wnd != NULL ) {
         if( want ) {
             wnd->flags |= PARTIAL_ROWS;
@@ -152,6 +156,7 @@ void GUIAPI GUIWantPartialRows( gui_window *wnd, bool want )
 
 void GUIAPI GUISetCheckResizeAreaForChildren( gui_window *wnd, bool check )
 {
+	GUIlog_entering_function ();
     /* unused parameters */ (void)wnd; (void)check;
 }
 
@@ -165,6 +170,7 @@ void GUIAPI GUIDestroyWnd( gui_window *wnd )
     HWND        hwnd;
     gui_window  *curr;
 
+	GUIlog_entering_function ();
     if( wnd == NULL ) {
         curr = GUIGetFront();
         while( curr != NULL ) {
@@ -200,6 +206,7 @@ void GUIAPI GUIDestroyWnd( gui_window *wnd )
 
 static bool DoRegisterClass( WPI_INST hinst, char *class_name, PFNWP win_call_back, UINT style, int extra )
 {
+	GUIlog_entering_function ();
     return( WinRegisterClass( hinst.hab, class_name, win_call_back, CS_CLIPCHILDREN | CS_SIZEREDRAW | CS_MOVENOTIFY | style, extra ) );
 }
 #else  // of #ifdef __OS2_PM__
@@ -212,6 +219,7 @@ static bool DoRegisterClass( WPI_INST hinst, char *class_name, WNDPROCx win_call
 {
     WNDCLASS    wc;
 
+	GUIlog_entering_function ();
     wc.style = style;
     wc.lpfnWndProc = GetWndProc( win_call_back );
     wc.cbClsExtra = 0;
@@ -234,6 +242,7 @@ static bool DoRegisterClass( WPI_INST hinst, char *class_name, WNDPROCx win_call
 static bool SetupClass( void )
 
 {
+	GUIlog_entering_function ();
     if( DoRegisterClass( GUIMainHInst, GUIClass, GUIWindowProc,
                          REGISTER_STYLE, EXTRA_SIZE * NUM_EXTRA_WORDS ) ) {
 
@@ -249,6 +258,7 @@ static bool SetupClass( void )
 
 void GUIAPI GUICleanup( void )
 {
+	GUIlog_entering_function ();
     GUIDeath();                 /* user replaceable stub function */
     GUICleanupHotSpots();
     GUIFreeStatus();
@@ -274,8 +284,7 @@ int GUIXMain( int argc, char *argv[] )
     bool        register_done;
     HAB         inst;
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
-
+	GUIlog_entering_function ();
     inst = WinInitialize( 0 );
     if( inst == 0 ) {
         return( 0 );
@@ -305,12 +314,16 @@ int GUIXMain( int argc, char *argv[],
     bool        register_done;
 
 // Set up loggin facility
-    GUIset_log_mode( 1 );       // 1 to turn on standard tracing, usually 1
-    GUIset_crash_mode( 1 );    	// 1 to turn on crash-resistant log file writing (slow!), usually 0
-	GUIjustify ( 0 );			// Close log file
+    GUIlog_set_logging_mode( 1 );	// 1 to turn on standard tracing, usually 1
+    GUIlog_set_crash_mode( 1 );    	// 1 to turn on crash-resistant log file writing (slow!), usually 0
+	GUIlog_set_justify_mode ( 1 );	// 1 ro turn on full justification
+	GUIlog_set_justify_width ( 76 );// Justification width
+	GUIlog_functions_on ();			// Turn off entering function lines in log
+	GUIlog_callbacks_on ();			// Turn off entering callback lines in log
+	GUIlog_win_msg_on ();			// Turn off entering function lines in log
 // End of logging facility setup
 
-	GUIlog ("Entered %s %s(%d)\n", __func__, __FILE__, __LINE__ );
+	GUIlog_entering_function ();
     ret = 0;
     lpCmdLine = lpCmdLine;
     nShowCmd = nShowCmd;
@@ -374,7 +387,7 @@ int GUIXMain( int argc, char *argv[],
     GUIDead();                  /* user replaceable stub function */
     GUIMemClose();
 // Close logging facility
-	GUIclose_log ();	// Close everything down when closing program
+	GUIlog_close_logfile ();	// Close everything down when closing program
 // End closing logging facility
     return( ret );
 }
@@ -385,6 +398,7 @@ int GUIXMain( int argc, char *argv[],
 
 static void ShowWnd( HWND hwnd )
 {
+	GUIlog_entering_function ();
     if( hwnd == NULLHANDLE ) {
         GUIError( LIT( Open_Failed ) );
     } else {
@@ -399,6 +413,7 @@ static void ShowWnd( HWND hwnd )
 
 void GUIAPI GUIShowWindow( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     GUIInvalidatePaintHandles( wnd );
     if( wnd->root != NULLHANDLE ) {
         ShowWnd( wnd->root_frame );
@@ -416,6 +431,7 @@ void GUIAPI GUIShowWindowNA( gui_window *wnd )
 {
     int flags;
 
+	GUIlog_entering_function ();
     flags = SW_SHOWNA;
 #ifdef __OS2_PM__
     flags |= SWP_ACTIVATE;
@@ -435,6 +451,7 @@ void GUIAPI GUIShowWindowNA( gui_window *wnd )
 
 bool GUIWndInit( unsigned dclick_ms, gui_window_styles style )
 {
+	GUIlog_entering_function ();
     Style = style;
     GUISysInit( INIT_MOUSE_INITIALIZED );       /* user replaceable stub function */
     _wpi_setdoubleclicktime( dclick_ms );
@@ -458,22 +475,37 @@ static bool CreateBackgroundWnd( gui_window *wnd, gui_create_info *dlg_info )
     HWND                frame_hwnd;
     WPI_RECTDIM         left, top, right, bottom;
 
+	GUIlog_entering_function ();
     _wpi_getclientrect( wnd->root, &wnd->hwnd_client_rect );
     _wpi_getrectvalues( wnd->hwnd_client_rect, &left, &top, &right, &bottom );
 
     style = BACKGROUND_STYLES;
 
+//	GUIlog (" Creating callback for wnd->gui_call_back to GUIRootWindowProc");
+//	wnd->gui_call_back= GUIRootWindowProc;
+
     wmcreateinfo.size = sizeof(wmcreate_info);
     wmcreateinfo.wnd = wnd;
     wmcreateinfo.dlg_info = dlg_info;
 
+	
     wnd->hwnd = NULLHANDLE;
     frame_hwnd = NULLHANDLE;
 
-    _wpi_createanywindow( GUIClass, NULL, style,
-                          0, 0, right-left, bottom-top,
-                          wnd->root, NULLHANDLE, GUIMainHInst,
-                          &wmcreateinfo, &wnd->hwnd, 0, &frame_hwnd );
+    _wpi_createanywindow( GUIClass,		// class
+						  NULL, 		// name
+						  style,		// style
+                          0, 			// x
+						  0, 			// y
+						  right-left, 	// width
+						  bottom-top,	// height
+                          wnd->root, 	// parent_hwnd
+						  NULLHANDLE, 	// menu
+						  GUIMainHInst,	// inst
+                          &wmcreateinfo,// param
+						  &wnd->hwnd, 	// hwnd
+						  0, 			// id
+						  &frame_hwnd );// frame_hwnd
 
     wnd->hwnd_frame = wnd->root_frame;
 
@@ -486,6 +518,7 @@ static bool CreateBackgroundWnd( gui_window *wnd, gui_create_info *dlg_info )
 
 static void DoSetWindowLongPtr( HWND hwnd, gui_window *wnd )
 {
+	GUIlog_entering_function ();
     _wpi_setwindowlongptr( hwnd, GUI_CONTAINER_WORD1 * EXTRA_SIZE, 0L );
     _wpi_setwindowlongptr( hwnd, GUI_CONTAINER_WORD2 * EXTRA_SIZE, 0L );
     _wpi_setwindowlongptr( hwnd, GUI_EXTRA_WORD * EXTRA_SIZE, (LONG_PTR)wnd );
@@ -516,6 +549,8 @@ bool GUIXCreateWindow( gui_window *wnd, gui_create_info *dlg_info, gui_window *p
 #else  // of #ifdef __OS2_PM__
     DWORD               exstyle;
 #endif  // of #else for #ifdef __OS2_PM__
+
+	GUIlog_entering_function ();
 
 #ifdef __OS2_PM__
 // Get rid of the changable font style for PM GUI app's
@@ -719,6 +754,7 @@ bool SendPointEvent( gui_window *wnd, gui_event gui_ev, WPI_PARAM1 wparam,
     WPI_POINT   wpi_point;
     gui_point   point;
 
+	GUIlog_entering_function ();
     if( force_current || !EditControlHasFocus ) {
         wparam = wparam;
         lparam = lparam;
@@ -746,6 +782,7 @@ void GUIResizeBackground( gui_window *wnd, bool force_msg )
     int         tbar_height, status_height;
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     if( wnd->root == NULLHANDLE ) {
         if( wnd->hwnd != NULLHANDLE ) {
             _wpi_getclientrect( wnd->hwnd, &wnd->hwnd_client_rect );
@@ -804,6 +841,7 @@ static bool SetFocusToParent( void )
 {
     HWND        curr_hwnd;
 
+	GUIlog_entering_function ();
     // for a reason I do not yet comprehend, the MDI stuff should no longer
     // be a deterent to setting the focus to the top parent
     if( ( GUICurrWnd != NULL ) && !EditControlHasFocus /* && !GUIMDI */
@@ -829,6 +867,7 @@ static bool SetFocusToParent( void )
 
 void GUIDoResize( gui_window *wnd, HWND hwnd, const guix_coord *scr_size )
 {
+	GUIlog_entering_function ();
     hwnd = hwnd;
     if( wnd->style & GUI_CHANGEABLE_FONT ) {
         GUIEnableSystemMenuItem( wnd, GUI_CHANGE_FONT, true );
@@ -865,6 +904,7 @@ void GUIDoResize( gui_window *wnd, HWND hwnd, const guix_coord *scr_size )
 
 static void ProcessMenu( gui_window *wnd, gui_ctl_id id )
 {
+	GUIlog_entering_function ();
     if( id < GUI_LAST_MENU_ID ) {
         GUIEVENT( wnd, GUI_CLICKED, &id );
     } else {
@@ -884,6 +924,7 @@ static void ProcessMenu( gui_window *wnd, gui_ctl_id id )
 
 static void CheckDoFront( gui_window *wnd )
 {
+	GUIlog_entering_function ();
     if( !GUIMDI || wnd->parent  ) {
         GUIBringToFront( wnd );
     }
@@ -899,6 +940,7 @@ static void NextWndToFront( HWND hwnd )
     HWND        next;
     gui_window  *wnd;
 
+	GUIlog_entering_function ();
     next = _wpi_getnextwindow( hwnd );
     if( next != NULLHANDLE ) {
         wnd = GUIGetWindow( next );
@@ -914,6 +956,7 @@ static void NextWndToFront( HWND hwnd )
 
 static bool IsToolBarCommand( gui_window *wnd, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
+	GUIlog_entering_function ();
 #ifdef __NT__
     wparam=wparam; //lparam=lparam;
     return( wnd != NULL && wnd->tbar != NULL && wnd->tbar->hdl != NULL &&
@@ -954,7 +997,8 @@ WPI_MRESULT CALLBACK GUIWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, W
     RECT                rc;
 #endif  // of #ifndef __OS2_PM__
 
-	_msg= msg;
+	GUIlog_entering_callback ();
+	GUIlog_win_msg ();
     root = NULL;
     dlg_info = NULL;
     if( msg == WM_CREATE ) {
@@ -1497,7 +1541,8 @@ WPI_MRESULT CALLBACK GUIFrameProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WP
     HWND        client;
     gui_window  *wnd;
 
-	_msg= msg;
+	GUIlog_entering_callback ();
+	GUIlog_win_msg ();
     client = WinWindowFromID( hwnd, FID_CLIENT );
     wnd = GUIGetWindow( client );
     if( wnd != NULL ) {
@@ -1561,6 +1606,7 @@ WPI_MRESULT CALLBACK GUIFrameProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WP
 
 void GUISetF10Menus( bool setting )
 {
+	GUIlog_entering_function ();
     setting = setting;
 }
 
@@ -1571,5 +1617,27 @@ void GUISetF10Menus( bool setting )
 
 bool GUIAPI GUIIsFirstInstance( void )
 {
+	GUIlog_entering_function ();
     return( FirstInstance );
+}
+
+/*
+ * GUIRootWindowProc -- Procedure to control root window, which only needs 
+ *                      to process WM_SYSCOLORCHANGE
+ */
+WPI_MRESULT CALLBACK GUIRootWindowProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
+{
+    WINDOW_MSG 			_msg= msg;
+
+	GUIlog_entering_callback ();
+	GUIlog_win_msg ();
+    switch( msg ) {
+		case WM_SYSCOLORCHANGE:
+			GUIlog ("  Hit WM_SYSCOLORCHANGE in callback");
+#ifndef __OS2_PM__
+			InitSystemRGB ();
+#endif  // of #ifndef __OS2_PM__
+			break;
+    }
+    return( _wpi_defwindowproc( hwnd, msg, wparam, lparam ) );
 }

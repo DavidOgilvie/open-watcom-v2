@@ -37,4 +37,4 @@
 #define MIN_WIDTH       0
 #define MIN_HEIGHT      0
 
-#endif
+#endif  // of ifndef _GUIMIN_H_

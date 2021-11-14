@@ -41,6 +41,7 @@
  
 bool GUIAPI GUI3DDialogInit( void )
 {
+	GUIlog_entering_function ();
     return( CvrCtl3DInit( GUIMainHInst ) );
 }
 
@@ -50,5 +51,6 @@ bool GUIAPI GUI3DDialogInit( void )
  
 void GUIAPI GUI3DDialogFini( void )
 {
+	GUIlog_entering_function ();
     (void)CvrCtl3dUnregister( GUIMainHInst );
 }

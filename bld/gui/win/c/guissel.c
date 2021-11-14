@@ -45,6 +45,7 @@ static bool GUISelect( gui_window *wnd, gui_ctl_id id, bool set, WPI_PARAM2 lpar
     gui_control_class   control_class;
     UINT                msg;
 
+	GUIlog_entering_function ();
     if( !GUIGetControlClass( wnd, id, &control_class ) ) {
         return( false );
     }
@@ -65,18 +66,19 @@ static bool GUISelect( gui_window *wnd, gui_ctl_id id, bool set, WPI_PARAM2 lpar
     return( GUIToControl( wnd, id, msg, (WPI_PARAM1)lparam, (WPI_PARAM2)0, ret ) );
 #elif defined(__NT__)
     return( GUIToControl( wnd, id, msg, (WPI_PARAM1)(INT)LOWORD( lparam ), (WPI_PARAM2)(INT)HIWORD( lparam ), ret ) );
-#else
+#else  // of #ifdef __OS2_PM__
     return( GUIToControl( wnd, id, msg, (WPI_PARAM1)0, lparam, ret ) );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 }
 
 bool GUIAPI GUISelectAll( gui_window *wnd, gui_ctl_id id, bool select )
 {
+	GUIlog_entering_function ();
 #ifdef __OS2_PM__
     return( GUISelect( wnd, id, true, (WPI_PARAM2)MAKELONG( 0, ( select ) ? 255 : 0 ), NULL ) );
-#else
+#else  // of #ifdef __OS2_PM__
     return( GUISelect( wnd, id, true, (WPI_PARAM2)MAKELONG( ( select ) ? 0 : -1, -1 ), NULL ) );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 }
 
 bool GUIAPI GUISetEditSelect( gui_window *wnd, gui_ctl_id id, int start, int end )
@@ -93,6 +95,7 @@ bool GUIAPI GUIGetEditSelect( gui_window *wnd, gui_ctl_id id, int *start, int *e
     bool        ret;
     WPI_MRESULT result;
 
+	GUIlog_entering_function ();
     ret = GUISelect( wnd, id, false, (WPI_PARAM2)0, &result );
     if( start != NULL ) {
         *start = LOWORD( result );
@@ -110,10 +113,12 @@ bool GUIAPI GUIGetEditSelect( gui_window *wnd, gui_ctl_id id, int *start, int *e
 void GUIAPI GUIScrollCaret( gui_window *wnd, gui_ctl_id id )
 {
     WPI_MRESULT result;
+
+	GUIlog_entering_function ();
 #ifdef  __NT__
     GUIToControl( wnd, id, EM_SCROLLCARET, (WPI_PARAM1)0, (WPI_PARAM2)0, &result );
-#else
+#else  // of #ifdef  __NT__
     GUIToControl( wnd, id, EM_GETSEL, (WPI_PARAM1)0, (WPI_PARAM2)0, &result );
     GUIToControl( wnd, id, EM_SETSEL, (WPI_PARAM1)0, (WPI_PARAM2)result, &result );
-#endif
+#endif  // of #else for #ifdef  __NT__
 }

@@ -61,6 +61,7 @@ BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
     char        osclassname[GUI_CLASSNAME_MAX + 1];
     enum_info   *info;
 
+	GUIlog_entering_callback ();
     info = ( enum_info * )lparam;
     if( info == NULL ) {
         return( FALSE );
@@ -88,20 +89,21 @@ WPI_WNDPROC GUISubClassEditCombobox( HWND hwnd )
     enum_info           e_info;
 #ifdef __OS2_PM__
     WPI_ENUMPROC        wndenumproc;
-#else
+#else  // of #ifdef __OS2_PM__
     WNDENUMPROC         wndenumproc;
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
 
+	GUIlog_entering_function ();
     e_info.success = false;
 #ifdef __OS2_PM__
     wndenumproc = _wpi_makeenumprocinstance( GUISubClassEditComboboxEnumFunc, GUIMainHInst );
     _wpi_enumchildwindows( hwnd, wndenumproc, (LPARAM)&e_info );
     _wpi_freeenumprocinstance( wndenumproc );
-#else
+#else  // of #ifdef __OS2_PM__
     wndenumproc = MakeProcInstance_WNDENUM( GUISubClassEditComboboxEnumFunc, GUIMainHInst );
     EnumChildWindows( hwnd, wndenumproc, (LPARAM)&e_info );
     FreeProcInstance_WNDENUM( wndenumproc );
-#endif
+#endif  // of #else for #ifdef __OS2_PM__
     if( e_info.success ) {
         return( e_info.old );
     }

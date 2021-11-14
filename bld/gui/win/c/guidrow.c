@@ -51,6 +51,7 @@ void GUIAPI GUIWndDirtyRow( gui_window *wnd, gui_text_ord row )
     int         h;
     WPI_RECTDIM left, top, right, bottom;
 
+	GUIlog_entering_function ();
     height = GUIFromTextY( 1, wnd );
     wpi_rect = wnd->hwnd_client_rect;
     h = _wpi_getheightrect( wpi_rect );

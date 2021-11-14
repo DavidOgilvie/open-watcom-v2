@@ -48,6 +48,7 @@ static  bool        external = false;
 
 bool GUIAPI GUIIsLoadStrInitialized( void )
 {
+	GUIlog_entering_function ();
     return( GUIMsgInitFlag );
 }
 
@@ -59,9 +60,10 @@ bool GUIAPI GUILoadStrInit( const char * fname )
 {
 #ifndef __OS2_PM__
     WPI_INST    library;
-#endif
+#endif  // of #ifndef __OS2_PM__
     char        *resource_file_name;
 
+	GUIlog_entering_function ();
     fname = fname;
     if( !GUIMsgInitFlag ) {
         resource_file_name = GUIGetResFileName();
@@ -76,7 +78,7 @@ bool GUIAPI GUILoadStrInit( const char * fname )
                 return( false );
             }
         }
-#endif
+#endif  // of #ifndef __OS2_PM__
         GUIMsgInitFlag = true;
         return( true );
     } else {
@@ -90,12 +92,13 @@ bool GUIAPI GUILoadStrInit( const char * fname )
 
 bool GUIAPI GUILoadStrFini( void )
 {
-    if( GUIMsgInitFlag ) {
+ 	GUIlog_entering_function ();
+   if( GUIMsgInitFlag ) {
 #ifndef __OS2_PM__
         if( external ) {
             _wpi_freelibrary( GUIMainHInst, GUIResHInst );
         }
-#endif
+#endif  // of #ifndef __OS2_PM__
         GUIMsgInitFlag = false;
     }
 
@@ -108,6 +111,7 @@ bool GUIAPI GUILoadStrFini( void )
 
 bool GUIAPI GUILoadString( gui_res_id id, char *buffer, int buffer_length )
 {
+	GUIlog_entering_function ();
     if( buffer != NULL && buffer_length > 0 ) {
         if( _wpi_loadstring( GUIResHInst, id, (LPSTR)buffer, buffer_length ) > 0 ) {
             return( true );

@@ -41,4 +41,4 @@ extern gui_control_styles   GUIGetControlStylesFromHWND( HWND cntl, gui_control_
 extern bool                 GUIInsertResDialogControls( gui_window *wnd );
 extern bool                 GUICreateDialogFromRes( res_name_or_id dlg_id, gui_window *parent_wnd, GUICALLBACK *gui_call_back, void *extra );
 
-#endif
+#endif  // of ifndef _GUIMIN_H_
