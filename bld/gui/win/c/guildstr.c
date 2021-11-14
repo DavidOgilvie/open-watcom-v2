@@ -48,7 +48,7 @@ static  bool        external = false;
 
 bool GUIAPI GUIIsLoadStrInitialized( void )
 {
-	GUIlog_entering_function ();
+	GUIlog_entering_strings ();
     return( GUIMsgInitFlag );
 }
 
@@ -63,7 +63,7 @@ bool GUIAPI GUILoadStrInit( const char * fname )
 #endif  // of #ifndef __OS2_PM__
     char        *resource_file_name;
 
-	GUIlog_entering_function ();
+	GUIlog_entering_strings ();
     fname = fname;
     if( !GUIMsgInitFlag ) {
         resource_file_name = GUIGetResFileName();
@@ -92,7 +92,7 @@ bool GUIAPI GUILoadStrInit( const char * fname )
 
 bool GUIAPI GUILoadStrFini( void )
 {
- 	GUIlog_entering_function ();
+ 	GUIlog_entering_strings ();
    if( GUIMsgInitFlag ) {
 #ifndef __OS2_PM__
         if( external ) {
@@ -111,7 +111,7 @@ bool GUIAPI GUILoadStrFini( void )
 
 bool GUIAPI GUILoadString( gui_res_id id, char *buffer, int buffer_length )
 {
-	GUIlog_entering_function ();
+	GUIlog_entering_strings ();
     if( buffer != NULL && buffer_length > 0 ) {
         if( _wpi_loadstring( GUIResHInst, id, (LPSTR)buffer, buffer_length ) > 0 ) {
             return( true );

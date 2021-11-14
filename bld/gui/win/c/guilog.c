@@ -80,6 +80,7 @@ static	int		LOGWIDTH= 76;				// Width of log if justified
 static	int		JUSTIFY= 1;					// Put routine and line number on right
 static	int		ENTERING= 1;				// Log lines for entering routines
 static	int		CALLBACKS= 1;				// Log lines for entering windprocs
+static	int		STRINGS= 1;					// Log lines for string loading
 static	int		WIN_MSG= 1;					// Log lines that show window messages
 static  char   *oldFILE= NULL;
 static  char   *oldFUNC= NULL;
@@ -129,6 +130,8 @@ int GUIlog_functions_on		(void)		{ ENTERING= 1;		return (1); }
 int GUIlog_functions_off	(void)		{ ENTERING= 0;		return (1); }
 int GUIlog_callbacks_on		(void)		{ CALLBACKS= 1;		return (1); }
 int GUIlog_callbacks_off	(void)		{ CALLBACKS= 0;		return (1); }
+int GUIlog_strings_on		(void)		{ STRINGS= 1;		return (1); }
+int GUIlog_strings_off		(void)		{ STRINGS= 0;		return (1); }
 int GUIlog_win_msg_on		(void) 		{ WIN_MSG= 1; 		return (1); }
 int GUIlog_win_msg_off		(void)		{ WIN_MSG= 0;		return (1); }
 
@@ -225,6 +228,7 @@ int GUIlog2 (char *FUNC, char *FILE, int LINE, char *format, ...)
     if (!DEBUG) return (0);
 	if (!ENTERING&&(ENTERING_FORMAT==format)) return (0);
 	if (!CALLBACKS&&(CALLBACK_FORMAT==format)) return (0);
+	if (!STRINGS&&(STRINGS_FORMAT==format)) return (0);
 	if (!WIN_MSG&&(WIN_MSG_FORMAT==format)) return (0);
     if (strlen (format) != 0)
     {

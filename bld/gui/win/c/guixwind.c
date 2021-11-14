@@ -320,6 +320,7 @@ int GUIXMain( int argc, char *argv[],
 	GUIlog_set_justify_width ( 76 );// Justification width
 	GUIlog_functions_on ();			// Turn off entering function lines in log
 	GUIlog_callbacks_on ();			// Turn off entering callback lines in log
+	GUIlog_strings_off ();			// Turn off strings lines in log
 	GUIlog_win_msg_on ();			// Turn off entering function lines in log
 // End of logging facility setup
 

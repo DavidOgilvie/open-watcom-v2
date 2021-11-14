@@ -329,10 +329,12 @@ typedef enum {
 #ifdef _GUILOG_H_
 	char ENTERING_FORMAT[]= "Function %s";
 	char CALLBACK_FORMAT[]= "Callback %s";
+	char STRINGS_FORMAT[]= "Strings %s";
 	char WIN_MSG_FORMAT[]= " MSG %d(%d),w=0x%06X,l=0x%06X";
 #else  // of #ifdef _GUILOG_H_
 	extern char ENTERING_FORMAT[];
 	extern char CALLBACK_FORMAT[];
+	extern char STRINGS_FORMAT[];
 	extern char WIN_MSG_FORMAT[];
 #endif  // of #else for #ifdef _GUILOG_H_
 
@@ -363,6 +365,8 @@ typedef enum {
  int GUIlog_functions_off ();				// Turn routine entering messages off
  int GUIlog_callbacks_on ();				// Turn entering windprocs notices on
  int GUIlog_callbacks_off ();		// Turn entering windprocs messages notices off
+ int GUIlog_strings_on ();					// Turn entering strings notices on
+ int GUIlog_strings_off ();					// Turn entering strings messages notices off
  int GUIlog_win_msg_on ();					// Turn window messages notices on
  int GUIlog_win_msg_off ();					// Turn window messages notices off
 
@@ -378,4 +382,5 @@ typedef enum {
 #define GUIlog(...) GUIlog2(__FUNCTION__,__FILE__,__LINE__,__VA_ARGS__)
 #define GUIlog_entering_function() (GUIlog(ENTERING_FORMAT,__FUNCTION__))
 #define GUIlog_entering_callback() (GUIlog(CALLBACK_FORMAT,__FUNCTION__))
+#define GUIlog_entering_strings() (GUIlog(STRINGS_FORMAT,__FUNCTION__))
 #define GUIlog_win_msg() (GUIlog(WIN_MSG_FORMAT,_msg,msg, wparam,lparam))
