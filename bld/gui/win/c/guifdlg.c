@@ -77,7 +77,8 @@ static  bool    hookFileDlg = true;
 
 void GUIAPI GUIHookFileDlg( bool hook )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hookFileDlg = hook;
 }
 
@@ -105,7 +106,8 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
     pgroup2             pg2;
     char                *cwd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_int_function ();
+
     cwd = getcwd( pg2.buffer, sizeof( pg2.buffer ) );
     if( cwd != NULL ) {
         _splitpath2( cwd, pg1.buffer, NULL, &pg1.dir, NULL, NULL );
@@ -257,7 +259,8 @@ static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
     LRESULT text_length;
     LRESULT text_copied;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_charptr_function ();
+
     text_length = SendDlgItemMessage( hDlg, id, WM_GETTEXTLENGTH, 0, 0 );
     cp = (char *)GUIMemAlloc( text_length + 1 );
     if( cp == NULL ) {
@@ -287,9 +290,13 @@ static char *GetStrFromEdit( HWND hDlg, gui_ctl_id id )
 
 UINT_PTR CALLBACK OpenOFNHookProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
 {
+    WINDOW_MSG  _msg= msg;
     UINT        ret;
 
-	GUIlog_entering_callback ();
+    GUIlog_entering_UINTptr_callback ();
+    GUIlog_win_msg ();
+    if (msg==WM_SYSCOLORCHANGE) GUIlog (L_WC,"*** This is a WM_SYSCOLORCHANGE");
+
     wparam = wparam;
     lparam = lparam;
     hwnd = hwnd;
@@ -322,7 +329,8 @@ int GUIGetFileName( gui_window *wnd, open_file_name *ofn )
     int                 new_drive;
     int                 old_drive;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_int_function ();
+
     LastPath = NULL;
     new_drive = 0;
     if( ofn->initial_dir != NULL && ofn->initial_dir[0] != '\0' && ofn->initial_dir[1] == ':' ) {

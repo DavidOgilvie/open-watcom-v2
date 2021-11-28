@@ -44,9 +44,9 @@
 extern  bool            EditControlHasFocus;
 extern  gui_keystate    KeyState;
 #ifndef __OS2_PM__
-	static  bool            RetTrue = false; /* set to true of app returned
-												true to last WM_SYSKEYDOWN or
-												WM_SYSKEYUP message */
+    static  bool            RetTrue = false; /* set to true of app returned
+                                                true to last WM_SYSKEYDOWN or
+                                                WM_SYSKEYUP message */
 #endif  // of ifndef __OS2_PM__
 
 
@@ -122,7 +122,8 @@ static bool convert_shiftkeys( WORD vk, gui_key *key,
 {
     char        *str;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     str = strchr( regular, vk );
     if( CHK_KS_SHIFT ) {
         if( str != NULL ) {
@@ -152,7 +153,8 @@ static bool discard_this_vk( WORD vk )
 {
     bool        discard;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     discard = false;
 
     switch( vk ) {
@@ -193,7 +195,8 @@ static bool convert_numeric( WORD ch, gui_key *key )
 {
     int         t;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( isdigit( ch ) ) {
         if( CHK_KS_SHIFT ) {
             if( convert_shiftkeys( ch, key, num_regular, num_shifted ) )
@@ -232,7 +235,8 @@ static bool convert_alpha( WORD ch, gui_key *key )
 {
     gui_key     t;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( isalpha( ch ) ) {
         t = toupper( ch ) - 'A';
         if( CHK_KS_ALT ) {
@@ -256,7 +260,8 @@ static bool convert_alpha( WORD ch, gui_key *key )
 
 static bool convert_otherkeys( WORD vk, gui_key *key )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     return( convert_shiftkeys( vk, key, c_regular, c_shifted ) );
 }
 
@@ -266,7 +271,8 @@ static bool convert_otherkeys( WORD vk, gui_key *key )
 
 static bool convert_ascii( WORD ch, gui_key *key )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( convert_alpha( ch, key ) )
         return( true );
     if( convert_numeric( ch, key ) )
@@ -284,7 +290,8 @@ static bool convert_keytable( WORD vk, gui_key *key )
 {
     int         i;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     for( i = 0; i < GUI_ARRAY_SIZE( vk_table ); i++ ) {
         if( vk == vk_table[i].value ) {
             if( CHK_KS_SHIFT ) {
@@ -310,7 +317,8 @@ static bool convert_keytable( WORD vk, gui_key *key )
 
 static bool convert_numpad( WORD vk, gui_key *key )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ( vk >= VK_NUMPAD0 ) && ( vk <= VK_NUMPAD9 ) ) {
         *key = '0' + ( vk - VK_NUMPAD0 );
         return( true );
@@ -325,7 +333,8 @@ static bool convert_numpad( WORD vk, gui_key *key )
 
 static bool GUIConvertVirtKeyToGUIKey( WORD vk, gui_key *key )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( key == NULL ) {
         return( false );
     }
@@ -469,7 +478,8 @@ void GUISetKeyState( void )
     bool        shift;
     bool        caplock;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     KeyState = GUI_KS_NONE;
     shift = _wpi_getkeystate( VK_SHIFT ) < 0;
 
@@ -502,7 +512,8 @@ void GUISetKeyState( void )
 
 bool GUIWindowsMapKey( WPI_PARAM1 vk, WPI_PARAM2 data, gui_key *scan )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( scan == NULL ) {
         return( false );
     }
@@ -522,7 +533,8 @@ WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2
     gui_event           gui_ev;
     HWND                low_l;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_MRESULT_function ();
+
     switch( msg ) {
     case WM_MENUCHAR:
         low_l = GET_WM_COMMAND_HWND( wparam, lparam );
@@ -626,7 +638,8 @@ static bool convert_table( WORD vk, gui_key *key, ctrlkey *table, int size )
 {
     int         i;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     for( i = 0; i < size; i++ ) {
         if( vk == table[i].scan ) {
             *key = table[i].key;
@@ -648,7 +661,8 @@ bool GUIWindowsMapKey( WPI_PARAM1 p1, WPI_PARAM2 p2, gui_key *key )
     char            scan;
     char            pm_scan;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     flags       = SHORT1FROMMP( p1 );
     vk          = SHORT2FROMMP( p2 );
     ch          = CHAR1FROMMP( p2 );
@@ -691,7 +705,8 @@ WPI_MRESULT GUIProcesskey( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2
     gui_key_state       key_state;
     gui_event           gui_ev;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_MRESULT_function ();
+
     switch( msg ) {
     case WM_TRANSLATEACCEL:
         // Don't let OS/2 process F10 as an accelerator

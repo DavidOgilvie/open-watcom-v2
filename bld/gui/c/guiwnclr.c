@@ -30,62 +30,62 @@
 ****************************************************************************/
 
 
-#include "guiwind.h"	// In <OWROOT>\bld\gui\win\h\guiwind.h
+#include "guiwind.h"    // In <OWROOT>\bld\gui\win\h\guiwind.h
 #include <string.h>
-#include "guiwnclr.h"	// In <OWROOT>\bld\gui\win\h\guiwnclr.h
-#include "guicolor.h"	// In <OWROOT>\bld\gui\win\h\guicolor.h
+#include "guiwnclr.h"   // In <OWROOT>\bld\gui\win\h\guiwnclr.h
+#include "guicolor.h"   // In <OWROOT>\bld\gui\win\h\guicolor.h
 
 
 static gui_colour_set Default[GUI_NUM_ATTRS] =
 {
 #if defined (__NT__) && defined( GUI_IS_GUI )
-    //  fore/text           		backgr. 			Window class
-    { GUIEX_MENUTEXT,         	GUIEX_MENU	     	}, // GUI_MENU_PLAIN
-    { GUIEX_MENUTEXT,           GUIEX_MENU      	}, // GUI_MENU_STANDOUT
-    { GUIEX_MENU_INACTIVE_TEXT, GUIEX_MENU    		}, // GUI_MENU_GRAYED
-    { GUIEX_MENUTEXT,  			GUIEX_MENUHILIGHT 	}, // GUI_MENU_ACTIVE    (selected in list)
-    { GUIEX_MENUTEXT,  			GUIEX_MENUHILIGHT 	}, // GUI_MENU_ACTIVE_STANDOUT
-    { GUIEX_BTNTEXT,       		GUIEX_APPWORKSPACE	}, // GUI_BACKGROUND
-    { GUIEX_MENUTEXT,       	GUIEX_WINDOWFRAME 	}, // GUI_MENU_FRAME
-    { GUIEX_CAPTIONTEXT,       	GUIEX_ACTIVECAPTION	}, // GUI_TITLE_INACTIVE
-    { GUIEX_CAPTIONTEXT,		GUIEX_ACTIVEBORDER	}, // GUI_FRAME_ACTIVE,
+    //  fore/text                   backgr.             Window class
+    { GUIEX_MENUTEXT,           GUIEX_MENU          }, // GUI_MENU_PLAIN
+    { GUIEX_MENUTEXT,           GUIEX_MENU          }, // GUI_MENU_STANDOUT
+    { GUIEX_MENU_INACTIVE_TEXT, GUIEX_MENU          }, // GUI_MENU_GRAYED
+    { GUIEX_MENUTEXT,           GUIEX_MENUHILIGHT   }, // GUI_MENU_ACTIVE    (selected in list)
+    { GUIEX_MENUTEXT,           GUIEX_MENUHILIGHT   }, // GUI_MENU_ACTIVE_STANDOUT
+    { GUIEX_BTNTEXT,            GUIEX_APPWORKSPACE  }, // GUI_BACKGROUND
+    { GUIEX_MENUTEXT,           GUIEX_WINDOWFRAME   }, // GUI_MENU_FRAME
+    { GUIEX_CAPTIONTEXT,        GUIEX_ACTIVECAPTION }, // GUI_TITLE_INACTIVE
+    { GUIEX_CAPTIONTEXT,        GUIEX_ACTIVEBORDER  }, // GUI_FRAME_ACTIVE,
     { GUIEX_INACTIVECAPTIONTEXT,GUIEX_INACTIVEBORDER}, // GUI_FRAME_INACTIVE
-    { GUIEX_CAPTIONTEXT,       	GUIEX_ACTIVECAPTION }, // GUI_ICON
-    { GUIEX_MENU_INACTIVE_TEXT, GUIEX_MENU    		}, // GUI_MENU_GRAYED_ACTIVE
+    { GUIEX_CAPTIONTEXT,        GUIEX_ACTIVECAPTION }, // GUI_ICON
+    { GUIEX_MENU_INACTIVE_TEXT, GUIEX_MENU          }, // GUI_MENU_GRAYED_ACTIVE
     { GUIEX_INACTIVECAPTIONTEXT,GUIEX_INACTIVEBORDER}, // GUI_FRAME_RESIZE
-    { GUIEX_BTNTEXT,       		GUIEX_BTNFACE	  	}  // GUI_CONTROL_BACKGROUND
+    { GUIEX_BTNTEXT,            GUIEX_BTNFACE       }  // GUI_CONTROL_BACKGROUND
 /* The following values were the orginal values
-    { GUI_BR_GREEN,         	GUI_BR_BLUE       	}, // GUI_MENU_PLAIN
-    { GUI_BLUE,             	GUI_BR_GREEN      	}, // GUI_MENU_STANDOUT
-    { GUI_GREY,             	GUI_BR_BLUE       	}, // GUI_MENU_GRAYED
-    { GUI_WHITE,  				GUI_GREY	      	}, // GUI_MENU_ACTIVE    (selected in list)
-    { GUI_BR_BLUE,          	GUI_BR_GREEN      	}, // GUI_MENU_ACTIVE_STANDOUT
-    { GUI_BLACK,       			GUI_WHITE 		  	}, // GUI_BACKGROUND
-    { GUI_BLUE,             	GUI_GREY          	}, // GUI_MENU_FRAME
-    { GUI_GREY,             	GUI_WHITE         	}, // GUI_TITLE_INACTIVE
-    { GUI_BLUE,             	GUI_GREY          	}, // GUI_FRAME_ACTIVE,
-    { GUI_BLACK,            	GUI_GREY          	}, // GUI_FRAME_INACTIVE
-    { GUI_BLUE,             	GUI_GREY          	}, // GUI_ICON
-    { GUI_BLUE,             	GUI_GREY          	}, // GUI_MENU_GRAYED_ACTIVE
-    { GUI_BLACK,            	GUI_WHITE         	}, // GUI_FRAME_RESIZE
-    { GUI_BLACK,       			GUI_GREY		  	} // GUI_CONTROL_BACKGROUND
+    { GUI_BR_GREEN,             GUI_BR_BLUE         }, // GUI_MENU_PLAIN
+    { GUI_BLUE,                 GUI_BR_GREEN        }, // GUI_MENU_STANDOUT
+    { GUI_GREY,                 GUI_BR_BLUE         }, // GUI_MENU_GRAYED
+    { GUI_WHITE,                GUI_GREY            }, // GUI_MENU_ACTIVE    (selected in list)
+    { GUI_BR_BLUE,              GUI_BR_GREEN        }, // GUI_MENU_ACTIVE_STANDOUT
+    { GUI_BLACK,                GUI_WHITE           }, // GUI_BACKGROUND
+    { GUI_BLUE,                 GUI_GREY            }, // GUI_MENU_FRAME
+    { GUI_GREY,                 GUI_WHITE           }, // GUI_TITLE_INACTIVE
+    { GUI_BLUE,                 GUI_GREY            }, // GUI_FRAME_ACTIVE,
+    { GUI_BLACK,                GUI_GREY            }, // GUI_FRAME_INACTIVE
+    { GUI_BLUE,                 GUI_GREY            }, // GUI_ICON
+    { GUI_BLUE,                 GUI_GREY            }, // GUI_MENU_GRAYED_ACTIVE
+    { GUI_BLACK,                GUI_WHITE           }, // GUI_FRAME_RESIZE
+    { GUI_BLACK,                GUI_GREY            } // GUI_CONTROL_BACKGROUND
 */
 #else
     /*  fore/text           backgr. */
-    { GUI_WHITE,            	GUI_BLUE          }, // GUI_MENU_PLAIN
-    { GUI_BR_WHITE,         	GUI_BLUE          }, // GUI_MENU_STANDOUT
-    { GUI_GREY,             	GUI_BLUE          }, // GUI_MENU_GRAYED
-    { GUI_WHITE,            	GUI_BLACK         }, // GUI_MENU_ACTIVE
-    { GUI_BR_WHITE,         	GUI_BLACK         }, // GUI_MENU_ACTIVE_STANDOUT
-    { GUI_BLUE,             	GUI_WHITE         }, // GUI_BACKGROUND
-    { GUI_BR_YELLOW,        	GUI_BLUE          }, // GUI_MENU_FRAME
-    { GUI_GREY,             	GUI_WHITE         }, // GUI_TITLE_INACTIVE
-    { GUI_BLUE,             	GUI_CYAN          }, // GUI_FRAME_ACTIVE
-    { GUI_GREY,             	GUI_WHITE         }, // GUI_FRAME_INACTIVE
-    { GUI_BR_WHITE,         	GUI_RED           }, // GUI_ICON
-    { GUI_GREY,             	GUI_BLACK         }, // GUI_MENU_GRAYED_ACTIVE
-    { GUI_GREY,             	GUI_CYAN          }, // GUI_FRAME_RESIZE
-    { GUI_BLUE,             	GUI_WHITE         }  // GUI_CONTROL_BACKGROUND
+    { GUI_WHITE,                GUI_BLUE          }, // GUI_MENU_PLAIN
+    { GUI_BR_WHITE,             GUI_BLUE          }, // GUI_MENU_STANDOUT
+    { GUI_GREY,                 GUI_BLUE          }, // GUI_MENU_GRAYED
+    { GUI_WHITE,                GUI_BLACK         }, // GUI_MENU_ACTIVE
+    { GUI_BR_WHITE,             GUI_BLACK         }, // GUI_MENU_ACTIVE_STANDOUT
+    { GUI_BLUE,                 GUI_WHITE         }, // GUI_BACKGROUND
+    { GUI_BR_YELLOW,            GUI_BLUE          }, // GUI_MENU_FRAME
+    { GUI_GREY,                 GUI_WHITE         }, // GUI_TITLE_INACTIVE
+    { GUI_BLUE,                 GUI_CYAN          }, // GUI_FRAME_ACTIVE
+    { GUI_GREY,                 GUI_WHITE         }, // GUI_FRAME_INACTIVE
+    { GUI_BR_WHITE,             GUI_RED           }, // GUI_ICON
+    { GUI_GREY,                 GUI_BLACK         }, // GUI_MENU_GRAYED_ACTIVE
+    { GUI_GREY,                 GUI_CYAN          }, // GUI_FRAME_RESIZE
+    { GUI_BLUE,                 GUI_WHITE         }  // GUI_CONTROL_BACKGROUND
 #endif
 };
 

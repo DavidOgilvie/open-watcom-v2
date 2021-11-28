@@ -41,6 +41,7 @@
 
 gui_scroll_styles GUIAPI GUIGetScrollStyle( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_scroll_styles_function ();
+
     return( wnd->scroll_style );
 }

@@ -45,7 +45,8 @@ int GUIWinMessageLoop( void )
     WPI_PARAM1  param1;
     WPI_QMSG    msg;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_int_function ();
+
     while( _wpi_getmessage( GUIMainHInst, &msg, NULLHANDLE, 0, 0 ) ) {
 
         _wpi_translatemessage( &msg );

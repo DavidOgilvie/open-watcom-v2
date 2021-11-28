@@ -41,7 +41,8 @@
 
 bool GUIAPI GUISysInit( init_mode install )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     /* unused parameters */ (void)install;
 
     return( true );

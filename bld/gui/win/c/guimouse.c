@@ -44,7 +44,8 @@ bool GUIAPI GUIGetMousePosn( gui_window *wnd, gui_point *point )
 {
     WPI_POINT   wpi_point;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !_wpi_getsystemmetrics( SM_MOUSEPRESENT ) ) {
         return( false );
     }

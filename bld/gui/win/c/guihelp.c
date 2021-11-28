@@ -50,32 +50,33 @@
 
 static gui_help_instance InitHelp( HWND hwnd, WPI_INST inst, const char *title, const char *help_lib )
 {
-	HWND        hwndHelpInstance;
-	HELPINIT    help;
+    HWND        hwndHelpInstance;
+    HELPINIT    help;
 
-	GUIlog_entering_function ();
-	help.cb = sizeof( HELPINIT );
-	help.pszTutorialName = NULL;
-	help.phtHelpTable = NULL;
-	help.hmodHelpTableModule = 0;
-	help.hmodAccelActionBarModule = 0;
-	help.idAccelTable = 0;
-	help.idActionBar = 0;
-	help.pszHelpWindowTitle = (PSZ)title;
+    GUIlog_entering_gui_help_instance_function ();
+
+    help.cb = sizeof( HELPINIT );
+    help.pszTutorialName = NULL;
+    help.phtHelpTable = NULL;
+    help.hmodHelpTableModule = 0;
+    help.hmodAccelActionBarModule = 0;
+    help.idAccelTable = 0;
+    help.idActionBar = 0;
+    help.pszHelpWindowTitle = (PSZ)title;
  #ifdef _M_I86
-	help.usShowPanelId = CMIC_HIDE_PANEL_ID;
+    help.usShowPanelId = CMIC_HIDE_PANEL_ID;
  #else  // of #ifdef _M_I86
-	help.fShowPanelId = CMIC_HIDE_PANEL_ID;
+    help.fShowPanelId = CMIC_HIDE_PANEL_ID;
  #endif  // of #else for #ifdef _M_I86
-	help.pszHelpLibraryName = (PSZ)help_lib;
-	hwndHelpInstance = WinCreateHelpInstance( inst.hab, &help );
-	if( hwndHelpInstance != NULLHANDLE ) {
-		if( !WinAssociateHelpInstance( hwndHelpInstance, hwnd ) ) {
-			WinDestroyHelpInstance( hwndHelpInstance );
-			hwndHelpInstance = NULLHANDLE;
-		}
-	}
-	return( (gui_help_instance)hwndHelpInstance );
+    help.pszHelpLibraryName = (PSZ)help_lib;
+    hwndHelpInstance = WinCreateHelpInstance( inst.hab, &help );
+    if( hwndHelpInstance != NULLHANDLE ) {
+        if( !WinAssociateHelpInstance( hwndHelpInstance, hwnd ) ) {
+            WinDestroyHelpInstance( hwndHelpInstance );
+            hwndHelpInstance = NULLHANDLE;
+        }
+    }
+    return( (gui_help_instance)hwndHelpInstance );
 }
 
 /*
@@ -84,13 +85,14 @@ static gui_help_instance InitHelp( HWND hwnd, WPI_INST inst, const char *title, 
 
 static void FiniHelp( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	hwnd=hwnd;
-	file=file;
-	if( (HWND)inst != NULLHANDLE ) {
-		WinAssociateHelpInstance( (HWND)inst, NULLHANDLE );
-		WinDestroyHelpInstance( (HWND)inst );
-	}
+    GUIlog_entering_void_function ();
+
+    hwnd=hwnd;
+    file=file;
+    if( (HWND)inst != NULLHANDLE ) {
+        WinAssociateHelpInstance( (HWND)inst, NULLHANDLE );
+        WinDestroyHelpInstance( (HWND)inst );
+    }
 }
 
 /*
@@ -99,10 +101,11 @@ static void FiniHelp( gui_help_instance inst, HWND hwnd, const char *file )
 
 static bool DisplayContents( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	hwnd=hwnd;
-	file=file;
-	return( !WinSendMsg( (HWND)inst, HM_HELP_CONTENTS, NULL, NULL ) );
+    GUIlog_entering_bool_function ();
+
+    hwnd=hwnd;
+    file=file;
+    return( !WinSendMsg( (HWND)inst, HM_HELP_CONTENTS, NULL, NULL ) );
 }
 
 /*
@@ -111,23 +114,24 @@ static bool DisplayContents( gui_help_instance inst, HWND hwnd, const char *file
 
 static bool DisplayHelpOnHelp( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	hwnd=hwnd;
-	file=file;
-	return( !WinSendMsg( (HWND)inst, HM_DISPLAY_HELP, NULL, NULL ) );
+    GUIlog_entering_bool_function ();
+
+    hwnd=hwnd;
+    file=file;
+    return( !WinSendMsg( (HWND)inst, HM_DISPLAY_HELP, NULL, NULL ) );
 }
 
 /*
  * DisplayHelpSearch -- This routine returns true if ?
  */
-
+ 
 static bool DisplayHelpSearch( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	hwnd=hwnd;
-	file=file;
-	topic=topic;
-	return( !WinSendMsg( (HWND)inst, HM_HELP_INDEX, NULL, NULL ) );
+    GUIlog_entering_bool_function ();
+    hwnd=hwnd;
+    file=file;
+    topic=topic;
+    return( !WinSendMsg( (HWND)inst, HM_HELP_INDEX, NULL, NULL ) );
 }
 
 /*
@@ -136,10 +140,11 @@ static bool DisplayHelpSearch( gui_help_instance inst, HWND hwnd, const char *fi
 
 static bool DisplayHelpKey( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	hwnd=hwnd;
-	file=file;
-	return( !WinSendMsg( (HWND)inst, HM_DISPLAY_HELP, MPFROMLONG( (LONG)&topic ), MPFROMSHORT( HM_PANELNAME ) ) );
+    GUIlog_entering_bool_function ();
+
+    hwnd=hwnd;
+    file=file;
+    return( !WinSendMsg( (HWND)inst, HM_DISPLAY_HELP, MPFROMLONG( (LONG)&topic ), MPFROMSHORT( HM_PANELNAME ) ) );
 }
 
 /*
@@ -148,10 +153,11 @@ static bool DisplayHelpKey( gui_help_instance inst, HWND hwnd, const char *file,
 
 static bool DisplayHelpContext( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	hwnd=hwnd;
-	file=file;
-	return( !WinSendMsg( (HWND)inst, HM_DISPLAY_HELP, MPFROM2SHORT( (SHORT)topic, 0 ), MPFROMSHORT( HM_RESOURCEID ) ) );
+    GUIlog_entering_bool_function ();
+
+    hwnd=hwnd;
+    file=file;
+    return( !WinSendMsg( (HWND)inst, HM_DISPLAY_HELP, MPFROM2SHORT( (SHORT)topic, 0 ), MPFROMSHORT( HM_RESOURCEID ) ) );
 }
 #else  // of #ifdef __OS2_PM__
 
@@ -161,12 +167,13 @@ static bool DisplayHelpContext( gui_help_instance inst, HWND hwnd, const char *f
 
 static gui_help_instance InitHelp( HWND hwnd, WPI_INST inst, const char *title, const char *help_file )
 {
-	GUIlog_entering_function ();
-	hwnd = hwnd;
-	inst = inst;
-	title = title;
-	help_file = help_file;
-	return( (gui_help_instance)true );
+    GUIlog_entering_gui_help_instance_function ();
+
+    hwnd = hwnd;
+    inst = inst;
+    title = title;
+    help_file = help_file;
+    return( (gui_help_instance)true );
 }
 
 /*
@@ -175,9 +182,10 @@ static gui_help_instance InitHelp( HWND hwnd, WPI_INST inst, const char *title, 
 
 static void FiniHelp( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	WWinHelp( hwnd, file, (UINT)HELP_QUIT, 0 );
+    GUIlog_entering_void_function ();
+
+    inst=inst;
+    WWinHelp( hwnd, file, (UINT)HELP_QUIT, 0 );
 }
 
 /*
@@ -186,9 +194,10 @@ static void FiniHelp( gui_help_instance inst, HWND hwnd, const char *file )
 
 static bool DisplayContents( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	return( WWinHelp( hwnd, file, (UINT)HELP_CONTENTS, 0 ) );
+    GUIlog_entering_bool_function ();
+
+    inst=inst;
+    return( WWinHelp( hwnd, file, (UINT)HELP_CONTENTS, 0 ) );
 }
 
 /*
@@ -197,9 +206,10 @@ static bool DisplayContents( gui_help_instance inst, HWND hwnd, const char *file
 
 static bool DisplayHelpOnHelp( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	return( WWinHelp( hwnd, file, (UINT)HELP_HELPONHELP, 0 ) );
+    GUIlog_entering_bool_function ();
+
+    inst=inst;
+    return( WWinHelp( hwnd, file, (UINT)HELP_HELPONHELP, 0 ) );
 }
 
 /*
@@ -208,12 +218,13 @@ static bool DisplayHelpOnHelp( gui_help_instance inst, HWND hwnd, const char *fi
 
 static bool DisplayHelpSearch( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	if( topic == NULL ) {
-		topic = "";
-	}
-	return( WWinHelp( hwnd, file, (UINT)HELP_PARTIALKEY, (HELP_DATA)(LPCSTR)topic ) );
+    GUIlog_entering_bool_function ();
+
+    inst=inst;
+    if( topic == NULL ) {
+        topic = "";
+    }
+    return( WWinHelp( hwnd, file, (UINT)HELP_PARTIALKEY, (HELP_DATA)(LPCSTR)topic ) );
 }
 
 /*
@@ -222,9 +233,10 @@ static bool DisplayHelpSearch( gui_help_instance inst, HWND hwnd, const char *fi
 
 static bool DisplayHelpContext( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	return( WWinHelp( hwnd, file, (UINT)HELP_CONTEXT, (HELP_DATA)(LPCSTR)topic ) );
+    GUIlog_entering_bool_function ();
+
+    inst=inst;
+    return( WWinHelp( hwnd, file, (UINT)HELP_CONTEXT, (HELP_DATA)(LPCSTR)topic ) );
 }
 
 /*
@@ -233,9 +245,10 @@ static bool DisplayHelpContext( gui_help_instance inst, HWND hwnd, const char *f
 
 static bool DisplayHelpKey( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	return( WWinHelp( hwnd, file, (UINT)HELP_KEY, (HELP_DATA)(LPCSTR)topic ) );
+    GUIlog_entering_bool_function ();
+
+    inst=inst;
+    return( WWinHelp( hwnd, file, (UINT)HELP_KEY, (HELP_DATA)(LPCSTR)topic ) );
 }
 
  #if defined( __NT__ )
@@ -246,9 +259,10 @@ static bool DisplayHelpKey( gui_help_instance inst, HWND hwnd, const char *file,
 
 static bool DisplayContentsHH( gui_help_instance inst, HWND hwnd, const char *file )
 {
-	GUIlog_entering_function ();
-	inst = inst;
-	return( WHtmlHelp( hwnd, file, (UINT)HELP_CONTENTS, 0 ) );
+    GUIlog_entering_bool_function ();
+
+    inst = inst;
+    return( WHtmlHelp( hwnd, file, (UINT)HELP_CONTENTS, 0 ) );
 }
 
 /*
@@ -257,12 +271,13 @@ static bool DisplayContentsHH( gui_help_instance inst, HWND hwnd, const char *fi
 
 static bool DisplayHelpSearchHH( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	inst = inst;
-	if( topic == NULL ) {
-		topic = "";
-	}
-	return( WHtmlHelp( hwnd, file, (UINT)HELP_PARTIALKEY, (HELP_DATA)(LPCSTR)topic ) );
+    GUIlog_entering_bool_function ();
+
+    inst = inst;
+    if( topic == NULL ) {
+        topic = "";
+    }
+    return( WHtmlHelp( hwnd, file, (UINT)HELP_PARTIALKEY, (HELP_DATA)(LPCSTR)topic ) );
 }
 
 /*
@@ -271,9 +286,10 @@ static bool DisplayHelpSearchHH( gui_help_instance inst, HWND hwnd, const char *
 
 static bool DisplayHelpContextHH( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	inst=inst;
-	return( WHtmlHelp( hwnd, file, (UINT)HELP_CONTEXT, (HELP_DATA)(LPCSTR)topic ) );
+    GUIlog_entering_bool_function ();
+
+    inst=inst;
+    return( WHtmlHelp( hwnd, file, (UINT)HELP_CONTEXT, (HELP_DATA)(LPCSTR)topic ) );
 }
 
 /*
@@ -282,9 +298,10 @@ static bool DisplayHelpContextHH( gui_help_instance inst, HWND hwnd, const char 
 
 static bool DisplayHelpKeyHH( gui_help_instance inst, HWND hwnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
-	inst = inst;
-	return( WHtmlHelp( hwnd, file, (UINT)HELP_KEY, (HELP_DATA)(LPCSTR)topic ) );
+    GUIlog_entering_bool_function ();
+
+    inst = inst;
+    return( WHtmlHelp( hwnd, file, (UINT)HELP_KEY, (HELP_DATA)(LPCSTR)topic ) );
 }
  #endif  // of #if defined( __NT__ )
 #endif  // of #else for #ifdef __OS2_PM__
@@ -295,7 +312,8 @@ static bool DisplayHelpKeyHH( gui_help_instance inst, HWND hwnd, const char *fil
 
 gui_help_instance GUIAPI GUIHelpInit( gui_window *wnd, const char *file, const char *title )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_help_instance_function ();
+
     return( InitHelp( wnd->hwnd, GUIMainHInst, title, file ) );
 }
 
@@ -306,7 +324,8 @@ gui_help_instance GUIAPI GUIHelpInit( gui_window *wnd, const char *file, const c
 
 void GUIAPI GUIHelpFini( gui_help_instance inst, gui_window *wnd, const char *file )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     FiniHelp( inst, wnd->hwnd, file );
 }
 
@@ -319,7 +338,8 @@ bool GUIAPI GUIShowHelp( gui_help_instance inst, gui_window *wnd, gui_help_actio
 {
     bool        ret;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     ret = false;
 
     switch( act ) {
@@ -355,7 +375,8 @@ bool GUIAPI GUIShowHtmlHelp( gui_help_instance inst, gui_window *wnd, gui_help_a
     /* unused parameters */ (void)inst; (void)wnd; (void)act; (void)file; (void)topic;
 #endif  // of #ifndef __NT__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     ret = false;
 
 #ifdef __OS2_PM__
@@ -384,7 +405,8 @@ bool GUIAPI GUIShowHtmlHelp( gui_help_instance inst, gui_window *wnd, gui_help_a
 
 bool GUIAPI GUIDisplayHelp( gui_window *wnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
 #ifdef __OS2_PM__
     wnd = wnd;
     file = file;
@@ -405,7 +427,8 @@ bool GUIAPI GUIDisplayHelp( gui_window *wnd, const char *file, const char *topic
 
 bool GUIAPI GUIDisplayHelpWin4( gui_window *wnd, const char *file, const char *topic )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
 #ifdef __OS2_PM__
     wnd = wnd;
     file = file;
@@ -440,7 +463,8 @@ bool GUIAPI GUIDisplayHelpWin4( gui_window *wnd, const char *file, const char *t
 
 bool GUIAPI GUIDisplayHelpId( gui_window *wnd, const char *file, gui_hlp_id id )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
 #ifdef __OS2_PM__
     wnd = wnd;
     file = file;

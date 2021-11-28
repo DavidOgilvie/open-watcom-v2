@@ -47,7 +47,8 @@ bool GUIAPI GUISetFocus( gui_window *wnd, gui_ctl_id id )
     control_item        *info;
     HWND                hwnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !GUIGetControlClass( wnd, id, &control_class ) ) {
         return( false );
     }
@@ -81,7 +82,8 @@ bool GUIAPI GUIGetFocus( gui_window *wnd, gui_ctl_id *id )
     HWND                parent;
     HWND                hwnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( id != NULL ) {
         hwnd = _wpi_getfocus();
         parent = _wpi_getparent( hwnd );

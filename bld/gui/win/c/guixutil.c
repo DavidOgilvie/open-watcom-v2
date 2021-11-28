@@ -60,7 +60,8 @@
 
 static void MaxChild( gui_window *wnd, void *param )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     param = param;
     if( _wpi_iszoomed( wnd->hwnd_frame ) ) {
         GUISetRedraw( wnd, false );
@@ -77,7 +78,8 @@ static void MaxChild( gui_window *wnd, void *param )
 
 void GUIMaximizeZoomedChildren( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     GUIEnumChildWindows( wnd, &MaxChild, NULL );
 }
 
@@ -87,7 +89,8 @@ void GUIMaximizeZoomedChildren( gui_window *wnd )
 
 bool GUIIsOpen( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( _wpi_iswindow( GUIMainHInst, wnd->hwnd ) ) {
         return( true );
     }
@@ -100,7 +103,8 @@ bool GUIIsOpen( gui_window *wnd )
 
 bool GUIIsParentADialog( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     while( (wnd = GUIGetParentWindow( wnd )) != NULL ) {
         if( GUI_IS_DIALOG( wnd ) ) {
             return( true );
@@ -118,7 +122,8 @@ bool GUIIsRectInUpdateRect( gui_window *wnd, WPI_RECT *wpi_rect )
     WPI_RECT    update_wpi_rect;
     WPI_RECT    intersect_wpi_rect;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !wnd || !wnd->ps || !wpi_rect ) {
         return( true );
     }
@@ -146,7 +151,8 @@ void GUICalcLocation( const gui_rect *rect, guix_coord *scr_pos, guix_coord *scr
     WPI_RECT    wpi_rect;
     WPI_RECTDIM left, top, right, bottom;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( parent == NULLHANDLE ) {
         parent = HWND_DESKTOP;
     }
@@ -174,7 +180,8 @@ void GUICalcLocation( const gui_rect *rect, guix_coord *scr_pos, guix_coord *scr
 bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info, guix_coord *scr_pos,
                         guix_coord *scr_size, HWND parent, HMENU *hmenu )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     GUICalcLocation( &dlg_info->rect, scr_pos, scr_size, parent );
     if( wnd != NULL ) {
         if( !GUI_IS_DIALOG( wnd ) ) {
@@ -203,20 +210,20 @@ bool GUISetupStruct( gui_window *wnd, gui_create_info *dlg_info, guix_coord *scr
 
 void GUIError( const char *_str, ... )
 {
-	char		str[256]= "\0";
-	HWND 		focus;
-	int			ret;
-    va_list 	arglist;
+    char        str[256]= "\0";
+    HWND        focus;
+    int         ret;
+    va_list     arglist;
 
     va_start (arglist, _str);
 
     ret = vsprintf (str, _str, arglist);
 
-	focus = _wpi_getfocus();
+    focus = _wpi_getfocus();
     if( focus != NULLHANDLE ) {
         _wpi_messagebox( focus, str, NULL, ERROR_STYLE );
     }
-	va_end (arglist);
+    va_end (arglist);
 }
 
 /*
@@ -227,17 +234,17 @@ void GUIError( const char *_str, ... )
 
 void GUIErrorSA( const char *_str, ... )
 {
-	char		str[256]= "\0";
-	HWND 		focus= 0L;
-	int			ret;
-    va_list 	arglist;
+    char        str[256]= "\0";
+    HWND        focus= 0L;
+    int         ret;
+    va_list     arglist;
 
     va_start (arglist, _str);
 
     ret = vsprintf (str, _str, arglist);
 
     _wpi_messagebox( focus, str, NULL, ERROR_STYLE );
-	va_end (arglist);
+    va_end (arglist);
 }
 
 /*
@@ -248,7 +255,8 @@ gui_window *GUIFindWindowFromHWND( HWND hwnd )
 {
     gui_window *curr;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     for( curr = GUIGetFront(); curr != NULL; curr = GUIGetNextWindow( curr ) ) {
         if( ( curr->hwnd == hwnd ) || ( curr->hwnd_frame == hwnd ) ||
             ( curr->root == hwnd ) || ( curr->root_frame == hwnd ) ) {
@@ -267,7 +275,8 @@ bool GUIIsGUIChild( HWND hwnd )
 {
     gui_window  *root;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     root = GUIGetRootWindow();
     if( root ) {
         hwnd = GUIGetTopParentHWND( hwnd );
@@ -286,7 +295,8 @@ bool GUIIsGUIChild( HWND hwnd )
 
 bool GUIAPI GUISetRedraw( gui_window *wnd, bool redraw )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     _wpi_setredraw( wnd->hwnd, ( redraw ) ? TRUE : FALSE );
     return( true );
 }
@@ -302,7 +312,8 @@ bool GUIBringNewToFront( gui_window *prev )
 {
     gui_window *curr;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     for( curr = GUIGetFront(); curr != NULL; curr = GUIGetNextWindow( curr ) ) {
         if( ( curr != prev ) && !_wpi_ischild( prev->hwnd, curr->hwnd ) && (curr->flags & DOING_DESTROY) == 0 ) {
             GUIBringToFront( curr );
@@ -320,7 +331,8 @@ gui_window *GUIXGetRootWindow( void )
 {
     gui_window *curr;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     for( curr = GUIGetFront(); curr != NULL; curr = GUIGetNextWindow( curr ) ) {
         if( curr->flags & IS_ROOT ) {
             return( curr );
@@ -338,7 +350,8 @@ gui_window *GUIFindFirstChild( gui_window *parent_wnd )
 {
     gui_window *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     for( wnd = GUIGetFront(); wnd != NULL; wnd = GUIGetNextWindow( wnd ) ) {
         if( wnd->parent == parent_wnd && (wnd->flags & UTILITY_BIT) == 0 ) {
             return( wnd );
@@ -356,7 +369,8 @@ static gui_window *GUIFindFirstPopupWithNoParent( void )
 {
     gui_window *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     for( wnd = GUIGetFront(); wnd != NULL; wnd = GUIGetNextWindow( wnd ) ) {
         if( (wnd->style & GUI_POPUP) && ( wnd->parent == NULL ) ) {
             return( wnd );
@@ -374,7 +388,8 @@ static void GUIMarkChildrenWithFlag( gui_window *parent_wnd, gui_flags flag )
 {
     gui_window *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     for( wnd = GUIGetFront(); wnd != NULL; wnd = GUIGetNextWindow( wnd ) ) {
         if( wnd->parent == parent_wnd ) {
             wnd->flags |= flag;
@@ -390,7 +405,8 @@ void GUIDestroyAllChildren( gui_window *parent_wnd )
 {
     gui_window  *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     GUIMarkChildrenWithFlag( parent_wnd, DOING_DESTROY );
     while( (wnd = GUIFindFirstChild( parent_wnd )) != NULL ) {
         wnd->flags |= UTILITY_BIT;
@@ -406,7 +422,8 @@ void GUIDestroyAllPopupsWithNoParent( void )
 {
     gui_window  *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     while( (wnd = GUIFindFirstPopupWithNoParent()) != NULL ) {
         GUIDestroyWnd( wnd );
     }
@@ -422,7 +439,8 @@ void GUIFreeWindowMemory( gui_window *wnd, bool from_parent, bool dialog )
     gui_window  *root;
     HWND        capture;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     from_parent = from_parent;
     if( ( wnd->hwnd != NULLHANDLE ) && ( GUICurrWnd == wnd ) ) {
         capture = _wpi_getcapture();
@@ -490,7 +508,8 @@ void GUIFreeWindowMemory( gui_window *wnd, bool from_parent, bool dialog )
 
 bool GUIScrollOn( gui_window *wnd, int bar )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ( bar == SB_VERT ) && GUI_VSCROLL_ON( wnd ) ) {
         return( true );
     }
@@ -509,7 +528,8 @@ void GUISetRowCol( gui_window *wnd, const guix_coord *scr_size )
     guix_ord    size_x;
     guix_ord    size_y;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( scr_size == NULL ) {
         size_x = _wpi_getwidthrect( wnd->hwnd_client_rect );
         size_y = _wpi_getheightrect( wnd->hwnd_client_rect );
@@ -531,7 +551,8 @@ void GUIInvalidateResize( gui_window *wnd )
     WPI_RECT    wpi_rect;
     WPI_RECTDIM left, top, right, bottom;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( (wnd->flags & NEEDS_RESIZE_REDRAW) && ( wnd->old_rows != wnd->num_rows ) ) {
         _wpi_getrectvalues( wnd->hwnd_client_rect, &left, &top, &right, &bottom );
         GUIGetMetrics( wnd );
@@ -555,7 +576,8 @@ void GUIInvalidateResize( gui_window *wnd )
 
 WPI_MRESULT GUISendMessage( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_MRESULT_function ();
+
     if( hwnd != NULLHANDLE ) {
         return( _wpi_sendmessage( hwnd, msg, wparam, lparam ) );
     } else {
@@ -571,7 +593,8 @@ WPI_MRESULT GUISendDlgItemMessage( HWND parent, gui_ctl_id id, WPI_MSG msg, WPI_
 {
     HWND hwnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_MRESULT_function ();
+
     hwnd = _wpi_getdlgitem( parent, id );
     if( hwnd != NULLHANDLE ) {
         return( _wpi_sendmessage( hwnd, msg, wparam, lparam ) );
@@ -591,7 +614,8 @@ void GUIMakeRelative( gui_window *wnd, WPI_POINT *wpi_point, gui_point *point )
     gui_ord     scr_x;
     gui_ord     scr_y;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     wpi_rect = wnd->hwnd_client_rect;
     _wpi_mapwindowpoints( wnd->hwnd, HWND_DESKTOP, (WPI_LPPOINT)&wpi_rect, 2 );
     _wpi_getrectvalues( wpi_rect, &left, &top, &right, &bottom );
@@ -615,7 +639,8 @@ void GUIMakeRelative( gui_window *wnd, WPI_POINT *wpi_point, gui_point *point )
 
 HWND GUIGetScrollHWND( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_HWND_function ();
+
     if( wnd == NULL ) {
         return( NULLHANDLE );
     }
@@ -631,7 +656,8 @@ HWND GUIGetScrollHWND( gui_window *wnd )
 
 static bool ChangeScrollPos( gui_window *wnd, int bar, guix_ord new )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( bar == SB_HORZ ) {
         if( wnd->hpos == new )
             return( false );
@@ -650,7 +676,8 @@ static bool ChangeScrollPos( gui_window *wnd, int bar, guix_ord new )
 
 void GUISetScrollPos( gui_window *wnd, int bar, guix_ord new, bool redraw )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( ChangeScrollPos( wnd, bar, new ) ) {
         _wpi_setscrollpos( GUIGetParentFrameHWND( wnd ), bar, new, ( redraw ) ? TRUE : FALSE );
     }
@@ -662,7 +689,8 @@ void GUISetScrollPos( gui_window *wnd, int bar, guix_ord new, bool redraw )
 
 guix_ord GUIGetScrollPos( gui_window *wnd, int bar )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_guix_ord_function ();
+
     if( bar == SB_HORZ ) {
         return( wnd->hpos );
     } else {
@@ -676,7 +704,8 @@ guix_ord GUIGetScrollPos( gui_window *wnd, int bar )
 
 static bool ChangeScrollRange( gui_window *wnd, int bar, guix_ord new )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( bar == SB_HORZ ) {
         if( wnd->hrange == new )
             return( false );
@@ -695,7 +724,8 @@ static bool ChangeScrollRange( gui_window *wnd, int bar, guix_ord new )
 
 void GUISetScrollRange( gui_window *wnd, int bar, int min, int max, bool redraw )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( ChangeScrollRange( wnd, bar, max - min ) ) {
         _wpi_setscrollrange( GUIGetParentFrameHWND( wnd ), bar, min, max, ( redraw ) ? TRUE : FALSE );
         if( bar == SB_HORZ ) {
@@ -712,7 +742,8 @@ void GUISetScrollRange( gui_window *wnd, int bar, int min, int max, bool redraw 
 
 guix_ord GUIGetScrollRange( gui_window *wnd, int bar )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_guix_ord_function ();
+
     if( bar == SB_HORZ ) {
         return( wnd->hrange );
     } else {
@@ -729,7 +760,8 @@ void GUISetRangePos( gui_window *wnd, int bar )
     guix_ord    range;
     guix_ord    pos;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     range = GUIGetScrollRange( wnd, bar );
     pos = GUIGetScrollPos( wnd, bar );
     _wpi_setscrollrange( GUIGetParentFrameHWND( wnd ), bar, 0, range, FALSE );
@@ -748,7 +780,8 @@ void GUIRedrawScroll( gui_window *wnd, int bar, bool redraw_now )
     WPI_RECTDIM left, top, right, bottom;
     WPI_RECTDIM clleft, cltop, clright, clbottom;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hwnd = GUIGetParentFrameHWND( wnd );
     _wpi_getwindowrect( hwnd, &wpi_rect );
     _wpi_getclientrect( hwnd, &client_wpi_rect );
@@ -774,7 +807,8 @@ void GUIRedrawScroll( gui_window *wnd, int bar, bool redraw_now )
 
 HWND GUIGetParentHWND( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_HWND_function ();
+
     if( wnd == NULL ) {
         return( NULLHANDLE );
     }
@@ -790,7 +824,8 @@ HWND GUIGetParentHWND( gui_window *wnd )
 
 HWND GUIGetParentFrameHWND( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_HWND_function ();
+
     if( wnd == NULL ) {
         return( NULLHANDLE );
     }
@@ -809,7 +844,8 @@ HWND GUIGetTopParentHWND( HWND hwnd )
     HWND curr_hwnd;
     HWND parent;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_HWND_function ();
+
     curr_hwnd = hwnd;
     for( ;; ) {
         parent = _wpi_getparent( curr_hwnd );
@@ -826,7 +862,8 @@ HWND GUIGetTopParentHWND( HWND hwnd )
 
 gui_window *GUIGetTopGUIWindow( HWND hwnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     hwnd = hwnd;
     return( GUIGetRootWindow() );
 }
@@ -839,7 +876,8 @@ gui_window *GUIGetWindow( HWND hwnd )
 {
     gui_window  *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     if( ( hwnd != NULLHANDLE ) && ( hwnd != HWND_DESKTOP ) ) {
         wnd = (gui_window *)_wpi_getwindowlongptr( hwnd, GUI_EXTRA_WORD * EXTRA_SIZE );
         return( wnd );
@@ -854,7 +892,8 @@ gui_window *GUIGetWindow( HWND hwnd )
 
 gui_window * GUIAPI GUIGetParentWindow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     if( wnd != NULL ) {
         return( wnd->parent );
     } else {
@@ -868,7 +907,8 @@ gui_window * GUIAPI GUIGetParentWindow( gui_window *wnd )
 
 bool GUIParentHasFlags( gui_window *wnd, gui_flags flags )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     for( ; wnd != NULL; wnd = GUIGetParentWindow( wnd ) ) {
         if( wnd->flags & flags ) {
             return( true );
@@ -886,7 +926,8 @@ gui_window * GUIAPI GUIGetFirstSibling( gui_window *wnd )
 {
     gui_window  *parent_wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     if( wnd == NULL ) {
         return( NULL );
     }
@@ -910,7 +951,8 @@ WPI_FONT GUIGetSystemFont( void )
 #ifdef __OS2_PM__
     WPI_FONT    ret;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_FONT_function ();
+
     font = NULL;
     ret = _wpi_getsystemfont();
     if( ret ) {
@@ -920,7 +962,8 @@ WPI_FONT GUIGetSystemFont( void )
         }
     }
 #else  // of #ifdef __OS2_PM__
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     font = _wpi_getsystemfont();
 #endif  // of #else for #ifdef __OS2_PM__
 

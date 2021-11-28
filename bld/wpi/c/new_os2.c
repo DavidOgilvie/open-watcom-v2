@@ -61,7 +61,6 @@ WPI_FONT _wpi_createwpifont( WPI_LOGFONT *fontmetrics )
 {
     WPI_FONT    wpifont;
 
-	GUIlog_entering_function ();
     wpifont = _wpi_malloc( sizeof(FATTRS) );
     _wpi_getfontattrs( fontmetrics, wpifont );
     wpifont->fsFontUse = FATTR_FONTUSE_OUTLINE;

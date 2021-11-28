@@ -60,7 +60,8 @@ bool GUIAPI GUITrackFloatingPopup( gui_window *wnd, const gui_point *location,
     guix_ord    scr_x;
     guix_ord    scr_y;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ( hpopup = GUIHFloatingPopup ) == NULLHANDLE ) {
         return( false );
     }
@@ -124,7 +125,8 @@ bool GUIXCreateFloatingPopup( gui_window *wnd, const gui_point *location,
                              const gui_menu_items *menus,
                              gui_mouse_track track, gui_ctl_id *curr_id )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( GUIHFloatingPopup != NULLHANDLE ) {
         _wpi_destroymenu( GUIHFloatingPopup );
         GUIHFloatingPopup = NULLHANDLE;
@@ -153,7 +155,8 @@ void GUIPopupMenuSelect( WPI_PARAM1 wparam, WPI_PARAM2 lparam )
     HMENU               hmenu;
 #endif  // of #ifdef __OS2_PM__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     lparam=lparam;
     id = GET_WM_MENUSELECT_ITEM( wparam, lparam );
     menu_closed = ( _wpi_is_close_menuselect( wparam, lparam ) != 0 );

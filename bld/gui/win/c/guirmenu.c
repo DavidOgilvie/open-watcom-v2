@@ -42,7 +42,8 @@
 
 void GUIFreeGUIMenuStruct( gui_menu_items *menus )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     /* unused parameters */ (void)menus;
 }
 
@@ -52,7 +53,8 @@ void GUIFreeGUIMenuStruct( gui_menu_items *menus )
 
 bool GUICreateMenuStructFromRes( res_name_or_id menu_id, gui_menu_items *menus )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     /* unused parameters */ (void)menu_id; (void)menus;
 
     return( false );

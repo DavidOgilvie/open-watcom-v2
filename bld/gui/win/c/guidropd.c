@@ -44,7 +44,8 @@ bool GUIAPI GUIDropDown( gui_window *wnd, gui_ctl_id id, bool drop )
 {
     gui_control_class control_class;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !GUIGetControlClass( wnd, id, &control_class ) ) {
         return( false );
     }

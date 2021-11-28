@@ -44,7 +44,8 @@ void GUIAPI GUIGetSystemMetrics( gui_system_metrics *metrics )
 {
     HDC       hdc;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( metrics != NULL ) {
         /* size of border on which your cursor will cause resize */
         metrics->resize_border.x = GUIScreenToScaleH( _wpi_getsystemmetrics( SM_CXFRAME ) );

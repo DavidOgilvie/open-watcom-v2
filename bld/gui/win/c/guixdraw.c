@@ -58,7 +58,8 @@ typedef struct draw_cache {
 
 static void SetText( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     _wpi_settextcolor( wnd->hdc, _wpi_getnearestcolor( wnd->hdc, fore ) );
     _wpi_setbackcolour( wnd->hdc, _wpi_getnearestcolor( wnd->hdc , back ) );
 }
@@ -89,7 +90,8 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
     WPI_RECTDIM paint_left, paint_top, paint_right, paint_bottom;
     //draw_cache        dcache;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( ( wnd->hdc == NULLHANDLE ) || ( wnd->ps == NULL ) ||
         ( ( text == NULL ) && ( hotspot_no == 0 ) ) ||
         ( ( hotspot_no > 0 ) && ( in_height == 0 ) ) ) {
@@ -166,7 +168,7 @@ static void GUIDrawTextBitmapRGB( gui_window *wnd, const char *text,
                 nDrawY += _wpi_metricdescent( GUItm );
 #endif  // of #ifdef __OS2_PM__
                 old_rop = _wpi_setrop2( wnd->hdc, R2_COPYPEN );
-				SetText( wnd, fore, back );
+                SetText( wnd, fore, back );
                 _wpi_textout( wnd->hdc, nDrawX, nDrawY, text, num_chars );
             } else {
                 GUIDrawBitmap( hotspot_no, wnd->hdc, nDrawX, nDrawY, colour );
@@ -199,7 +201,8 @@ void GUIDrawBitmapAttr( gui_window *wnd, const guix_coord *size, const gui_coord
 {
     WPI_COLOUR  fore, back;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     fore = GUIGetFore( wnd, attr );
     back = GUIGetBack( wnd, attr );
 
@@ -211,7 +214,8 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
 {
     WPI_COLOUR  fore, back;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     fore = GUIGetFore( wnd, attr );
     back = GUIGetBack( wnd, attr );
 
@@ -225,6 +229,7 @@ void GUIXDrawText( gui_window *wnd, const char *text, size_t length, const gui_c
 void GUIXDrawTextRGB( gui_window *wnd, const char *text, size_t length, const gui_coord *pos,
                       gui_rgb fore, gui_rgb back, gui_ord extentx, bool draw_extent )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     GUIDrawTextBitmapRGB( wnd, text, length, 0, pos, GETRGB( fore ), GETRGB( back ), extentx, draw_extent, 0 );
 }

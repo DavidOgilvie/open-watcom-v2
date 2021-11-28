@@ -34,9 +34,9 @@
 #include "guixmain.h"
 #include <stdlib.h>
 #ifdef __WATCOMC__
-	#include "clibint.h"
+    #include "clibint.h"
 #else  // of #ifdef __WATCOMC__
-	#include "clibext.h"
+    #include "clibext.h"
 #endif  // of #else for #ifdef __WATCOMC__
 #include "guilog.h"
 
@@ -52,7 +52,8 @@ bool    GUIMainTouched = false;
 
 int main( SHORT sArgc, CHAR *ppArgv[] )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_int_function ();
+
     return( GUIXMain( sArgc, ppArgv ) );
 }
 
@@ -65,7 +66,8 @@ int main( SHORT sArgc, CHAR *ppArgv[] )
 int PASCAL WinMain( HINSTANCE inst, HINSTANCE hPrevInstance, LPSTR lpCmdLine,
                     int nShowCmd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_int_function ();
+
  #if !defined( __WATCOMC__ ) && defined( __NT__ )
     _argc = __argc;
     _argv = __argv;

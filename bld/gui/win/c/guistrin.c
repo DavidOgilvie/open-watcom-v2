@@ -44,7 +44,8 @@
 
 static gui_text_ord DoReturn( gui_text_ord ret, gui_window *wnd, bool got_new )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     if( got_new ) {
         GUIReleaseTheDC( wnd );
     }
@@ -64,7 +65,8 @@ gui_text_ord GUIAPI GUIGetStringPos( gui_window *wnd, gui_ord indent, const char
     guix_ord        new_curr;
     bool            got_new;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     if( indent > mouse_x ) {
         return( GUI_TEXT_NO_COLUMN );
     }

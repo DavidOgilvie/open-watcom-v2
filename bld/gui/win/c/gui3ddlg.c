@@ -36,21 +36,23 @@
 #include "guilog.h"
 
 /*
- * GUI3DDialogInit -- 
+ * GUI3DDialogInit --
  */
- 
+
 bool GUIAPI GUI3DDialogInit( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     return( CvrCtl3DInit( GUIMainHInst ) );
 }
 
 /*
- * GUI3DDialogFini -- 
+ * GUI3DDialogFini --
  */
- 
+
 void GUIAPI GUI3DDialogFini( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     (void)CvrCtl3dUnregister( GUIMainHInst );
 }

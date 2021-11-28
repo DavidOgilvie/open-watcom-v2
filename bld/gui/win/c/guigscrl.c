@@ -43,7 +43,8 @@
 
 static guix_ord GetPos( gui_window *wnd, int bar )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_guix_ord_function ();
+
     if( GUIScrollOn( wnd, bar ) ) {
         return( GUIGetScrollPos( wnd, bar ) );
     } else {
@@ -57,7 +58,8 @@ static guix_ord GetPos( gui_window *wnd, int bar )
 
 gui_text_ord GUIAPI GUIGetHScrollCol( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     return( GUIToTextX( GetPos( wnd, SB_HORZ ), wnd ) );
 }
 
@@ -67,7 +69,8 @@ gui_text_ord GUIAPI GUIGetHScrollCol( gui_window *wnd )
 
 gui_text_ord GUIAPI GUIGetVScrollRow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     return( GUIToTextY( GetPos( wnd, SB_VERT ), wnd ) );
 }
 
@@ -79,7 +82,8 @@ static gui_ord GetScroll( gui_window *wnd, int bar )
 {
     guix_ord    pos;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     pos = GetPos( wnd, bar );
     if( bar == SB_HORZ ) {
         return( GUIScreenToScaleH( pos ) );
@@ -94,7 +98,8 @@ static gui_ord GetScroll( gui_window *wnd, int bar )
 
 gui_ord GUIAPI GUIGetHScroll( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     return( GetScroll( wnd, SB_HORZ ) );
 }
 
@@ -104,6 +109,7 @@ gui_ord GUIAPI GUIGetHScroll( gui_window *wnd )
 
 gui_ord GUIAPI GUIGetVScroll( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     return( GetScroll( wnd, SB_VERT ) );
 }

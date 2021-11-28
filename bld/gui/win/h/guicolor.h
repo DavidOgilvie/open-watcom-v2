@@ -33,9 +33,12 @@
 
 #define GETRGB( rgb )   ( RGB( GUIGETRVALUE(rgb), GUIGETGVALUE(rgb), GUIGETBVALUE(rgb) ) )
 
-extern bool         GUIXSetColours( gui_window * wnd, int num_attrs, gui_colour_set * colours );
-extern HBRUSH       GUIFreeBKBrush( gui_window * wnd );
-extern void         GUIXGetWindowColours( gui_window * wnd, gui_colour_set * colours );
-extern WPI_COLOUR   GUIGetFore( gui_window *wnd, gui_attr attr );
-extern WPI_COLOUR   GUIGetBack( gui_window *wnd, gui_attr attr );
-extern void 		InitSystemRGB( void );
+bool         GUIXSetColours( gui_window * wnd, int num_attrs, gui_colour_set * colours );
+HBRUSH       GUIFreeBKBrush( gui_window * wnd );
+void         GUIXGetWindowColours( gui_window * wnd, gui_colour_set * colours );
+WPI_COLOUR   GUIGetFore( gui_window *wnd, gui_attr attr );
+WPI_COLOUR   GUIGetBack( gui_window *wnd, gui_attr attr );
+void        InitSystemRGB( void );
+
+void SetTextColorByScheme( gui_window *wnd, WPI_COLOUR fore, WPI_COLOUR back );
+void InitRootWindowRGB ( gui_window *wnd );

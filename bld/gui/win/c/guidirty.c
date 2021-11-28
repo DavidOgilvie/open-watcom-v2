@@ -46,7 +46,8 @@ void GUIAPI GUIWndDirty( gui_window *wnd )
 {
     gui_window *curr;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( wnd == NULL ) {
         for( curr = GUIGetFront(); curr != NULL; curr = GUIGetNextWindow( curr ) ) {
             if( GUIGetParentFrameHWND( curr ) != NULLHANDLE ) {
@@ -69,7 +70,8 @@ void GUIAPI GUIWndDirtyControl( gui_window *wnd, gui_ctl_id id )
 {
     HWND        control;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     control = _wpi_getdlgitem( wnd->hwnd, id );
     if( control != NULLHANDLE ) {
         //GUIInvalidatePaintHandles( wnd ); // not 100% sure this is required

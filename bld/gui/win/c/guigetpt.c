@@ -42,7 +42,8 @@
 
 void GUIAPI GUIGetPoint( gui_window *wnd, gui_ord extentx, gui_text_ord row, gui_point *point )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( point == NULL ) {
         return;
     }

@@ -58,7 +58,8 @@ static bool DrawSimpleBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
     guix_ord    vscroll;
     guix_ord    win_height;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ( rect->s_width == 0 ) || ( rect->s_height == 0 ) ) {
         return( false );
     }
@@ -131,7 +132,8 @@ static bool DrawShadowBar( gui_window *wnd, const guix_rect *rect, WPI_COLOUR co
     guix_ord    vscroll;
     guix_ord    win_height;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ( rect->s_width == 0 ) || ( rect->s_height == 0 ) ) {
         return( false );
     }
@@ -216,7 +218,8 @@ bool GUIAPI GUIDrawBar( gui_window *wnd, gui_text_ord row, gui_ord start, gui_or
     gui_text_metrics    metrics;
     WPI_COLOUR          colour;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( (wnd == NULL) || (wnd->hdc == NULLHANDLE) || (wnd->ps == NULL) ) {
         return( false );
     }
@@ -264,7 +267,8 @@ bool GUIAPI GUIDrawBarGroup( gui_window *wnd, gui_text_ord row, gui_ord start,
     gui_ord     stretch_width;
     bool        ret;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( width1 == 0 ) {
         ret = true;
     } else {

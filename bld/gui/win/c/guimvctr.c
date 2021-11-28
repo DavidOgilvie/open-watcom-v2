@@ -48,7 +48,8 @@ bool GUIAPI GUIResizeControl( gui_window *wnd, gui_ctl_id id, const gui_rect *re
     guix_coord  scr_size;
     HWND        control;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     control = _wpi_getdlgitem( wnd->hwnd, id );
     if( control != NULLHANDLE ) {
         GUICalcLocation( rect, &scr_pos, &scr_size, wnd->hwnd );
@@ -66,7 +67,8 @@ bool GUIAPI GUIGetControlRect( gui_window *wnd, gui_ctl_id id, gui_rect *rect )
 {
     HWND        control;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     control = _wpi_getdlgitem( wnd->hwnd, id );
     if( control != NULLHANDLE ) {
         GUIGetRelRect( control, rect, false );

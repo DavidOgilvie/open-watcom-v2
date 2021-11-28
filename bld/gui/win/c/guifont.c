@@ -34,7 +34,7 @@
 #include "guiwind.h"
 #include <string.h>
 #if !defined(__OS2_PM__) && !defined(__WINDOWS_386__)
-	#include <commdlg.h>
+    #include <commdlg.h>
 #endif  // of #if !defined(__OS2_PM__) && !defined(__WINDOWS_386__)
 #include "guifont.h"
 #include "fontstr.h"
@@ -54,7 +54,8 @@
 #ifndef __OS2_PM__
 static void SetFont( gui_window *wnd, HFONT font )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     wnd->font = font;
     GUISetRowCol( wnd, NULL );
     GUISetScroll( wnd );
@@ -67,7 +68,8 @@ static void SetFont( gui_window *wnd, HFONT font )
 
 static bool GUIChooseFont( HFONT font, LOGFONT *lf, HWND hwnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
  #ifdef __OS2_PM__
     hwnd = hwnd;
     lf = lf;
@@ -143,7 +145,8 @@ bool GUIAPI GUIChangeFont( gui_window *wnd )
     LOGFONT     lf;
     HFONT       font;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !GUIChooseFont( wnd->font, &lf, wnd->hwnd ) ) {
         return( false );
     }
@@ -156,7 +159,8 @@ bool GUIAPI GUIChangeFont( gui_window *wnd )
     GUIWndDirty( wnd );
     return( true );
 #else  // of #ifndef __OS2_PM__
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     wnd = wnd;
     return( false );
 #endif  // of #else for #ifndef __OS2_PM__
@@ -171,7 +175,8 @@ static char *GetFontInfo( LOGFONT *lf )
 {
     char                buff[MAX_STR];
 
-	GUIlog_entering_function ();
+    GUIlog_entering_charptr_function ();
+
     GetFontFormatString( lf, buff );
     return( GUIStrDup( buff, NULL ) );
 }
@@ -186,13 +191,14 @@ char * GUIAPI GUIGetFontInfo( gui_window *wnd )
 #ifndef __OS2_PM__
     LOGFONT             lf;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_charptr_function ();
+
     if( GetObject( wnd->font, sizeof( LOGFONT ), (LPSTR) &lf ) == 0 ) {
         return( NULL );
     }
     return( GetFontInfo( &lf ) );
 #else  // of #ifndef __OS2_PM__
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
     wnd = wnd;
     return( NULL );
 #endif  // of #else for #ifndef __OS2_PM__
@@ -210,7 +216,8 @@ char * GUIAPI GUIGetFontFromUser( char *fontinfo )
     LOGFONT     lf;
     HFONT       font;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_charptr_function ();
+
     font = NULLHANDLE;
     if( fontinfo != NULL ) {
         GetLogFontFromString( &lf, fontinfo );
@@ -225,7 +232,8 @@ char * GUIAPI GUIGetFontFromUser( char *fontinfo )
     }
     return( fontinfo );
 #else  // of #ifndef __OS2_PM__
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     fontinfo = fontinfo;
     return( NULL );
 #endif  // of #else for #ifndef __OS2_PM__
@@ -241,7 +249,8 @@ bool GUIAPI GUISetFontInfo( gui_window *wnd, char *fontinfo )
     HFONT       font;
     LOGFONT     lf;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( fontinfo == NULL ) {
         return( false );
     }
@@ -256,7 +265,8 @@ bool GUIAPI GUISetFontInfo( gui_window *wnd, char *fontinfo )
     SetFont( wnd, font );
     return( true );
 #else  // of #ifndef __OS2_PM__
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     wnd = wnd;
     fontinfo = fontinfo;
     return( false );
@@ -269,7 +279,8 @@ bool GUIAPI GUISetFontInfo( gui_window *wnd, char *fontinfo )
 
 bool GUIAPI GUIFontsSupported( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
 #ifndef __OS2_PM__
     return( true );
 #else  // of #ifndef __OS2_PM__
@@ -289,7 +300,8 @@ bool GUIAPI GUISetSystemFont( gui_window *wnd, bool fixed )
     NONCLIENTMETRICS    ncm;
  #endif  // of #ifdef __NT__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( fixed ) {
         font = GetStockObject( SYSTEM_FIXED_FONT );
     } else {

@@ -49,7 +49,8 @@ static bool GetExtent( gui_window *wnd, const char *text, size_t in_length, gui_
     WPI_RECTDIM extentx;
     WPI_RECTDIM extenty;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( wnd != NULL && text != NULL ) {
         got_new = GUIGetTheDC( wnd );
         length = strlen( text );
@@ -77,7 +78,8 @@ gui_ord GUIAPI GUIGetExtentX( gui_window *wnd, const char *text, size_t length )
 {
     gui_coord extent;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     if( GetExtent( wnd, text, length, &extent ) ) {
         return( extent.x );
     }
@@ -92,7 +94,8 @@ gui_ord GUIAPI GUIGetExtentY( gui_window *wnd, const char *text )
 {
     gui_coord extent;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     if( GetExtent( wnd, text, (size_t)-1, &extent ) ) {
         return( extent.y );
     }
@@ -105,7 +108,8 @@ gui_ord GUIAPI GUIGetExtentY( gui_window *wnd, const char *text )
 
 static bool GetControlInfo( gui_window *wnd, gui_ctl_id id, HWND *hwnd, WPI_PRES *dc )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( wnd && wnd->hwnd ) {
         *hwnd = _wpi_getdlgitem( wnd->hwnd, id );
         if( *hwnd != NULLHANDLE ) {
@@ -130,7 +134,8 @@ static bool GetControlExtent( gui_window *wnd, gui_ctl_id id, const char *text, 
     WPI_RECTDIM extentx;
     WPI_RECTDIM extenty;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( text != NULL && GetControlInfo( wnd, id, &hwnd, &dc ) ) {
         length = strlen( text );
         if( in_length != (size_t)-1 ) {
@@ -163,7 +168,8 @@ gui_ord GUIAPI GUIGetControlExtentX( gui_window *wnd, gui_ctl_id id, const char 
 {
     gui_coord   extent;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     if( GetControlExtent( wnd, id, text, length, &extent ) ) {
         return( extent.x );
     }
@@ -178,7 +184,8 @@ gui_ord GUIAPI GUIGetControlExtentY( gui_window *wnd, gui_ctl_id id, const char 
 {
     gui_coord extent;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_ord_function ();
+
     if( GetControlExtent( wnd, id, text, (size_t)-1, &extent ) ) {
         return( extent.y );
     }

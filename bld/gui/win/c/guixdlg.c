@@ -49,12 +49,12 @@
 #include "guimapky.h"
 #include "guirdlg.h"
 #ifdef __NT__
-	#include <wingdi.h>
+    #include <wingdi.h>
 #endif  // of #ifdef __NT__
 #ifndef __OS2_PM__
-	#include "windlg.h"
+    #include "windlg.h"
 #else  // of #ifndef __OS2_PM__
-	#include "os2dlg.h"
+    #include "os2dlg.h"
 #endif  // of #else for #ifndef __OS2_PM__
 #include "guilog.h"
 
@@ -79,7 +79,8 @@ void GUIAPI GUISetJapanese( void )
 #ifndef __OS2_PM__
     char *  newfont;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( GUIIsDBCS() ) {
   #if 0
         newfont = "";
@@ -106,7 +107,8 @@ void GUIInitControl( control_item *item, gui_window *wnd, gui_ctl_id *focus_id )
 {
     HWND        ctrl;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( !item->hwnd ) {
         item->hwnd = _wpi_getdlgitem( wnd->hwnd, item->id );
     }
@@ -142,7 +144,8 @@ static bool InitDialog( gui_window *wnd )
     control_item        *item;
     gui_ctl_id          focus_id;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     focus_id = 0;
     for( item = wnd->controls; item != NULL; item = item->next ) {
         GUIInitControl( item, wnd, &focus_id );
@@ -172,8 +175,9 @@ bool GUIProcessControlNotification( gui_ctl_id id, int wNotify, gui_window *wnd 
     control_item        *item;
     HWND                cntl;
 
-	GUIlog_entering_function ();
-   if( wnd == NULL ) {
+    GUIlog_entering_bool_function ();
+
+    if( wnd == NULL ) {
         return( false );
     }
 
@@ -272,7 +276,8 @@ bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd
     bool        rc;
     int         notify_code;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     lparam=lparam;
 
     ret = false;
@@ -314,8 +319,8 @@ bool GUIProcessControlMsg( WPI_PARAM1 wparam, WPI_PARAM2 lparam, gui_window *wnd
 
 WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    WINDOW_MSG _msg= msg;
-	gui_ctl_id          id;
+    WINDOW_MSG          _msg= msg;
+    gui_ctl_id          id;
     bool                escape_pressed;
     gui_window          *wnd;
     bool                msg_processed;
@@ -327,8 +332,11 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wpar
     gui_event           gui_ev;
     gui_key_state       key_state;
 
-	GUIlog_entering_callback ();
-	GUIlog_win_msg ();
+    GUIlog_entering_WPI_DLGRESULT_callback ();
+
+    GUIlog_win_msg ();
+    if (msg==WM_SYSCOLORCHANGE) GUIlog (L_WC,"*** This is a WM_SYSCOLORCHANGE");
+
     msg_processed = false;
     ret = false;
 
@@ -350,7 +358,7 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wpar
     }
 
     switch( msg ) {
-	case WM_SIZE:
+    case WM_SIZE:
         if( wnd != NULL ) {
             guix_coord  scr_size;
             gui_coord   size;
@@ -379,10 +387,12 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wpar
         }
         break;
 #endif  // of #if defined(__NT__)
-	case WM_SYSCOLORCHANGE:
-		(void)CvrCtl3dColorChange();
+    case WM_SYSCOLORCHANGE:
+        (void)CvrCtl3dColorChange();
 #ifndef __OS2_PM__
-		InitSystemRGB();  // Reset colours on change of colour scheme
+        GUIlog (L_WC,"*** System colour change choice #10");
+        InitSystemRGB();  // Reset colours on change of colour scheme
+        InitRootWindowRGB ( wnd );
 #endif  // of #ifndef __OS2_PM__
         break;
     case WM_INITDIALOG:
@@ -561,7 +571,8 @@ WPI_DLGRESULT CALLBACK GUIDialogDlgProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wpar
 
 static void ToDialogUnits( guix_coord *scr_coord )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( scr_coord != NULL ) {
         scr_coord->x = GUIMulDiv( int, scr_coord->x, SizeDialog.x, SizeScreen.x );
         scr_coord->y = GUIMulDiv( int, scr_coord->y, SizeDialog.y, SizeScreen.y );
@@ -575,7 +586,8 @@ static void ToDialogUnits( guix_coord *scr_coord )
 
 static void AdjustToDialogUnits( guix_coord *scr_coord )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     ToDialogUnits( scr_coord );
 }
 
@@ -589,7 +601,8 @@ static void AdjustForFrame( guix_coord *scr_pos, guix_coord *scr_size )
 #ifndef __OS2_PM__
     int xframe, yframe, ycaption;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     xframe = 0;
     yframe = 0;
     ycaption = 0;
@@ -609,7 +622,8 @@ static void AdjustForFrame( guix_coord *scr_pos, guix_coord *scr_size )
         scr_size->y -= ( 2 * yframe + ycaption );
     }
 #else  // of #ifndef __OS2_PM__
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     scr_pos = scr_pos;
     scr_size = scr_size;
 #endif  // of #ifndef __OS2_PM__
@@ -621,7 +635,8 @@ static void AdjustForFrame( guix_coord *scr_pos, guix_coord *scr_size )
 
 static void GUIDlgCalcLocation( const gui_rect *rect, guix_coord *scr_pos, guix_coord *scr_size )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     scr_pos->x = GUIScaleToScreenH( rect->x );
     scr_pos->y = GUIScaleToScreenV( rect->y );
     scr_size->x = GUIScaleToScreenH( rect->width );
@@ -657,7 +672,8 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
 #endif  // of #ifdef __OS2_PM__
     size_t              templatelen;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     wnd->flags |= IS_DIALOG;
     wnd->parent = dlg_info->parent;
     wnd->root_pinfo.force_count = NUMBER_OF_FORCED_REPAINTS;
@@ -757,7 +773,8 @@ bool GUIXCreateDialog( gui_create_info *dlg_info, gui_window *wnd,
 
 void GUIAPI GUICloseDialog( gui_window * wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     GUISendMessage( wnd->hwnd, WM_CLOSE, (WPI_PARAM1)0, (WPI_PARAM2)0 );
 }
 
@@ -775,21 +792,25 @@ static WPI_FONT         DlgFont;
 
 WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM2 lparam )
 {
-    WINDOW_MSG 			_msg= msg;
+    WINDOW_MSG          _msg= msg;
     WPI_PRES            hdc;
     WPI_RECT            wpi_rect;
     bool                ret;
 
-	GUIlog_entering_callback ();
- 	GUIlog_win_msg ();
+    GUIlog_entering_WPI_DLGRESULT_callback ();
+    GUIlog_win_msg ();
+    if (msg==WM_SYSCOLORCHANGE) GUIlog (L_WC,"*** This is a WM_SYSCOLORCHANGE");
+
     lparam = lparam;
     ret    = false;
 
     switch( msg ) {
 #ifndef __OS2_PM__
-    case WM_SYSCOLORCHANGE:
-		InitSystemRGB ();
-		break;
+//    case WM_SYSCOLORCHANGE:
+//      GUIlog (L_WC,"*** System colour change choice #11");
+//      InitSystemRGB ();
+//      InitRootWindowRGB ( wnd );
+//      break;
     case WM_SETFONT:
         DlgFont = (WPI_FONT)wparam;
         break;
@@ -824,7 +845,8 @@ WPI_DLGRESULT CALLBACK GUIInitDialogFuncDlgProc( HWND hwnd, WPI_MSG msg, WPI_PAR
 
 void GUIFiniDialog( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( Font != NULL ) {
         GUIMemFree( Font );
         Font = NULL;
@@ -843,7 +865,8 @@ void GUIInitDialog( void )
     bool                font_set;
     size_t              templatelen;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     font_set = false;
 #ifdef __OS2_PM__
     Font = GUIStrDup( LIT( OS2_Dialog_Font ), NULL );
@@ -890,7 +913,8 @@ void GUIInitDialog( void )
 
 static void ScaleGrow( gui_coord * coord )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( coord != NULL ) {
         coord->x = GUIMulDiv( int, coord->x, ActualSize.x, ExpectedSize.x );
         coord->y = GUIMulDiv( int, coord->y, ActualSize.y, ExpectedSize.y );
@@ -904,7 +928,8 @@ static void ScaleGrow( gui_coord * coord )
 
 void GUIAPI GUIGetDlgTextMetrics( gui_text_metrics * metrics )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( metrics != NULL ) {
         GUISetMetrics( metrics, &GUIDialogtm );
 #ifdef THIS_CODE_IS_STUPID

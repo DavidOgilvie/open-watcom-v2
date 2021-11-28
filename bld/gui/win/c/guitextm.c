@@ -44,7 +44,8 @@
 
 void GUISetMetrics( gui_text_metrics *metrics, WPI_TEXTMETRIC *tm )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     metrics->avg.x = GUIScreenToScaleH( AVGXCHAR( *tm ) );
     metrics->avg.y = GUIScreenToScaleV( AVGYCHAR( *tm ) );
     metrics->max.x = GUIScreenToScaleH( MAXXCHAR( *tm ) );
@@ -57,7 +58,8 @@ void GUISetMetrics( gui_text_metrics *metrics, WPI_TEXTMETRIC *tm )
 
 void GUIAPI GUIGetTextMetrics( gui_window *wnd, gui_text_metrics *metrics )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( metrics != NULL ) {
         GUIGetMetrics( wnd );
         GUISetMetrics( metrics, &GUItm );

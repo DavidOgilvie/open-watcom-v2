@@ -42,7 +42,8 @@
 
 void TrayCallBack( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hwnd=hwnd; wParam=wParam; lParam=lParam;
     return;
 }
@@ -53,7 +54,8 @@ void TrayCallBack( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam )
 
 void WndSizeChange( HWND hwnd, WPI_PARAM1 wParam, WPI_PARAM2 lParam )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hwnd=hwnd; wParam=wParam; lParam=lParam;
     return;
 }

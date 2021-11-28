@@ -62,7 +62,8 @@ bool GUIXInitHotSpots( int num_hot_spots, gui_resource *hot )
     int         bm_w;
     int         bm_h;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     for( i = 0; i < num_hot_spots; i++ ) {
 #ifdef __NT__
         if( hInstUser == NULL ) {
@@ -95,7 +96,8 @@ void GUIXCleanupHotSpots( void )
 {
     int i;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     for( i = 0; i < GUINumHotSpots; i++ ) {
         _wpi_deletebitmap( GUIHotSpots[i].hbitmap );
     }
@@ -115,7 +117,8 @@ void GUIAPI GUIDrawHotSpot( gui_window *wnd, int hotspot_no, gui_text_ord row, g
     gui_text_metrics    metrics;
     gui_coord           pos;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( ( hotspot_no > 0 ) && ( hotspot_no <= GUINumHotSpots ) ) {
         GUIGetTextMetrics( wnd, &metrics );
         pos.x = indent;
@@ -148,7 +151,8 @@ void GUIDrawBitmap( int hotspot_no, WPI_PRES hdc, int nDrawX, int nDrawY, WPI_CO
     /* unused parameters */ (void)bkcolour;
 #endif  // of #ifndef __NT__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hbitmap = GUIHotSpots[hotspot_no - 1].hbitmap;
     size_wpi_point.x = GUIHotSpots[hotspot_no - 1].size.x;
     size_wpi_point.y = GUIHotSpots[hotspot_no - 1].size.y;

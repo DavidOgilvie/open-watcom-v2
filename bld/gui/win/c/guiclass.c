@@ -37,9 +37,10 @@
 /*
  * GUIGetWindowClassName -- Returns the default class name
  */
- 
+
 char * GUIAPI GUIGetWindowClassName( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_charptr_function ();
+
     return( GUIDefaultClassName );
 }

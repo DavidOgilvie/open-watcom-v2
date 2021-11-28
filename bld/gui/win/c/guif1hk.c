@@ -37,45 +37,38 @@
 #include "wclbproc.h"
 #include "guilog.h"
 
-
 /* Local Window callback functions prototypes */
 #ifdef __OS2_PM__
 int                     CALLBACK F1Proc( HAB hab, WPI_QMSG *qmsg, ULONG fs );
-#else  // of #ifdef __OS2_PM__
+#else
 WINEXPORT LRESULT       CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param );
-#endif  // of #else for #ifdef __OS2_PM__
+#endif
 
 static  unsigned        F1Hooked = 0;
 #ifndef __OS2_PM__
 static  HHOOK           F1HookHandle = (HHOOK)NULL;
 static  HOOKPROC        F1ProcInst;
-#else  // of #ifndef __OS2_PM__
+#else
 static  PFN             F1ProcInst;
-#endif  // of #else for #ifndef __OS2_PM__
+#endif
 
-
-/*
- * scroll_catch_check -- This routine returns true if ?
- */
-
+// What the hell does this do??!!
 static bool scroll_catch_check( WPI_QMSG *qmsg )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     (void)qmsg;
 
     return( false );
 }
-
-/*
- * getFirstGUIParent -- ?
- */
 
 static gui_window *getFirstGUIParent( HWND hwnd )
 {
     HWND        parent;
     gui_window  *wnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
     wnd = NULL;
 
     for( ;; ) {
@@ -94,18 +87,13 @@ static gui_window *getFirstGUIParent( HWND hwnd )
     return( wnd );
 }
 
-/*
- * F1Proc -- This is the callback routine for the ?
- */
-
 #ifdef __OS2_PM__
 int CALLBACK F1Proc( HAB hab, WPI_QMSG *qmsg, ULONG fs )
-#else  // of #ifdef __OS2_PM__
+#else
 LRESULT CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param )
-#endif  // of #else for #ifdef __OS2_PM__
+#endif
 {
     WPI_MSG             message;
-    WINDOW_MSG 			_msg;
     WPI_PARAM1          parm1;
     WPI_PARAM2          parm2;
     gui_window          *curr;
@@ -113,22 +101,21 @@ LRESULT CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param )
     bool                b;
 #ifdef __OS2_PM__
     int                 code;
-#else  // of #ifdef __OS2_PM__
+#else
     WPI_QMSG            *qmsg;
-#endif  // of #else for #endif
+#endif
 
-	GUIlog_entering_callback ();
+    GUIlog_entering_LRESULT_function ();
 
 #ifdef __OS2_PM__
     fs = fs;            // unused
     hab = hab;          // unused
     code = 0;
-#else  // of #ifdef __OS2_PM__
+#else
     qmsg = (WPI_QMSG *)msg_param;
-#endif  // of #else for #ifdef __OS2_PM__
+#endif
 
     message = _wpi_qmsgmessage( qmsg );
-	_msg= message;
     parm1 = _wpi_qmsgparam1( qmsg );
     parm2 = _wpi_qmsgparam2( qmsg );
 
@@ -151,18 +138,15 @@ LRESULT CALLBACK F1Proc( int code, WPARAM dummy, LPARAM msg_param )
 
 #ifdef __OS2_PM__
     return( false );            // No, we didn't gobble this msg
-#else  // of #ifdef __OS2_PM__
+#else
     return( CallNextHookEx( F1HookHandle, code, dummy, msg_param ) );
-#endif  // of #else for #ifdef __OS2_PM__
+#endif
 }
-
-/*
- * GUIHookF1 -- ?
- */
 
 void GUIAPI GUIHookF1( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( F1Hooked == 0 ) {
 #ifndef __OS2_PM__
         // we use a hook to trap F1 in dialogs that were not
@@ -171,35 +155,32 @@ void GUIAPI GUIHookF1( void )
         // we cant use a system wide hook because they only can be
         // used in DLL's
         F1ProcInst = MakeProcInstance_HOOK( F1Proc, GUIMainHInst );
- #if defined( __WINDOWS__ )
+    #if defined( __WINDOWS__ )
         F1HookHandle = SetWindowsHookEx( WH_MSGFILTER, F1ProcInst, GUIMainHInst, GetCurrentTask() );
- #else  // of #if defined( __WINDOWS__ )
+    #else
         F1HookHandle = SetWindowsHookEx( WH_MSGFILTER, F1ProcInst, GUIMainHInst, GetCurrentThreadId() );
- #endif  // of #else for #if defined( __WINDOWS__ )
-#else  // for #ifndef __OS2_PM__
+    #endif
+#else
         // in OS/2, it has to be an app. specific input filter (OS/2 has
         // bad problems, occassionally, with system input hooks)
         F1ProcInst = (PFN)F1Proc;
         WinSetHook( GUIMainHInst.hab, HMQ_CURRENT, HK_INPUT, F1ProcInst, GUIMainHInst.mod_handle );
-#endif  // of #else for #ifndef __OS2_PM__
+#endif
     }
     F1Hooked++;
 }
 
-/*
- * GUIUnHookF1 -- ?
- */
-
 void GUIAPI GUIUnHookF1( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( F1Hooked == 1 ) {
 #ifndef __OS2_PM__
         UnhookWindowsHookEx( F1HookHandle );
         FreeProcInstance_HOOK( F1ProcInst );
-#else  // of #ifndef __OS2_PM__
+#else
         WinReleaseHook( GUIMainHInst.hab, HMQ_CURRENT, HK_INPUT, F1ProcInst, GUIMainHInst.mod_handle );
-#endif  // of #else for #ifndef __OS2_PM__
+#endif
     }
 
     if( F1Hooked != 0 ) {

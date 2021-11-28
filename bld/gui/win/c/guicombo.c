@@ -61,7 +61,8 @@ BOOL CALLBACK GUISubClassEditComboboxEnumFunc( HWND hwnd, WPI_PARAM2 lparam )
     char        osclassname[GUI_CLASSNAME_MAX + 1];
     enum_info   *info;
 
-	GUIlog_entering_callback ();
+    GUIlog_entering_bool_function ();
+
     info = ( enum_info * )lparam;
     if( info == NULL ) {
         return( FALSE );
@@ -93,7 +94,8 @@ WPI_WNDPROC GUISubClassEditCombobox( HWND hwnd )
     WNDENUMPROC         wndenumproc;
 #endif  // of #else for #ifdef __OS2_PM__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_WNDPROC_function ();
+
     e_info.success = false;
 #ifdef __OS2_PM__
     wndenumproc = _wpi_makeenumprocinstance( GUISubClassEditComboboxEnumFunc, GUIMainHInst );

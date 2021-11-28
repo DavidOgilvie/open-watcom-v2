@@ -43,7 +43,8 @@
 
 bool GUIAPI GUISetWindowText( gui_window *wnd, const char *data )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
 #if defined( __OS2__ ) && defined( _M_I86 )
      _wpi_setwindowtext( GUIGetParentFrameHWND( wnd ), (char *)data );
 #else  // of #if defined( __OS2__ ) && defined( _M_I86 )
@@ -59,7 +60,8 @@ bool GUIAPI GUISetWindowText( gui_window *wnd, const char *data )
 
 size_t GUIAPI GUIGetWindowText( gui_window *wnd, char *buff, size_t buff_len )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_size_t_function ();
+
     return( _wpi_getwindowtext( GUIGetParentFrameHWND( wnd ), buff, buff_len ) );
 }
 
@@ -69,6 +71,7 @@ size_t GUIAPI GUIGetWindowText( gui_window *wnd, char *buff, size_t buff_len )
 
 size_t GUIAPI GUIGetWindowTextLength( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_size_t_function ();
+
     return( _wpi_getwindowtextlength( GUIGetParentFrameHWND( wnd ) ) );
 }

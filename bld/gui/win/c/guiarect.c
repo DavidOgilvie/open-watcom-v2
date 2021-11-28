@@ -39,7 +39,7 @@
 /*
  * GUIGetAbsRect --
  */
- 
+
 void GUIAPI GUIGetAbsRect( gui_window *wnd, gui_rect *rect )
 {
     HWND        hwnd;
@@ -47,7 +47,8 @@ void GUIAPI GUIGetAbsRect( gui_window *wnd, gui_rect *rect )
     WPI_RECTDIM left, top, right, bottom;
     guix_rect   scr_rect;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hwnd = GUIGetParentFrameHWND( wnd );
     _wpi_getwindowrect( hwnd, &wpi_rect );
     _wpi_getwrectvalues( wpi_rect, &left, &top, &right, &bottom );

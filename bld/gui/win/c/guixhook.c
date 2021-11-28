@@ -52,7 +52,8 @@ static  void    (*SetMDIRestoredSize)(HWND, const WPI_RECT *) = NULL;
 void GUISetMDIProcessMessage( bool (*func)(gui_window *, HWND, WPI_MSG, WPI_PARAM1,
                               WPI_PARAM2, WPI_MRESULT *) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     ProcessMsg = func;
 }
 
@@ -63,7 +64,8 @@ void GUISetMDIProcessMessage( bool (*func)(gui_window *, HWND, WPI_MSG, WPI_PARA
 bool GUIMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg,
                            WPI_PARAM1 wparam, WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ProcessMsg != NULL ) {
         return( (*ProcessMsg)( wnd, hwnd, msg, wparam, lparam, ret ) );
     }
@@ -76,7 +78,8 @@ bool GUIMDIProcessMessage( gui_window *wnd, HWND hwnd, WPI_MSG msg,
 
 bool GUIMDIMaximized( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( IsMaximized != NULL ) {
         return( (*IsMaximized)( wnd ) );
     }
@@ -89,13 +92,15 @@ bool GUIMDIMaximized( gui_window *wnd )
 
 void GUISetMDIMaximized( bool (*func)( gui_window * ) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     IsMaximized = func;
 }
 
 bool GUIMDIUpdatedMenu( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( UpdatedMenu != NULL ) {
         return( (*UpdatedMenu)() );
     }
@@ -108,7 +113,8 @@ bool GUIMDIUpdatedMenu( void )
 
 void GUISetMDIUpdatedMenu( bool (*func)( void ) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     UpdatedMenu = func;
 }
 
@@ -118,7 +124,8 @@ void GUISetMDIUpdatedMenu( bool (*func)( void ) )
 
 void GUISetIsMDIChildWindow( bool (*func)( gui_window *) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     IsMDIChildWindow = func;
 }
 
@@ -128,7 +135,8 @@ void GUISetIsMDIChildWindow( bool (*func)( gui_window *) )
 
 bool GUIIsMDIChildWindow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( IsMDIChildWindow != NULL ) {
         return( (*IsMDIChildWindow)(wnd) );
     }
@@ -141,7 +149,8 @@ bool GUIIsMDIChildWindow( gui_window *wnd )
 
 void GUISetMDINewWindow( bool (*func)(HWND) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     NewWindow = func;
 }
 
@@ -151,7 +160,8 @@ void GUISetMDINewWindow( bool (*func)(HWND) )
 
 bool GUIMDINewWindow( HWND hwnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( NewWindow != NULL ) {
         return( (*NewWindow)( hwnd ) );
     } else {
@@ -165,13 +175,15 @@ bool GUIMDINewWindow( HWND hwnd )
 
 void GUISetMDIMaximize( void (*func)(bool, gui_window *) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     MDIMaximize = func;
 }
 
 void GUIMDIMaximize( bool max, gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( MDIMaximize != NULL ) {
         (*MDIMaximize)( max, wnd );
     }
@@ -183,7 +195,8 @@ void GUIMDIMaximize( bool max, gui_window *wnd )
 
 void GUISetSetMDIRestoredSize( void (*func)(HWND, const WPI_RECT *) )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     SetMDIRestoredSize = func;
 }
 
@@ -193,7 +206,8 @@ void GUISetSetMDIRestoredSize( void (*func)(HWND, const WPI_RECT *) )
 
 void GUISetMDIRestoredSize( HWND hwnd, const WPI_RECT *wpi_rect )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( SetMDIRestoredSize != NULL ) {
         (*SetMDIRestoredSize)( hwnd, wpi_rect );
     }

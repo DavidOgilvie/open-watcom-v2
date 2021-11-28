@@ -84,7 +84,7 @@ win_sysobjs = &
     guiclen.obj  &
     guif1hk.obj	 &
     guigetrc.obj &
-	guilog.obj
+    guilog.obj
 
 win_sysobjs_nt = &
     guisystr.obj

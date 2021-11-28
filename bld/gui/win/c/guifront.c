@@ -48,7 +48,8 @@ void ActivateNC( gui_window *wnd, bool activate )
 {
     gui_window  *current;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     for( current = wnd; current != NULL; current = GUIGetParentWindow( current ) ) {
         if( current->flags & HAS_CAPTION ) {
             GUISendMessage( current->hwnd_frame, WM_NCACTIVATE, (WPI_PARAM1)activate, (WPI_PARAM2)0 );
@@ -66,7 +67,8 @@ void GUIAPI GUIBringToFront( gui_window *wnd )
     bool        parent_is_dlg;
     bool        same_window;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( wnd == NULL ) {
         return;
     }
@@ -113,6 +115,7 @@ void GUIAPI GUIBringToFront( gui_window *wnd )
 
 void GUIAPI GUIActivateNC( gui_window *wnd, bool activate )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     ActivateNC( wnd, activate );
 }

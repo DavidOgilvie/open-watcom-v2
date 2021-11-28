@@ -45,7 +45,8 @@ bool GUIAPI GUISetIcon( gui_window *wnd, gui_resource *res )
 {
     WPI_HICON icon;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     icon = (WPI_HICON)0;
 
     if( res != NULL ) {

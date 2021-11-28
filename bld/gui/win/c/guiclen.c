@@ -70,7 +70,8 @@ static void MBInit( void )
     DWORD               version;
 #endif  // of #elif defined( __WINDOWS__ )
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     memset( __CharLenTable, 1, sizeof( __CharLenTable ) );              /* zero table to start */
 
 #if defined( __NT__)
@@ -122,7 +123,8 @@ static void MBInit( void )
 
 int GUIAPI GUICharLen( int ch )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_int_function ();
+
     if( !Init ) {
         MBInit();
         Init = true;
@@ -136,7 +138,8 @@ int GUIAPI GUICharLen( int ch )
 
 bool GUIAPI GUIIsDBCS( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !Init ) {
         MBInit();
         Init = true;

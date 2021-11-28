@@ -46,7 +46,8 @@ WPI_TEXTMETRIC GUItm;
 
 void GUIClientToScaleRect( const guix_rect *client, gui_rect *rect )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     GUIScreenToScaleRect( client, rect );
 }
 
@@ -56,7 +57,8 @@ void GUIClientToScaleRect( const guix_rect *client, gui_rect *rect )
 
 gui_text_ord GUIToTextX( guix_ord ord, gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     GUIGetMetrics( wnd );
     return( GUIMulDiv( gui_text_ord, ord, 1, AVGXCHAR( GUItm ) ) );
 }
@@ -67,7 +69,8 @@ gui_text_ord GUIToTextX( guix_ord ord, gui_window *wnd )
 
 gui_text_ord GUIToTextY( guix_ord ord, gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     GUIGetMetrics( wnd );
     return( GUIMulDiv( gui_text_ord, ord, 1, AVGYCHAR( GUItm ) ) );
 }
@@ -78,7 +81,8 @@ gui_text_ord GUIToTextY( guix_ord ord, gui_window *wnd )
 
 guix_ord GUIFromTextX( gui_text_ord text_ord, gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_guix_ord_function ();
+
     GUIGetMetrics( wnd );
     return( GUIMulDiv( gui_ord, text_ord, AVGXCHAR( GUItm ), 1 ) );
 }
@@ -89,7 +93,8 @@ guix_ord GUIFromTextX( gui_text_ord text_ord, gui_window *wnd )
 
 guix_ord GUIFromTextY( gui_text_ord text_ord, gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_guix_ord_function ();
+
     GUIGetMetrics( wnd );
     return( GUIMulDiv( gui_ord, text_ord, AVGYCHAR( GUItm ), 1 ) );
 }
@@ -101,7 +106,8 @@ guix_ord GUIFromTextY( gui_text_ord text_ord, gui_window *wnd )
 
 bool GUIGetTheDC( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( wnd->hdc == NULLHANDLE ) {
         wnd->hdc = _wpi_getpres( wnd->hwnd );
         if( wnd->font != NULL ) {
@@ -120,7 +126,8 @@ bool GUIGetTheDC( gui_window *wnd )
 
 void GUIReleaseTheDC( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
 #ifdef __OS2_PM__
     wnd=wnd;
 #else  // of #ifdef __OS2_PM__
@@ -142,7 +149,8 @@ void GUIGetMetrics( gui_window *wnd )
 {
     bool got_new;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     got_new = GUIGetTheDC( wnd );
     _wpi_gettextmetrics( wnd->hdc, &GUItm );
     if( got_new ) {
@@ -162,12 +170,14 @@ void GUIGetMetrics( gui_window *wnd )
 
 void GUIGetUpdateRows( gui_window *wnd, HWND hwnd, gui_text_ord *start, gui_text_ord *num )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     WPI_RECT    wpi_rect;
     int         avgy;
     WPI_RECTDIM left, top, right, bottom;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hwnd = hwnd;
 
     _wpi_gettextmetrics( wnd->hdc, &GUItm );

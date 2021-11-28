@@ -45,7 +45,8 @@ static bool GUISelect( gui_window *wnd, gui_ctl_id id, bool set, WPI_PARAM2 lpar
     gui_control_class   control_class;
     UINT                msg;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( !GUIGetControlClass( wnd, id, &control_class ) ) {
         return( false );
     }
@@ -73,7 +74,8 @@ static bool GUISelect( gui_window *wnd, gui_ctl_id id, bool set, WPI_PARAM2 lpar
 
 bool GUIAPI GUISelectAll( gui_window *wnd, gui_ctl_id id, bool select )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
 #ifdef __OS2_PM__
     return( GUISelect( wnd, id, true, (WPI_PARAM2)MAKELONG( 0, ( select ) ? 255 : 0 ), NULL ) );
 #else  // of #ifdef __OS2_PM__
@@ -83,6 +85,7 @@ bool GUIAPI GUISelectAll( gui_window *wnd, gui_ctl_id id, bool select )
 
 bool GUIAPI GUISetEditSelect( gui_window *wnd, gui_ctl_id id, int start, int end )
 {
+    GUIlog_entering_bool_function ();
     return( GUISelect( wnd, id, true, (WPI_PARAM2)MAKELONG( start, end ), NULL ) );
 }
 
@@ -95,7 +98,8 @@ bool GUIAPI GUIGetEditSelect( gui_window *wnd, gui_ctl_id id, int *start, int *e
     bool        ret;
     WPI_MRESULT result;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     ret = GUISelect( wnd, id, false, (WPI_PARAM2)0, &result );
     if( start != NULL ) {
         *start = LOWORD( result );
@@ -114,7 +118,8 @@ void GUIAPI GUIScrollCaret( gui_window *wnd, gui_ctl_id id )
 {
     WPI_MRESULT result;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
 #ifdef  __NT__
     GUIToControl( wnd, id, EM_SCROLLCARET, (WPI_PARAM1)0, (WPI_PARAM2)0, &result );
 #else  // of #ifdef  __NT__

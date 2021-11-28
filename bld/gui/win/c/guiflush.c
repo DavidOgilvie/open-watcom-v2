@@ -47,7 +47,8 @@ void GUIAPI GUIFlushKeys( void )
     WPI_QMSG    msg;
 
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( GUICurrWnd != NULL ) {
         hwnd = GUIGetTopParentHWND( GUICurrWnd->hwnd );
         /* look until no more keyboard messages in queue */

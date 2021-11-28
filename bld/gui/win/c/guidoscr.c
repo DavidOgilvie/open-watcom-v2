@@ -55,7 +55,8 @@ static void DoScroll( gui_window *wnd, int rows, int cols, int start, int end, b
     int         bottom_adjust;
 #endif  // of #ifdef __OS2_PM__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     hwnd = GUIGetScrollHWND( wnd );
     _wpi_getclientrect( wnd->hwnd, &wpi_rect );
     _wpi_getrectvalues( wpi_rect, &left, &top, &right, &bottom );
@@ -143,7 +144,8 @@ static void DoScroll( gui_window *wnd, int rows, int cols, int start, int end, b
 
 void GUIAPI GUIDoVScroll( gui_window *wnd, int rows )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     DoScroll( wnd, rows, 0, -1, -1, true );
 }
 
@@ -153,7 +155,8 @@ void GUIAPI GUIDoVScroll( gui_window *wnd, int rows )
 
 void GUIAPI GUIDoHScroll( gui_window *wnd, int cols )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     DoScroll( wnd, 0, cols, -1, -1, true );
 }
 
@@ -163,7 +166,8 @@ void GUIAPI GUIDoHScroll( gui_window *wnd, int cols )
 
 void GUIAPI GUIDoVScrollClip( gui_window *wnd, int rows, int start, int end )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     DoScroll( wnd, rows, 0, start, end, true );
 }
 
@@ -173,7 +177,8 @@ void GUIAPI GUIDoVScrollClip( gui_window *wnd, int rows, int start, int end )
 
 void GUIAPI GUIDoHScrollClip( gui_window *wnd, int cols, int start, int end )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     DoScroll( wnd, 0, cols, start, end, true );
 }
 
@@ -186,7 +191,8 @@ void GUIDoScroll( gui_window *wnd, int row_col, int bar )
     int         rows;
     int         cols;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     rows = 0;
     cols = 0;
     if( bar == SB_HORZ ) {

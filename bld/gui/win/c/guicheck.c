@@ -39,12 +39,13 @@
 /*
  * GUIIsChecked -- Indicates whether a checkbox is checked or not
  */
- 
+
 unsigned GUIAPI GUIIsChecked( gui_window *wnd, gui_ctl_id id )
 {
     unsigned    ret;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_unsigned_function ();
+
     ret = (unsigned)GUISendDlgItemMessage( wnd->hwnd, id, BM_GETCHECK, (WPI_PARAM1)0, (WPI_PARAM2)0 );
 
     return( ret & 0x3 );
@@ -53,10 +54,11 @@ unsigned GUIAPI GUIIsChecked( gui_window *wnd, gui_ctl_id id )
 /*
  * GUISetChecked -- Sets the current checkbox control to checked
  */
- 
+
 bool GUIAPI GUISetChecked( gui_window *wnd, gui_ctl_id id, unsigned check )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( ( check == GUI_CHECKED ) && (wnd->flags & IS_RES_DIALOG) == 0 ) {
         if( GUIIsChecked( wnd, id ) != GUI_CHECKED ) {
             return( GUIProcessControlNotification( id, BN_CLICKED, wnd ) );

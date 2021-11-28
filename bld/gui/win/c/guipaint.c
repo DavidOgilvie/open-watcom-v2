@@ -52,12 +52,13 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
     gui_row_num row_num;
     PAINTSTRUCT ps;
     WPI_RECT    wpi_rect;
- #ifdef __OS2_PM__
+  #ifdef __OS2_PM__
     ULONG       flags;
     RECTL       client;
- #endif // of #ifdef __OS2_PM__
+  #endif // of #ifdef __OS2_PM__
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     isdlg=isdlg;
     /* save old state */
     prev_hdc = wnd->hdc;
@@ -68,18 +69,18 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
     wnd->hdc = _wpi_beginpaint( hwnd, NULLHANDLE, wnd->ps );
     _wpi_torgbmode( wnd->hdc );
     _wpi_getpaintrect( wnd->ps, &wpi_rect );
- #ifdef __OS2_PM__
+  #ifdef __OS2_PM__
     wpi_rect = *(wnd->ps);
     if( isdlg ) {
         _wpi_inflaterect( GUIMainHInst, &wpi_rect, 10, 10);
     }
     WinFillRect( wnd->hdc, &wpi_rect, GUIGetBack( wnd, GUI_BACKGROUND ) );
- #endif // of #ifdef __OS2_PM__
- #if defined( __NT__ )
+  #endif // of #ifdef __OS2_PM__
+  #if defined( __NT__ )
     if( isdlg ) {
         _wpi_fillrect( wnd->hdc, &wpi_rect, GUIGetBack( wnd, GUI_BACKGROUND ), wnd->bk_brush );
     }
- #endif // of #if defined( __NT__ )
+  #endif // of #if defined( __NT__ )
     if( wnd->font != NULL ) {
         wnd->prev_font = _wpi_selectfont( wnd->hdc, wnd->font );
     } else {
@@ -99,21 +100,21 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
         wnd->prev_font = NULLHANDLE;
     }
 
- #ifdef __OS2_PM__
+  #ifdef __OS2_PM__
     if( isdlg ) {
         flags = DB_AREAATTRS | DB_DLGBORDER;
-  #ifdef _M_I86
+    #ifdef _M_I86
         if( WinQueryActiveWindow( HWND_DESKTOP, false ) != hwnd ) {
-  #else // of #ifdef _M_I86
+    #else // of #ifdef _M_I86
         if( WinQueryActiveWindow( HWND_DESKTOP ) != hwnd ) {
-  #endif // of else for #ifdef _M_I86
+    #endif // of else for #ifdef _M_I86
         //if( _wpi_getfocus() != hwnd ) {
             flags |= DB_PATINVERT;
         }
         WinQueryWindowRect( hwnd, &client );
         WinDrawBorder( wnd->hdc, &client, 1, 1, 0, 0, flags );
     }
- #endif // of #ifdef __OS2_PM__
+  #endif // of #ifdef __OS2_PM__
 
     _wpi_endpaint( hwnd, wnd->hdc, wnd->ps );
 
@@ -143,7 +144,8 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
     int                 compat_created;
     gui_paint_info      *pinfo;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     // figure out which paint info to use
     if( !isdlg && wnd->root == hwnd ) {
         pinfo = &wnd->root_pinfo;
@@ -257,7 +259,8 @@ void GUIPaint( gui_window *wnd, HWND hwnd, bool isdlg )
 
 void GUIInvalidatePaintHandles( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     GUIFreeWndPaintHandles( wnd, false );
 }
 
@@ -267,7 +270,8 @@ void GUIInvalidatePaintHandles( gui_window *wnd )
 
 void GUIFreeWndPaintHandles( gui_window *wnd, int force )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     force=force;
     if( wnd == NULL ) {
         return;
@@ -284,7 +288,8 @@ void GUIFreeWndPaintHandles( gui_window *wnd, int force )
 
 void GUIFreePaintHandles( gui_paint_info *pinfo, int force )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( pinfo == NULL ) {
         return;
     }

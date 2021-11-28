@@ -47,7 +47,8 @@ static HWND GUIGetControlHWND( gui_window *wnd, gui_ctl_id id )
 {
     HWND                control;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_HWND_function ();
+
     control = _wpi_getdlgitem( wnd->hwnd, id );
     return( control );
 }
@@ -62,7 +63,8 @@ bool GUIToControl( gui_window *wnd, gui_ctl_id id, WPI_MSG msg,
     HWND                control;
     WPI_MRESULT         ret_val;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     control = GUIGetControlHWND( wnd, id );
     if( control != NULLHANDLE ) {
         ret_val = GUISendMessage( control, msg, wparam, lparam );
@@ -81,7 +83,8 @@ bool GUIToControl( gui_window *wnd, gui_ctl_id id, WPI_MSG msg,
 static bool GUIToComboListControl( gui_window *wnd, gui_ctl_id id, WPI_MSG msg,
                             WPI_PARAM1 wparam, WPI_PARAM2 lparam, WPI_MRESULT *ret )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     return( GUIToControl( wnd, id, msg, wparam, lparam, ret ) );
 }
 
@@ -95,7 +98,8 @@ WPI_MRESULT GUIToComboList( gui_window *wnd, gui_ctl_id id, WPI_MSG lb_msg, WPI_
     gui_control_class   control_class;
     WPI_MRESULT         my_ret;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_WPI_MRESULT_function ();
+
     if( !GUIGetControlClass( wnd, id, &control_class ) ) {
         return( ret );
     }
@@ -122,7 +126,8 @@ bool GUIAPI GUIGetControlClass( gui_window *wnd, gui_ctl_id id, gui_control_clas
 {
     control_item        *item;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( control_class == NULL ) {
         return( false );
     }

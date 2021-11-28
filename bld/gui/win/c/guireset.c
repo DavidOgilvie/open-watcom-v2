@@ -52,7 +52,8 @@ static void FreeSystemMenu( gui_window *wnd )
     HMENU           hsysmenu;
     HWND            frame;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     frame = GUIGetParentFrameHWND( wnd );
     if( ( _wpi_getparent( frame ) != HWND_DESKTOP ) && (wnd->style & GUI_SYSTEM_MENU) ) {
         hsysmenu = _wpi_getsystemmenu( frame );
@@ -76,7 +77,8 @@ bool GUIAPI GUIResetMenus( gui_window *wnd, const gui_menu_items *menus )
     HWND        parent;
     HWND        frame;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     GUIFiniHint( wnd, MENU_HINT );
     success = false;
     frame = GUIGetParentFrameHWND( wnd );

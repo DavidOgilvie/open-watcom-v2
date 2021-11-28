@@ -62,7 +62,8 @@ bool GUIXCloseToolBar( gui_window *wnd )
     toolbarinfo     *tbar;
     int             i;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     tbar = wnd->tbar;
     if( tbar != NULL ) {
         wnd->tbar = NULL;
@@ -90,7 +91,8 @@ static gui_window *GetToolWnd( HWND hwnd )
 {
     HWND        parent;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_window_function ();
+
 #ifndef __OS2_PM__
     parent = _wpi_getparent( hwnd );
     if( parent != HWND_DESKTOP ) {
@@ -117,7 +119,8 @@ static void guiToolBarHelp( HWND hwnd, ctl_id id, bool down )
     gui_window          *wnd;
     gui_menu_styles     style;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     wnd = GetToolWnd( hwnd );
     if( wnd != NULL ) {
         style = ( down ) ? GUI_STYLE_MENU_ENABLED : GUI_STYLE_MENU_IGNORE;
@@ -137,7 +140,8 @@ static bool guiToolBarProc( HWND hwnd, WPI_MSG msg, WPI_PARAM1 wparam, WPI_PARAM
     HMENU                   hsysmenu;
     gui_ctl_id              id;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     wnd = GetToolWnd( hwnd );
     if( wnd == NULL ) {
         return( false );
@@ -251,7 +255,8 @@ bool GUIXCreateToolBarWithTips( gui_window *wnd, bool fixed, gui_ord in_height,
     int                 h;
     int                 num_items;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     excl = excl;
     plain = plain;
     standout = standout;
@@ -383,7 +388,8 @@ bool GUIXCreateToolBar( gui_window *wnd, bool fixed, gui_ord height,
                         bool excl, gui_colour_set *plain,
                         gui_colour_set *standout, const gui_rect *float_pos )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     return( GUIXCreateToolBarWithTips( wnd, fixed, height, toolinfo,
                                        excl, plain, standout, float_pos, false ) );
 }
@@ -401,7 +407,8 @@ void GUIResizeToolBar( gui_window *wnd )
     WPI_RECTDIM t, h;
     toolbarinfo *tbar;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     tbar = wnd->tbar;
     if( tbar != NULL ) {
         wpi_rect = wnd->root_client_rect;
@@ -428,7 +435,8 @@ void GUIResizeToolBar( gui_window *wnd )
 
 bool GUIAPI GUIHasToolBar( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     return( wnd->tbar != NULL );
 }
 
@@ -444,7 +452,8 @@ bool GUIAPI GUIChangeToolBar( gui_window *wnd )
     int         t;
     WPI_RECTDIM left, top, right, bottom;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     tbar = wnd->tbar;
     if( !tbar->info.is_fixed ) {
         tbar->info.is_fixed = true;
@@ -483,7 +492,8 @@ bool GUIAPI GUIChangeToolBar( gui_window *wnd )
 
 bool GUIAPI GUIToolBarFixed( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( GUIHasToolBar( wnd ) ) {
         return( wnd->tbar->info.is_fixed );
     }

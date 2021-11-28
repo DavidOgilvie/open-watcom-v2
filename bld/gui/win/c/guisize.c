@@ -56,7 +56,8 @@ bool GUIAPI GUIResizeWindow( gui_window *wnd, const gui_rect *rect )
     HWND        rphwnd;
     WPI_POINT   wpi_point;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     GUIInvalidatePaintHandles( wnd );
     if( wnd->hwnd != NULLHANDLE ) {
         frame = GUIGetParentFrameHWND( wnd );
@@ -111,7 +112,8 @@ void GUIAPI GUISetRestoredSize( gui_window *wnd, const gui_rect *rect )
     HWND                phwnd;
     WPI_RECT            wpi_rect;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( GUIIsMaximized( wnd ) || GUIIsMinimized( wnd ) ) {
         if( wnd->hwnd != NULLHANDLE ) {
             frame = GUIGetParentFrameHWND( wnd );
@@ -144,7 +146,8 @@ bool GUIAPI GUIGetRestoredSize( gui_window *wnd, gui_rect *rect )
     HWND                parent;
     WPI_RECT            wpi_rect;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( wnd->hwnd != NULLHANDLE ) {
         top_hwnd = GUIGetParentFrameHWND( wnd );
         parent = _wpi_getparent( top_hwnd );
@@ -163,7 +166,8 @@ bool GUIAPI GUIGetRestoredSize( gui_window *wnd, gui_rect *rect )
 
 void GUIAPI GUIMinimizeWindow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( wnd->style & GUI_MINIMIZE ) {
         _wpi_minimizewindow( GUIGetParentFrameHWND( wnd ) );
     }
@@ -175,7 +179,8 @@ void GUIAPI GUIMinimizeWindow( gui_window *wnd )
 
 void GUIAPI GUIMaximizeWindow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( wnd->style & GUI_MAXIMIZE ) {
         if( GUIIsMDIChildWindow( wnd ) ) {
             GUIMDIMaximize( true, GUIGetFront() );
@@ -191,7 +196,8 @@ void GUIAPI GUIMaximizeWindow( gui_window *wnd )
 
 void GUIAPI GUIHideWindow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     _wpi_showwindow( GUIGetParentFrameHWND( wnd ), SW_HIDE );
 }
 
@@ -203,7 +209,8 @@ bool GUIAPI GUIIsWindowVisible( gui_window *wnd )
 {
     HWND        hwnd;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     hwnd = GUIGetParentFrameHWND( wnd );
     if( hwnd != NULLHANDLE ) {
         if( IsWindowVisible( hwnd ) ) {
@@ -219,7 +226,8 @@ bool GUIAPI GUIIsWindowVisible( gui_window *wnd )
 
 void GUIAPI GUIRestoreWindow( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     if( GUIIsMDIChildWindow( wnd ) && GUIMDIMaximized( wnd ) ) {
         GUIMDIMaximize( false, GUIGetFront() );
     } else {
@@ -235,7 +243,8 @@ bool GUIAPI GUIIsMaximized( gui_window *wnd )
 {
     bool        maximized;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     if( GUIMDI ) {
         maximized = GUIMDIMaximized( wnd );
     } else {
@@ -250,6 +259,7 @@ bool GUIAPI GUIIsMaximized( gui_window *wnd )
 
 bool GUIAPI GUIIsMinimized( gui_window *wnd )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     return( _wpi_isiconic( GUIGetParentFrameHWND( wnd ) ) );
 }

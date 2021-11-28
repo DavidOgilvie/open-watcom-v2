@@ -45,7 +45,8 @@
 
 gui_text_ord GUIAPI GUIGetRow( gui_window *wnd, const gui_point *in_pos )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     GUIGetMetrics( wnd );
     return( GUIScaleToScreenV( in_pos->y ) / AVGYCHAR( GUItm ) );
 }
@@ -60,7 +61,8 @@ gui_text_ord GUIAPI GUIGetCol( gui_window *wnd, const char *text, const gui_poin
     guix_ord        scr_x;
     bool            got_new;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_text_ord_function ();
+
     got_new = GUIGetTheDC( wnd );
     GUIGetMetrics( wnd );
     scr_x = GUIScaleToScreenH( in_pos->x );

@@ -41,7 +41,8 @@
 
 void GUIAPI GUIRefresh( void )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
 #if 0
     if( GUIMainHwnd != NULL ) {
         InvalidateRect( GUIMainHwnd, NULL, true );

@@ -107,7 +107,8 @@ gui_control_class GUIGetControlClassFromHWND( HWND cntl )
     DWORD               style;
     int                 index;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_control_class_function ();
+
     control_class = GUI_BAD_CLASS;
     if( _wpi_getclassname( cntl, osclassname, sizeof( osclassname ) ) ) {
         style = _wpi_getwindowlong( cntl, GWL_STYLE );
@@ -133,7 +134,8 @@ gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class con
     gui_control_styles  styles;
     DWORD               style;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_gui_control_styles_function ();
+
     styles = GUI_STYLE_CONTROL_NOSTYLE;
     style = _wpi_getwindowlong( cntl, GWL_STYLE );
 
@@ -203,7 +205,8 @@ gui_control_styles GUIGetControlStylesFromHWND( HWND cntl, gui_control_class con
 
 BOOL CALLBACK InsertResDlgCntlFunc( HWND hwnd, LPARAM lparam )
 {
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     GUIControlInsertByHWND( hwnd, (gui_window *)lparam );
     return( TRUE );
 }
@@ -217,14 +220,16 @@ bool GUIInsertResDialogControls( gui_window *wnd )
 #ifdef __OS2_PM__
     WPI_ENUMPROC        wndenumproc;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     wndenumproc = _wpi_makeenumprocinstance( InsertResDlgCntlFunc, GUIMainHInst );
     _wpi_enumchildwindows( wnd->hwnd, wndenumproc, (LPARAM)wnd );
     _wpi_freeenumprocinstance( wndenumproc );
 #else  // of #ifdef __OS2_PM__
     WNDENUMPROC         wndenumproc;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_void_function ();
+
     wndenumproc = MakeProcInstance_WNDENUM( InsertResDlgCntlFunc, GUIMainHInst );
     EnumChildWindows( wnd->hwnd, wndenumproc, (LPARAM)wnd );
     FreeProcInstance_WNDENUM( wndenumproc );
@@ -248,7 +253,8 @@ bool GUICreateDialogFromRes( res_name_or_id dlg_id, gui_window *parent_wnd, GUIC
 
     /* unused parameters */ (void)gui_call_back;
 
-	GUIlog_entering_function ();
+    GUIlog_entering_bool_function ();
+
     parent_hwnd = parent_wnd->hwnd;
     if( parent_hwnd == NULLHANDLE )
         parent_hwnd = HWND_DESKTOP;
